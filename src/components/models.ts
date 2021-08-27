@@ -134,6 +134,7 @@ export interface IMenace {
   name: string;
   boxes: boolean[];
 }
+
 export interface IProgressTrack {
   name: string;
   difficulty: number;
@@ -169,7 +170,6 @@ export interface ICharacter {
   pronouns: string;
   callsign: string;
   characteristics: string;
-  xp: number;
   stats: IStats;
   tracks: ITracks;
   impacts: IImpacts;
@@ -348,13 +348,14 @@ export interface IStarshipOracle {
 
 // Derelict
 export interface IDerelict {
+  name: string;
   location: ESLocation;
   type: EDerelictType;
   condition: string;
   outerFirstLook: string;
   innerFirstLook: string;
   currentZone: EDerelictZone;
-  explore: string[];
+  explore: string;
 }
 
 export interface IDerelictOracle {

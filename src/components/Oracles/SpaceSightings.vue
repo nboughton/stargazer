@@ -18,6 +18,9 @@
       />
     </div>
     <div class="text-h6">{{ rollResult }}</div>
+    <div v-if="rollResult === ESighting.StellarObject">
+      {{ tableRoll(StellarObject) }}
+    </div>
     <planet
       v-if="rollResult === ESighting.Planet"
       :modelValue="RollPlanet(regionSelect)"
@@ -30,25 +33,31 @@
       v-if="rollResult === ESighting.Starship"
       :modelValue="RollStarship(regionSelect)"
     />
+    <derelict
+      v-if="rollResult === ESighting.Derelict"
+      :modelValue="RollDerelict()"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Sighting } from 'src/lib/oracles/space';
+import { Sighting, StellarObject } from 'src/lib/oracles/space';
 import { ERegion, ESighting, EPClass } from 'src/components/models';
-import { sightingRoll } from 'src/lib/roll';
+import { sightingRoll, tableRoll } from 'src/lib/roll';
 import { RollPlanet } from 'src/lib/oracles/planets';
 import { RollSettlement } from 'src/lib/oracles/settlement';
 import { RollStarship } from 'src/lib/oracles/starship';
+import { RollDerelict } from 'src/lib/oracles/derelict';
 
 import Planet from 'src/components/Oracles/Planet.vue';
 import Settlement from 'src/components/Oracles/Settlement.vue';
 import Starship from 'src/components/Oracles/Starship.vue';
+import Derelict from 'src/components/Oracles/Derelict.vue';
 
 export default defineComponent({
   name: 'SpaceSightings',
-  components: { Planet, Settlement, Starship },
+  components: { Planet, Settlement, Starship, Derelict },
   setup() {
     const regionSelect = ref(ERegion.Terminus);
 
@@ -60,6 +69,7 @@ export default defineComponent({
 
     return {
       Sighting,
+      StellarObject,
       ERegion,
       ESighting,
       EPClass,
@@ -67,10 +77,12 @@ export default defineComponent({
 
       rollResult,
       rollSighting,
+      tableRoll,
 
       RollPlanet,
       RollSettlement,
       RollStarship,
+      RollDerelict,
     };
   },
 });

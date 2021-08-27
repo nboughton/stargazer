@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- content -->
     <q-input
       class="q-my-sm"
       label="Search name or key word"
@@ -18,7 +17,7 @@
     <div v-for="(category, index) in Moves" :key="index">
       <div v-for="(move, mIndex) in category" :key="mIndex">
         <div v-if="show(move)" class="q-mb-sm">
-          <move :move="move" :moveType="index" :id="genID(move)" />
+          <move :move="move" :moveType="index" />
         </div>
       </div>
     </div>
@@ -55,15 +54,11 @@ export default defineComponent({
       }
       return false;
     };
-    const genID = (move: IMove): string => {
-      return move.name.replace(/ /g, '-');
-    };
 
     return {
       Moves,
       filter,
       show,
-      genID,
     };
   },
 });

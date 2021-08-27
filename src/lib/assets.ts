@@ -1,5 +1,5 @@
-import { IAsset } from 'src/components/models'
-import { v4 as uuid } from 'uuid'
+import { IAsset } from 'src/components/models';
+import { v4 as uuid } from 'uuid';
 
 export const NewAsset = (): IAsset => {
   return {
@@ -9,1599 +9,1813 @@ export const NewAsset = (): IAsset => {
     items: [
       {
         text: 'Asset item text 1',
-        marked: false
+        marked: false,
       },
       {
         text: 'Asset item text 2',
-        marked: false
+        marked: false,
       },
       {
         text: 'Asset item text 3',
-        marked: false
-      }
-    ]
-  }
-}
+        marked: false,
+      },
+    ],
+  };
+};
 
 export const Assets: { [index: string]: IAsset } = {
-  Alchemist: {
+  Ace: {
     type: 'Path',
-    title: 'Alchemist',
+    title: 'Ace',
+
     items: [
       {
-        text: 'When you create an elixir, choose an effect: Deftness (edge), audacity (heart), vigor (iron), slyness (shadow), or clarity (wits). Then, suffer -1 supply and roll +wits. On a strong hit, you create a single dose. The character who consumes the elixir must <i>Face Danger</i> +iron and score a hit, after which they add +1 when making moves with the related stat until their health, spirit, or momentum fall below +1. On a weak hit, as above, but suffer an additional -1 supply to create it.',
-        marked: true
+        text: '<p>When you <i>Face Danger</i> or <i>React Under Fire</i> by guiding your vehicle through a hazard or out of harm&rsquo;s way, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'As above, and you may choose two effects for a single dose, or create two doses of the same effect.',
-        marked: false
+        text: '<p>When you <i>Gain Ground</i> by maneuvering your vehicle against a foe, add +1. If you roll a strong hit with a 4, 5, or 6 on the action die, you may put yourself in firing position. If you do, set side the action die or note its value. If you or an ally <i>Strike</i> using the vehicle&rsquo;s weapons, use that value for the action die (rolling only the challenge dice). This persists until you fail to score a strong hit on that move, or until you make another move which changes your vehicle&rsquo;s position.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you prepare an elixir, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you must <i>Endure Stress</i> while piloting a vehicle, you may roll +integrity. If you do, take +1 momentum on a strong hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  'Animal Kin': {
+  Agent: {
     type: 'Path',
-    title: 'Animal Kin',
+    title: 'Agent',
+
     items: [
       {
-        text: 'When you make a move to pacify, calm, control, aid, or fend off an animal (or an animal or beast companion), add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>When you make a move to break into a secure site, infiltrate a protected area, or hack or manipulate a secure system, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'You may add or upgrade an animal or beast companion asset for 1 fewer experience. Once you mark all their abilities, you may <i>Forge a Bond</i> with them and take an automatic strong hit. When you do, mark a bond twice and take 1 experience.',
-        marked: false
+        text: '<p>When you <i>Face Danger</i> or <i>Secure an Advantage</i> to establish a false identity, add +1. On a hit, you may add +1 when using that identity to deceive or influence others. If you roll a miss with a match when using that identity, your deception is completely and dramatically undone.</p>\n',
+        marked: false,
       },
       {
-        text: 'Once per fight, when you leverage your animal or beast companion to make a move, reroll any dice. On a hit, take +1 momentum.',
-        marked: false
-      }
-    ]
+        text: '<p>When you covertly <i>Gather Information</i>, you may roll +shadow. If you do, take +1 momentum on a hit. On a strong hit with a match, you also uncover a surprising aspect of an adversary&rsquo;s plan or a connection to another quest or relationship; mark progress twice on a related quest.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Archer: {
-    type: 'Combat Talent',
+    type: 'Path',
     title: 'Archer',
-    subtitle: 'If you wield a bow...',
+
     items: [
       {
-        text: 'When you <i>Secure an Advantage</i> by taking a moment to aim, choose your approach and add +1.<br />  * Trust your instincts: Roll +wits, and take +2 momentum on a strong hit.<br />  * Line up your shot: Roll +edge, and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>Your bow has 6 ammo. When you <i>Strike</i> or <i>Clash</i>, you may add +1 or +2 and suffer that amount as -ammo. To replenish your ammo by crafting projectiles, roll +wits. On a strong hit, take your action die value as +ammo. On a weak hit, as above, but <i>Sacrifice Resources</i> (-1). On a miss, <i>Sacrifice Resources</i> (-1).</p>\n',
+        marked: true,
       },
       {
-        text: 'Once per fight, when you <i>Strike</i> or <i>Clash</i>, you may take extra shots and suffer -1 supply (decide before rolling). When you do, reroll any dice. On a hit, inflict +2 harm and take +1 momentum.',
-        marked: false
+        text: '<p>You may <i>Enter the Fray</i> by unleashing a volley of bow shots. If you do, roll +ammo and suffer -1 ammo. On a hit, mark progress.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Resupply</i> by hunting, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Augur: {
-    type: 'Ritual',
-    title: 'Augur',
-    items: [
-      {
-        text: 'When you summon a flock of crows and ask a single question, roll +wits. On a strong hit, you interpret their calls as a helpful omen. Envision the response (<i>Ask the Oracle</i> if unsure) and take +2 momentum. On a weak hit, the crows ignore your question and offer a clue to an unrelated problem or opportunity in this area. Envision what you learn (<i>Ask the Oracle</i> if unsure), and take +1 momentum.',
-        marked: true
+        text: '<p>When you load a specialized projectile such as a zip line, explosive, or electromagnetic disrupter, suffer -1 ammo. When you then take your shot by making a move, you may set the value of your action die to 5. On a hit, envision the effects and take +1 momentum.</p>\n',
+        marked: false,
       },
-      {
-        text: 'As above, and the crows will also help guide you on the proper path. On a hit, add +1 on the next segment when you <i>Undertake a Journey</i>.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Awakening: {
-    type: 'Ritual',
-    title: 'Awakening',
-    items: [
-      {
-        text: 'When you create a simulacrum, roll +heart. On a strong hit, your creation is given unnatural life. If it aids you as you make a move to assault or overcome an obstacle through strength, add +2. It has 3 health and suffers harm as appropriate, but is not a companion and may not be healed. At 0 health, it is dead. On a weak hit, as above, but if you roll a 1 on your action die when aided by your creation, you must <i>Face Danger</i> +heart to keep it from turning on you (as a formidable foe).',
-        marked: true
-      },
-      {
-        text: 'Your simulacrum has 6 health.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
     ],
     track: {
-      value: 0,
-      max: 3,
-      min: 0
-    }
+      value: 6,
+      max: 6,
+      min: 0,
+    },
   },
-  'Banner-Sworn': {
+  Armored: {
     type: 'Path',
-    title: 'Banner-Sworn',
-    subtitle: 'Once you mark a bond with a leader or faction...',
+    title: 'Armored',
+    subtitle: 'If you wear your finely crafted set of personal armor...',
+
+    items: [
+      {
+        text: '<p>When you <i>Face Danger</i>, <i>React Under Fire</i>,or <i>Clash</i> against physical attacks or impact, you may put trust in your armor&rsquo;s protection. If you do, set the value of your action die to 4 instead of rolling that die.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>You add an important new piece to your set of armor, or upgrade its materials. As above, but set the value of your action die to 5 instead of 4.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you must <i>Endure Harm</i>, you may instead let your armor take the hit. If you do, roll your action die. On a 4 or greater, ignore the harm. On a 1-3, ignore the harm but your armor is now broken; you must <i>Repair</i> and spend 5 repair points to bring it back to working condition.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Augmented: {
+    type: 'Path',
+    title: 'Augmented',
     input: {
-      label: 'Name',
-      text: ''
+      label: 'One',
+      text: ' ',
     },
     items: [
       {
-        text: 'When you <i>Swear an Iron Vow</i> to serve your leader or faction on a mission, you may reroll any dice. When you <i>Fulfill Your Vow</i> and mark experience, take +1 experience.',
-        marked: true
+        text: '<p>You are equipped with an advanced prosthetic, implant, or mechanical enhancement. When you make a move directly aided by the augment, envision how it gives you exceptional capabilities and add +1. On a strong hit with a match, your augment exceeds expectations; take +2 momentum. On a miss with a match, the augment is broken; you must <i>Repair</i> and spend 3 repair points to bring it back to working condition.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Sojourn</i> or <i>Make Camp</i> in the company of your banner-kin, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>You are equipped with a second augment. It functions as above, but the benefits of the two augments do not stack.</p>\n',
+        marked: false,
+        input: {
+          label: 'Two',
+          text: ' ',
+        },
       },
       {
-        text: 'When you <i>Enter the Fray</i> bearing your banner, add +1 and take +1 momentum on a hit. When you burn momentum while carrying your banner in combat, take +1 momentum after you reset.',
-        marked: false
-      }
-    ]
+        text: '<p>When you must <i>Endure Harm</i> or <i>Face Death</i>, you may instead mark an augment as broken. <i>Repair</i> it as detailed above.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  'Battle-Scarred': {
+  Bannersworn: {
     type: 'Path',
-    title: 'Battle-Scarred',
-    subtitle: 'Once you become maimed...',
-    items: [
-      {
-        text: 'You focus your energies: Reduce your edge or iron by 1 and add +2 to wits or heart, or +1 to each (to a maximum of +4).',
-        marked: false
-      },
-      {
-        text: 'You overcome your limitations: Reduce your maximum health by 1. Maimed no longer counts as a debility, and does not reduce your maximum momentum or reset value. When you <i>Endure Stress</i> +heart, take +1 momentum on a strong hit.',
-        marked: false
-      },
-      {
-        text: 'You have stared down death before: When you are at 0 health and <i>Endure Harm</i>, you may roll +wits or +heart (instead of +health or +iron). If you do, take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Berserker: {
-    type: 'Combat Talent',
-    title: 'Berserker',
-    subtitle: 'If you are clad only in animal pelts...',
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> or <i>Compel</i> by embodying your wild nature, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i> by unleashing your rage (decide before rolling), inflict +1 harm on a hit. Then, choose one.<br />  * Push yourself: <i>Endure Harm</i> (1 harm).<br />  * Lose yourself: <i>Endure Stress</i> (1 stress).',
-        marked: false
-      },
-      {
-        text: 'When you <i>Endure Harm</i> in a fight, and your health is above 0, you may let the pain inflame your wildness (decide before rolling). If you then score a strong hit and choose to embrace the pain, take +momentum equal to your remaining health. A weak hit counts as a miss.',
-        marked: false
-      }
-    ]
-  },
-  Bind: {
-    type: 'Ritual',
-    title: 'Bind',
-    items: [
-      {
-        text: 'When you wear an animal pelt and dance in moonlight, roll +wits. On a strong hit, you or an ally may wear the pelt and add +1 when making moves with the related stat (wolf-edge; bear-iron; deer-heart; fox-shadow; boar-wits). If the wearer rolls a 1 on their action die while making a move using the pelt, the magic is spent. On a weak hit, as above, but the wilds call as you dance; <i>Endure Stress</i> (2 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may instead perform this ritual wearing the pelt of a beast. If you do, name the related stat and add +2 (instead of +1).',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  'Blade-Bound': {
-    type: 'Path',
-    title: 'Blade-Bound',
-    subtitle: 'Once you mark a bond with a kin-blade, a sentient weapon imbued with the spirit of your ancestor...',
+    title: 'Bannersworn',
     input: {
-      label: 'Name',
-      text: ''
+      label: 'Ideology',
+      text: ' ',
     },
     items: [
       {
-        text: 'When you <i>Enter the Fray</i> or <i>Draw the Circle</i> while wielding your kin-blade, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>You are bound to a clan, faction, or creed. When you <i>Swear an Iron Vow</i> in service to this ideology, reroll any dice. On a hit, mark 1 tick on your bonds legacy track.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Gather Information</i> by listening to the whispers of your kin- blade, add +1 and take +2 momentum on a hit. Then, <i>Endure Stress</i> (2 stress).',
-        marked: false
+        text: '<p>When you or an ally <i>Sojourn</i> and score a strong hit with a match, you may envision meeting someone of the same ideology. If you <i>Make a Connection</i> with them and score a hit, mark 1 tick on your bonds legacy track. When you <i>Forge a Bond</i> with anyone of your ideology, make the legacy reward one rank higher (1 extra box if already epic).</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Strike</i> with your kin-blade to inflict savage harm (decide before rolling), add +1 and inflict +2 harm on a hit. Then, <i>Endure Stress</i> (2 stress).',
-        marked: false
-      }
-    ]
+        text: '<p>When you make a progress move in direct service to your ideology, you may reroll one challenge die. If you then score a strong hit with a match, mark 1 tick on your bonds legacy track.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Banshee: {
+    type: 'Companion',
+    title: 'Banshee',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your banshee companion accompanies you on planetside missions, using its echolocation to help guide the way. When you ride your banshee as you <i>Undertake an Expedition</i> or <i>Set a Course</i>, you may roll +its health.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move astride the banshee to detect a threat or avoid a fight, add +1 and take +1 momentum on a hit. On a strong hit with a match, you&rsquo;re gone in a flash; take another +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a combat move and roll a 1 on your action die, the banshee senses the danger and emits a powerful scream to alert you or distract your foes. You may reroll that die, but must first <i>Lose Momentum</i> (-1).</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Blademaster: {
+    type: 'Path',
+    title: 'Blademaster',
+    subtitle: 'If you wield a bladed weapon...',
+
+    items: [
+      {
+        text: '<p>When you <i>Clash</i> or <i>Strike</i> in close quarters, add +1. On a strong hit with a match, mark progress. Also, once per fight, you may reroll any dice as you make a move to attack or defend using your blade.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>If you <i>Gain Ground</i> by moving into close quarters against your foe, choose your approach.</p>\n\n<ul>\n<li>Charge: Roll +heart, and mark progress on a hit.</li>\n<li>Evade: Roll +edge, and take +1 momentum on a hit.</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> and bind the oath to your blade, add +1. On a hit, take +2 momentum or +2 spirit.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Bonded: {
-    type: 'Path',
+    type: 'Deed',
     title: 'Bonded',
-    items: [
-      {
-        text: 'When you make a move which gives you an add for sharing a bond, add +1 more.',
-        marked: true
-      },
-      {
-        text: 'When you completely fill a box on your bonds progress track, envision what your relationships have taught you. Then, take 1 experience and +2 momentum.',
-        marked: false
-      },
-      {
-        text: 'When you make a move in a crucial moment and score a miss, you may cling to thoughts of your bond-kin for courage or encouragement. If you do, reroll any dice. On another miss, in addition to the outcome of the move, you must mark shaken or corrupted. If both debilities are already marked, <i>Face Desolation</i>.',
-        marked: false
-      }
-    ]
-  },
-  Brawler: {
-    type: 'Combat Talent',
-    title: 'Brawler',
-    subtitle: 'If you are unarmed or fighting with a non-deadly weapon...',
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> +iron by engaging in close-quarters brawling (such as punching, tripping, or grappling), add +1. If you score a hit, you may also inflict 1 harm.',
-        marked: true
-      },
-      {
-        text: 'When you use an unarmed attack or simple weapon to <i>Strike</i> with deadly intent, add +2 and inflict 2 harm on a hit (instead of 1). On a weak hit or miss, suffer -1 momentum (in addition to any other outcome of the move).',
-        marked: false
-      },
-      {
-        text: 'When you <i>Face Danger</i> or <i>Clash</i> against a brawling attack, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  'Cave Lion': {
-    type: 'Companion',
-    title: 'Cave Lion',
-    subtitle: 'Your cat takes down its prey.',
+    subtitle:
+      'One time only, once you [Forge a Bond](#Forge-a-Bond) with a special individual...',
     input: {
-      label: 'Name',
-      text: ''
+      label: 'Bond-mate',
+      text: ' ',
     },
     items: [
       {
-        text: 'When your cat chases down big game, you may <i>Resupply</i> with +edge (instead of +wits). If you do, take +1 supply or +1 momentum on a strong hit.',
-        marked: false
+        text: '<p>This person is your bond-mate. When you <i>Sojourn</i> at their home, <i>Hearten</i> in their presence, or <i>Test Your Relationship</i> or <i>Develop Your Relationship</i> with them, reroll any dice. On a strong hit, take +1 momentum.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Enter the Fray</i> or <i>Strike</i> by sending your cat to attack, roll +edge. On a hit, take +2 momentum.',
-        marked: false
+        text: '<p>When you <i>Set a Course</i> back to your bond-mate&rsquo;s location, add +heart. On a strong hit with a match, envision a special reunion and mark two ticks on your bonds legacy track.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Make Camp</i>, your cat is alert to trouble. If you or an ally choose to relax, take +1 spirit. If you focus, take +1 momentum.',
-        marked: false
-      }
+        text: '<p>When you make a move in a crucial moment and score a miss, you may cling to thoughts of your bond-mate for support. If you do, reroll any dice. On another miss, in addition to the outcome of the move, you must mark shaken or traumatized. If both debilities are already marked, <i>Face Desolation</i>.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Bounty Hunter': {
+    type: 'Path',
+    title: 'Bounty Hunter',
+
+    items: [
+      {
+        text: '<p>When you take a bounty contract and <i>Swear an Iron Vow</i> to see it done, add +1. On a strong hit, you&rsquo;ve got a solid lead and may immediately mark progress. When you <i>Fulfill Your Vow</i>, make the legacy reward one rank higher (1 extra box if already epic).</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Gather Information</i> related to a bounty, add +2. On a strong hit with a match, you reveal a surprising aspect of the contract; envision what you discover, and choose one.</p>\n\n<ul>\n<li>Forge ahead: Mark progress twice.</li>\n<li>Change loyalties: <i>Forsake Your Vow</i> and mark 2 ticks on your bonds legacy track.</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Take Decisive Action</i> in a fight against a bounty target or their agents, you may reroll one challenge die.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Brawler: {
+    type: 'Path',
+    title: 'Brawler',
+    subtitle: 'If you fight unarmed or with a close quarters weapon...',
+
+    items: [
+      {
+        text: '<p>When you <i>Gain Ground</i> by attempting to disarm, trip, shove, grapple, or stun your foe, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Clash</i> in close quarters, you may draw on your momentum to gain advantage. If you do, <i>Lose Momentum</i> (-2) and choose one (before rolling).</p>\n\n<ul>\n<li>Aggressive: Count a weak hit as a strong hit.</li>\n<li>Defensive: Count a miss as a weak hit.</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Enter the Fray</i> already positioned in close quarters against your foe, mark progress on a hit. On a strong hit with a match, your initial assault leaves them stunned; also take +2 momentum.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Combat Bot': {
+    type: 'Companion',
+    title: 'Combat Bot',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your combat bot companion fights at your side. When you <i>Strike</i> aided by the bot, add +1; if you <i>Clash</i>, take +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you use the threat of violence to <i>Compel</i> or <i>Gain Ground</i> while the bot brings its weapons to bear, you may roll +its health. If you do, take +1 momentum on a hit. On a strong hit with a match, the bot&rsquo;s display is especially persuasive; take another +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>Once per fight, when you <i>React Under Fire</i> by using the bot to draw fire or create a diversion, roll +its health. On a strong hit, mark progress. On a weak hit, face the cost as normal, but then you are in control.</p>\n',
+        marked: false,
+      },
     ],
     track: {
-      value: 0,
-      max: 4,
-      min: 0
-    }
+      value: 5,
+      max: 5,
+      min: 0,
+    },
   },
   Commander: {
     type: 'Path',
     title: 'Commander',
+
     items: [
       {
-        text: 'You lead a warband with +4 strength. Roll +strength when you command your warband to <i>Face Danger</i>, <i>Secure an Advantage</i>, <i>Compel</i>, or <i>Battle</i>. When you face the negative outcome of any move, you may suffer -1 strength as the cost. When you <i>Make Camp</i> or <i>Sojourn</i> and score a hit, take +1 strength. While at 0 strength, this asset counts as a debility.',
-        marked: true
+        text: '<p>When you <i>Aid Your Ally</i> through leadership, coordination, or planning, add +1. On a strong hit, any allies who are present take +1 momentum.</p>\n',
+        marked: true,
       },
       {
-        text: 'You may dispatch scouts from your warband to <i>Gather Information</i> or <i>Resupply</i>; if you do, roll +strength.',
-        marked: false
+        text: '<p>When you <i>Enter the Fray</i> (+heart) by coordinating with your team as they wade into the fight, make your move before your allies act. On a strong hit, all allies may take an automatic strong hit. On a strong hit with a match, also mark progress on any objectives in this fight.</p>\n',
+        marked: false,
       },
       {
-        text: 'Once you <i>Forge a Bond</i> with your warband, take +1 momentum on a hit when you leverage a warband ability.',
-        marked: false
-      }
+        text: '<p>When you make a move to influence someone (not an ally) through leadership, add +1 and take +1 momentum on a hit. On a strong hit with a match, your command galvanizes them into unexpected action. Take another +1 momentum, and mark 1 tick on your bonds legacy track.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Courier: {
+    type: 'Path',
+    title: 'Courier',
+
+    items: [
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> to transport and protect something precious, set its safety to 5. When you <i>Undertake an Expedition</i> or <i>Set a Course</i> and score a weak hit or miss, you may suffer -1 safety as the cost. On a miss with a match, you must suffer -2 safety as the cost. When safety falls to 0, envision a major complication related to this mission. If you overcome the threat, mark progress twice on this quest. Then, set safety to 3.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Sojourn</i> during a courier mission, you may roll +safety. On a strong hit, take +1 safety or +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Fulfill Your Vow</i> to a connection by finishing a courier mission, you may <i>Develop Your Relationship</i> and mark progress twice.</p>\n',
+        marked: false,
+      },
     ],
     track: {
-      value: 0,
-      max: 4,
-      min: 0
-    }
-  },
-  Communion: {
-    type: 'Ritual',
-    title: 'Communion',
-    items: [
-      {
-        text: 'When you surround the remains of a recently deceased intelligent creature with lit candles, and summon its spirit, roll +heart. Add +1 if you share a bond. On a strong hit, the spirit appears and you may converse for a few minutes. Make moves as appropriate (add +1). On a weak hit, as above, but the spirit also delivers troubling news unrelated to your purpose. Envision what it tells you (<i>Ask the Oracle</i> if unsure) and <i>Endure Stress</i> (1 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may also commune with the long-dead.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Cutthroat: {
-    type: 'Combat Talent',
-    title: 'Cutthroat',
-    subtitle: 'If you wield a dagger or knife...',
-    items: [
-      {
-        text: 'When you are in position to <i>Strike</i> at an unsuspecting foe, choose one (before rolling).<br />  * Add +2 and take +1 momentum on a hit.<br />  * Inflict +2 harm on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Compel</i> someone at the point of your blade, or when you rely on your blade to <i>Face Danger</i>, add +1.',
-        marked: false
-      },
-      {
-        text: 'Once per fight, when you <i>Secure an Advantage</i> +shadow by performing a feint or misdirection, reroll any dice and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Dancer: {
-    type: 'Path',
-    title: 'Dancer',
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> +edge by dancing for an audience, add +1 and take +2 momentum on a hit. On a strong hit, also add +2 (one time only) if you make a move to interact with someone in the audience.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Face Danger</i> +edge in a fight by nimbly avoiding your foe’s attacks, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you or an ally make a progress move and score a hit, you may perform a dance to commemorate the event. If you do, roll +edge. On a strong hit, you and each of your allies take +2 momentum and +1 spirit. On a weak hit, you take +1 momentum or +1 spirit, but your allies are unmoved.',
-        marked: false
-      }
-    ]
+      value: 5,
+      max: 5,
+      min: 0,
+    },
   },
   Devotant: {
     type: 'Path',
     title: 'Devotant',
     input: {
-      label: "God's Name",
-      text: ''
+      label: 'Name',
+      text: ' ',
     },
     items: [
       {
-        text: 'When you say your daily prayers, you may <i>Secure an Advantage</i> by asking your god to grant a blessing. If you do, roll +your god’s stat. On a hit, take +2 momentum.',
-        marked: true
+        text: '<p>You worship a god, power, or entity. Give it a name and choose one of your stats to represent its nature. When you <i>Secure an Advantage</i> or <i>Gain Ground</i> by calling on it for guidance or blessings, roll +linked stat. On a hit, take +1 momentum or +1 spirit. On a strong hit with a match, a miracle or sign manifests; take another +1 momentum or +1 spirit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Swear an Iron Vow</i> to serve your god on a divine quest, you may roll +your god’s stat and reroll any dice. When you <i>Fulfill Your Vow</i> and mark experience, take +1 experience.',
-        marked: false
+        text: '<p>When you <i>Swear an Iron Vow</i> in service to your faith, roll +linked stat. On a strong hit, mark progress. When you <i>Fulfill Your Vow</i> on a divine quest (formidable or greater) and score a hit, also mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: false,
+        input: {
+          label: 'Linked Stat',
+          text: ' ',
+        },
       },
       {
-        text: 'When you <i>Sojourn</i> by sharing the word of your god, you may roll +your god’s stat. If you do, take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Hearten</i> through contemplation or sharing of your faith, you may roll +linked stat. If you do, take +1 spirit or +1 momentum on a strong hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Divination: {
-    type: 'Ritual',
-    title: 'Divination',
-    items: [
-      {
-        text: 'When you take a drop of blood from a willing subject (not yourself) and cast the rune-carved stones, roll +heart. On a strong hit, you may read the runes to gain insight about the subject and people close to them, including information you and the subject have no knowledge of. If you use the reading to <i>Gather Information</i>, <i>Compel</i>, or <i>Forge a Bond</i>, add +1. On a weak hit, as above, but the runes reveal their secrets only with extra time and focus; suffer -2 momentum.',
-        marked: true
-      },
-      {
-        text: 'As above, and your divination can also reveal information about the subject’s future.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Duelist: {
-    type: 'Combat Talent',
-    title: 'Duelist',
-    subtitle: 'If you wield a bladed weapon in each hand...',
-    items: [
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i>, you may add +2. If you do (decide before rolling), inflict +1 harm on a strong hit and count a weak hit as a miss.',
-        marked: true
-      },
-      {
-        text: 'Once per fight, when you <i>Secure an Advantage</i> +edge by making a bold display of your combat prowess, you may reroll any dice.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Draw the Circle</i>, choose one (before rolling).<br />  * Add+2.<br />  * Take+2 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Empowered: {
+  Diplomat: {
     type: 'Path',
-    title: 'Empowered',
+    title: 'Diplomat',
+
+    items: [
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> to resolve a dispute, negotiate an agreement, or gather allies, add +1. On a strong hit, mark progress. When you <i>Fulfill Your Vow</i> on a diplomatic mission (formidable or greater) and score a hit, also mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move to defuse, reason, or negotiate, add +1. If you roll a miss, you may try a different tact. Envision this new approach, reroll all dice, and add +2. If you roll a miss yet again, face a dire complication or blow to your reputation as you <i>Pay the Price</i>.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Make a Connection</i> or <i>Sojourn</i>, add +1. If you <i>Sojourn</i> and roll a strong hit with a match, you are shown great respect; take +momentum equal to your heart.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Empath: {
+    type: 'Path',
+    title: 'Empath',
+
+    items: [
+      {
+        text: '<p>When you read the intent, emotions, or memories of a nearby being, roll +heart. On a strong hit, you glimpse a helpful aspect of their inner self. Envision what you learn, take +2 momentum, and add +1 if you use that insight while making a move to interact with them in this scene. On a weak hit, the visions are murky; take +1 momentum. On a miss, you reveal a troubling motive or secret; <i>Pay the Price</i>.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>As above, and if you score a hit as you read them, you may subtly influence their attitude or actions, such as making a hostile being hestitate. Take another +1 momentum. If in a fight, mark progress.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Face Danger</i> to soothe a being&rsquo;s distress by creating an empathic bond, roll +spirit and take +1 momentum on a hit. If they are an ally, also give them +2 spirit on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Engine Upgrade': {
+    type: 'Module',
+    title: 'Engine Upgrade',
+
+    items: [
+      {
+        text: '<p>Your vehicle&rsquo;s finely-tuned engines speed your travels. When you <i>Undertake an Expedition</i> (+edge) and roll a strong hit with 6 on your action die, take +2 momentum.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Enter the Fray</i>, choose one (before rolling).</p>\n\n<ul>\n<li>Maneuver: Add +1 and take +1 momentum on a strong hit.</li>\n<li>Boost: Take +2 momentum on a hit.</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a desperate move to pursue a foe, escape a threat, or get in range, you may push your engines to their limit. If you do (decide after rolling), reroll any dice and count a weak hit as a strong hit. Then, <i>Withstand Damage</i> (-2).</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Exosuit: {
+    type: 'Support Vehicle',
+    title: 'Exosuit',
     input: {
-      label: 'Title/Lineage',
-      text: ''
+      label: 'Name',
+      text: ' ',
     },
     items: [
       {
-        text: 'When you <i>Sojourn</i> and score a weak hit or miss, you may claim the rights of hospitality warranted by your title or lineage. If you do, roll all dice again and add +1. On a miss, you are refused, and your presumption causes significant new trouble.',
-        marked: true
+        text: '<p>Your lumbering rig houses one pilot, is sealed against hostile environments, and is armed with fixed or held weapons. When you make a forceful, damaging, or resistant move, you may (after rolling) replace the value of your action die with the rig&rsquo;s integrity; if you do, <i>Lose Momentum</i> (-1).</p>\n',
+        marked: true,
       },
       {
-        text: 'When you exert your title or lineage to <i>Compel</i>, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>Your exosuit is equipped with thrusters. You can maneuver in zero-g, make thrust-assisted leaps, and drop to a surface from altitude. When you burn fuel to overcome a critical obstacle (decide after rolling), you may reroll any dice. If you do, <i>Sacrifice Resources</i> (-1).</p>\n',
+        marked: false,
       },
       {
-        text: 'When you forgo your title or lineage and <i>Forge a Bond</i> as an equal, or when you <i>Swear an Iron Vow</i> to serve someone of a lower station, add +1 and take +1 momentum or +1 spirit on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Withstand Damage</i>, you may reroll one challenge die.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 6,
+      max: 6,
+      min: 0,
+    },
+  },
+  'Expanded Hold': {
+    type: 'Module',
+    title: 'Expanded Hold',
+
+    items: [
+      {
+        text: '<p>Your vehicle carries up to 3 cargo. When you gain +supply, you may convert it to +cargo. When you make a move +supply, you may add +cargo. When you <i>Sacrifice Resources</i>, you may instead suffer -cargo for any portion of the cost.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you roll a miss or weak hit as you make a move to barter or negotiate, and you have at least 1 cargo, you may sweeten the pot. If you do, reroll all dice and add +cargo. Then, suffer -1 cargo.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a move to outrun a threat and have at least 1 cargo, you may first lighten your load by dropping cargo. If you do, suffer -cargo by the amount dropped, add +that amount, and take +2 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 3,
+      max: 3,
+      min: 0,
+    },
+  },
+  Explorer: {
+    type: 'Path',
+    title: 'Explorer',
+
+    items: [
+      {
+        text: '<p>When you <i>Explore a Waypoint</i>, take +1 momentum on a hit. When you <i>Finish an Expedition</i> and score a hit, mark 1 extra tick on your discoveries legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you come across a wondrous sight or phenomenon, such as an extraordinary planet, majestic creature, or dazzling stellar object, choose one:</p>\n\n<ul>\n<li>Find inspiration: Take +1 momentum</li>\n<li>Soak it all in: <i>Hearten</i>; add +1, and take +1 momentum on a hit.</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Secure an Advantage</i> by studying a newfound place from a safe position, add +1 and take +1 momentum on a hit. On a strong hit with a match, take another +1 momentum and envision an unusual aspect of the site.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Fated: {
     type: 'Path',
     title: 'Fated',
+
     items: [
       {
-        text: 'When you <i>Face Death</i> or <i>Face Desolation</i> while your epic background vow is unfulfilled, it is not yet your time. Instead of rolling, you may take an automatic strong hit. If you do, this asset counts as a debility (and you no longer have this protection) until you next <i>Reach a Milestone</i> on the background vow.',
-        marked: true
+        text: '<p>Once you fill a box on your background vow progress track, mark 1 tick on your quests legacy track. When you <i>Fulfill Your Vow</i> on the background vow, your fate is at hand. Envision your final sacrifice and take an automatic strong hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Reach a Milestone</i> on your background vow, take +2 momentum or +1 spirit.',
-        marked: false
-      },
-      {
-        text: 'For every two boxes filled on your background vow progress track, take 1 experience. When you <i>Fulfill Your Vow</i>, your fate is at hand. Envision your final sacrifice and reroll any dice.',
-        marked: false
-      }
-    ]
-  },
-  Fletcher: {
-    type: 'Combat Talent',
-    title: 'Fletcher',
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> by crafting arrows of fine quality, add +1. Then, take +1 supply or +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Resupply</i> by recovering or gathering arrows after a battle, add +2.',
-        marked: false
-      },
-      {
-        text: 'When you craft a single arrow designated for a specific foe, envision the process and materials, and roll +wits. On a strong hit, take both. On a weak hit, choose one.<br />  * Seeker: When a shooter uses the arrow to <i>Strike</i> or <i>Clash</i> against this foe, reroll any dice (one time only).<br />  * Ravager: When a shooter uses the arrow to inflict harm against this foe, inflict +1d6 harm (one time only).',
-        marked: false
-      }
-    ]
-  },
-  'Fortune Hunter': {
-    type: 'Path',
-    title: 'Fortune Hunter',
-    items: [
-      {
-        text: 'When you <i>Swear an Iron Vow</i> to someone under the promise of payment, add +1 and give the quest a special mark. When you successfully <i>Fulfill Your Vow</i> to them, take +wealth equal to the rank of the quest. If you leverage wealth when making a move where resources are a factor, add +wealth and suffer -1 wealth.',
-        marked: true
-      },
-      {
-        text: 'When in a community or trading, you may suffer -1 wealth and take +2 supply.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Resupply</i> by scavenging or looting, and score a strong hit with a match, you may envision finding an object of value. If you do, take +1 supply (instead of +2) and +1 wealth.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 5,
-      min: 0
-    }
-  },
-  'Giant Spider': {
-    type: 'Companion',
-    title: 'Giant Spider',
-    subtitle: 'Your spider uncovers secrets.',
-    input: {
-      label: 'Name',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> by sending your spider to scout a place, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'You may <i>Face Danger</i> +shadow by sending your spider to secretly study someone. On a hit, the spider returns to reveal the target’s deepest fears through a reflection in its glassy eyes. Use this to <i>Gather Information</i> and reroll any dice.',
-        marked: false
-      },
-      {
-        text: 'When your spider sets a trap, add +1 as you <i>Enter the Fray</i> +shadow. On a strong hit, also inflict 2 harm.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 4,
-      min: 0
-    }
-  },
-  Hawk: {
-    type: 'Companion',
-    title: 'Hawk',
-    subtitle: 'Your hawk can aid you while it is aloft.',
-    input: {
-      label: 'Name',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you <i>Undertake a Journey</i>, or when you <i>Resupply</i> by hunting for small game, add +1.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> +edge using your hawk to harass and distract your foes, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Face Danger</i> +wits to detect an approaching threat, or when you <i>Enter the Fray</i> +wits against an ambush, add +2.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 3,
-      min: 0
-    }
-  },
-  Herbalist: {
-    type: 'Path',
-    title: 'Herbalist',
-    items: [
-      {
-        text: 'When you attempt to <i>Heal</i> using herbal remedies, and you have at least +1 supply, choose one (decide before rolling).<br />  * Add +2.<br />  * On a hit, take or give an additional +1 health.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Heal</i> a companion, ally, or other character, and score a hit, take +1 spirit or +1 momentum.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Make Camp</i> and choose the option to partake, you can create a restorative meal. If you do, you and your companions take +1 health. Any allies who choose to partake also take +1 health, and do not suffer -supply.',
-        marked: false
-      }
-    ]
-  },
-  Honorbound: {
-    type: 'Path',
-    title: 'Honorbound',
-    items: [
-      {
-        text: 'When you <i>Turn the Tide</i>, envision how your vows give you strength in this moment. Then, when you make your move, add +2 (instead of +1) and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> or <i>Compel</i> by telling a hard truth, add +1 and take +1 momentum on a hit. On a weak hit or miss, envision how this truth complicates your current situation.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Fulfill Your Vow</i> and score a miss, you may reroll one challenge die. If you score a miss again, reduce your maximum spirit by 1. You may recover this lost spirit when you next <i>Fulfill Your Vow</i> and score a strong hit.',
-        marked: false
-      }
-    ]
-  },
-  Horse: {
-    type: 'Companion',
-    title: 'Horse',
-    subtitle: 'You and your horse ride as one.',
-    input: {
-      label: 'Name',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you <i>Face Danger</i> +edge using your horse’s speed and grace, or when you <i>Undertake a Journey</i>, add +1.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Enter the Fray</i> or <i>Secure an Advantage</i> +heart by charging into combat, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i> at close range while mounted, add +1 and inflict +1 harm on a hit.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 5,
-      min: 0
-    }
-  },
-  Hound: {
-    type: 'Companion',
-    title: 'Hound',
-    subtitle: 'Your hound is your steadfast companion.',
-    input: {
-      label: 'Name',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you <i>Gather Information</i> using your hound’s keen senses to track your quarry or investigate a scene, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i> alongside your hound and score a hit, inflict +1 harm or take +1 momentum.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Endure Stress</i> in the company of your hound, add +1.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 4,
-      min: 0
-    }
-  },
-  Improviser: {
-    type: 'Path',
-    title: 'Improviser',
-    items: [
-      {
-        text: 'When you <i>Check your Gear</i>, you may roll +wits (instead of +supply). If you do, envision how you make do with a clever solution, and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> or <i>Face Danger</i> by cobbling together an ad hoc tool or apparatus, add +1 and take +1 momentum on a hit. After rolling, you may also suffer -1 supply and add +1 more.',
-        marked: false
-      },
-      {
-        text: 'When you throw caution to the wind and make an impulsive move in a risky situation, you may add +2. If you do, take +1 momentum on a strong hit, but count a weak hit as a miss.',
-        marked: false
-      }
-    ]
-  },
-  Infiltrator: {
-    type: 'Path',
-    title: 'Infiltrator',
-    items: [
-      {
-        text: 'When you make a move to breach, traverse, or hide within an area held by an enemy, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Gather Information</i> within an enemy area to discover their positions, plans, or methods, or when you <i>Secure an Advantage</i> within that area through observation, you may roll +shadow (instead of +wits). If you do, take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Resupply</i> within an enemy area by scavenging or looting, you may roll +shadow (instead of +wits). If you do, take +1 momentum or +1 supply on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Invoke: {
-    type: 'Ritual',
-    title: 'Invoke',
-    items: [
-      {
-        text: 'When you consume the mystical essence of your surroundings, roll +wits. On a strong hit, add the value of your action die to your essence track (max 6). You may then <i>Secure an Advantage</i> or <i>Face Danger</i> +essence to create minor mystical effects or illusions. If you do, suffer -1 essence and take +1 momentum on a hit. On a weak hit, as above, but capturing these energies is harrowing; <i>Endure Stress</i> (2 stress).',
-        marked: true
-      },
-      {
-        text: 'You may <i>Compel</i> +essence (and suffer -1 essence) through a show of power.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 essence on a hit.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 6,
-      min: 0
-    }
-  },
-  Ironclad: {
-    type: 'Combat Talent',
-    title: 'Ironclad',
-    subtitle: 'If you wear armor...',
-    items: [
-      {
-        text: 'When you equip or adjust your armor, choose one.<br />  * Lightly armored: When you <i>Endure Harm</i> in a fight, add +1 and take +1 momentum on a hit.<br />  * Geared for war: Mark encumbered. When you <i>Endure Harm</i> in a fight, add +2 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Clash</i> while you are geared for war, add +1.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Compel</i> in a situation where strength of arms is a factor, add +2.',
-        marked: false
-      }
-    ]
-  },
-  Keen: {
-    type: 'Ritual',
-    title: 'Keen',
-    items: [
-      {
-        text: 'When you hold a weapon and sing a keen for those it has killed, roll +heart. On a strong hit, the wielder inflicts +1 harm when they <i>Strike</i> or <i>Clash</i>. If they roll a 1 on their action die when making a move to inflict harm, the magic is spent. On a weak hit, as above, but the voices of those who were slain join in your song; <i>Endure Stress</i> (2 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and the wielder may also (one time only) add +1 and take +2 momentum on a hit when they <i>Draw the Circle</i>, <i>Enter the Fray</i>, or <i>Battle</i>.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Kindred: {
-    type: 'Companion',
-    title: 'Kindred',
-    subtitle: 'Your friend stands by you.',
-    input: {
-      label: 'Name',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you make a move outside of combat aided by your companion’s expertise, add +1.',
+        text: '<p>When you <i>Face Death</i> or <i>Face Desolation</i> while your background vow is unfulfilled, it is not yet your time. Instead of rolling, you may take an automatic strong hit. If you do, this asset counts as an impact (and you no longer have this protection) until you next <i>Reach a Milestone</i> on the background vow.</p>\n',
         marked: false,
-        input: {
-          label: 'Expertise',
-          text: ''
-        }
       },
       {
-        text: 'When you <i>Clash</i> or <i>Battle</i> alongside your companion, or when you <i>Face Danger</i> against an attack by standing together, add +1.',
-        marked: false
+        text: '<p>When you make any progress move directly related to your background vow, and roll a 10 on either challenge die, you may reroll that die. On a strong hit, take +2 momentum.</p>\n',
+        marked: false,
       },
-      {
-        text: 'Once you mark a bond with your companion, add +1 when you <i>Face Desolation</i> in their presence.',
-        marked: false
-      }
     ],
-    track: {
-      value: 0,
-      max: 4,
-      min: 0
-    }
   },
-  Leech: {
-    type: 'Ritual',
-    title: 'Leech',
-    items: [
-      {
-        text: 'When you mark your hands or weapon with an intricate blood rune, roll +iron. On a strong hit, the rune thirsts for fresh blood. One time only, when you make a move to inflict harm, reroll any dice and inflict +2 harm on a hit. Then, for each point of harm inflicted, take +1 and allocate it as +health or +momentum. On a weak hit, as above, but this asset counts as a debility until the rune’s thirst is quenched.',
-        marked: true
-      },
-      {
-        text: 'As above, and you may also touch an ally or companion and let them take any remaining points as +health or +momentum.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Lightbearer: {
-    type: 'Ritual',
-    title: 'Lightbearer',
-    items: [
-      {
-        text: 'When you focus on a source of light and capture its essence, roll +wits. On a strong hit, set your light track to +6. On a weak hit, make it +3. Then, when you make a move to overcome or navigate darkness, you may add +2 and suffer -1 light.',
-        marked: true
-      },
-      {
-        text: 'You may use your light to <i>Strike</i> or <i>Clash</i> against a dark-dwelling foe. Choose the amount of light to unleash, and roll +light (instead of +iron or +edge). Suffer -light equal to that amount. On a hit, your harm is 1+your unleashed light.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ],
-    track: {
-      value: 0,
-      max: 6,
-      min: 0
-    }
-  },
-  'Long-Arm': {
-    type: 'Combat Talent',
-    title: 'Long-Arm',
-    subtitle: 'If you wield a staff...',
-    items: [
-      {
-        text: 'In your hands, a humble staff is a deadly weapon (2 harm). When you instead use it as a simple weapon (1 harm), you may <i>Strike</i> or <i>Clash</i> +edge (instead of iron). If you do, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> +edge using your staff to disarm, trip, shove, or stun your foe, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Undertake a Journey</i> and score a strong hit, or if you accompany an ally who scores a strong hit on that move, your staff provides support and comfort in your travels; take +1 momentum.',
-        marked: false
-      }
-    ]
-  },
-  Lorekeeper: {
+  Firebrand: {
     type: 'Path',
-    title: 'Lorekeeper',
+    title: 'Firebrand',
+
     items: [
       {
-        text: 'You are the bearer of a mystical archive. When you <i>Secure an Advantage</i> or <i>Gather Information</i> using lore recalled from your studies, add +1. If you have a few hours to search the archive, add +2. On a hit, envision the obscure but helpful knowledge you put to use (<i>Ask the Oracle</i> if unsure), and take +1 momentum.',
-        marked: true
+        text: '<p>You wield fiery energy. When you rest and meditate to gather this energy, roll +spirit. On a strong hit, take up to +3 fire. On a weak hit, take +2. On a miss, take +2 fire but <i>Endure Harm</i> (-2). Your max fire is +5. When you make moves aided by this energy to attack or overcome obstacles, add +2 and suffer -1 fire.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you learn of a site or object holding lost knowledge, and <i>Swear an Iron Vow</i> to recover it for the archive, reroll any dice. When you <i>Fulfill Your Vow</i> and mark experience, take +1 experience.',
-        marked: false
+        text: '<p>When you <i>Endure Harm</i> and roll a strong hit with a match, you may instead ignore the harm and take +fire equal to the amount of harm faced (+1, +2, or +3).</p>\n',
+        marked: false,
       },
       {
-        text: 'One time only, you may browse the archive’s forbidden depths. If you do, raise your wits by 1 and roll an action die. On 1-3, you must also mark corrupted or <i>Face Desolation</i> (ignoring momentum).',
-        marked: false
-      }
-    ]
+        text: '<p>When you have at least +3 fire, you may <i>Gain Ground</i> or <i>Strike</i> by unleashing hell. If you do, take an automatic strong hit and mark progress. Then, set your fire to 0.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 5,
+      max: 5,
+      min: 0,
+    },
+  },
+  Fugitive: {
+    type: 'Path',
+    title: 'Fugitive',
+
+    items: [
+      {
+        text: '<p>You are hunted by a power or authority. When you make a move, you may rely on your resourcefulness to improve the result to a strong hit. If you do, mark a box above to represent hunters closing in on you. On the third mark, a notable foe or force has tracked you down. If you overcome them or escape, clear the boxes and mark 1 tick on your quests legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move by hiding, concealing your identity, or fleeing from a pursuer, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Fulfill Your Vow</i> (extreme or greater) by clearing your name or defeating the power or authority who marked you as a fugitive, gain this ability at no cost. You may then exchange this asset for another with the same number of marked abilities.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 3,
+      max: 3,
+      min: 0,
+    },
+  },
+  Gearhead: {
+    type: 'Path',
+    title: 'Gearhead',
+
+    items: [
+      {
+        text: '<p>When you make a move to craft, repair, repurpose, or modify equipment or technology, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Gather Information</i> by studying or disassembling a machine or device, reroll any dice. On a match, you reveal an unexpected function, capability, or danger; mark 1 tick on your discoveries legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>With sufficient time (a couple of hours or more), you may <i>Face Danger</i> to assemble or enhance a device for a powerful but limited role. On a hit, the device is ready for use. One time only, when you or an ally make a move aided by the device, take an automatic strong hit. If you are in a fight, also mark progress.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Glowcat: {
+    type: 'Companion',
+    title: 'Glowcat',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your glowcat companion perceives the inner emotions and intentions of people and creatures in its vicinity, and embodies those impressions through the colors and intensity of its luminescent fur. When you <i>Secure an Advantage</i> by studying the glowcat&rsquo;s reactions in a charged interaction, you may add +your companion&rsquo;s health.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Compel</i>, the glowcat&rsquo;s reactions will help guide your approach. If the value of your action die is less than the glowcat&rsquo;s health, you may reroll it.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Endure Stress</i> in the company of the glowcat, add +1. On a strong hit with a match, take +momentum equal to their health.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 3,
+      max: 3,
+      min: 0,
+    },
+  },
+  Grappler: {
+    type: 'Module',
+    title: 'Grappler',
+
+    items: [
+      {
+        text: '<p>Your grappler can disrupt systems and snare machines and vehicles with a magnetic tether. When you take a minute or so to ready the grappler, roll +integrity or +wits. On a strong hit, the grappler is charged and may be fired. On a weak hit, charging requires extra time or focus and you <i>Lose Momentum</i> (-1). On a miss, charging fails and you must <i>Withstand Damage</i> (-2). If you make a move to attack a foe or overcome an obstacle by firing the grappler, take an automatic strong hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>If you score a strong hit when readying the grappler, you may <i>Sacrifice Resources</i> (-1) to overcharge the module. When you fire an overcharged grappler, take +2 momentum; if in a fight, also mark progress.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Take Decisive Action</i> by firing the grappler, you may reroll one challenge die.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Gunner: {
+    type: 'Path',
+    title: 'Gunner',
+    subtitle: 'If you wield a heavy ranged personal weapon...',
+
+    items: [
+      {
+        text: '<p>When you <i>Strike</i>, choose one (before rolling).</p>\n\n<ul>\n<li>Pin them down: Add +1 and take +1 momentum on a hit.</li>\n<li>Make them hurt: Mark progress on a hit.</li>\n</ul>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Take Decisive Action</i> by emptying your gun (decide before rolling), you may <i>Sacrifice Resources</i> (-1) and reroll one challenge die. If the fight continues or you are caught up another fight, <i>Check Your Gear</i> to see if you have more ammo on-hand.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>Give your favorite gun a name. When you <i>Clash</i> with it, add +1. When you <i>Enter the Fray</i> or <i>Endure Stress</i> while wielding it, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Gunslinger: {
+    type: 'Path',
+    title: 'Gunslinger',
+    subtitle: 'If you wield a pistol...',
+
+    items: [
+      {
+        text: '<p>When you <i>Enter the Fray</i> by facing off against your foe (+heart), or by preparing to act without tipping them off (+shadow), add +1 and take +1 momentum on a hit. On a strong hit with a match, you may immediately take a shot (without making a move) and mark progress twice.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Gain Ground</i> or <i>React Under Fire</i> by moving into cover, add +1. On a strong hit, this cover gives you leverage; add +1 when you make a move to attack or defend at range. If you then score a miss, the cover is lost or compromised.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Compel</i> or <i>Gain Ground</i> with the threat of violence by holding someone at gunpoint, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Haunted: {
+    type: 'Path',
+    title: 'Haunted',
+
+    items: [
+      {
+        text: '<p>You are haunted by the spirit of someone whose death you caused or mourn (or both). When you make a move to call upon their insight, add +1. On a weak hit, also <i>Endure Stress</i> (-1). On a strong hit with a match, mark 1 tick on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Face Death</i> guided by the spirit, add +1. On a strong hit, envision what you learn from them or about them, and mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>One time only, when you <i>Fulfill Your Vow</i>(extreme or greater) in service to the spirit, take this ability at no cost and choose one.</p>\n\n<ul>\n<li>Let them go: Mark 2 ticks on your bonds legacy track for each marked ability, and discard this asset.</li>\n<li>Bolster your link: When you use a HAUNTED asset ability, take +1 momentum on a hit.</li>\n</ul>\n',
+        marked: false,
+      },
+    ],
+  },
+  Healer: {
+    type: 'Path',
+    title: 'Healer',
+
+    items: [
+      {
+        text: '<p>When you give medical care to <i>Heal</i> yourself or another character, add +1. If you are treating someone other than yourself, take +1 spirit or +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Gather Information</i> by studying medical evidence or biological remains, add +1 and take +1 momentum on a hit. On a strong hit with a match, you also reveal an unexpected medical anomaly; mark 1 tick on your discoveries legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>Once every day or so, when you are in a safe place with plenty of time on your hands, you may <i>Sacrifice Resources</i> (-1) and provide basic medical care for yourself, companions, or allies without risk. If you do, automatically give +1 health to everyone whose health is greater than 0.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Heavy Cannons': {
+    type: 'Module',
+    title: 'Heavy Cannons',
+
+    items: [
+      {
+        text: '<p>When you aim your cannons and use them to <i>Strike</i>, choose one.</p>\n\n<ul>\n<li>Strafing run: Add +1 and take +1 momentum on a hit.</li>\n<li>Focus fire: Mark progress on a hit, but <i>Lose Momentum</i> (-1).</li>\n</ul>\n',
+        marked: true,
+      },
+      {
+        text: '<p>Once per fight, when you <i>Clash</i> by committing to an all-or-nothing exchange of fire, add +1, count a weak hit as a strong hit, and mark progress on a hit. On a miss, you must suffer a dire outcome.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Compel</i>, <i>Enter the Fray</i>, or <i>Gain Ground</i> by bringing your cannons to bear and sending a promise of violence to your foe over communication channels, add +1 and take +1 momentum on a hit. On a strong hit with a match, take another +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Homesteader: {
+    type: 'Deed',
+    title: 'Homesteader',
+    subtitle: 'Once you fill 4 boxes on your bonds legacy track...',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>You have chosen or established a community as your home. When you <i>Swear an Iron Vow</i> (formidable or greater) in service to your home, reroll any dice. On a hit, mark 1 tick on your bonds legacy track. When you <i>Fulfill Your Vow</i> and score a hit, also mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Sojourn</i> in your home, choose one.</p>\n\n<ul>\n<li>Don&rsquo;t linger: Take an automatic weak hit</li>\n<li>Stay a bit: Add +1 and take +1 momentum on a hit</li>\n</ul>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Set a Course</i> for home, you may reroll your action die if its value is less than your spirit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Hoverbike: {
+    type: 'Support Vehicle',
+    title: 'Hoverbike',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your unarmed hoverbike provides speedy planetside ground transport, and is equipped to carry up to two people and their gear. When you <i>Underake an Expedition</i> (+edge), take +1 momentum on a hit. On a strong hit with a match, you also surge ahead or find a new path; mark progress.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you fire the bike&rsquo;s afterburner and make a move to perform a risky maneuver, you may add +integrity and take +2 momentum on a strong hit. If you do, count a weak hit as a miss.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a move while maneuvering your bike and burn momentum to improve your result, roll your action die. On a 5 or 6, do not reset momentum.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 3,
+      max: 3,
+      min: 0,
+    },
+  },
+  'Internal Refit': {
+    type: 'Module',
+    title: 'Internal Refit',
+
+    items: [
+      {
+        text: '<p>You have customized the cabins, common spaces, and environment of the ship to your needs. When you <i>Undertake an Expedition</i> (dangerous or greater), reroll any dice for the first leg of your journey. On a hit, you and your allies may envision how you make yourself at home; if you do, take +2 momentum or +1 spirit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>Your vessel is stocked with reserves. When you <i>Sacrifice Resources</i> and your supply is reduced to 0, first roll +integrity instead of marking unprepared. On a strong hit, take +1 supply. Otherwise, mark unprepared.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Enter the Fray</i> to oppose an invader within your vessel, reroll any dice. On a strong hit, take +momentum equal to integrity. On a strong hit with a match, also mark progress.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Kinetic: {
+    type: 'Path',
+    title: 'Kinetic',
+
+    items: [
+      {
+        text: '<p>You wield kinetic powers. By focusing, you may remotely push, pull, lift, or constrict objects and beings that are about your size or smaller. When you are in a risky situation and draw on your powers to make a move, add +2 and <i>Lose Momentum</i> (-2).</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>As above, but you may instead draw on your powers in a desperate effort to change the outcome of an action. If you do, add +2 (after you roll) and <i>Lose Momentum</i> (-3).</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>If you have at least +8 momentum, you may attempt great kinetic feats, such as manipulating large objects and creating destructive bursts of concussive force. To do so, first reset your momentum. Then, as you make a single move fueled by your powers, take an automatic strong hit. If you are in a fight, mark progress.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Lore Hunter': {
+    type: 'Path',
+    title: 'Lore Hunter',
+
+    items: [
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> (formidable or greater) to recover valuable knowledge or a powerful relic, reroll any dice. When you <i>Fulfill Your Vow</i> and score a hit, also mark 2 ticks on your discoveries legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move to conduct extended research or study, you may reroll your action die if its value is less than your wits. On a hit, take +1 momentum. On a match, you piece together a surprising or harrowing new theory; also mark 1 tick on your discoveries legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you recall esoteric knowledge to <i>Secure an Advantage</i> or <i>Gain Ground</i>, add +1. On a hit, envision the obscure but helpful fact, theory, or technique you put to use, and take +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Loyalist: {
     type: 'Path',
     title: 'Loyalist',
+
     items: [
       {
-        text: 'When you <i>Aid Your Ally</i>, add +1 and take +1 momentum on a hit. This is in addition to the benefits taken by your ally.',
-        marked: true
+        text: '<p>When you <i>Aid Your Ally</i>, add +1 and take +1 momentum on a hit. This is in addition to the benefits taken by your ally. On a strong hit with a match, envision how this moment marks a breakthrough or milestone in your relationship; both of you may mark 1 tick on your bonds legacy track.</p>\n',
+        marked: true,
       },
       {
-        text: 'When an ally makes the <i>Endure Stress</i> move in your company, they add +1 and you take +1 momentum on a hit.',
-        marked: false
+        text: '<p>You may burn momentum on behalf of an ally to improve their result on a move. If you do, your ally takes +1 momentum.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you stand with your ally as they make a progress move, envision how you support them. Then, roll one challenge die. On a 1-9, your ally may replace one of their challenge dice with yours. On a 10, envision how you inadvertently undermine their action; your ally must replace their lowest challenge die with yours.',
-        marked: false
-      }
-    ]
+        text: '<p>When you stand with your ally as they make a progress move, envision how you support them. Then, roll one challenge die. On a 1-9, your ally may replace one of their challenge dice with yours. On a 10, envision how you inadvertently undermine their action; your ally must replace their lowest challenge die with yours.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Mammoth: {
-    type: 'Companion',
-    title: 'Mammoth',
-    subtitle: 'Your mammoth walks a resolute path.',
+  Marked: {
+    type: 'Deed',
+    title: 'Marked',
+    subtitle: 'Once you fill 5 boxes on your quests legacy track...',
     input: {
-      label: 'Name',
-      text: ''
+      label: 'Identifier',
+      text: ' ',
     },
     items: [
       {
-        text: 'When your mammoth travels with you as you <i>Undertake a Journey</i>, you may add +2 but suffer -1 momentum (decide before rolling).',
-        marked: false
+        text: '<p>Envision the title, sigil, uniform, or tattoo you bear in recognition of your achievements. When you <i>Compel</i> or <i>Make a Connection</i> among those who would know or recognize your reputation, add +1 and take +1 momentum on a hit. On a strong hit with a match, your notoriety grows; mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you make a move which requires you to roll +supply, you may instead roll +your mammoth’s health.',
-        marked: false
+        text: '<p>When you risk your reputation to overcome failure, reroll any dice. If you score a miss, make a mark on this asset. When you have 5 such marks, discard this asset.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Strike</i> or <i>Clash</i> by riding your mammoth against a pack of foes, add +1 and inflict +1 harm on a hit.',
-        marked: false
-      }
+        text: '<p>Once per fight, when you <i>Gain Ground</i> through threat or leadership, you may reroll any dice and mark progress on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Medbay: {
+    type: 'Module',
+    title: 'Medbay',
+
+    items: [
+      {
+        text: '<p>When you use your medbay to <i>Heal</i> yourself or another patient, you may reroll your action die if its value is less than your vehicle&rsquo;s integrity.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you or an ally mark the permanently harmed impact and are brought to the medbay without delay (less than an hour or so), you have a shot at making things right. If you <i>Heal</i> and score a strong hit, clear the impact (in addition to the other benefits of the move). Then, envision the scar that now serves as a reminder of the incident.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Face Danger</i> by performing a risky medical procedure, or if you <i>Gather Information</i> through an autopsy or medical examination, reroll any dice and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Mercenary: {
+    type: 'Path',
+    title: 'Mercenary',
+
+    items: [
+      {
+        text: '<p>When you agree to wage war or defend others from war in exchange for payment or promises, you may <i>Swear an Iron Vow</i> to see the mission done. If you do, reroll any dice. When you <i>Fulfill Your Vow</i>, make the legacy reward one rank higher (1 extra box if already epic).</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Make a Connection</i> by searching out or making contact with someone in need of your services, add +1 and take +1 momentum on a hit. On a strong hit with a match, this mission pits you against an unresolved aspect of your past or a hated foe; mark 2 ticks on your quests legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Check Your Gear</i> in the midst of a fight, or <i>Resupply</i> by looting the field of battle in the aftermath of a fight, add +2.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Missile Array': {
+    type: 'Module',
+    title: 'Missile Array',
+
+    items: [
+      {
+        text: '<p>Your missile array is armed with 5 ammo. When you <i>Strike</i> or <i>Clash</i> with a missile attack, suffer -1 ammo and mark progress on a hit. If you <i>Resupply</i> in a place where your missiles can be replenished, you may exchange any earned +supply for +ammo.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you have at least 1 ammo and <i>Gain Ground</i> by locking a missile on target, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you have at least 3 ammo and <i>Take Decisive Action</i> by unleashing all of your missiles, roll an action die before making the progress roll. If your action die is equal to or less than ammo, you may reroll each challenge die. Then, set ammo to 0.</p>\n',
+        marked: false,
+      },
     ],
     track: {
-      value: 0,
+      value: 5,
       max: 5,
-      min: 0
-    }
+      min: 0,
+    },
   },
-  Masked: {
+  Naturalist: {
     type: 'Path',
-    title: 'Masked',
-    subtitle: 'Once you mark a bond with elves, and are gifted a mask of precious elderwood...',
+    title: 'Naturalist',
+
     items: [
       {
-        text: 'Choose your mask’s material.<br />  * Thunderwood: Edge / Health<br />  * Bloodwood: Iron / Health<br />  * Ghostwood: Shadow / Spirit<br />  * Whisperwood: Wits / Spirit<br />When you wear the mask and make a move which uses its stat, add +1. If you roll a 1 on your action die, suffer -1 to the associated track (in addition to any other outcome of the move).',
+        text: '<p>When you <i>Secure an Advantage</i> or <i>Gather Information</i> using your knowledge of lifeforms or planetside ecosystems, add +1 and take + 1 momentum on a hit. On a strong hit with a match, you also confirm an obscure theory or reveal a surprising aspect of the encounter; mark 1 tick on your discoveries legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move by taking a risky action to pacify, avoid, or outwit a creature (decide before rolling), you may reroll any dice, but must <i>Lose Momentum</i> (-2).</p>\n',
         marked: false,
-        input: {
-          label: 'Material',
-          text: ''
-        }
       },
       {
-        text: 'As above, and you may instead add +2 and suffer -2 (decide before rolling).',
-        marked: false
+        text: '<p>You are skilled at planetside survival. When you <i>Resupply</i> to scavenge resources in a life-bearing natural environment, take +1 supply on a hit. When you <i>Face Danger</i> against an environmental threat, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Navigator: {
+    type: 'Path',
+    title: 'Navigator',
+
+    items: [
+      {
+        text: '<p>When you <i>Set a Course</i>, choose one.</p>\n\n<ul>\n<li>Follow the fastest path: Take +2 momentum on a hit.</li>\n<li>Follow the safest path: Add +1</li>\n</ul>\n\n<p>On a strong hit with a match, you charted a new path during the journey; mark 1 tick on your discoveries legacy track.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Face Death</i> or <i>Face Desolation</i> while wearing the mask, you may roll +its stat (instead of +heart).',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Secure an Advantage</i> by charting the way forward, <i>Face Danger</i> to find a path around a hazard, or <i>Gather Information</i> about a location by studying your charts, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>Once per expedition, when you or an ally <i>Undertake an Expedition</i> and score a weak hit or miss, you may ignore that result, plot an alternate path, and make it an automatic strong hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Oathbreaker: {
-    type: 'Path',
+    type: 'Deed',
     title: 'Oathbreaker',
-    subtitle: 'Once you <i>Forsake Your Vow</i>...',
+    subtitle: 'Once you [Forsake Your Vow](#Forsake-Your-Vow)...',
+
     items: [
       {
-        text: 'This asset counts as a debility. One time only, when you <i>Swear an Iron Vow</i> to redeem yourself (extreme or greater), give that vow a special mark. When you <i>Reach a Milestone</i> on the marked vow, take +2 momentum.',
-        marked: true
+        text: '<p>This asset counts as an impact. One time only, when you <i>Swear an Iron Vow</i> (extreme or greater) to redeem yourself, give that vow a special mark. When you <i>Reach a Milestone</i> on the marked vow, take +2 momentum. If you <i>Forsake Your Vow</i> on the quest, discard this asset and retain the impact.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Secure an Advantage</i> or <i>Compel</i> by reaffirming your commitment to your marked vow, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>When you <i>Secure an Advantage</i> or <i>Compel</i> by reaffirming your commitment to your marked vow, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Fulfill Your Vow</i> on your marked quest and score a hit, you find redemption and automatically activate this ability at no cost. You may then improve one of your stats by +1 and discard this asset.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Fulfill Your Vow</i> on the marked quest and score a hit, you find redemption and automatically gain this ability at no cost. You may then improve one of your stats by +1 and discard this asset. Once the asset is discarded, you may not take it again.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Outcast: {
     type: 'Path',
     title: 'Outcast',
+
     items: [
       {
-        text: 'When your supply is reduced to 0, suffer any remaining -supply as -momentum. Then, roll +wits. On a strong hit, you manage to scrape by and take +1 supply. On a weak hit, you may suffer -2 momentum in exchange for +1 supply. On a miss, you are <i>Out of Supply</i>.',
-        marked: true
+        text: '<p>When you <i>Hearten</i> in isolation, you may attempt to find solace in fond memories or a hopeful wish. If you do (decide before rolling), reroll any dice but count a strong hit as a weak hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Sojourn</i>, you may reroll any dice. If you do (decide before your first roll), your needs are few, but your isolation sets you apart from others. A strong hit counts as a weak hit.',
-        marked: false
+        text: '<p>When you <i>Sacrifice Resources</i> and your supply is reduced to 0, roll +wits. On a strong hit, you manage to scrape by and take +1 supply. On a weak hit, you may <i>Lose Momentum</i> (-1) in exchange for +1 supply. On a miss, your supply remains at 0 and you <i>Lose Momentum</i> (-1).</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Reach Your Destination</i> and score a strong hit, you recall or recognize something helpful about this place. Envision what it is, and take +2 momentum.',
-        marked: false
-      }
-    ]
+        text: '<p>When you or an ally <i>Sojourn</i> and score a strong hit with a match, you may envision encountering someone who knows or understands you. If you Make a Connectionwith them, take an automatic strong hit and mark 1 tick on your bonds legacy track.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Owl: {
-    type: 'Companion',
-    title: 'Owl',
-    subtitle: 'Your owl soars through the darkness.',
+  Overseer: {
+    type: 'Module',
+    title: 'Overseer',
     input: {
       label: 'Name',
-      text: ''
+      text: ' ',
     },
     items: [
       {
-        text: 'If you <i>Resupply</i> at night by sending your owl to hunt, take +2 momentum on a hit. When you <i>Enter the Fray</i> +wits against an ambush in darkness, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>Your AI module keeps watch over the vehicle&rsquo;s systems and sensor data. When you <i>Secure an Advantage</i> or <i>Gain Ground</i> by talking through a situation with the overseer, you may roll +integrity. If you do, take +1 momentum on a hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you leverage your owl’s secret knowledge to perform a ritual, add +1 or take +1 momentum on a hit (decide before rolling).',
-        marked: false
+        text: '<p>When you <i>Withstand Damage</i> and roll on the miss table, the overseer will do what it can to help. Roll twice on the table and choose either result.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Face Death</i>, take your owl’s health as +momentum before you roll.',
-        marked: false
-      }
+        text: '<p>The overseer can pilot the vehicle independently. When you <i>Face Danger</i> by handing over control to the AI in an emergency, or to summon the vehicle remotely within a hazardous situation, you may roll +integrity. If you do, take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Protocol Bot': {
+    type: 'Companion',
+    title: 'Protocol Bot',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your protocol bot companion is programmed with knowledge of cultures, languages, and customs. When you are aided by the bot as you make a move in a formal social interaction, add +1. On a strong hit with a match, you learn something which builds understanding or empathy; also mark 1 tick on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you first visit or interact with a new community or culture, you may ask for the bot&rsquo;s insight. If you do, envision what you learn and take +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>If you make a move in a charged interaction and the value of your action die is less than the bot&rsquo;s health, you may reroll it as the bot interjects with their commentary or advice.</p>\n',
+        marked: false,
+      },
     ],
     track: {
-      value: 0,
+      value: 3,
       max: 3,
-      min: 0
-    }
-  },
-  Pretender: {
-    type: 'Path',
-    title: 'Pretender',
-    items: [
-      {
-        text: 'When you establish a false identity, roll +shadow. On a strong hit, you may add +2 when you make moves using this identity to deceive or influence others. If you roll a 1 on your action die when using your false identity, someone doubts you. Make appropriate moves to reassure them or prevent them from revealing the truth. On a weak hit, as above, but add +1 (instead of +2).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may roll +shadow (instead of +heart) when you <i>Sojourn</i> under your false identity. If you do, take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> by revealing your true identity in a dramatic moment, reroll any dice.',
-        marked: false
-      }
-    ]
-  },
-  Raven: {
-    type: 'Companion',
-    title: 'Raven',
-    subtitle: 'Your raven heeds your call.',
-    input: {
-      label: 'Name',
-      text: ''
+      min: 0,
     },
+  },
+  'Reinforced Hull': {
+    type: 'Module',
+    title: 'Reinforced Hull',
+
     items: [
       {
-        text: 'When you <i>Secure an Advantage</i> or <i>Face Danger</i> +shadow using your raven to perform trickery (such as creating a distraction or stealing a small object) add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>Your vehicle is clad in iron. When you <i>Withstand Damage</i>, add +1. On a strong hit, take +1 momentum.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Face Death</i>, add +2 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>Your plated hull is given a fierce and distinctive color or design. When you arrive at a place where your reputation is a factor, take +1 momentum. When you <i>Enter the Fray</i> against a foe who would know your reputation, take +momentum equal to your vehicle&rsquo;s integrity on a strong hit.</p>\n',
+        marked: false,
       },
       {
-        text: 'When your raven carries messages for you, you may <i>Secure an Advantage</i>, <i>Gather Information</i>, or <i>Compel</i> from a distance.',
-        marked: false
-      }
+        text: '<p>When you <i>React Under Fire</i> by letting your plated hull take the hit, add +1 and take +1 momentum on a hit. On a strong hit with a match, take another +1 momentum as you surge through the chaos and put yourself in perfect position. On a miss, <i>Pay the Price</i> by marking this component as broken.</p>\n',
+        marked: false,
+      },
     ],
-    track: {
-      value: 0,
-      max: 2,
-      min: 0
-    }
+  },
+  'Research Lab': {
+    type: 'Module',
+    title: 'Research Lab',
+
+    items: [
+      {
+        text: '<p>When you use your lab to <i>Secure an Advantage</i> or <i>Gather Information</i> through careful analysis or experimentation, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Face Danger</i> to isolate or secure a hazardous specimen, reroll any dice.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> to undertake a long-term research project (extreme or greater), reroll any dice. When you obtain crucial samples, equipment, or data, mark progress on the quest and take +2 momentum. When you devote extended time to the project in your lab, <i>Face Danger</i> and add +1. On a hit, mark progress. On a strong hit with a match, mark progress twice. When you <i>Fulfill Your Vow</i> and score a hit, also mark one box on your discoveries legacy track.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Revenant: {
-    type: 'Path',
+    type: 'Deed',
     title: 'Revenant',
-    subtitle: 'Once you <i>Face Death</i> and return to the world of the living...',
+    subtitle: 'Once you [Face Death](#Face-Death)...',
+
     items: [
       {
-        text: 'When you are at 0 health, and <i>Endure Harm</i> or <i>Face Death</i>, add +1. If you then burn momentum to improve your result, envision what bond or vow binds you to this world, and take +2 momentum after you reset.',
-        marked: true
+        text: '<p>When you are at 0 health, and <i>Endure Harm</i> or <i>Face Death</i>, add +1. You may then reroll your action die if its value is less than your spirit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you make a move to investigate, oppose, or interact with a horror, spirit, or other undead being, add +1.',
-        marked: false
+        text: '<p>When you <i>Take Decisive Action</i> by bringing death to a foe, you may burn momentum to zero out one (not both) of the challenge dice if your momentum is greater than the value of that die. If you do, <i>Endure Stress</i> (-2).</p>\n',
+        marked: false,
       },
       {
-        text: 'When you bring death to your foe to <i>End the Fight</i>, you may burn momentum to cancel one (not both) of the challenge dice if your momentum is greater than the value of that die. If you do, <i>Endure Stress</i> (2 stress).',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Gather Information</i> by studying a place where death left its mark, you may roll +heart. If you do, take +1 momentum on a hit. On a strong hit with a match, you experience a detailed vision or insightful revelation of what occurred here; take +1 momentum more.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Rider: {
+  Rockhorn: {
+    type: 'Companion',
+    title: 'Rockhorn',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your rockhorn companion uses its resilient, stone-like hide and brute strength to overcome threats. When you make a move by sending the rockhorn to directly attack a foe or smash an obstacle, roll +its health.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make the <i>Companion Takes a Hit</i> move for the rockhorn, count a weak hit as a strong hit. On a strong hit with a match, its rapid healing makes it unstoppable; give it another +1 health or take +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>The rockhorn will come to your aid in your most vulnerable moments. When you <i>Endure Harm</i> or <i>Endure Stress</i> and roll a miss, you may reroll your action die if its value is less than the rockhorn&rsquo;s health.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 5,
+      max: 5,
+      min: 0,
+    },
+  },
+  Rover: {
+    type: 'Support Vehicle',
+    title: 'Rover',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your unarmed rover provides protected planetside transport. When you <i>Undertake an Expedition</i> or <i>Set a Course</i>, add +1. When you <i>Finish an Expedition</i> in your rover, you may reroll one challenge die.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>You may equip your rover with one module asset at no extra cost. When you <i>Withstand Damage</i>, the module can be broken or destroyed as with a command vehicle. If you reconfigure your rover, spend 1 experience, discard the module, and equip another with the same number of marked abilities.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Face Danger</i> or <i>React Under Fire</i> by taking a hit or crashing through an obstacle, you may roll +integrity. If you do, take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 5,
+      max: 5,
+      min: 0,
+    },
+  },
+  Scavenger: {
     type: 'Path',
-    title: 'Rider',
-    subtitle: 'If you are with your horse companion...',
+    title: 'Scavenger',
+
     items: [
       {
-        text: 'When you <i>Heal</i> your horse, or when you <i>Face Danger</i> to calm or encourage it, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>When you <i>Gather Information</i> or <i>Resupply</i> by scavenging a wreck, ruin, or abandoned site, add +1 and take +1 momentum on a hit. On a strong hit with a match, you also find something of unique value, significance, or function; envision the nature of this discovery, take +2 momentum, and mark 2 ticks on your discoveries legacy track.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Undertake a Journey</i>, you may push your horse harder and add +1 (after rolling). If you do, make the <i>Companion Endure Harm</i> move (1 harm).',
-        marked: false
+        text: '<p>When you <i>Face Danger</i> to cobble together an ad hoc tool, device, or weapon, envision what you intend to create. On a hit, you may add +1 when making a move aided by the item. If you roll a 1 on your action die while using the item, it is permanently broken, lost, or depleted.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Secure an Advantage</i> +wits by sizing up a perilous situation from the saddle, you are one with your horse’s instincts. Add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Check Your Gear</i>, roll +wits or +supply (whichever is highest) and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Ritualist: {
+  Scoundrel: {
     type: 'Path',
-    title: 'Ritualist',
-    subtitle: 'Once you <i>Fulfill Your Vow</i> (formidable or greater) in service to an elder mystic, and <i>Forge a Bond</i> to train with them...',
+    title: 'Scoundrel',
+
     items: [
       {
-        text: 'When you <i>Secure an Advantage</i> to ready yourself for a ritual, envision how you prepare. Then, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>When you make a move by lying, bluffing, stealing, or cheating, add +2. On a strong hit with a match, your deception creates an unexpected opportunity; take the value of your shadow as +momentum.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you perform a ritual, you may suffer -1 supply and add +1 (decide before rolling).',
-        marked: false
+        text: '<p>When you <i>Make a Connection</i> to search out a new contact, you may roll +shadow. If you do, reroll any dice on a miss and envision how your reputation or underworld contacts lead you to a disreputable connection.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you tattoo the essence of a new ritual onto your skin, envision the mark you create. You may then purchase and upgrade that ritual asset for 1 fewer experience.',
-        marked: false
-      }
-    ]
+        text: '<p>When you make a quick escape or con your way out of a situation and burn momentum to gain a strong hit, take +1 momentum after you reset. If you envision how this momentary success leaves you fated for future trouble, mark 2 ticks on your quests legacy track.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Scry: {
-    type: 'Ritual',
-    title: 'Scry',
-    items: [
-      {
-        text: 'When you look into flames to study a remote person or location, roll +shadow. You or someone with you must have knowledge of the target. On a strong hit, you may <i>Gather Information</i> through observation using +shadow or +wits. On a weak hit, as above, but the flames are hungry; choose one to sacrifice.<br />  * Your blood: <i>Endure Harm</i> (2 harm).<br />  * Something precious: <i>Endure Stress</i> (2 stress).<br />  * Provisions: Suffer -2 supply.',
-        marked: true
-      },
-      {
-        text: 'As above, and you may instead study a past event.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  'Shadow-Kin': {
+  Seer: {
     type: 'Path',
-    title: 'Shadow-Kin',
-    subtitle: 'Once you become corrupted...',
+    title: 'Seer',
+
     items: [
       {
-        text: 'You harden your heart: Reduce your heart stat by 1 and add up to +2 to shadow (to a maximum of +4).',
-        marked: false
+        text: '<p>When you envision experiencing a prophetic dream, you may <i>Ask the Oracle</i> for details using an interpretive oracle such as Action/Theme or Descriptor/Focus. If you record the answer, and later face a situation which gives truth to the vision, take an automatic strong hit (one time only) when making a move to act on your foresight. Then, clear the prophecy. Only one prophecy can be active at a time.</p>\n',
+        marked: true,
       },
       {
-        text: 'You are attuned to the realms of shadow: When you perform a ritual, add +1.',
-        marked: false
+        text: '<p>When you focus or medidate to <i>Gather Information</i> about a place, being, or situation (in person or remotely), roll +spirit and take +1 momentum on a hit.</p>\n',
+        marked: false,
       },
       {
-        text: 'You know the sly ways of death: When you <i>Face Death</i>, you may roll +shadow (instead of +heart). On a weak hit, if you choose to undertake a deathbound quest, you may roll +shadow (instead of +heart) and reroll any dice as you <i>Swear an Iron Vow</i>. When you <i>Fulfill Your Vow</i> on that quest and and mark experience, take +2 experience.',
-        marked: false
-      }
-    ]
+        text: '<p>When you or an ally roll a match as you <i>Sojourn</i> in a community or <i>Undertake an Expedition</i> within a site, you may envision gaining sudden and unbidden insight about the location. If you do, take +2 momentum.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  'Shadow-Walk': {
-    type: 'Ritual',
-    title: 'Shadow-Walk',
+  'Sensor Array': {
+    type: 'Module',
+    title: 'Sensor Array',
+
     items: [
       {
-        text: 'When you cloak yourself with the gossamer veil of the shadow realms, roll +shadow. On a strong hit, take +1 momentum. Then, reroll any dice (one time only) when you make a move by ambushing, hiding, or sneaking. On a weak hit, as above, but the shadows try to lead you astray. You must first <i>Face Danger</i> to find your way.',
-        marked: true
+        text: '<p>Your advanced sensors scan the paths ahead to help spot dangers. When you <i>Undertake an Expedition</i> (+wits), and roll a 10 on only one challenge die, you may reroll that die.</p>\n',
+        marked: true,
       },
       {
-        text: 'As above, and you may also travel along the hidden paths of the shadow realms to <i>Undertake a Journey</i> using +shadow (instead of +wits). If you do, <i>Endure Stress</i> (1 stress) and mark progress twice on a strong hit.',
-        marked: false
+        text: '<p>When you <i>Secure an Advantage</i> or <i>Gather Information</i> by scanning your vehicle&rsquo;s surroundings or analyzing a nearby object, choose one and take +1 momentum on a hit.</p>\n\n<ul>\n<li>Manual scan: Add +1</li>\n<li>Automated scan: Instead of rolling the action die, make it the value of your vehicle&rsquo;s integrity</li>\n</ul>\n',
+        marked: false,
       },
       {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Enter the Fray</i> against an ambush, or <i>Face Danger</i> to detect a hidden threat, you may roll +integrity. If you do, reroll any dice and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  'Shield-Bearer': {
-    type: 'Combat Talent',
-    title: 'Shield-Bearer',
-    subtitle: 'If you wield a shield...',
+  'Service Pod': {
+    type: 'Support Vehicle',
+    title: 'Service Pod',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
     items: [
       {
-        text: 'When you <i>Face Danger</i> using your shield as cover, add +1. When you <i>Clash</i> in close quarters, take +1 momentum on a strong hit.',
-        marked: true
+        text: '<p>Your utility vehicle houses one pilot for short-range, low gravity operations. When you make a move using the pod&rsquo;s manipulator arms to perform a delicate or forceful task, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you paint your shield with a meaningful symbol, envision what you create. Then, if you <i>Endure Stress</i> as you face off against a fearsome foe, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>When you <i>Face Danger</i>, <i>Gain Ground</i>, or <i>React Under Fire</i> by maneuvering your pod through a hazardous or obstructed area, choose an approach and roll +integrity.</p>\n\n<ul>\n<li>Careful: Add +2 and <i>Lose Momentum</i> (-1)</li>\n<li>Reckless: Take +1 momentum on a hit</li>\n</ul>\n',
+        marked: false,
       },
       {
-        text: 'When forced to <i>Endure Harm</i> in a fight, you may instead sacrifice your shield and ignore all harm. If you do, the shield is destroyed. Once per fight, you also take initiative when you sacrifice your shield to avoid harm.',
-        marked: false
-      }
-    ]
+        text: '<p>When you make a move while controlling the pod and push its capabilities to the limit, you may take an automatic strong hit. If you do, <i>Withstand Damage</i> (-2).</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
   },
-  Sighted: {
+  Shade: {
     type: 'Path',
-    title: 'Sighted',
+    title: 'Shade',
+
     items: [
       {
-        text: 'When you <i>Face Danger</i> or <i>Gather Information</i> to identify or detect mystic forces, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>Drawing on esoteric energies, you may instantly cloak your form in the shadowy veil of the void. When you are veiled and make a move to ambush, hide, or sneak, set the value of your action die as 5 instead of rolling that die. In darkness, make it 6. On a miss, in addition to any other cost, you are revealed and can&rsquo;t veil yourself until the current situation is resolved.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Compel</i>, <i>Forge a Bond</i>, or <i>Test Your Bond</i> with a fellow mystic or mystical being, add +1 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>When you expand your veil to immerse your surroundings in darkness, roll +shadow. On a strong hit, the darkness extends to all adjacent spaces. On a weak hit, only your immediate surroundings are made dark. On a miss, you fail and draw unwanted attention.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Secure an Advantage</i> by studying someone or something in a charged situation, add +1 and take +1 momentum on a hit. When you also pierce the veil to explore deeper truths (decide before rolling), you may reroll any dice. If you do, count a weak hit as a miss.',
-        marked: false
-      }
-    ]
+        text: '<p>When you intentionally drop your veil to reveal yourself for dramatic effect, foregoing its use in this situation, take +2 momentum.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Skirmisher: {
-    type: 'Combat Talent',
-    title: 'Skirmisher',
-    subtitle: 'If you wield a spear...',
+  Shields: {
+    type: 'Module',
+    title: 'Shields',
+
     items: [
       {
-        text: 'When you <i>Face Danger</i> by holding a foe at bay using your spear’s reach, roll +iron or +edge. If you score a hit, you may...<br />  * Iron: <i>Strike</i> (if you have initiative) or <i>Clash</i> now, and add +1.<br />  * Edge: Take+1 momentum.',
-        marked: true
+        text: '<p>When you raise your shields, roll +your vehicle&rsquo;s integrity or +wits. On a strong hit, set your shields to 4. On a weak hit, make them 3. On a miss, make them 2 but <i>Lose Momentum</i> (-1). Then, if you <i>Withstand Damage</i>, ignore damage up to the value of your shields and suffer -1 shields. Raised shields last for a few minutes. If reduced to 0, they cannot be raised again for an hour or so.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Strike</i> in close combat, you may attempt to drive your spear home (decide before rolling). If you do, add +1 and inflict +2 harm on a hit. If you score a hit and the fight continues, <i>Face Danger</i> +iron to recover your spear.',
-        marked: false
+        text: '<p>You may <i>React Under Fire</i> by letting your shields take the blow. If you do, roll +shields and take +2 momentum on a hit.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Secure an Advantage</i> by bracing your spear against a charging foe, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Enter the Fray</i> and score a strong hit, you may raise your shields to 3 without rolling. If you do, take +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Shuttle: {
+    type: 'Support Vehicle',
+    title: 'Shuttle',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your unarmed shuttle provides short-range transport for several people and equipment through space or atmosphere. When you travel to a location (not your command vehicle), you and your allies may take +1 momentum when you arrive.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Face Danger</i> or <i>React Under Fire</i> to navigate through hazardous skies or around obstacles, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>You shuttle is sealed against high pressure environments, can travel underwater, and is more resistant to damage; when you <i>Withstand Damage</i>, add +1.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Sidekick: {
+    type: 'Companion',
+    title: 'Sidekick',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your sidekick has a helpful expertise. When you make a move outside of a fight directly aided by their expertise, you may reroll your action die if its value is less than your sidekick&rsquo;s health. If you then score a strong hit with a match, mark 1 tick on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Enter the Fray</i> with the support of your sidekick, take +2 momentum on a hit. When you <i>Clash</i> together, add +1.</p>\n',
+        marked: false,
+        input: {
+          label: 'Expertise',
+          text: ' ',
+        },
+      },
+      {
+        text: '<p>When your sidekick acts to get you out of a tough spot, you may <i>Face Danger</i> or <i>React Under Fire</i> and roll +their health (instead of your own stat). On a hit, take +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Skiff: {
+    type: 'Support Vehicle',
+    title: 'Skiff',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your unarmed flatbed hover-vehicle carries several people, gear, and cargo over land or water. When you <i>Undertake an Expedition</i> or <i>Set a Course</i>, you may rely on the skiff&rsquo;s simple reliability and roll +integrity. If you do, take +1 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>Your skiff is armed with a turreted cannon. When you <i>Strike</i> or <i>Clash</i> by firing the cannon, roll +integrity and take +1 momentum on a hit. On a strong hit with a match, your shots cause extra destruction or create havoc; mark progress.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>Your skiff is fully stocked. When you <i>Check Your Gear</i>, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
   },
   Slayer: {
     type: 'Path',
     title: 'Slayer',
+
     items: [
       {
-        text: 'When you <i>Gather Information</i> by tracking a beast or horror, or when you <i>Secure an Advantage</i> by readying yourself for a fight against them, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>When you make a move to investigate, track, or stalk a hostile creature, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Swear an Iron Vow</i> to slay a beast or horror, you may reroll any dice. When you <i>Fulfill Your Vow</i> and mark experience, take +1 experience.',
-        marked: false
+        text: '<p>When you <i>Swear an Iron Vow</i> to slay a hostile creature in service to a community, reroll any dice. When you <i>Fulfill Your Vow</i> and score a hit, also mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you slay a beast or horror (at least formidable), you may take a trophy and choose one.<br />  * Power a ritual: When you or an ally make a ritual move, reroll any dice (one time only).<br />  * Prove your worth: When you <i>Sojourn</i>, reroll any dice (one time only).',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Enter the Fray</i> against a hostile creature (dangerous or greater), take +2 momentum. If you choose to face the creature on its own terms, envision the crucial weapon, protection, or aid you set aside, and set the objective one rank higher. If you <i>Take Decisive Action</i> after making this sacrifice and score a strong hit, take a trophy of your victory and mark 2 ticks on your quests legacy track.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Slinger: {
-    type: 'Combat Talent',
-    title: 'Slinger',
-    subtitle: 'If you wield a sling...',
-    items: [
-      {
-        text: 'When launched from a sling, a simple stone inflicts deadly harm (2 harm). When you <i>Enter the Fray</i> by barraging your foe with sling-bullets, inflict harm on a strong hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Strike</i> by launching stones at an advancing foe, you may choose one (before rolling).<br />  * Hold them back: Retain initiative on a weak hit, but inflict only 1 harm.<br />  * Hit them hard: Inflict +1 harm on a hit, but suffer -1 momentum.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> by preparing stones of a special quality or material, add +1. Then, take +1 momentum or +1 supply on a hit.',
-        marked: false
-      }
-    ]
-  },
-  'Spirit-Bound': {
+  Sniper: {
     type: 'Path',
-    title: 'Spirit-Bound',
+    title: 'Sniper',
+    subtitle: 'If you wield a rifle...',
+
     items: [
       {
-        text: 'You are haunted by someone whose death you caused through your actions or failures. When you consult with their spirit to <i>Secure an Advantage</i> or <i>Gather Information</i>, add +1 and take +2 momentum on a hit. On a weak hit, also <i>Endure Stress</i> (1 stress).',
-        marked: true
+        text: '<p>When you <i>Face Danger</i> outside of a fight to preemptively take out a single minor foe from a distance, add +1. On a hit, they are out of action and no longer a threat. If other foes remain and you <i>Enter the Fray</i> against them, mark progress.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Face Death</i> guided by the spirit, add +1. On a strong hit, envision what you learn and take 1 experience.',
-        marked: false
+        text: '<p>When you <i>Strike</i> from a distance with time enough to line up your shot, you may roll +wits. If you do, mark progress on a hit.</p>\n',
+        marked: false,
       },
       {
-        text: 'One time only, when you successfully <i>Fulfill Your Vow</i> (formidable or greater) in service to the spirit, choose one.<br />  * Let them go: Take 2 experience for each marked ability and discard this asset.<br />  * Deepen your connection: Add +1 more when you leverage this asset.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Secure an Advantage</i> by studying a distant situation through the scope of your rifle, or <i>Gain Ground</i> by readying your shot and taking careful aim, you may sacrifice time in exchange for greater certainty. If you do (decide before rolling), <i>Lose Momentum</i> (-1, -2, or -3) and add that amount. Then, take +1 momentum on a strong hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Storyweaver: {
+  'Snub Fighter': {
+    type: 'Support Vehicle',
+    title: 'Snub Fighter',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your snub fighter carries a single pilot for space or atmospheric flight and combat. When you <i>Enter the Fray</i>, you may roll +integrity; if you do, take +2 momentum on a hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Strike</i> or <i>Clash</i>, add +1. On a strong hit with a match, mark progress.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you personally defeat a notable foe in your snub fighter, envision the victory mark you make on the fuselage. Tally your victories in this box. For every five, mark 2 ticks on your quests legacy track.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Sprite: {
+    type: 'Companion',
+    title: 'Sprite',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your sprite companion alters its delicate, crystalline form to fly, swim, or scurry, and can covertly navigate even the harshest of environments. When you make a move by sending it to perform trickery (such as creating a distraction, sneaking into a protected location, or stealing an object) add +its health.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>You are attuned to the resonance of the sprite&rsquo;s crystalline structure, and can communicate with it at a distance and perceive through its senses. When you <i>Secure an Advantage</i> by observing a situation from its perspective, or remotely <i>Gather Information</i>, add +its health.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>With a moment&rsquo;s rest, the sprite can mend its form and return automatically to max health.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 2,
+      max: 2,
+      min: 0,
+    },
+  },
+  Starship: {
+    type: 'Command Vehicle',
+    title: 'Starship',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your armed, multipurpose starship is suited for interstellar and atmospheric flight. It can comfortably transport several people, has space for cargo, and can carry and launch support vehicles. When you <i>Advance</i>, you may spend experience to equip this vehicle with module assets.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Finish an Expedition</i> (dangerous or greater) in your starship and score a hit, this journey strengthened your ties to your ship and any fellow travelers. You and your allies may mark 1 tick on your bonds legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Withstand Damage</i>, you may roll +heart. If you do, <i>Endure Stress</i> (-1) on a weak hit or miss.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 5,
+      max: 5,
+      min: 0,
+    },
+  },
+  'Stealth Tech': {
+    type: 'Module',
+    title: 'Stealth Tech',
+
+    items: [
+      {
+        text: '<p>When you make a move against a specific foe or threat to avoid detection, add +1. If you <i>Enter the Fray</i> by ambushing an unaware foe, add +1 and mark progress on a strong hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Undertake an Expedition</i> (+shadow), and roll a 1 on your action die, you may reroll it.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you are poised to <i>Strike</i> from hiding, you may roll +shadow. If you do, choose one (before rolling).</p>\n\n<ul>\n<li>Strike true: Reroll any dice.</li>\n<li>Strike hard: Mark progress on a hit.</li>\n</ul>\n\n<p>On a strong hit with a match, you also remain totally undetected; take +2 momentum and add +1 on your next <i>Strike</i>.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Survey Bot': {
+    type: 'Companion',
+    title: 'Survey Bot',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your survey bot companion scans the path ahead. When you <i>Undertake an Expedition</i> (+wits) overland or within a site, add +1.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>Once per expedition, when you <i>Secure an Advantage</i> by sending the bot to scout ahead, roll +its health. On a hit, also mark progress on the expedition. On a strong hit with a match, the bot uncovers an unexpected feature or location; envision what it reveals and mark one tick on your discoveries legacy track.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Explore a Waypoint</i> aided by the bot&rsquo;s sensors, or <i>Face Danger</i> to detect a threat, roll +its health and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 3,
+      max: 3,
+      min: 0,
+    },
+  },
+  Symbiote: {
+    type: 'Companion',
+    title: 'Symbiote',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>You are physically bound to a being with +2 health. When you make aggressive moves while giving yourself to the symbiote&rsquo;s power, add +its health. If you face physical harm, choose either the <i>Endure Harm</i> or <i>Companion Takes a Hit</i> move. To restore the symbiote&rsquo;s health, you must <i>Endure Stress</i> and give the symbiote +health equal to the -spirit you face. If you make a move aided by the symbiote and roll a 1 on your action die, your fragile bond is broken for several hours.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move and heed the symbiote&rsquo;s guidance (decide after rolling), you may reroll any dice. Then, <i>Endure Stress</i> (-2).</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>The symbiote gains power and has +3 health.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 2,
+      max: 2,
+      min: 0,
+    },
+  },
+  Tech: {
     type: 'Path',
-    title: 'Storyweaver',
+    title: 'Tech',
+
     items: [
       {
-        text: 'When you <i>Secure an Advantage</i>, <i>Compel</i>, or <i>Forge a Bond</i> by sharing an inspiring or enlightening song, poem, or tale, envision the story you tell. Then, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>When you make a move to configure, optimize, hack, or disrupt an electronic system, add +1. On a weak hit, you can choose to press your luck. If you do, reroll all dice and add +2 (instead of +1).</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Make Camp</i> and choose the option to relax, you may share a story with your allies or compose a new story if alone. If you do, envision the story you tell and take +1 spirit or +1 momentum. Any allies who choose to relax in your company may also take +1 spirit or +1 momentum.',
-        marked: false
+        text: '<p>When you <i>Withstand Damage</i> and score a miss, you may attempt to reroute power or reboot critical systems. If you do, first <i>Lose Momentum</i> (-2). Then, reroll all dice, add +wits instead of +integrity, and count a weak hit as a miss.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Sojourn</i> within a community with which you share a bond, add +2 (instead of +1).',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Face Danger</i> or <i>Secure an Advantage</i> by creating a computer program to perform a specific, complex function, add +2 and take +1 momentum on a hit. One time only, when you trigger the program to fulfill its purpose, reroll any dice.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Sunderer: {
-    type: 'Combat Talent',
-    title: 'Sunderer',
-    subtitle: 'If you wield an axe...',
-    items: [
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i> in close quarters, you may suffer -1 momentum and inflict +1 harm on a hit (decide before rolling).',
-        marked: true
-      },
-      {
-        text: 'When you have your axe in hand, and use the promise of violence to <i>Compel</i> or <i>Secure an Advantage</i>, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you make a tribute to a fallen foe (formidable or greater) by carving a rune in the haft of your axe, roll +heart. On a strong hit, inflict +1d6 harm (one time only) when you <i>Strike</i> or <i>Clash</i>. On a weak hit, as above, but this death weighs on you; <i>Endure Stress</i> (2 stress).',
-        marked: false
-      }
-    ]
-  },
-  Sway: {
-    type: 'Ritual',
-    title: 'Sway',
-    items: [
-      {
-        text: 'When you speak a person’s name three times to the wind, roll +wits. On a strong hit, the wind whispers of this person’s need. Envision what you hear (<i>Ask the Oracle</i> if unsure). If you use this information or fulfill this need when you <i>Compel</i> them, you may reroll any dice (one time only). On a weak hit, as above, but this person’s need creates a troubling dilemma or complication; <i>Endure Stress</i> (1 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and if you score a strong hit when you <i>Compel</i>, you may also reroll any dice (one time only) when you <i>Gather Information</i> from this person.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Swordmaster: {
-    type: 'Combat Talent',
-    title: 'Swordmaster',
-    subtitle: 'If you wield a sword...',
-    items: [
-      {
-        text: 'When you <i>Strike</i> or <i>Clash</i> and burn momentum to improve your result, inflict +2 harm. If the fight continues, add +1 on your next move.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Clash</i> and score a strong hit, add +1 if you immediately follow with a <i>Strike</i>.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Swear an Iron Vow</i> by kneeling and grasping your sword’s blade, add +1 and take +1 momentum on a hit. If you let the edge draw blood from your hands, <i>Endure Harm</i> (1 harm) in exchange for an additional +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Talisman: {
-    type: 'Ritual',
-    title: 'Talisman',
-    items: [
-      {
-        text: 'When you fashion a charm, envision it and name the specific person or creature it protects against. Then roll +wits. On a strong hit, when the wearer opposes the target through a move, add +2. If a 1 is rolled on the action die while making a move using the charm, the magic is spent. On a weak hit, as above, but the wearer adds +1 when making a move (instead of +2).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may instead fashion a charm which aids the wearer against all supernatural threats, such as mystic rituals or horrors.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Tether: {
-    type: 'Ritual',
-    title: 'Tether',
-    items: [
-      {
-        text: 'When you commune with the spirits of a place, roll +heart. If you share a bond with someone there, add +1. On a strong hit, you are tethered. When you <i>Undertake a Journey</i> to return, you may roll +spirit or +heart (instead of +wits), and take +1 momentum on a hit. When you <i>Reach Your Destination</i>, take +2 momentum on a strong hit. The tether is lost if you perform this ritual elsewhere, or when you <i>Face Desolation</i>. On a weak hit, as above, but the spirits reveal a disturbing aspect of the place; <i>Endure Stress</i> (2 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may also reroll any dice when you <i>Sojourn</i> in the tethered place.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  'Thunder-Bringer': {
-    type: 'Combat Talent',
-    title: 'Thunder-Bringer',
-    subtitle: 'If you wield a mighty hammer...',
-    items: [
-      {
-        text: 'When you <i>Face Danger</i>, <i>Secure an Advantage</i>, or <i>Compel</i> by hitting or breaking an inanimate object, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Strike</i> a foe to knock them back, stun them, or put them off balance, inflict 1 harm (instead of 2) and take +2 momentum on a hit. On a strong hit, you also create an opening and add +1 on your next move.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Turn the Tide</i>, you may <i>Strike</i> with all the fury and power you can muster. If you do (decide before rolling), you may reroll any dice and inflict +2 harm on a strong hit, but count a weak hit as a miss.',
-        marked: false
-      }
-    ]
-  },
-  Totem: {
-    type: 'Ritual',
-    title: 'Totem',
-    items: [
-      {
-        text: 'When you hold a totem of your animal or beast companion and focus on it, roll +heart. On a strong hit, you are bound together. Add +1 and take +1 momentum on a hit when you use a companion ability. If you roll a 1 on your action die when using a companion ability, the magic is spent. On a weak hit, as above, but creating this connection is unsettling; <i>Endure Stress</i> (1 stress).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may also perceive the world through your companion’s senses while you make moves aided by them (even when you are apart).',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Trickster: {
+  Trader: {
     type: 'Path',
-    title: 'Trickster',
+    title: 'Trader',
+
     items: [
       {
-        text: 'When you <i>Face Danger</i>, <i>Secure an Advantage</i>, or <i>Compel</i> by lying, bluffing, stealing, or cheating, add +1.',
-        marked: true
+        text: '<p>When you <i>Sojourn</i> or <i>Compel</i>, you may roll +supply. If you do, <i>Sacrifice Resources</i> (-1).</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Gather Information</i> by investigating a devious scheme, you may roll +shadow (instead of +wits). If you do, take +2 momentum on a hit.',
-        marked: false
+        text: '<p>When you <i>Make a Connection</i> with a merchant or supplier, add +1. When you <i>Resupply</i> by bartering with them, reroll your action die if its value is less than your supply. On a strong hit, take +1 momentum or +1 supply.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Forge a Bond</i> for a relationship founded on a lie, choose one.<br />  * Keep your secret: Roll +shadow (instead of +heart).<br />  * Reveal the truth: Roll +heart. On a strong hit, mark a bond twice and take 1 experience. A weak hit counts as a miss.',
-        marked: false
-      }
-    ]
+        text: '<p>When you or an ally <i>Sojourn</i> and roll a strong hit with a match, you have a chance to secure a unique item or valuable payload. Envision the nature of the opportunity and the obstacle you must overcome to aquire it. If you are successful, mark 2 ticks on your quests legacy track. One time only, you may use this acquisition to gain an automatic strong hit on any move where your resources are a factor.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Utility Bot': {
+    type: 'Companion',
+    title: 'Utility Bot',
+    input: {
+      label: 'Name',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>Your utility bot companion has helpful tools at-hand. When you make a move by directing it to access a system, cut through an obstacle, analyze a mechanical issue, or assemble or disassemble a device, roll +its health and take +1 momentum on a hit. On a strong hit with a match, it reveals an unexpected advantage or insight; take another +1 momentum.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Repair</i> aided by the bot, add +1. On a miss, it reveals an alternative approach which will take extra time; you may reroll any dice, but first <i>Lose Momentum</i> (-2).</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Check Your Gear</i> to see if the bot has a specific tool or technique available, roll +its health and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+    track: {
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  Vanguard: {
+    type: 'Deed',
+    title: 'Vanguard',
+    subtitle: 'Once you fill 6 boxes on your discoveries legacy track...',
+
+    items: [
+      {
+        text: '<p>When you seek safe haven in a remote environment, make a progress roll against your discoveries legacy track. On a strong hit, you find or establish a safe location and may add +2 whenever you make a recovery move there. If you roll a miss when making a recovery move, the place is no longer safe. On a weak hit, as above, but add +1 when you make a recovery move. On a miss, you are drawn into a bad situation and must <i>Pay the Price</i>.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move +wits and score a strong hit with a match, your hard-won experience lends insight; take +1 momentum.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Endure Stress</i>, you may roll +wits. If you do, take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  'Vehicle Bay': {
+    type: 'Module',
+    title: 'Vehicle Bay',
+
+    items: [
+      {
+        text: '<p>You may purchase or upgrade a support vehicle for 1 less experience. When you <i>Repair</i> a battered support vehicle, spend 1 repair point (instead of 2).</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When a support vehicle is destroyed, and you are able to retrieve its wreckage, you may <i>Ask the Oracle</i> using the yes/no table if something can be salvaged from the mess. Make it &lsquo;<sup>50</sup>&frasl;<sub>50</sub>&rsquo;. On a yes, spend 2 experience to restore the support vehicle asset with all previously marked abilities. Until you <i>Repair</i> and bring it back to full working order, the vehicle is battered with 0 integrity.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a move to launch from or land on your command vehicle in a perilous situation or environment, reroll any dice and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Vestige: {
+    type: 'Path',
+    title: 'Vestige',
+    input: {
+      label: 'Last of',
+      text: ' ',
+    },
+    items: [
+      {
+        text: '<p>You are all that remains of a people, culture, or tradition. When you <i>Face Death</i> or <i>Face Desolation</i>, memories or visions of your heritage give you the strength to carry on. Envision how this manifests, and reroll any dice. On a strong hit with a match, a surprising new aspect of your heritage is revealed; take +2 momentum and mark 2 ticks on your bonds legacy track.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Secure an Advantage</i> or <i>Compel</i> through a tale, performance, or ceremony, envision what you reveal of your legacy. Then, add +1 and take +2 momentum on a hit.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Hearten</i> by taking solace in the power of your legacy, add +1 and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
   },
   Veteran: {
     type: 'Path',
     title: 'Veteran',
+
     items: [
       {
-        text: 'When you burn momentum to improve your result in combat, envision how your hard-won fighting experience gives you the upper hand. Then, take +1 momentum after you reset, and add +1 when you make your next move. Once per fight, you also take initaitive when burning momentum to improve a miss to a weak hit.',
-        marked: true
+        text: '<p>When you are in a fight, increase your momentum reset by 1. Then, if you burn momentum to improve your result, add +1 on your next move.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Swear an Iron Vow</i> to someone who fought beside you, or <i>Forge a Bond</i> with them, add +2 and take +2 momentum on a hit.',
-        marked: false
+        text: '<p>When you <i>Make a Connection</i>, add +1. If you roll a match, you have a history.</p>\n\n<ul>\n<li>On a strong hit with a match, you once fought beside them, and they owe you a favor. Mark 1 tick on your bonds legacy track, and <i>Develop Your Relationship</i> now.</li>\n<li>On a miss with a match, you once fought against them, and they hold a grudge.</li>\n</ul>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Resupply</i> by looting the dead on a field of battle, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
+        text: '<p>When you <i>Secure an Advantage</i> or <i>Gain Ground</i> by recounting or recalling a hard-won lesson from your battlefield experiences, envision the memory and add +1. On a hit, take +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Visage: {
-    type: 'Ritual',
-    title: 'Visage',
-    items: [
-      {
-        text: 'When you paint yourself in blood and ash, roll +wits. On a strong hit, you may add +2 and take +1 momentum on a hit when you <i>Secure an Advantage</i> or <i>Compel</i> using fear or intimidation. If you roll a 1 on your action die when making a move aided by your visage, the magic is spent. On a weak hit, as above, but the blood must be your own; <i>Endure Harm</i> (2 harm).',
-        marked: true
-      },
-      {
-        text: 'As above, and you may also add +1 when you <i>Strike</i>, <i>Clash</i>, or <i>Battle</i>.',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Ward: {
-    type: 'Ritual',
-    title: 'Ward',
-    items: [
-      {
-        text: 'When you walk a wide circle, sprinkling the ground with salt, roll +wits. On a strong hit, choose two. On a weak hit, choose one.<br />  * When a foe first crosses the boundary, take +1 momentum.<br />  * When you first inflict harm against a foe within the boundary, inflict +1 harm.<br />  * Your ward is ‘likely’ (<i>Ask the Oracle</i>) to trap a foe within the boundary.',
-        marked: true
-      },
-      {
-        text: 'As above, and improve the effect of your ward (+2 momentum, +2 harm, and ‘almost certain’).',
-        marked: false
-      },
-      {
-        text: 'When you perform this ritual, add +1 and take +1 momentum on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Waterborn: {
+  Voidborn: {
     type: 'Path',
-    title: 'Waterborn',
+    title: 'Voidborn',
+
     items: [
       {
-        text: 'When you <i>Face Danger</i>, <i>Gather Information</i>, or <i>Secure an Advantage</i> related to your knowledge of watercraft, water travel, or aquatic environments or creatures, add +1 and take +1 momentum on a hit.',
-        marked: true
+        text: '<p>You are most suited to life in the limitless void. When you are in space (or a spacebound vehicle or station), increase your momentum reset by 1. When you enter a planetside or high gravity environment, <i>Lose Momentum</i> (-1).</p>\n',
+        marked: true,
       },
       {
-        text: 'When you <i>Undertake a Journey</i> by boat or ship, add +1. On a strong hit, also choose one.<br />  * The wind is at your back: Mark progress twice.<br />  * Find safe anchor: <i>Make Camp</i> now and reroll any dice.<br />  * Reap the bounty: <i>Resupply</i> now and reroll any dice.',
-        marked: false
+        text: '<p>When you <i>Sojourn</i> or <i>Make a Connection</i> within a spacebound community, add +1. If you <i>Hearten</i> there and score a strong hit, take +1 spirit or +1 momentum.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Enter the Fray</i> aboard a boat or ship, reroll any dice.',
-        marked: false
-      }
-    ]
+        text: '<p>When you make a move to perform an agile physical maneuver (such as leaping or evading) in a low gravity environment, add +1 and take +1 momentum on a hit. On a strong hit with a match, you build speed or put yourself in perfect position; take another +1 momentum.</p>\n',
+        marked: false,
+      },
+    ],
   },
-  Wayfinder: {
-    type: 'Path',
-    title: 'Wayfinder',
-    items: [
-      {
-        text: 'When you <i>Undertake a Journey</i>, take +1 momentum on a strong hit. If you burn momentum to improve your result, also take +1 momentum after you reset.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Secure an Advantage</i> or <i>Gather Information</i> by carefully surveying the landscape or scouting ahead, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Swear an Iron Vow</i> to safely guide someone on a perilous journey, you may reroll any dice. When you <i>Fulfill Your Vow</i> and mark experience, take +1 experience.',
-        marked: false
-      }
-    ]
-  },
-  Weaponmaster: {
-    type: 'Path',
-    title: 'Weaponmaster',
-    subtitle: 'Once you <i>Fulfill Your Vow</i> (formidable or greater) in service to a seasoned warrior, and <i>Forge a Bond</i> to train with them...',
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> by sizing up your foe in a fight, or in a charged situation which may lead to a fight, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'When you study or train in a new weapon or technique, you may obtain and upgrade that combat talent for 1 fewer experience.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Turn the Tide</i> with a sudden change of weapon or technique, and your next move is a <i>Strike</i>, add +1 and inflict +2 harm on a strong hit.',
-        marked: false
-      }
-    ]
-  },
-  Wildblood: {
-    type: 'Path',
-    title: 'Wildblood',
-    items: [
-      {
-        text: 'When you <i>Face Danger</i>, <i>Secure an Advantage</i>, or <i>Gather Information</i> using your knowledge of tracking, woodcraft, or woodland creatures, add +1.',
-        marked: true
-      },
-      {
-        text: 'When you <i>Face Danger</i> or <i>Secure an Advantage</i> by hiding or sneaking in the woodlands, add +1 and take +1 momentum on a hit.',
-        marked: false
-      },
-      {
-        text: 'When you <i>Make Camp</i> in the woodlands, you may roll +wits (instead of +supply). If you do, you and your allies each choose 1 more option on a hit.',
-        marked: false
-      }
-    ]
-  },
-  Wright: {
-    type: 'Path',
-    title: 'Wright',
-    input: {
-      label: 'Specialty',
-      text: ''
-    },
-    items: [
-      {
-        text: 'When you <i>Secure an Advantage</i> by crafting a useful item using your specialty, or when you <i>Face Danger</i> to create or repair an item in a perilous situation, add +1 and take +1 momentum on a hit.',
-        marked: true
-      },
-      {
-        text: 'As above, and you may suffer -1 supply (after rolling) to add an additional +1.',
-        marked: false
-      },
-      {
-        text: 'When you give the item you create as a gift to commemorate an important event or relationship, you may (one time only) reroll any dice when you <i>Compel</i>, <i>Forge a Bond</i>, or <i>Test Your Bond</i>.',
-        marked: false
-      }
-    ]
-  },
-  'Young Wyvern': {
+  Voidglider: {
     type: 'Companion',
-    title: 'Young Wyvern',
-    subtitle: 'Your wyvern won’t devour you. For now.',
+    title: 'Voidglider',
     input: {
       label: 'Name',
-      text: ''
+      text: ' ',
     },
     items: [
       {
-        text: 'When you <i>Undertake a Journey</i> and score a hit, you may suffer -1 supply in exchange for +2 momentum.',
-        marked: false
+        text: '<p>Your voidglider companion cruises in your starship&rsquo;s energy wake and helps guide the way on spacebound expeditions. When you <i>Undertake an Expedition</i> and roll a strong hit, take +1 momentum.</p>\n',
+        marked: true,
       },
       {
-        text: 'When you make the <i>Companion Endure Harm</i> move for your wyvern, add +2 and take +1 momentum on a hit.',
-        marked: false
+        text: '<p>The voidglider is harnessed and trained as a mount, and can be ridden for short-range spacebound transport. When you are riding the voidglider and make a move to detect or evade a threat by relying on its instincts, roll +its health.</p>\n',
+        marked: false,
       },
       {
-        text: 'When you <i>Strike</i> by commanding your wyvern to attack, roll +heart. Your wyvern inflicts 3 harm on a hit.',
-        marked: false
-      }
+        text: '<p>When you make a move by signaling the voidglider to distract or attack a spacebound foe, roll +its health and take +1 momentum on a hit.</p>\n',
+        marked: false,
+      },
     ],
     track: {
-      value: 0,
-      max: 5,
-      min: 0
-    }
-  }
-}
+      value: 4,
+      max: 4,
+      min: 0,
+    },
+  },
+  'Weapon Master': {
+    type: 'Path',
+    title: 'Weapon Master',
+
+    items: [
+      {
+        text: '<p>You are a walking armory, with a weapon for every occassion. When you <i>Enter the Fray</i> in personal combat, add +1 and take +1 momentum on a hit. Once per fight, when you <i>Gain Ground</i> by switching weapons or changing tactics, take an automatic strong hit.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Strike</i> using a personal weapon which has limited ammo or a single-use mode, add +1 and mark progress on a hit. Then, <i>Sacrifice Resources</i> (-1). If you score a strong hit on this attack and immediately <i>Take Decisive Action</i>, you may retain the value of one challenge die from your <i>Strike</i> action instead of rolling that die.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Secure an Advantage</i> by suiting up and gathering your gear for a perilous encounter or mission, you may roll +supply. If you do, take +2 momentum on a hit.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+  Workshop: {
+    type: 'Module',
+    title: 'Workshop',
+
+    items: [
+      {
+        text: '<p>When you <i>Repair</i> in the field, add +1.</p>\n',
+        marked: true,
+      },
+      {
+        text: '<p>When you make a move in your workshop to craft, modify, deactivate, or disassemble a device or machine, you may reroll your action die if its value is less than your vehicle&rsquo;s integrity.</p>\n',
+        marked: false,
+      },
+      {
+        text: '<p>When you <i>Swear an Iron Vow</i> to undertake a long-term engineering project (extreme or greater), reroll any dice. When you obtain a crucial part or resource, mark progress on the quest and take +2 momentum. When you devote extended time to the project in your workshop, <i>Face Danger</i> and add +1. On a hit, mark progress. On a strong hit with a match, mark progress twice. When you <i>Fulfill Your Vow</i> and score a hit, mark one extra box on your quests legacy track.</p>\n',
+        marked: false,
+      },
+    ],
+  },
+};

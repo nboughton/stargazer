@@ -2,8 +2,10 @@ import {
   EDerelictType,
   EDerelictZone,
   ESLocation,
+  IDerelict,
   IDerelictOracle,
 } from 'src/components/models';
+import { tableRoll } from '../roll';
 
 export const Derelict: IDerelictOracle = {
   location: {
@@ -1779,4 +1781,23 @@ export const Derelict: IDerelictOracle = {
       },
     },
   },
+};
+
+export const RollDerelict = (
+  location?: ESLocation,
+  type?: EDerelictType
+): IDerelict => {
+  const l = location ? location : tableRoll(Derelict.location);
+  const t = type ? type : tableRoll(Derelict.type[l]);
+
+  return {
+    name: '',
+    location: l as ESLocation,
+    type: t as EDerelictType,
+    condition: tableRoll(Derelict.condition),
+    outerFirstLook: tableRoll(Derelict.outerFirstLook),
+    innerFirstLook: tableRoll(Derelict.innerFirstLook),
+    currentZone: EDerelictZone.Access,
+    explore: '',
+  };
 };

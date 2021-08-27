@@ -53,7 +53,6 @@ export function NewCharacter(): ICharacter {
     pronouns: '',
     callsign: '',
     characteristics: '',
-    xp: 0,
     stats: {
       edge: 0,
       heart: 0,
