@@ -1,0 +1,77 @@
+<template>
+  <div class="column">
+    <div class="text-h6">Space Sightings</div>
+    <div class="row full-width items-baseline q-mb-md">
+      <q-select
+        class="col-grow"
+        label="Region"
+        v-model="regionSelect"
+        :options="Object.values(ERegion)"
+        dense
+      />
+      <q-btn
+        class="col-shrink"
+        icon="mdi-dice-6"
+        flat
+        dense
+        @click="rollSighting"
+      />
+    </div>
+    <div class="text-h6">{{ rollResult }}</div>
+    <planet
+      v-if="rollResult === ESighting.Planet"
+      :modelValue="RollPlanet(regionSelect)"
+    />
+    <settlement
+      v-if="rollResult === ESighting.Settlement"
+      :modelValue="RollSettlement(regionSelect)"
+    />
+    <starship
+      v-if="rollResult === ESighting.Starship"
+      :modelValue="RollStarship(regionSelect)"
+    />
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import { Sighting } from 'src/lib/oracles/space';
+import { ERegion, ESighting, EPClass } from 'src/components/models';
+import { sightingRoll } from 'src/lib/roll';
+import { RollPlanet } from 'src/lib/oracles/planets';
+import { RollSettlement } from 'src/lib/oracles/settlement';
+import { RollStarship } from 'src/lib/oracles/starship';
+
+import Planet from 'src/components/Oracles/Planet.vue';
+import Settlement from 'src/components/Oracles/Settlement.vue';
+import Starship from 'src/components/Oracles/Starship.vue';
+
+export default defineComponent({
+  name: 'SpaceSightings',
+  components: { Planet, Settlement, Starship },
+  setup() {
+    const regionSelect = ref(ERegion.Terminus);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rollResult = ref('');
+    const rollSighting = () => {
+      rollResult.value = sightingRoll(Sighting, regionSelect.value);
+    };
+
+    return {
+      Sighting,
+      ERegion,
+      ESighting,
+      EPClass,
+      regionSelect,
+
+      rollResult,
+      rollSighting,
+
+      RollPlanet,
+      RollSettlement,
+      RollStarship,
+    };
+  },
+});
+</script>
