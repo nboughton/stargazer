@@ -37,6 +37,10 @@
       v-if="rollResult === ESighting.Derelict"
       :modelValue="RollDerelict()"
     />
+    <creature
+      v-if="rollResult === ESighting.Creature"
+      :modelValue="RollCreature()"
+    />
   </div>
 </template>
 
@@ -49,15 +53,17 @@ import { RollPlanet } from 'src/lib/oracles/planets';
 import { RollSettlement } from 'src/lib/oracles/settlement';
 import { RollStarship } from 'src/lib/oracles/starship';
 import { RollDerelict } from 'src/lib/oracles/derelict';
+import { RollCreature } from 'src/lib/oracles/creature';
 
 import Planet from 'src/components/Oracles/Planet.vue';
 import Settlement from 'src/components/Oracles/Settlement.vue';
 import Starship from 'src/components/Oracles/Starship.vue';
 import Derelict from 'src/components/Oracles/Derelict.vue';
+import Creature from 'src/components/Oracles/Creature.vue';
 
 export default defineComponent({
   name: 'SpaceSightings',
-  components: { Planet, Settlement, Starship, Derelict },
+  components: { Planet, Settlement, Starship, Derelict, Creature },
   setup() {
     const regionSelect = ref(ERegion.Terminus);
 
@@ -83,6 +89,7 @@ export default defineComponent({
       RollSettlement,
       RollStarship,
       RollDerelict,
+      RollCreature,
     };
   },
 });

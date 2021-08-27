@@ -65,6 +65,13 @@ export enum EDerelictType {
   Settlement = 'Settlement',
 }
 
+export enum EEnv {
+  Space = 'Space',
+  Interior = 'Interior',
+  Land = 'Land',
+  Liquid = 'Liquid',
+  Air = 'Air',
+}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;
@@ -375,6 +382,25 @@ export interface IDerelictOracle {
   };
 }
 
+export interface ICreature {
+  name: string;
+  environment: EEnv;
+  scale: string;
+  form: string;
+  firstLook: string;
+  behaviour: string;
+  aspect: string;
+}
+
+export interface ICreatureOracle {
+  environment: ISFTable;
+  scale: ISFTable;
+  ultraScale: ISFTable;
+  form: { [index: string]: ISFTable };
+  firstLook: ISFTable;
+  behaviour: ISFTable;
+  aspect: ISFTable;
+}
 // Rolls
 export interface IRollData {
   action: {
