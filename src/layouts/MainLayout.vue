@@ -1,9 +1,8 @@
 <template>
   <q-layout view="hHh lpR fFf">
-
     <q-header elevated class="bg-secondary text-white" height-hint="98">
       <q-toolbar>
-        <q-btn dense flat  icon="menu" @click="toggleLeftDrawer" />
+        <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
           {{ campaign.data.name }}
@@ -14,7 +13,7 @@
         <q-toggle icon="delete" v-model="config.data.edit">
           <q-tooltip>Toggle Delete buttons</q-tooltip>
         </q-toggle>
-        <q-btn dense flat  icon="edit_note" @click="toggleRightDrawer" />
+        <q-btn dense flat icon="edit_note" @click="toggleRightDrawer" />
       </q-toolbar>
 
       <q-tabs align="center" dense>
@@ -29,13 +28,31 @@
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
       <!-- left drawer content -->
-      <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
+      <q-btn
+        class="full-width"
+        label="New Campaign"
+        flat
+        @click="addCampaign"
+        icon-right="add"
+      />
       <q-list>
-        <q-item class="items-center" v-for="(item, index) in config.data.index" :key="index" clickable v-ripple>
-          <q-item-section @click="config.data.current = item.id" class="row full-width no-wrap">
+        <q-item
+          class="items-center"
+          v-for="(item, index) in config.data.index"
+          :key="index"
+          clickable
+          v-ripple
+        >
+          <q-item-section
+            @click="config.data.current = item.id"
+            class="row full-width no-wrap"
+          >
             {{ item.name }}
           </q-item-section>
-          <q-item-section class="col-shrink" v-if="config.data.index.length > 1 && config.data.edit">
+          <q-item-section
+            class="col-shrink"
+            v-if="config.data.index.length > 1 && config.data.edit"
+          >
             <q-btn icon="delete" flat dense @click="removeCampaign(item.id)" />
           </q-item-section>
         </q-item>
@@ -50,7 +67,10 @@
           </q-item-section>
           <q-item-section>
             Export Campaign Data
-            <q-tooltip>Downlaod your current campaign database as a .json file</q-tooltip>
+            <q-tooltip
+              >Download your current campaign database as a .json
+              file</q-tooltip
+            >
           </q-item-section>
         </q-item>
 
@@ -89,7 +109,7 @@
         <q-separator size="lg" />
         <q-item clickable v-ripple @click="showAbout = true">
           <q-item-section avatar>
-            <q-icon name="info"/>
+            <q-icon name="info" />
           </q-item-section>
           <q-item-section>
             About
@@ -99,14 +119,20 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" :width="width" bordered>
+    <q-drawer
+      show-if-above
+      v-model="rightDrawerOpen"
+      side="right"
+      :width="width"
+      bordered
+    >
       <!-- right drawer content -->
       <div class="row">
         <q-expansion-item class="col-12">
           <template v-slot:header>
             <div class="text-h5 col-grow">ORACLES</div>
           </template>
-          <oracles class="q-pl-sm q-pr-sm"/>
+          <oracles class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
       </div>
 
@@ -115,15 +141,30 @@
           <template v-slot:header>
             <div class="text-h5 col-grow">MOVES</div>
           </template>
-          <moves class="q-pl-sm q-pr-sm"/>
+          <moves class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
       </div>
 
       <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
         <span class="col-shrink text-h5 q-pr-sm">JOURNAL</span>
-        <q-input v-model="filter" class="col-grow q-mb-sm" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="500" clearable label="Search by title or content">
+        <q-input
+          v-model="filter"
+          class="col-grow q-mb-sm"
+          dense
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          debounce="500"
+          clearable
+          label="Search by title or content"
+        >
           <template v-slot:before>
-            <q-btn class="col-shrink" icon="add_circle" flat dense @click="addJournal">
+            <q-btn
+              class="col-shrink"
+              icon="add_circle"
+              flat
+              dense
+              @click="addJournal"
+            >
               <q-tooltip>Add a journal entry</q-tooltip>
             </q-btn>
           </template>
@@ -136,15 +177,38 @@
       <div v-for="(journal, index) in campaign.data.journal" :key="index">
         <div class="q-pa-sm q-gutter-xs" v-if="showJournal(journal)">
           <div class="row">
-            <q-input class="col-grow" label="Title" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750" v-model="campaign.data.journal[index].title">
-              <template v-slot:append  v-if="config.data.edit">
-                <q-btn class="col-shrink q-pl-sm" flat dense icon="delete" @click="removeJournal(index)">
+            <q-input
+              class="col-grow"
+              label="Title"
+              dense
+              standout="bg-blue-grey text-white"
+              :input-style="{ color: '#ECEFF4' }"
+              debounce="750"
+              v-model="campaign.data.journal[index].title"
+            >
+              <template v-slot:append v-if="config.data.edit">
+                <q-btn
+                  class="col-shrink q-pl-sm"
+                  flat
+                  dense
+                  icon="delete"
+                  @click="removeJournal(index)"
+                >
                   <q-tooltip>Delete this journal entry</q-tooltip>
                 </q-btn>
               </template>
             </q-input>
           </div>
-          <q-input class="row" label="Content" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" autogrow debounce="750" v-model="campaign.data.journal[index].content" />
+          <q-input
+            class="row"
+            label="Content"
+            dense
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            autogrow
+            debounce="750"
+            v-model="campaign.data.journal[index].content"
+          />
         </div>
       </div>
     </q-drawer>
@@ -165,12 +229,22 @@
         </q-card-section>
 
         <q-card-section>
-          <q-file v-model="fileToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
+          <q-file
+            v-model="fileToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select File"
+          />
         </q-card-section>
 
         <q-card-actions align="center">
           <q-btn label="load" color="primary" @click="loadData" flat />
-          <q-btn label="close" color="warning" @click="showDataLoad = false" flat />
+          <q-btn
+            label="close"
+            color="warning"
+            @click="showDataLoad = false"
+            flat
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -182,23 +256,34 @@
         </q-card-section>
 
         <q-card-section class="text-subtitle text-center">
-          <q-icon name="warning" size="xl" color="warning"/>
+          <q-icon name="warning" size="xl" color="warning" />
           <div class="text-justify">
-          Warning: loading user supplied asset data can be risky. Iron Journal attempts
-          to strip any potentially malicious code (i.e script tags in asset items) but
-          cannot absolutely guarantee the safety of any data loaded. Please check over
-          the contents of the Asset file before loading it. And always ensure you only
-          load data from sources you trust.
+            Warning: loading user supplied asset data can be risky. Stargazer
+            attempts to strip any potentially malicious code (i.e script tags in
+            asset items) but cannot absolutely guarantee the safety of any data
+            loaded. Please check over the contents of the Asset file before
+            loading it. And always ensure you only load data from sources you
+            trust.
           </div>
         </q-card-section>
 
         <q-card-section>
-          <q-file v-model="assetsToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
+          <q-file
+            v-model="assetsToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select File"
+          />
         </q-card-section>
 
         <q-card-actions align="center">
           <q-btn label="load" color="primary" @click="loadAssetData" flat />
-          <q-btn label="close" color="warning" @click="showAssetLoad = false" flat />
+          <q-btn
+            label="close"
+            color="warning"
+            @click="showAssetLoad = false"
+            flat
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -207,14 +292,33 @@
       <q-card class="my-card">
         <q-card-section class="row bg-secondary text-h6 justify-between">
           <div class="col-grow">About</div>
-          <q-btn class="col-shrink" flat dense icon="close" @click="showAbout = false" />
+          <q-btn
+            class="col-shrink"
+            flat
+            dense
+            icon="close"
+            @click="showAbout = false"
+          />
         </q-card-section>
 
         <q-card-section class="about-text text-justify">
-          <div class="q-my-sm">Ironsworn and Ironsworn Delve are &copy; <a href="https://www.ironswornrpg.com">Shawn Tomkin</a></div>
-          <div class="q-my-sm">Code &copy; <a href="https://twitter.com/tiberianpun">Nick Boughton</a>, 2021</div>
-          <div class="q-my-sm">If you like this app and want to say thanks you can <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a></div>
-          <div class="q-my-sm">With extra thanks to <a href="https://twitter.com/r_sek">rsek</a> for the amazing <a href="https://github.com/rsek/datasworn">Datasworn repository</a></div>
+          <div class="q-my-sm">
+            Ironsworn and Ironsworn Delve are &copy;
+            <a href="https://www.ironswornrpg.com">Shawn Tomkin</a>
+          </div>
+          <div class="q-my-sm">
+            Code &copy;
+            <a href="https://twitter.com/tiberianpun">Nick Boughton</a>, 2021
+          </div>
+          <div class="q-my-sm">
+            If you like this app and want to say thanks you can
+            <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a>
+          </div>
+          <div class="q-my-sm">
+            With extra thanks to
+            <a href="https://twitter.com/r_sek">rsek</a> for the amazing
+            <a href="https://github.com/rsek/datasworn">Datasworn repository</a>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -223,96 +327,97 @@
   </q-layout>
 </template>
 
-<script lang=ts>
-import { ref, defineComponent, computed } from 'vue'
-import { useCampaign } from 'src/store/campaign'
-import { useConfig } from 'src/store/config'
-import { useQuasar } from 'quasar'
-import { NewJournal } from 'src/lib/campaign'
-import { IJournalEntry } from 'src/components/models'
-import Oracles from 'src/components/Oracles.vue'
-import Moves from 'src/components/Moves.vue'
-import Roller from 'src/components/Roller.vue'
-import { useAssets } from 'src/store/assets'
+<script lang="ts">
+import { ref, defineComponent, computed } from 'vue';
+import { useCampaign } from 'src/store/campaign';
+import { useConfig } from 'src/store/config';
+import { useQuasar } from 'quasar';
+import { NewJournal } from 'src/lib/campaign';
+import { IJournalEntry } from 'src/components/models';
+import Oracles from 'src/components/Oracles/Oracles.vue';
+import Moves from 'src/components/Moves.vue';
+import Roller from 'src/components/Roller.vue';
+import { useAssets } from 'src/store/assets';
 
 export default defineComponent({
   components: { Oracles, Moves, Roller },
-  setup () {
-    const leftDrawerOpen = ref(false)
-    const rightDrawerOpen = ref(false)
+  setup() {
+    const leftDrawerOpen = ref(false);
+    const rightDrawerOpen = ref(false);
 
-    const campaign = useCampaign()
-    const config = useConfig()
+    const campaign = useCampaign();
+    const config = useConfig();
 
-    const addCampaign = () => campaign.new()
-    const removeCampaign = (id: string) => campaign.delete(id)
+    const addCampaign = () => campaign.new();
+    const removeCampaign = (id: string) => campaign.delete(id);
 
-    const addJournal = () => campaign.data.journal.unshift(NewJournal())
-    const removeJournal = (index: number) => campaign.data.journal.splice(index, 1)
+    const addJournal = () => campaign.data.journal.unshift(NewJournal());
+    const removeJournal = (index: number) =>
+      campaign.data.journal.splice(index, 1);
 
-    const filter = ref('')
+    const filter = ref('');
     const showJournal = (journal: IJournalEntry): boolean => {
       if (filter.value === '' || filter.value === null) {
-        return true
+        return true;
       }
 
       if (journal.title !== undefined) {
         if (RegExp(filter.value, 'i').test(journal.title)) {
-          return true
+          return true;
         }
       }
 
       if (journal.content !== undefined) {
         if (RegExp(filter.value, 'i').test(journal.content)) {
-          return true
+          return true;
         }
       }
-      return false
-    }
+      return false;
+    };
 
-    const fileToLoad = ref(null)
-    const showDataLoad = ref(false)
+    const fileToLoad = ref(null);
+    const showDataLoad = ref(false);
     const loadData = async () => {
-      const f: File = fileToLoad.value as unknown as File
-      await campaign.loadData(f)
-      showDataLoad.value = false
-    }
+      const f: File = fileToLoad.value as unknown as File;
+      await campaign.loadData(f);
+      showDataLoad.value = false;
+    };
 
-    const customAssets = useAssets()
-    const assetsToLoad = ref(null)
-    const showAssetLoad = ref(false)
+    const customAssets = useAssets();
+    const assetsToLoad = ref(null);
+    const showAssetLoad = ref(false);
     const loadAssetData = async () => {
-      const f: File = assetsToLoad.value as unknown as File
-      await customAssets.loadData(f)
-      showAssetLoad.value = false
-    }
+      const f: File = assetsToLoad.value as unknown as File;
+      await customAssets.loadData(f);
+      showAssetLoad.value = false;
+    };
 
-    const $q = useQuasar()
+    const $q = useQuasar();
     const width = computed((): number => {
       if ($q.screen.lt.sm) {
-        return Math.floor($q.screen.width * 0.9)
+        return Math.floor($q.screen.width * 0.9);
       }
-      return Math.floor($q.screen.width * 0.4)
-    })
+      return Math.floor($q.screen.width * 0.4);
+    });
     const btnSize = computed((): string => {
       if ($q.screen.lt.sm) {
-        return 'sm'
+        return 'sm';
       }
-      return 'md'
-    })
+      return 'md';
+    });
 
-    const showRoller = ref(false)
-    const showAbout = ref(false)
+    const showRoller = ref(false);
+    const showAbout = ref(false);
 
     return {
       leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
+      toggleLeftDrawer() {
+        leftDrawerOpen.value = !leftDrawerOpen.value;
       },
 
       rightDrawerOpen,
-      toggleRightDrawer () {
-        rightDrawerOpen.value = !rightDrawerOpen.value
+      toggleRightDrawer() {
+        rightDrawerOpen.value = !rightDrawerOpen.value;
       },
       width,
 
@@ -338,10 +443,10 @@ export default defineComponent({
 
       showRoller,
       showAbout,
-      btnSize
-    }
-  }
-})
+      btnSize,
+    };
+  },
+});
 </script>
 
 <style lang="sass">
