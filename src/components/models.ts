@@ -285,7 +285,6 @@ export interface ISFOracle {
   table: ISFTable;
 }
 
-// Planets
 export interface IPlanet {
   type: EPClass;
   name: string;
@@ -311,7 +310,6 @@ export interface IPlanetOracle {
   life: ISFTable;
 }
 
-// Settlement
 export interface ISettlement {
   name: string;
   location: ESLocation;
@@ -334,7 +332,6 @@ export interface ISettlementOracle {
   trouble: ISFTable;
 }
 
-// Starship
 export interface IStarship {
   name: string;
   class: string;
@@ -353,7 +350,6 @@ export interface IStarshipOracle {
   mission: { [index: string]: ISFTable };
 }
 
-// Derelict
 export interface IDerelict {
   name: string;
   location: ESLocation;
@@ -401,6 +397,45 @@ export interface ICreatureOracle {
   behaviour: ISFTable;
   aspect: ISFTable;
 }
+
+export interface IVaultArea {
+  feature: string;
+  peril: string;
+  opportunity: string;
+}
+export interface IVault {
+  name: string;
+  location: ESLocation;
+  scale: string;
+  form: string;
+  shape: string;
+  material: string;
+  outerFirstLook: string;
+  innerFirstLook: string;
+  purpose: string;
+  interior: IVaultArea;
+  sanctum: IVaultArea;
+}
+
+export interface IVaultAreaOracle {
+  feature: ISFTable;
+  peril: ISFTable;
+  opportunity: ISFTable;
+}
+
+export interface IVaultOracle {
+  location: ISFTable;
+  scale: ISFTable;
+  form: ISFTable;
+  shape: ISFTable;
+  material: ISFTable;
+  outerFirstLook: ISFTable;
+  innerFirstLook: ISFTable;
+  purpose: ISFTable;
+  interior: IVaultAreaOracle;
+  sanctum: IVaultAreaOracle;
+}
+
 // Rolls
 export interface IRollData {
   action: {
