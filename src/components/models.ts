@@ -72,6 +72,16 @@ export enum EEnv {
   Liquid = 'Liquid',
   Air = 'Air',
 }
+
+export enum ECoreCombo {
+  DescFoc = 'Descriptor + Focus',
+  ActTheme = 'Action + Theme',
+}
+
+export enum EVault {
+  Planet = 'Precursor Vault (planetside)',
+  Orbital = 'Precursor Vault (orbital)',
+}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;

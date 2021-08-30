@@ -1,10 +1,13 @@
 import {
+  ECoreCombo,
   EPClass,
   ERegion,
+  EVault,
   IPlanet,
   TPlanetOracles,
 } from 'src/components/models';
 import { d, tableRoll } from 'src/lib/roll';
+import { Core } from './core';
 
 /* Planet template
   [EPClass]: {
@@ -181,11 +184,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: 'Descriptor + Focus',
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -245,11 +248,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -439,11 +442,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -503,11 +506,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -689,11 +692,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -753,11 +756,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -938,11 +941,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -1002,11 +1005,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -1192,11 +1195,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -1256,11 +1259,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -1458,11 +1461,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -1522,11 +1525,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -1719,11 +1722,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -1783,11 +1786,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -1973,11 +1976,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -2037,11 +2040,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -2226,11 +2229,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -2290,11 +2293,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -2464,11 +2467,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -2528,11 +2531,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -2714,11 +2717,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (orbital)',
+          data: EVault.Orbital,
         },
       ],
     },
@@ -2778,11 +2781,11 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
-          data: '▶️Precursor Vault (planetside)',
+          data: EVault.Planet,
         },
       ],
     },
@@ -2822,6 +2825,18 @@ export const RollPlanet = (region: ERegion): IPlanet => {
 };
 
 export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
+  let o = tableRoll(Planets[type].observed);
+  o =
+    o === ECoreCombo.DescFoc
+      ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
+      : o;
+
+  let f = tableRoll(Planets[type].feature);
+  f =
+    f === ECoreCombo.DescFoc
+      ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
+      : f;
+
   return {
     type: type,
     name: Planets[type].names[
@@ -2832,8 +2847,8 @@ export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
     description: Planets[type].description,
     atmosphere: tableRoll(Planets[type].atmosphere),
     settlements: tableRoll(Planets[type].settlements[region]),
-    observed: tableRoll(Planets[type].observed),
-    feature: tableRoll(Planets[type].feature),
+    observed: o,
+    feature: f,
     life: tableRoll(Planets[type].life),
     notes: '',
   };

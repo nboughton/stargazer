@@ -1,4 +1,5 @@
 import { ISFOracle, ERegion, ESighting, ISFTable } from 'src/components/models';
+import { tableRoll } from '../roll';
 
 export const StellarObject: ISFTable = {
   items: [
@@ -336,4 +337,11 @@ export const Sighting: { [index: string]: ISFOracle } = {
       ],
     },
   },
+};
+
+export const sightingRoll = (
+  oracle: { [index: string]: ISFOracle },
+  region: ERegion
+): string => {
+  return tableRoll(oracle[region].table);
 };

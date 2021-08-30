@@ -1,10 +1,4 @@
-import {
-  IRollData,
-  IOracle,
-  ISFOracle,
-  ISFTable,
-  ERegion,
-} from 'src/components/models';
+import { IRollData, IOracle, ISFTable } from 'src/components/models';
 
 export const d = (size: number) => {
   return Math.floor(Math.random() * size) + 1;
@@ -132,11 +126,4 @@ export const tableRoll = (oracle: ISFTable): string => {
     }
   });
   return out;
-};
-
-export const sightingRoll = (
-  oracle: { [index: string]: ISFOracle },
-  region: ERegion
-): string => {
-  return tableRoll(oracle[region].table);
 };

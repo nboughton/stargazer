@@ -1,7 +1,7 @@
 <template>
   <div class="column">
     <div class="text-h6">Space Sightings</div>
-    <div class="row full-width items-baseline q-mb-md">
+    <div class="row full-width items-center q-mb-md">
       <q-select
         class="col-grow"
         label="Region"
@@ -16,10 +16,20 @@
         dense
         @click="rollSighting"
       />
+      <q-btn
+        class="col-shrink"
+        icon="clear"
+        flat
+        dense
+        @click="rollResult = ''"
+      />
     </div>
     <div class="text-h6">{{ rollResult }}</div>
     <div v-if="rollResult === ESighting.StellarObject">
       {{ tableRoll(StellarObject) }}
+    </div>
+    <div v-if="rollResult === ESighting.DescFoc">
+      {{ tableRoll(Core.descriptor) }} {{ tableRoll(Core.focus) }}
     </div>
     <planet
       v-if="rollResult === ESighting.Planet"
@@ -39,7 +49,7 @@
     />
     <creature
       v-if="rollResult === ESighting.Creature"
-      :modelValue="RollCreature()"
+      :modelValue="RollCreature(EEnv.Space)"
     />
     <vault v-if="rollResult === ESighting.Vault" :modelValue="RollVault()" />
   </div>
@@ -47,9 +57,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Sighting, StellarObject } from 'src/lib/oracles/space';
-import { ERegion, ESighting, EPClass } from 'src/components/models';
-import { sightingRoll, tableRoll } from 'src/lib/roll';
+import { Core } from 'src/lib/oracles/core';
+import { Sighting, StellarObject, sightingRoll } from 'src/lib/oracles/space';
+import { ERegion, ESighting, EPClass, EEnv } from 'src/components/models';
+import { tableRoll } from 'src/lib/roll';
 import { RollPlanet } from 'src/lib/oracles/planets';
 import { RollSettlement } from 'src/lib/oracles/settlement';
 import { RollStarship } from 'src/lib/oracles/starship';
@@ -76,11 +87,13 @@ export default defineComponent({
     };
 
     return {
+      Core,
       Sighting,
       StellarObject,
       ERegion,
       ESighting,
       EPClass,
+      EEnv,
       regionSelect,
 
       rollResult,
