@@ -9,13 +9,7 @@
         :options="Object.values(ERegion)"
         dense
       />
-      <q-btn
-        class="col-shrink"
-        icon="mdi-dice-6"
-        flat
-        dense
-        @click="rollSighting"
-      />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll" />
       <q-btn
         class="col-shrink"
         icon="clear"
@@ -58,7 +52,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { Core } from 'src/lib/oracles/core';
-import { Space, sightingRoll } from 'src/lib/oracles/space';
+import { Space, RollSighting } from 'src/lib/oracles/space';
 import { ERegion, ESighting, EPClass, EEnv } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { RollPlanet } from 'src/lib/oracles/planets';
@@ -81,9 +75,9 @@ export default defineComponent({
   setup() {
     const regionSelect = ref(ERegion.Terminus);
     const rollResult = ref('');
-    const rollSighting = () => {
+    const roll = () => {
       rollResult.value = '';
-      rollResult.value = sightingRoll(Space.sighting, regionSelect.value);
+      rollResult.value = RollSighting(regionSelect.value);
     };
 
     return {
@@ -96,9 +90,10 @@ export default defineComponent({
       regionSelect,
 
       rollResult,
-      rollSighting,
+      roll,
       tableRoll,
 
+      RollSighting,
       RollPlanet,
       RollSettlement,
       RollStarship,

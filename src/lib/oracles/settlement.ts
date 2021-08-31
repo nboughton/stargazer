@@ -4,6 +4,7 @@ import {
   ISettlement,
   ISettlementOracle,
 } from 'src/components/models';
+import { Core } from 'src/lib/oracles/core';
 import { tableRoll } from 'src/lib/roll';
 
 export const Settlement: ISettlementOracle = {
@@ -585,7 +586,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [91, 100],
-        data: '▶️Descriptor + Focus',
+        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
       },
     ],
   },
@@ -801,7 +802,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [96, 100],
-        data: '▶️Action + Theme',
+        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
       },
     ],
   },
@@ -921,7 +922,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [81, 90],
-        data: '▶️Action + Theme',
+        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
       },
       {
         match: [91, 100],

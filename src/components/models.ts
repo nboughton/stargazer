@@ -82,6 +82,16 @@ export enum EVault {
   Planet = 'Precursor Vault (planetside)',
   Orbital = 'Precursor Vault (orbital)',
 }
+
+export enum ELocTheme {
+  Chaotic = 'Chaotic',
+  Fortified = 'Fortified',
+  Haunted = 'Haunted',
+  Infested = 'Infested',
+  Inhabited = 'Inhabited',
+  Ruined = 'Ruined',
+  Sacred = 'Sacred',
+}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;
@@ -302,6 +312,17 @@ export interface ISpaceOracle {
   sectorSuffix: ISFTable;
   peril: ISFTable;
   opportunity: ISFTable;
+}
+
+export interface ILocThemeOracle {
+  type: ISFTable;
+  [ELocTheme.Chaotic]: { [index: string]: ISFTable };
+  [ELocTheme.Fortified]: { [index: string]: ISFTable };
+  [ELocTheme.Haunted]: { [index: string]: ISFTable };
+  [ELocTheme.Infested]: { [index: string]: ISFTable };
+  [ELocTheme.Inhabited]: { [index: string]: ISFTable };
+  [ELocTheme.Ruined]: { [index: string]: ISFTable };
+  [ELocTheme.Sacred]: { [index: string]: ISFTable };
 }
 
 export interface IPlanet {

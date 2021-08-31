@@ -1,9 +1,5 @@
-import {
-  ERegion,
-  ESighting,
-  ISpaceOracle,
-  ISFTable,
-} from 'src/components/models';
+import { ERegion, ESighting, ISpaceOracle } from 'src/components/models';
+import { Core } from 'src/lib/oracles/core';
 import { tableRoll } from '../roll';
 
 export const Space: ISpaceOracle = {
@@ -873,7 +869,7 @@ export const Space: ISpaceOracle = {
       },
       {
         match: [97, 99],
-        data: '▶️Action + Theme',
+        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
       },
       {
         match: [100],
@@ -987,9 +983,10 @@ export const Space: ISpaceOracle = {
   },
 };
 
-export const sightingRoll = (
-  oracle: { [index: string]: ISFTable },
-  region: ERegion
-): string => {
-  return tableRoll(oracle[region]);
+export const RollSighting = (region: ERegion): string => {
+  return tableRoll(Space.sighting[region]);
+};
+
+export const RollSectorName = (): string => {
+  return tableRoll(Space.sectorPrefix) + ' ' + tableRoll(Space.sectorSuffix);
 };

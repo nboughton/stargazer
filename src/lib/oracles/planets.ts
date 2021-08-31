@@ -1,5 +1,4 @@
 import {
-  ECoreCombo,
   EPClass,
   ERegion,
   EVault,
@@ -248,7 +247,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -442,7 +441,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -506,7 +505,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -692,7 +691,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -756,7 +755,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -941,7 +940,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1005,7 +1004,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1195,7 +1194,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1259,7 +1258,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1461,7 +1460,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1525,7 +1524,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1722,7 +1721,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1786,7 +1785,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -1976,7 +1975,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2040,7 +2039,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2229,7 +2228,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2293,7 +2292,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2467,7 +2466,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2531,7 +2530,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2717,7 +2716,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2781,7 +2780,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: ECoreCombo.DescFoc,
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [99, 100],
@@ -2827,13 +2826,13 @@ export const RollPlanet = (region: ERegion): IPlanet => {
 export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
   let o = tableRoll(Planets[type].observed);
   o =
-    o === ECoreCombo.DescFoc
+    o === tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus)
       ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
       : o;
 
   let f = tableRoll(Planets[type].feature);
   f =
-    f === ECoreCombo.DescFoc
+    f === tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus)
       ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
       : f;
 

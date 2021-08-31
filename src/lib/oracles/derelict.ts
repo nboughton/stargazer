@@ -5,6 +5,7 @@ import {
   IDerelict,
   IDerelictOracle,
 } from 'src/components/models';
+import { Core } from './core';
 import { tableRoll } from '../roll';
 
 export const Derelict: IDerelictOracle = {
@@ -262,7 +263,7 @@ export const Derelict: IDerelictOracle = {
       },
       {
         match: [94, 100],
-        data: '▶️Descriptor + Focus',
+        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
       },
     ],
   },
@@ -450,7 +451,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [96, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -494,7 +495,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -629,7 +630,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -673,7 +674,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -808,7 +809,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -852,7 +853,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -987,7 +988,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -1031,7 +1032,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -1166,7 +1167,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -1210,7 +1211,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -1345,7 +1346,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -1389,7 +1390,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -1524,7 +1525,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -1568,7 +1569,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],
@@ -1703,7 +1704,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: '▶️Descriptor + Focus',
+            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
           },
         ],
       },
@@ -1747,7 +1748,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: '▶️Action + Theme',
+            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
           },
           {
             match: [99, 100],

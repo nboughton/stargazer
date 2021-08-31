@@ -1,4 +1,5 @@
 import { IVaultOracle, ESLocation, IVault } from 'src/components/models';
+import { Core } from './core';
 import { tableRoll } from '../roll';
 
 export const Vault: IVaultOracle = {
@@ -298,7 +299,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [96, 100],
-        data: '▶️Descriptor + Focus',
+        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
       },
     ],
   },
@@ -430,7 +431,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [94, 100],
-        data: '▶️Descriptor + Focus',
+        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
       },
     ],
   },
@@ -571,7 +572,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [91, 95],
-          data: '▶️Descriptor + Focus',
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [96, 100],
@@ -659,7 +660,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [96, 99],
-          data: '▶️Action + Theme',
+          data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
         },
         {
           match: [100, 100],
@@ -824,7 +825,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [91, 95],
-        data: '▶️Action + Theme',
+        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
       },
       {
         match: [96, 100],
@@ -969,7 +970,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [91, 95],
-          data: '▶️Descriptor + Focus',
+          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
         },
         {
           match: [96, 100],
@@ -1057,7 +1058,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [96, 99],
-          data: '▶️Action + Theme',
+          data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
         },
         {
           match: [100, 100],

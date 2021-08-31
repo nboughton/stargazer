@@ -1,5 +1,6 @@
 import { ERegion, IStarship, IStarshipOracle } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
+import { Core } from './core';
 
 export const Starship: IStarshipOracle = {
   name: {
@@ -674,7 +675,7 @@ export const Starship: IStarshipOracle = {
       },
       {
         match: [95, 100],
-        data: '▶️Descriptor + Focus',
+        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
       },
     ],
   },
@@ -803,7 +804,7 @@ export const Starship: IStarshipOracle = {
         },
         {
           match: [86, 90],
-          data: '▶️Action + Theme',
+          data: tableRoll(Core.action) + tableRoll(Core.theme),
         },
         {
           match: [91, 100],
@@ -935,7 +936,7 @@ export const Starship: IStarshipOracle = {
         },
         {
           match: [86, 90],
-          data: '▶️Action + Theme',
+          data: tableRoll(Core.action) + tableRoll(Core.theme),
         },
         {
           match: [91, 100],
@@ -1067,7 +1068,7 @@ export const Starship: IStarshipOracle = {
         },
         {
           match: [86, 90],
-          data: '▶️Action + Theme',
+          data: tableRoll(Core.action) + tableRoll(Core.theme),
         },
         {
           match: [91, 100],
