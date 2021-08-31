@@ -1,11 +1,11 @@
 import {
+  ECoreCombo,
   EDerelictType,
   EDerelictZone,
   ESLocation,
   IDerelict,
   IDerelictOracle,
 } from 'src/components/models';
-import { Core } from './core';
 import { tableRoll } from '../roll';
 
 export const Derelict: IDerelictOracle = {
@@ -263,7 +263,7 @@ export const Derelict: IDerelictOracle = {
       },
       {
         match: [94, 100],
-        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+        data: ECoreCombo.DescFoc,
       },
     ],
   },
@@ -451,7 +451,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [96, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -495,7 +495,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -630,7 +630,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -674,7 +674,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -809,7 +809,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -853,7 +853,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -988,7 +988,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -1032,7 +1032,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -1167,7 +1167,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -1211,7 +1211,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -1346,7 +1346,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -1390,7 +1390,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -1525,7 +1525,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -1569,7 +1569,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -1704,7 +1704,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [89, 100],
-            data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+            data: ECoreCombo.DescFoc,
           },
         ],
       },
@@ -1748,7 +1748,7 @@ export const Derelict: IDerelictOracle = {
           },
           {
             match: [91, 98],
-            data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+            data: ECoreCombo.ActTheme,
           },
           {
             match: [99, 100],
@@ -1799,6 +1799,11 @@ export const RollDerelict = (
     outerFirstLook: tableRoll(Derelict.outerFirstLook),
     innerFirstLook: tableRoll(Derelict.innerFirstLook),
     currentZone: EDerelictZone.Access,
-    explore: '',
+    explore: {
+      area: '',
+      feature: '',
+      peril: '',
+      opportunity: '',
+    },
   };
 };

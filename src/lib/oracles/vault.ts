@@ -1,5 +1,10 @@
-import { IVaultOracle, ESLocation, IVault } from 'src/components/models';
-import { Core } from './core';
+import {
+  IVaultOracle,
+  ESLocation,
+  IVault,
+  ECoreCombo,
+} from 'src/components/models';
+
 import { tableRoll } from '../roll';
 
 export const Vault: IVaultOracle = {
@@ -299,7 +304,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [96, 100],
-        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+        data: ECoreCombo.DescFoc,
       },
     ],
   },
@@ -431,7 +436,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [94, 100],
-        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+        data: ECoreCombo.DescFoc,
       },
     ],
   },
@@ -572,7 +577,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [91, 95],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [96, 100],
@@ -660,7 +665,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [96, 99],
-          data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [100, 100],
@@ -825,7 +830,7 @@ export const Vault: IVaultOracle = {
       },
       {
         match: [91, 95],
-        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+        data: ECoreCombo.ActTheme,
       },
       {
         match: [96, 100],
@@ -970,7 +975,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [91, 95],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [96, 100],
@@ -1058,7 +1063,7 @@ export const Vault: IVaultOracle = {
         },
         {
           match: [96, 99],
-          data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [100, 100],

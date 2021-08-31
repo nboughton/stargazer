@@ -2823,6 +2823,18 @@ export const RollPlanet = (region: ERegion): IPlanet => {
   return p;
 };
 
+export const RollPlanetType = (): EPClass => {
+  const n = d(100);
+  let p = EPClass.Desert;
+  Object.keys(Planets).forEach((k) => {
+    if (n >= Planets[k].match[0] && n <= Planets[k].match[1]) {
+      p = k as EPClass;
+      return;
+    }
+  });
+  return p;
+};
+
 export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
   let o = tableRoll(Planets[type].observed);
   o =

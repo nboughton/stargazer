@@ -1,4 +1,4 @@
-import { ELocTheme, ILocThemeOracle } from 'src/components/models';
+import { ECoreCombo, ELocTheme, ILocThemeOracle } from 'src/components/models';
 
 export const LocTheme: ILocThemeOracle = {
   type: {
@@ -87,7 +87,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -135,7 +135,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -222,7 +222,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -270,7 +270,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -357,7 +357,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -405,7 +405,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -492,7 +492,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -540,7 +540,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -627,7 +627,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -675,7 +675,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -762,7 +762,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -810,7 +810,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],
@@ -897,7 +897,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [97, 100],
-          data: '▶️Descriptor + Focus',
+          data: ECoreCombo.DescFoc,
         },
       ],
     },
@@ -945,7 +945,7 @@ export const LocTheme: ILocThemeOracle = {
         },
         {
           match: [91, 98],
-          data: '▶️Action + Theme',
+          data: ECoreCombo.ActTheme,
         },
         {
           match: [99, 100],

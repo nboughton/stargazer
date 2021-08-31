@@ -73,11 +73,6 @@ export enum EEnv {
   Air = 'Air',
 }
 
-export enum ECoreCombo {
-  DescFoc = 'Descriptor + Focus',
-  ActTheme = 'Action + Theme',
-}
-
 export enum EVault {
   Planet = 'Precursor Vault (planetside)',
   Orbital = 'Precursor Vault (orbital)',
@@ -91,6 +86,11 @@ export enum ELocTheme {
   Inhabited = 'Inhabited',
   Ruined = 'Ruined',
   Sacred = 'Sacred',
+}
+
+export enum ECoreCombo {
+  ActTheme = 'Action + Theme',
+  DescFoc = 'Descriptor + Focus',
 }
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
@@ -305,6 +305,27 @@ export interface ISFOracle {
   table: ISFTable;
 }
 
+export interface IChar {
+  givenName: string;
+  familyName: string;
+  callsign: string;
+  firstLook: string;
+  disposition: string;
+  role: string;
+  goal: string;
+  aspect: string;
+}
+
+export interface ICharOracle {
+  givenName: ISFTable;
+  familyName: ISFTable;
+  callsign: ISFTable;
+  firstLook: ISFTable;
+  disposition: ISFTable;
+  role: ISFTable;
+  goal: ISFTable;
+  aspect: ISFTable;
+}
 export interface ISpaceOracle {
   sighting: { [index: string]: ISFTable };
   stellarObject: ISFTable;
@@ -398,7 +419,12 @@ export interface IDerelict {
   outerFirstLook: string;
   innerFirstLook: string;
   currentZone: EDerelictZone;
-  explore: string;
+  explore: {
+    area: string;
+    feature: string;
+    peril: string;
+    opportunity: string;
+  };
 }
 
 export interface IDerelictOracle {

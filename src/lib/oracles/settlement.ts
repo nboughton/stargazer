@@ -1,10 +1,10 @@
 import {
+  ECoreCombo,
   ERegion,
   ESLocation,
   ISettlement,
   ISettlementOracle,
 } from 'src/components/models';
-import { Core } from 'src/lib/oracles/core';
 import { tableRoll } from 'src/lib/roll';
 
 export const Settlement: ISettlementOracle = {
@@ -586,7 +586,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [91, 100],
-        data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+        data: ECoreCombo.DescFoc,
       },
     ],
   },
@@ -802,7 +802,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [96, 100],
-        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+        data: ECoreCombo.ActTheme,
       },
     ],
   },
@@ -922,7 +922,7 @@ export const Settlement: ISettlementOracle = {
       },
       {
         match: [81, 90],
-        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+        data: ECoreCombo.ActTheme,
       },
       {
         match: [91, 100],

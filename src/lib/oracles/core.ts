@@ -1,4 +1,5 @@
 import { ISFTable } from 'src/components/models';
+import { tableRoll } from '../roll';
 
 export const Core: { [index: string]: ISFTable } = {
   action: {
@@ -1617,4 +1618,12 @@ export const Core: { [index: string]: ISFTable } = {
       },
     ],
   },
+};
+
+export const ActTheme = (): string => {
+  return tableRoll(Core.action) + ' ' + tableRoll(Core.theme);
+};
+
+export const DescFoc = (): string => {
+  return tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus);
 };

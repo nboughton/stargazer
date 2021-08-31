@@ -1,5 +1,9 @@
-import { ERegion, ESighting, ISpaceOracle } from 'src/components/models';
-import { Core } from 'src/lib/oracles/core';
+import {
+  ECoreCombo,
+  ERegion,
+  ESighting,
+  ISpaceOracle,
+} from 'src/components/models';
 import { tableRoll } from '../roll';
 
 export const Space: ISpaceOracle = {
@@ -869,7 +873,7 @@ export const Space: ISpaceOracle = {
       },
       {
         match: [97, 99],
-        data: tableRoll(Core.action) + ' ' + tableRoll(Core.theme),
+        data: ECoreCombo.ActTheme,
       },
       {
         match: [100],
