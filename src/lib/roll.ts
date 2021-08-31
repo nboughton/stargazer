@@ -65,8 +65,7 @@ export const moveRoll = (
   attr: number,
   adds: number,
   momentum: number,
-  progress: boolean,
-  progressScore?: number
+  progress?: number
 ): IRollData => {
   let r = NewRollData();
   r.action.die = d(6);
@@ -81,8 +80,7 @@ export const moveRoll = (
 
   // Replace action score for a progress move
   if (progress) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    r.action.score = progressScore!;
+    r.action.score = progress;
   }
   r.challenge.match = false;
 

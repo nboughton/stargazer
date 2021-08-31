@@ -26,7 +26,7 @@
     </div>
     <div class="text-h6">{{ rollResult }}</div>
     <div v-if="rollResult === ESighting.StellarObject">
-      {{ tableRoll(StellarObject) }}
+      {{ tableRoll(Space.stellarObject) }}
     </div>
     <div v-if="rollResult === ESighting.DescFoc">
       {{ tableRoll(Core.descriptor) }} {{ tableRoll(Core.focus) }}
@@ -58,7 +58,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { Core } from 'src/lib/oracles/core';
-import { Sighting, StellarObject, sightingRoll } from 'src/lib/oracles/space';
+import { Space, sightingRoll } from 'src/lib/oracles/space';
 import { ERegion, ESighting, EPClass, EEnv } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { RollPlanet } from 'src/lib/oracles/planets';
@@ -83,13 +83,12 @@ export default defineComponent({
     const rollResult = ref('');
     const rollSighting = () => {
       rollResult.value = '';
-      rollResult.value = sightingRoll(Sighting, regionSelect.value);
+      rollResult.value = sightingRoll(Space.sighting, regionSelect.value);
     };
 
     return {
       Core,
-      Sighting,
-      StellarObject,
+      Space,
       ERegion,
       ESighting,
       EPClass,

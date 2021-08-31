@@ -295,6 +295,15 @@ export interface ISFOracle {
   table: ISFTable;
 }
 
+export interface ISpaceOracle {
+  sighting: { [index: string]: ISFTable };
+  stellarObject: ISFTable;
+  sectorPrefix: ISFTable;
+  sectorSuffix: ISFTable;
+  peril: ISFTable;
+  opportunity: ISFTable;
+}
+
 export interface IPlanet {
   type: EPClass;
   name: string;
