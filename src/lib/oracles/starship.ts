@@ -587,7 +587,7 @@ export const Starship: IStarshipOracle = {
       },
       {
         match: [96, 100],
-        data: '▶️Derelict',
+        data: 'Derelict',
       },
     ],
   },

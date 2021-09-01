@@ -15,6 +15,8 @@
   <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
 
   <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
+
+  <o-btns clear @clear="btns.Clear" />
 </template>
 
 <script lang="ts">
@@ -22,9 +24,10 @@ import { Space } from 'src/lib/oracles/space';
 import { tableRoll } from 'src/lib/roll';
 import { defineComponent, ref } from 'vue';
 import { ERegion } from '../models';
+import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
 export default defineComponent({
-  components: { OInput },
+  components: { OInput, OBtns },
   name: 'Space',
   setup() {
     const data = ref({
@@ -56,12 +59,26 @@ export default defineComponent({
         data.value.opportunity = tableRoll(Space.opportunity);
       },
     };
+
+    const btns = {
+      Clear: () => {
+        data.value = {
+          sighting: '',
+          obj: '',
+          sectorName: '',
+          peril: '',
+          opportunity: '',
+        };
+      },
+    };
+
     return {
       data,
       regionSelect,
       ERegion,
 
       roll,
+      btns,
     };
   },
 });

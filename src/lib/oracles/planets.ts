@@ -3,6 +3,7 @@ import {
   ERegion,
   EVault,
   IPlanet,
+  ISFTable,
   TPlanetOracles,
 } from 'src/components/models';
 import { d, tableRoll } from 'src/lib/roll';
@@ -2811,6 +2812,448 @@ export const Planets: TPlanetOracles = {
   },
 };
 
+export const Peril: { [index: string]: ISFTable } = {
+  lifeless: {
+    items: [
+      {
+        match: [1, 3],
+        data: 'Life is revealed or takes an unexpected form',
+      },
+      {
+        match: [4, 7],
+        data: 'Blocked or impassible path',
+      },
+      {
+        match: [8, 11],
+        data: 'Corrosive substance or environment',
+      },
+      {
+        match: [12, 15],
+        data: 'Disturbing remains or evidence of death',
+      },
+      {
+        match: [16, 19],
+        data: 'Drastic environmental change',
+      },
+      {
+        match: [20, 23],
+        data: 'Enemy holds this area',
+      },
+      {
+        match: [24, 27],
+        data: 'Entangling or engulfing hazard',
+      },
+      {
+        match: [28, 31],
+        data: 'Equipment fails or malfunctions',
+      },
+      {
+        match: [32, 35],
+        data: 'Guarded or patrolled path',
+      },
+      {
+        match: [36, 39],
+        data: 'Led astray',
+      },
+      {
+        match: [40, 43],
+        data: 'Lost the path',
+      },
+      {
+        match: [44, 47],
+        data: 'Meteorites fall from the sky',
+      },
+      {
+        match: [48, 51],
+        data: 'Irradiated area or object',
+      },
+      {
+        match: [52, 55],
+        data: 'Realization that something was left behind',
+      },
+      {
+        match: [56, 59],
+        data: 'Seismic or volcanic upheaval',
+      },
+      {
+        match: [60, 63],
+        data: 'Signs of a lurking or trailing foe',
+      },
+      {
+        match: [64, 67],
+        data: 'Storm or atmospheric disruption',
+      },
+      {
+        match: [68, 71],
+        data: 'Toxic or sickening environment',
+      },
+      {
+        match: [72, 75],
+        data: 'Trap or alarm',
+      },
+      {
+        match: [76, 79],
+        data: 'Treacherous or arduous path',
+      },
+      {
+        match: [80, 83],
+        data: 'Troubling visions or apparitions',
+      },
+      {
+        match: [84, 87],
+        data: 'Visibility hindered by atmospheric effects',
+      },
+      {
+        match: [88, 91],
+        data: 'Worrying arrival of a ship or vehicle',
+      },
+      {
+        match: [92, 95],
+        data: 'Wreckage or ruins portend a new threat',
+      },
+      {
+        match: [96, 99],
+        data: '▶️Action + Theme',
+      },
+      {
+        match: [100],
+        data: 'Roll twice',
+      },
+    ],
+  },
+  lifebearing: {
+    items: [
+      {
+        match: [1, 3],
+        data: 'Corrupted or mutated lifeform',
+      },
+      {
+        match: [4, 6],
+        data: 'Signs of a lifeform&rsquo;s power or cunning',
+      },
+      {
+        match: [7, 9],
+        data: 'Hazardous plant life or malignant spores',
+      },
+      {
+        match: [10, 12],
+        data: 'Lifeform hunts for prey',
+      },
+      {
+        match: [13, 15],
+        data: 'Lifeform lairs here',
+      },
+      {
+        match: [16, 18],
+        data: 'Lifeforms guided by a greater threat',
+      },
+      {
+        match: [19, 21],
+        data: 'Lifeforms spooked or stampeding',
+      },
+      {
+        match: [22, 24],
+        data: 'Threatening lifeform draws near',
+      },
+      {
+        match: [25, 27],
+        data: 'Life is revealed or takes an unexpected form',
+      },
+      {
+        match: [28, 30],
+        data: 'Blocked or impassible path',
+      },
+      {
+        match: [31, 33],
+        data: 'Corrosive substance or environment',
+      },
+      {
+        match: [34, 36],
+        data: 'Disturbing remains or evidence of death',
+      },
+      {
+        match: [37, 39],
+        data: 'Drastic environmental change',
+      },
+      {
+        match: [40, 42],
+        data: 'Enemy holds this area',
+      },
+      {
+        match: [43, 45],
+        data: 'Entangling or engulfing hazard',
+      },
+      {
+        match: [46, 48],
+        data: 'Equipment fails or malfunctions',
+      },
+      {
+        match: [49, 51],
+        data: 'Guarded or patrolled path',
+      },
+      {
+        match: [52, 54],
+        data: 'Led astray',
+      },
+      {
+        match: [55, 57],
+        data: 'Lost the path',
+      },
+      {
+        match: [58, 60],
+        data: 'Meteorites fall from the sky',
+      },
+      {
+        match: [61, 63],
+        data: 'Irradiated area or object',
+      },
+      {
+        match: [64, 66],
+        data: 'Realization that something was left behind',
+      },
+      {
+        match: [67, 69],
+        data: 'Seismic or volcanic upheaval',
+      },
+      {
+        match: [70, 72],
+        data: 'Signs of a lurking or trailing foe',
+      },
+      {
+        match: [73, 75],
+        data: 'Storm or atmospheric disruption',
+      },
+      {
+        match: [76, 78],
+        data: 'Toxic or sickening environment',
+      },
+      {
+        match: [79, 81],
+        data: 'Trap or alarm',
+      },
+      {
+        match: [82, 84],
+        data: 'Treacherous or arduous path',
+      },
+      {
+        match: [85, 87],
+        data: 'Troubling visions or apparitions',
+      },
+      {
+        match: [88, 90],
+        data: 'Visibility hindered by atmospheric effects',
+      },
+      {
+        match: [91, 93],
+        data: 'Worrying arrival of a ship or vehicle',
+      },
+      {
+        match: [94, 96],
+        data: 'Wreckage or ruins portend a new threat',
+      },
+      {
+        match: [97, 99],
+        data: '▶️Action + Theme',
+      },
+      {
+        match: [100],
+        data: 'Roll twice',
+      },
+    ],
+  },
+};
+
+export const Opportunity: { [index: string]: ISFTable } = {
+  lifeless: {
+    items: [
+      {
+        match: [1, 5],
+        data: 'Encounter reveals unexpected benign lifeforms',
+      },
+      {
+        match: [6, 10],
+        data: 'Abandoned camp or vehicle',
+      },
+      {
+        match: [11, 15],
+        data: 'Advance warning of an environmental threat',
+      },
+      {
+        match: [16, 20],
+        data: 'Clear path through otherwise perilous terrain',
+      },
+      {
+        match: [21, 25],
+        data: 'Clue offers insight into a current quest or mystery',
+      },
+      {
+        match: [26, 30],
+        data: 'Clue to the history or nature of this place',
+      },
+      {
+        match: [31, 35],
+        data: 'Evidence that others have passed this way',
+      },
+      {
+        match: [36, 40],
+        data: 'Foe reveals themselves or tips their hand',
+      },
+      {
+        match: [41, 45],
+        data: 'Fortuitous change in the weather or atmosphere',
+      },
+      {
+        match: [46, 50],
+        data: 'Friendly traveler crosses your path',
+      },
+      {
+        match: [51, 55],
+        data: 'Helpful resource is in ample supply',
+      },
+      {
+        match: [56, 60],
+        data: 'Impressive vista offers comfort or inspiration',
+      },
+      {
+        match: [61, 65],
+        data: 'Interesting artifact or device',
+      },
+      {
+        match: [66, 70],
+        data: 'Interesting site offers opportunities for exploration',
+      },
+      {
+        match: [71, 75],
+        data: 'Moment of fellowship or inner peace',
+      },
+      {
+        match: [76, 80],
+        data: 'Opening to distract, escape, or avoid foes',
+      },
+      {
+        match: [81, 85],
+        data: 'Opening to get the drop on a foe',
+      },
+      {
+        match: [86, 90],
+        data: 'Plea for help from a potential benefactor',
+      },
+      {
+        match: [91, 95],
+        data: 'Refuge offers a place to hide, plan, or recover',
+      },
+      {
+        match: [96, 100],
+        data: 'Vantage point reveals the lay of the land',
+      },
+    ],
+  },
+  lifebearing: {
+    items: [
+      {
+        match: [1, 4],
+        data: 'Clue to a lifeform&rsquo;s nature or vulnerabilities',
+      },
+      {
+        match: [5, 8],
+        data: 'Friendly interaction with a benign lifeform',
+      },
+      {
+        match: [9, 12],
+        data: 'Hunting or foraging opportunities are plentiful',
+      },
+      {
+        match: [13, 16],
+        data: 'Interesting or helpful aspect of benign creatures',
+      },
+      {
+        match: [17, 20],
+        data: 'Interesting or helpful aspect of local plant life',
+      },
+      {
+        match: [21, 24],
+        data: 'Encounter reveals unexpected benign lifeforms',
+      },
+      {
+        match: [25, 28],
+        data: 'Abandoned camp or vehicle',
+      },
+      {
+        match: [29, 32],
+        data: 'Advance warning of an environmental threat',
+      },
+      {
+        match: [33, 36],
+        data: 'Clear path through otherwise perilous terrain',
+      },
+      {
+        match: [37, 40],
+        data: 'Clue offers insight into a current quest or mystery',
+      },
+      {
+        match: [41, 44],
+        data: 'Clue to the history or nature of this place',
+      },
+      {
+        match: [45, 48],
+        data: 'Evidence that others have passed this way',
+      },
+      {
+        match: [49, 52],
+        data: 'Foe reveals themselves or tips their hand',
+      },
+      {
+        match: [53, 56],
+        data: 'Fortuitous change in the weather or atmosphere',
+      },
+      {
+        match: [57, 60],
+        data: 'Friendly traveler crosses your path',
+      },
+      {
+        match: [61, 64],
+        data: 'Helpful resource is in ample supply',
+      },
+      {
+        match: [65, 68],
+        data: 'Impressive vista offers comfort or inspiration',
+      },
+      {
+        match: [69, 72],
+        data: 'Interesting artifact or device',
+      },
+      {
+        match: [73, 76],
+        data: 'Interesting site offers opportunities for exploration',
+      },
+      {
+        match: [77, 80],
+        data: 'Moment of fellowship or inner peace',
+      },
+      {
+        match: [81, 84],
+        data: 'Opening to distract, escape, or avoid foes',
+      },
+      {
+        match: [85, 88],
+        data: 'Opening to get the drop on a foe',
+      },
+      {
+        match: [89, 92],
+        data: 'Plea for help from a potential benefactor',
+      },
+      {
+        match: [93, 96],
+        data: 'Refuge offers a place to hide, plan, or recover',
+      },
+      {
+        match: [97, 100],
+        data: 'Vantage point reveals the lay of the land',
+      },
+    ],
+  },
+};
+
 export const RollPlanet = (region: ERegion): IPlanet => {
   const n = d(100);
   let p = <IPlanet>{};
@@ -2853,7 +3296,6 @@ export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
     name: Planets[type].names[
       Math.floor(Math.random() * Planets[type].names.length)
     ],
-    region: region,
     sector: '',
     description: Planets[type].description,
     atmosphere: tableRoll(Planets[type].atmosphere),

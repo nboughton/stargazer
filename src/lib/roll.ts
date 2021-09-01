@@ -1,4 +1,10 @@
-import { IRollData, IOracle, ISFTable } from 'src/components/models';
+import {
+  IRollData,
+  IOracle,
+  ISFTable,
+  ECoreCombo,
+} from 'src/components/models';
+import { Core } from './oracles/core';
 
 export const d = (size: number) => {
   return Math.floor(Math.random() * size) + 1;
@@ -123,5 +129,10 @@ export const tableRoll = (oracle: ISFTable): string => {
       return;
     }
   });
+
+  if (out === ECoreCombo.ActTheme)
+    out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
+  if (out === ECoreCombo.DescFoc)
+    out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
   return out;
 };

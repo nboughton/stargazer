@@ -21,7 +21,12 @@
 
   <o-input label="Population" v-model="data.population" @roll="roll.Pop" />
 
-  <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" />
+  <o-input
+    label="First Look"
+    v-model="data.firstLook"
+    @roll="roll.First"
+    reroll
+  />
 
   <o-input
     label="Initial Contact"
@@ -31,9 +36,18 @@
 
   <o-input label="Authority" v-model="data.authority" @roll="roll.Auth" />
 
-  <o-input label="Projects" v-model="data.projects" @roll="roll.Proj" />
+  <o-input label="Projects" v-model="data.projects" @roll="roll.Proj" reroll />
 
   <o-input label="Trouble" v-model="data.trouble" @roll="roll.Trouble" />
+
+  <o-btns
+    clear
+    @clear="btns.Clear"
+    initial
+    @initial="btns.Initial"
+    save
+    @save="btns.Save"
+  />
 </template>
 
 <script lang="ts">
@@ -42,8 +56,9 @@ import { ISettlement, ESLocation, ERegion } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { Settlement } from 'src/lib/oracles/settlement';
 import OInput from './OInput.vue';
+import OBtns from './OBtns.vue';
 export default defineComponent({
-  components: { OInput },
+  components: { OInput, OBtns },
   name: 'Settlement',
   props: {
     modelValue: {
@@ -72,7 +87,10 @@ export default defineComponent({
         );
       },
       First: () => {
-        data.value.firstLook = tableRoll(Settlement.firstLook);
+        const f = tableRoll(Settlement.firstLook);
+        data.value.firstLook
+          ? (data.value.firstLook += ', ' + f)
+          : (data.value.firstLook = f);
       },
       Cont: () => {
         data.value.initialContact = tableRoll(Settlement.initialContact);
@@ -81,10 +99,29 @@ export default defineComponent({
         data.value.authority = tableRoll(Settlement.authority);
       },
       Proj: () => {
-        data.value.projects = tableRoll(Settlement.projects);
+        const p = tableRoll(Settlement.projects);
+        data.value.projects
+          ? (data.value.projects += ', ' + p)
+          : (data.value.projects = p);
       },
       Trouble: () => {
         data.value.trouble = tableRoll(Settlement.trouble);
+      },
+    };
+
+    const btns = {
+      Clear: () => {
+        data.value = <ISettlement>{ location: ESLocation.Planetside };
+      },
+      Initial: () => {
+        btns.Clear();
+        roll.Loc();
+        roll.Name();
+        roll.Pop();
+        roll.First();
+      },
+      Save: () => {
+        alert('Not yet implemented');
       },
     };
 
@@ -93,8 +130,8 @@ export default defineComponent({
       regionSelect,
       ERegion,
       ESLocation,
-
       roll,
+      btns,
     };
   },
 });

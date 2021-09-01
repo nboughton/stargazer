@@ -306,8 +306,7 @@ export interface ISFOracle {
 }
 
 export interface IChar {
-  givenName: string;
-  familyName: string;
+  name: string;
   callsign: string;
   firstLook: string;
   disposition: string;
@@ -349,7 +348,6 @@ export interface ILocThemeOracle {
 export interface IPlanet {
   type: EPClass;
   name: string;
-  region: ERegion;
   sector: string;
   description: string;
   atmosphere: string;

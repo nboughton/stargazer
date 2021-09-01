@@ -1,9 +1,10 @@
 <template>
   <div>
-    <q-input label="Name" v-model="data.name" dense debounce="750" />
+    <!--q-input label="Name" v-model="data.name" dense debounce="750" /-->
 
     <div class="row items-center">
       <q-select
+        class="col-grow"
         label="Location"
         v-model="data.location"
         :options="Object.values(ESLocation)"
@@ -20,11 +21,13 @@
       label="Outer First Look"
       v-model="data.outerFirstLook"
       @roll="roll.OuterFirst"
+      reroll
     />
     <o-input
       label="Inner First Look"
       v-model="data.innerFirstLook"
       @roll="roll.InnerFirst"
+      reroll
     />
 
     <q-expansion-item label="Interior">
@@ -64,6 +67,14 @@
       <o-input label="Purpose" v-model="data.purpose" @roll="roll.Purpose" />
     </q-expansion-item>
   </div>
+  <o-btns
+    clear
+    @clear="btns.Clear"
+    save
+    @save="btns.Save"
+    initial
+    @initial="btns.Initial"
+  />
 </template>
 
 <script lang="ts">
@@ -73,10 +84,11 @@ import { defineComponent, PropType, ref } from 'vue';
 import { IVault, ESLocation } from '../models';
 
 import OInput from 'src/components/Oracles/OInput.vue';
+import OBtns from './OBtns.vue';
 
 export default defineComponent({
   name: 'Vault',
-  components: { OInput },
+  components: { OInput, OBtns },
   props: {
     modelValue: {
       type: Object as PropType<IVault>,
@@ -117,10 +129,16 @@ export default defineComponent({
         data.value.material = tableRoll(Vault.material);
       },
       OuterFirst: () => {
-        data.value.outerFirstLook = tableRoll(Vault.outerFirstLook);
+        const o = tableRoll(Vault.outerFirstLook);
+        data.value.outerFirstLook
+          ? (data.value.outerFirstLook += ', ' + o)
+          : (data.value.outerFirstLook = o);
       },
       InnerFirst: () => {
-        data.value.innerFirstLook = tableRoll(Vault.innerFirstLook);
+        const i = tableRoll(Vault.innerFirstLook);
+        data.value.innerFirstLook
+          ? (data.value.innerFirstLook += ', ' + i)
+          : (data.value.innerFirstLook = i);
       },
       Purpose: () => {
         data.value.purpose = tableRoll(Vault.purpose);
@@ -151,11 +169,42 @@ export default defineComponent({
       },
     };
 
+    const btns = {
+      Clear: () => {
+        data.value = <IVault>{
+          location: ESLocation.Planetside,
+          interior: {
+            feature: '',
+            peril: '',
+            opportunity: '',
+          },
+          sanctum: {
+            feature: '',
+            peril: '',
+            opportunity: '',
+          },
+        };
+      },
+      Initial: () => {
+        btns.Clear();
+        roll.Loc();
+        roll.Scale();
+        roll.Form();
+        roll.Shape();
+        roll.Material();
+        roll.OuterFirst();
+      },
+      Save: () => {
+        alert('Not yet implemented');
+      },
+    };
+
     return {
       data,
       ESLocation,
 
       roll,
+      btns,
     };
   },
 });

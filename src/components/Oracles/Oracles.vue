@@ -4,10 +4,6 @@
       <core />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Character">
-      <character />
-    </q-expansion-item>
-
     <q-expansion-item header-class="text-h6" label="Space">
       <space />
     </q-expansion-item>
@@ -22,6 +18,10 @@
 
     <q-expansion-item header-class="text-h6" label="Starship">
       <starship />
+    </q-expansion-item>
+
+    <q-expansion-item header-class="text-h6" label="Character">
+      <character />
     </q-expansion-item>
 
     <q-expansion-item header-class="text-h6" label="Creature">

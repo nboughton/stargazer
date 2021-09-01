@@ -3,6 +3,7 @@
   <o-input label="Theme" v-model="data.theme" @roll="roll.Theme" />
   <o-input label="Descriptor" v-model="data.desc" @roll="roll.Desc" />
   <o-input label="Focus" v-model="data.focus" @roll="roll.Focus" />
+  <o-btns clear @clear="btns.Clear" />
 </template>
 
 <script lang="ts">
@@ -10,8 +11,9 @@ import { tableRoll } from 'src/lib/roll';
 import { Core } from 'src/lib/oracles/core';
 import { defineComponent, ref } from 'vue';
 import OInput from './OInput.vue';
+import OBtns from './OBtns.vue';
 export default defineComponent({
-  components: { OInput },
+  components: { OInput, OBtns },
   name: 'Core',
   setup() {
     const data = ref({
@@ -36,9 +38,21 @@ export default defineComponent({
       },
     };
 
+    const btns = {
+      Clear: () => {
+        data.value = {
+          action: '',
+          theme: '',
+          focus: '',
+          desc: '',
+        };
+      },
+    };
+
     return {
       data,
       roll,
+      btns,
     };
   },
 });

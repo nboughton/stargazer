@@ -1,5 +1,5 @@
 <template>
-  <q-input label="Name" v-model="data.name" dense debounce="750" />
+  <!--q-input label="Name" v-model="data.name" dense debounce="750" /-->
 
   <div class="row items-center">
     <q-select
@@ -65,6 +65,15 @@
       @roll="roll.Explore.Opp"
     />
   </q-expansion-item>
+
+  <o-btns
+    clear
+    @clear="btns.Clear"
+    initial
+    @initial="btns.Initial"
+    save
+    @save="btns.Save"
+  />
 </template>
 
 <script lang="ts">
@@ -72,9 +81,10 @@ import { Derelict } from 'src/lib/oracles/derelict';
 import { tableRoll } from 'src/lib/roll';
 import { defineComponent, PropType, ref } from 'vue';
 import { IDerelict, ESLocation, EDerelictType, EDerelictZone } from '../models';
+import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
 export default defineComponent({
-  components: { OInput },
+  components: { OInput, OBtns },
   name: 'Derelict',
   props: {
     modelValue: {
@@ -144,6 +154,31 @@ export default defineComponent({
       },
     };
 
+    const btns = {
+      Clear: () => {
+        data.value = <IDerelict>{
+          location: ESLocation.Space,
+          type: EDerelictType.Starship,
+          currentZone: EDerelictZone.Access,
+          explore: {
+            area: '',
+            feature: '',
+            peril: '',
+            opportunity: '',
+          },
+        };
+      },
+      Initial: () => {
+        btns.Clear();
+        roll.Loc();
+        roll.Type();
+        roll.Cond();
+        roll.OuterFirst();
+      },
+      Save: () => {
+        alert('Not yet implemented');
+      },
+    };
     return {
       data,
       ESLocation,
@@ -151,6 +186,7 @@ export default defineComponent({
       EDerelictZone,
 
       roll,
+      btns,
     };
   },
 });

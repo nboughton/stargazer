@@ -3,7 +3,7 @@
     <q-select
       class="col-grow"
       label="Region"
-      v-model="data.region"
+      v-model="regionSelect"
       dense
       :options="Object.values(ERegion)"
     />
@@ -19,15 +19,19 @@
 
   <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
-  <!--q-input label="Sector" v-model="data.sector" dense debounce="750" /-->
-
-  <q-input
-    label="Description"
-    v-model="data.description"
-    autogrow
-    dense
-    debounce="750"
-  />
+  <div class="row items-center">
+    <q-input
+      class="col-grow"
+      label="Description"
+      v-model="data.description"
+      autogrow
+      dense
+      debounce="750"
+    />
+    <q-btn icon="mdi-playlist-plus" flat dense @click="btns.DescText">
+      <q-tooltip>Use default description text</q-tooltip>
+    </q-btn>
+  </div>
 
   <o-input label="Atmosphere" v-model="data.atmosphere" @roll="roll.Atmos" />
 
@@ -37,25 +41,54 @@
     label="Observed From Space"
     v-model="data.observed"
     @roll="roll.Obs"
+    reroll
   />
 
   <o-input
     label="Planetside Feature"
     v-model="data.feature"
     @roll="roll.Feat"
+    reroll
   />
 
   <o-input label="Life" v-model="data.life" @roll="roll.Life" />
+
+  <o-input
+    label="Planetside Peril"
+    v-model="poppers.peril"
+    @roll="roll.Peril"
+  />
+
+  <o-input
+    label="Planetsiide Opportunity"
+    v-model="poppers.opportunity"
+    @roll="roll.Opp"
+  />
+
+  <o-btns
+    save
+    @save="btns.Save"
+    clear
+    @clear="btns.Clear"
+    initial
+    @initial="btns.Initial"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
 import { IPlanet, ERegion, EPClass } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
-import { Planets, RollPlanetType } from 'src/lib/oracles/planets';
+import {
+  Opportunity,
+  Peril,
+  Planets,
+  RollPlanetType,
+} from 'src/lib/oracles/planets';
 import OInput from './OInput.vue';
+import OBtns from './OBtns.vue';
 export default defineComponent({
-  components: { OInput },
+  components: { OInput, OBtns },
   name: 'Planet',
   props: {
     modelValue: {
@@ -66,18 +99,19 @@ export default defineComponent({
     const data = ref(
       props.modelValue ||
         <IPlanet>{
-          region: ERegion.Terminus,
           type: EPClass.Desert,
         }
     );
+    const regionSelect = ref(ERegion.Terminus);
+    const poppers = ref({
+      peril: '',
+      opportunity: '',
+    });
 
-    watch(
-      () => data.value.type,
-      () => (data.value.description = Planets[data.value.type].description)
-    );
     const roll = {
       Type: () => {
         data.value.type = RollPlanetType();
+        data.value.description = Planets[data.value.type].description;
       },
       Name: () => {
         data.value.name =
@@ -90,25 +124,70 @@ export default defineComponent({
       },
       Sett: () => {
         data.value.settlements = tableRoll(
-          Planets[data.value.type].settlements[data.value.region]
+          Planets[data.value.type].settlements[regionSelect.value]
         );
       },
       Obs: () => {
-        data.value.observed = tableRoll(Planets[data.value.type].observed);
+        const o = tableRoll(Planets[data.value.type].observed);
+        data.value.observed
+          ? (data.value.observed += ', ' + o)
+          : (data.value.observed = o);
       },
       Feat: () => {
-        data.value.feature = tableRoll(Planets[data.value.type].feature);
+        const f = tableRoll(Planets[data.value.type].feature);
+        data.value.feature
+          ? (data.value.feature += ', ' + f)
+          : (data.value.feature = f);
       },
       Life: () => {
         data.value.life = tableRoll(Planets[data.value.type].life);
+      },
+      Peril: () => {
+        poppers.value.peril = /(none|extinct)/i.test(data.value.life)
+          ? tableRoll(Peril.lifeless)
+          : tableRoll(Peril.lifebearing);
+      },
+      Opp: () => {
+        poppers.value.opportunity = /(none|extinct)/i.test(data.value.life)
+          ? tableRoll(Opportunity.lifeless)
+          : tableRoll(Opportunity.lifebearing);
+      },
+    };
+
+    const btns = {
+      Clear: () => {
+        data.value = <IPlanet>{
+          type: EPClass.Desert,
+        };
+        poppers.value = {
+          peril: '',
+          opportunity: '',
+        };
+      },
+      Initial: () => {
+        btns.Clear();
+        roll.Type();
+        roll.Name();
+        roll.Atmos();
+        roll.Sett();
+        roll.Obs();
+      },
+      Save: () => {
+        alert('Not implemented yet');
+      },
+      DescText: () => {
+        data.value.description = Planets[data.value.type].description;
       },
     };
 
     return {
       data,
+      regionSelect,
+      poppers,
       ERegion,
       EPClass,
       roll,
+      btns,
     };
   },
 });
