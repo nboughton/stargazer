@@ -186,7 +186,7 @@
     <q-separator />
 
     <!-- Bonds -->
-    <div class="text-h4 text-center q-mt-md q-mb-sm">Bonds</div>
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Bonds</div>
     <progress-track
       class="q-mb-md"
       v-model="campaign.data.character.bonds"
@@ -198,7 +198,7 @@
     <q-separator />
 
     <!-- Vows -->
-    <div class="text-h4 text-center q-mt-md q-mb-sm">
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
       Vows<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
     <progress-track
@@ -221,7 +221,7 @@
     <q-separator />
 
     <!-- Progress -->
-    <div class="text-h4 text-center q-mt-md q-mb-sm">
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
       Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
     </div>
     <progress-track
@@ -244,7 +244,7 @@
 
     <q-separator />
 
-    <div class="text-h4 text-center q-mt-md q-mb-sm">
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
       Assets<q-btn
         icon="add_circle"
         flat
@@ -278,7 +278,9 @@
 
     <div class="row">
       <!-- Impacts -->
-      <div class="col-12 text-h4 text-center q-pt-md">Impacts</div>
+      <div class="col-12 text-h4 custom-header text-center q-pt-md">
+        Impacts
+      </div>
       <div
         class="col-xs-6 col-sm-3 col-3"
         v-for="(set, setIndex) in campaign.data.character.impacts"

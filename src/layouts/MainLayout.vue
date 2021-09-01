@@ -130,7 +130,7 @@
       <div class="row">
         <q-expansion-item class="col-12">
           <template v-slot:header>
-            <div class="text-h5 col-grow">ORACLES</div>
+            <div class="text-h4 custom-header col-grow">ORACLES</div>
           </template>
           <oracles class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
@@ -139,14 +139,14 @@
       <div class="row">
         <q-expansion-item class="col-12">
           <template v-slot:header>
-            <div class="text-h5 col-grow">MOVES</div>
+            <div class="text-h4 custom-header col-grow">MOVES</div>
           </template>
           <moves class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
       </div>
 
       <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
-        <span class="col-shrink text-h5 q-pr-sm">JOURNAL</span>
+        <span class="col-shrink text-h4 custom-header q-pr-sm">JOURNAL</span>
         <q-input
           v-model="filter"
           class="col-grow q-mb-sm"

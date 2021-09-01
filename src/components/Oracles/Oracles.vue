@@ -1,39 +1,46 @@
 <template>
   <div class="content-start items-start">
-    <q-expansion-item header-class="text-h6" label="Core">
+    <q-expansion-item header-class="text-h5 custom-header" label="Core">
       <core />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Space">
+    <q-expansion-item header-class="text-h5 custom-header" label="Space">
       <space />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Planet">
+    <q-expansion-item header-class="text-h5 custom-header" label="Planet">
       <planet />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Settlement">
+    <q-expansion-item header-class="text-h5 custom-header" label="Settlement">
       <settlement />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Starship">
+    <q-expansion-item header-class="text-h5 custom-header" label="Starship">
       <starship />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Character">
+    <q-expansion-item header-class="text-h5 custom-header" label="Character">
       <character />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Creature">
+    <q-expansion-item header-class="text-h5 custom-header" label="Creature">
       <creature />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Derelict">
+    <q-expansion-item header-class="text-h5 custom-header" label="Derelict">
       <derelict />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Vault">
+    <q-expansion-item header-class="text-h5 custom-header" label="Vault">
       <vault />
+    </q-expansion-item>
+
+    <q-expansion-item
+      header-class="text-h5 custom-header"
+      label="Location Theme"
+    >
+      <location-theme />
     </q-expansion-item>
   </div>
 </template>
@@ -50,6 +57,7 @@ import Creature from './Creature.vue';
 import Core from './Core.vue';
 import Vault from './Vault.vue';
 import Character from './Character.vue';
+import LocationTheme from './LocationTheme.vue';
 
 export default defineComponent({
   name: 'Oracles',
@@ -63,6 +71,7 @@ export default defineComponent({
     Derelict,
     Vault,
     Character,
+    LocationTheme,
   },
 });
 </script>

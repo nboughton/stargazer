@@ -1,1 +1,10 @@
 // app global css in SCSS form
+@font-face {
+  font-family: CustomFont;
+  src: url(../fonts/Teko_Medium.10.ttf);
+}
+
+// declare a class which applies it
+.custom-header {
+  font-family: 'CustomFont';
+}
