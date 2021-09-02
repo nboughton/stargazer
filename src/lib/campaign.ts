@@ -4,6 +4,7 @@ import {
   IDenizens,
   IDiff,
   IJournalEntry,
+  ILegacyTrack,
   ILocation,
   IMenace,
   INPC,
@@ -47,6 +48,54 @@ export function NewProgressTrack(): IProgressTrack {
   };
 }
 
+export function NewLegacyTrack(): ILegacyTrack {
+  return {
+    plus10: false,
+    boxes: [
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+      {
+        ticks: 0,
+        xp: [false, false],
+      },
+    ],
+  };
+}
+
 export function NewCharacter(): ICharacter {
   return {
     name: 'New Character',
@@ -65,6 +114,11 @@ export function NewCharacter(): ICharacter {
       spirit: { value: 5, max: 5, min: 0 },
       supply: { value: 5, max: 5, min: 0 },
       momentum: { value: 2, max: 10, min: -6, reset: 2 },
+    },
+    legacies: {
+      quests: NewLegacyTrack(),
+      bonds: NewLegacyTrack(),
+      discoveries: NewLegacyTrack(),
     },
     impacts: {
       Misfortunes: [

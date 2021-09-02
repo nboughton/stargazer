@@ -170,6 +170,16 @@ export interface IProgressTrack {
   menace?: IMenace;
 }
 
+export interface ILegacyBox {
+  ticks: number;
+  xp: boolean[];
+}
+
+export interface ILegacyTrack {
+  plus10: boolean;
+  boxes: ILegacyBox[];
+}
+
 // Assets
 export interface IAssetInput {
   label: string;
@@ -200,6 +210,11 @@ export interface ICharacter {
   stats: IStats;
   tracks: ITracks;
   impacts: IImpacts;
+  legacies: {
+    quests: ILegacyTrack;
+    bonds: ILegacyTrack;
+    discoveries: ILegacyTrack;
+  };
   vows: IProgressTrack[];
   bonds: IProgressTrack;
   gear: string;

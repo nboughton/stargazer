@@ -114,6 +114,7 @@ import { Difficulty, NewMenace } from 'src/lib/campaign';
 import { sleep } from 'src/lib/util';
 import { useQuasar } from 'quasar';
 import { moveRoll, NewRollData } from 'src/lib/roll';
+import { boxIcon } from 'src/lib/tracks';
 
 export default defineComponent({
   name: 'ProgressTrack',
@@ -163,24 +164,6 @@ export default defineComponent({
         data.value.boxes[index]++;
       }
       updateValue();
-    };
-    const boxIcon = (value: number): string => {
-      switch (value) {
-        case 0:
-          return 'mdi-checkbox-blank-outline';
-        case 1:
-          return 'mdi-slash-forward';
-        case 2:
-          return 'mdi-close';
-        case 3:
-          return 'mdi-asterisk';
-        case 4:
-          return 'mdi-svg';
-        default:
-          break;
-      }
-
-      return 'mdi-checkbox-blank-outline';
     };
 
     const diffOpts = [

@@ -185,6 +185,22 @@
 
     <q-separator />
 
+    <!-- Legacy tracks -->
+    <legacy-track
+      name="Quests"
+      v-model="campaign.data.character.legacies.quests"
+    />
+    <q-separator />
+    <legacy-track
+      name="Bonds"
+      v-model="campaign.data.character.legacies.bonds"
+    />
+    <q-separator />
+    <legacy-track
+      name="Discoveries"
+      v-model="campaign.data.character.legacies.discoveries"
+    />
+    <q-separator />
     <!-- Bonds -->
     <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Bonds</div>
     <progress-track
@@ -307,8 +323,6 @@
 import { defineComponent, ref } from 'vue';
 import { NewProgressTrack } from 'src/lib/campaign';
 
-import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
-import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
 import Stats from 'src/components/Stats.vue';
 import Asset from 'src/components/Assets/Asset.vue';
 import Assets from 'src/components/Assets/Assets.vue';
@@ -316,9 +330,20 @@ import { useCampaign } from 'src/store/campaign';
 import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 
+import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
+import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
+import LegacyTrack from 'src/components/Tracks/LegacyTrack.vue';
+
 export default defineComponent({
   name: 'Character',
-  components: { ResourceTrack, Stats, ProgressTrack, Asset, Assets },
+  components: {
+    LegacyTrack,
+    ResourceTrack,
+    Stats,
+    ProgressTrack,
+    Asset,
+    Assets,
+  },
   setup() {
     const campaign = useCampaign();
 
