@@ -1,12 +1,6 @@
 <template>
   <div class="row items-center">
-    <q-select
-      class="col-grow"
-      label="Region"
-      v-model="regionSelect"
-      :options="Object.values(ERegion)"
-      dense
-    />
+    <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
   </div>
 
   <o-input label="Name" v-model="data.name" @roll="roll.Name" />
@@ -15,29 +9,13 @@
 
   <o-input label="Fleet" v-model="data.fleet" @roll="roll.Fleet" />
 
-  <o-input
-    label="Initial Contact"
-    v-model="data.initialContact"
-    @roll="roll.Cont"
-  />
+  <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
 
-  <o-input
-    label="First Look"
-    v-model="data.firstLook"
-    @roll="roll.First"
-    reroll
-  />
+  <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
 
   <o-input label="Mission" v-model="data.mission" @roll="roll.Mission" />
 
-  <o-btns
-    save
-    @save="btns.Save"
-    initial
-    @initial="btns.Initial"
-    clear
-    @clear="btns.Clear"
-  />
+  <o-btns save @save="btns.Save" initial @initial="btns.Initial" clear @clear="btns.Clear" />
 </template>
 
 <script lang="ts">
@@ -47,9 +25,10 @@ import { tableRoll } from 'src/lib/roll';
 import { Starship } from 'src/lib/oracles/starship';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+import { useCampaign } from 'src/store/campaign';
 export default defineComponent({
   components: { OInput, OBtns },
-  name: 'Starship',
+  name: 'OStarship',
   props: {
     modelValue: {
       type: Object as PropType<IStarship>,
@@ -65,15 +44,9 @@ export default defineComponent({
       },
       Class: () => {
         let c = tableRoll(Starship.class);
-        c = /roll twice/i.test(c)
-          ? `${tableRoll(Starship.class)}, ${tableRoll(Starship.class)}`
-          : c;
+        c = /roll twice/i.test(c) ? `${tableRoll(Starship.class)}, ${tableRoll(Starship.class)}` : c;
         c = /▶️Fleet/i.test(c) ? `Fleet: ${tableRoll(Starship.fleet)}` : c;
-        c = /▶️Starship Mission/i.test(c)
-          ? `Starship Mission: ${tableRoll(
-              Starship.mission[regionSelect.value]
-            )}`
-          : c;
+        c = /▶️Starship Mission/i.test(c) ? `Starship Mission: ${tableRoll(Starship.mission[regionSelect.value])}` : c;
         data.value.class = c;
       },
       Fleet: () => {
@@ -84,9 +57,7 @@ export default defineComponent({
       },
       First: () => {
         const f = tableRoll(Starship.firstLook);
-        data.value.firstLook
-          ? (data.value.firstLook += ', ' + f)
-          : (data.value.firstLook = f);
+        data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Mission: () => {
         data.value.mission = tableRoll(Starship.mission[regionSelect.value]);
@@ -103,8 +74,9 @@ export default defineComponent({
         roll.Class();
         roll.First();
       },
-      Save: () => {
-        alert('Not implemented yet');
+      Save: (args: { sector: number; cell: number }) => {
+        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IStarship;
+        useCampaign().data.sectors[args.sector].cells[args.cell].ships.unshift(storeCopy);
       },
     };
 

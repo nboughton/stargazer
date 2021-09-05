@@ -1,11 +1,4 @@
-import {
-  ECoreCombo,
-  ERegion,
-  ESLocation,
-  ISettlement,
-  ISettlementOracle,
-} from 'src/components/models';
-import { tableRoll } from 'src/lib/roll';
+import { ECoreCombo, ERegion, ESLocation, ISettlementOracle } from 'src/components/models';
 
 export const Settlement: ISettlementOracle = {
   name: {
@@ -930,22 +923,4 @@ export const Settlement: ISettlementOracle = {
       },
     ],
   },
-};
-
-export const RollSettlement = (
-  region: ERegion,
-  location?: ESLocation
-): ISettlement => {
-  return {
-    name: tableRoll(Settlement.name),
-    location: location
-      ? location
-      : (tableRoll(Settlement.location) as ESLocation),
-    population: tableRoll(Settlement.population[region]),
-    firstLook: tableRoll(Settlement.firstLook),
-    initialContact: tableRoll(Settlement.initialContact),
-    authority: tableRoll(Settlement.authority),
-    projects: tableRoll(Settlement.projects),
-    trouble: tableRoll(Settlement.trouble),
-  };
 };

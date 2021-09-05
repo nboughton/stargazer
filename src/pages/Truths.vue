@@ -16,18 +16,18 @@
 </template>
 
 <script lang="ts">
-import { useCampaign } from 'src/store/campaign'
-import { defineComponent } from 'vue'
-import Truth from 'src/components/Truth.vue'
+import { useCampaign } from 'src/store/campaign';
+import { defineComponent } from 'vue';
+import Truth from 'src/components/Truth.vue';
 export default defineComponent({
   name: 'Truths',
   components: { Truth },
   setup() {
-    const campaign = useCampaign()
+    const campaign = useCampaign();
 
     return {
-      campaign
-    }
-  }
-})
+      campaign,
+    };
+  },
+});
 </script>

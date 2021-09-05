@@ -92,6 +92,17 @@ export enum ECoreCombo {
   ActTheme = 'Action + Theme',
   DescFoc = 'Descriptor + Focus',
 }
+
+export enum ESectorItem {
+  Star = 'Star',
+  Planet = 'Planet',
+  Settlement = 'Settlement',
+  Ship = 'Ship',
+  Person = 'Person',
+  Creature = 'Creature',
+  Derelict = 'Derelict',
+  Vault = 'Vault',
+}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;
@@ -107,6 +118,7 @@ export interface IIndexItem {
 export interface IConfig {
   id: number;
   current: string;
+  sector: number;
   index: IIndexItem[];
   edit: boolean;
 }
@@ -226,6 +238,16 @@ export interface IJournalEntry {
   content: string;
 }
 
+// Truths
+export interface ITruths {
+  [index: string]: string;
+}
+
+export interface IStar {
+  name: string;
+  description: string;
+}
+
 export interface ILocation {
   name: string;
   region: string;
@@ -233,52 +255,33 @@ export interface ILocation {
   trouble: string;
 }
 
-export interface INPC {
+export interface ISectorCell {
+  id: string;
   name: string;
-  description: string;
+  stars: IStar[];
+  planets: IPlanet[];
+  settlements: ISettlement[];
+  derelicts: IDerelict[]; // Deep space derelicts
+  ships: IStarship[];
+  npcs: INPC[];
+  creatures: ICreature[];
+  vaults: IVault[];
 }
 
-// Truths
-export interface ITruths {
-  [index: string]: string;
-}
-
-// Delve Sites
-export interface IDenizens {
-  veryCommon: string;
-  common1: string;
-  common2: string;
-  common3: string;
-  uncommon1: string;
-  uncommon2: string;
-  uncommon3: string;
-  uncommon4: string;
-  rare1: string;
-  rare2: string;
-  rare3: string;
-  unforeseen: string;
-}
-
-export interface ISite {
+export interface ISector {
   name: string;
-  objective: string;
-  theme: string;
-  domain: string;
-  track: IProgressTrack;
-  notes: string;
-  denizens: IDenizens;
+  region: ERegion;
+  control: string;
+  cells: ISectorCell[];
 }
-
 export interface ICampaign {
   id: string;
   name: string;
   character: ICharacter;
   progressTracks: IProgressTrack[];
   journal: IJournalEntry[];
-  npcs: INPC[];
-  locations: ILocation[];
   truths: ITruths;
-  sites: ISite[];
+  sectors: ISector[];
 }
 
 // Moves
@@ -320,7 +323,7 @@ export interface ISFOracle {
   table: ISFTable;
 }
 
-export interface IChar {
+export interface INPC {
   name: string;
   callsign: string;
   firstLook: string;
@@ -328,9 +331,12 @@ export interface IChar {
   role: string;
   goal: string;
   aspect: string;
+  track: IProgressTrack;
+  bond: boolean;
+  notes: string;
 }
 
-export interface ICharOracle {
+export interface INPCOracle {
   givenName: ISFTable;
   familyName: ISFTable;
   callsign: ISFTable;
@@ -363,7 +369,6 @@ export interface ILocThemeOracle {
 export interface IPlanet {
   type: EPClass;
   name: string;
-  sector: string;
   description: string;
   atmosphere: string;
   settlements: string;
@@ -393,6 +398,7 @@ export interface ISettlement {
   authority: string;
   projects: string;
   trouble: string;
+  notes: string;
 }
 
 export interface ISettlementOracle {
@@ -413,6 +419,7 @@ export interface IStarship {
   initialContact: string;
   firstLook: string;
   mission: string;
+  notes: string;
 }
 
 export interface IStarshipOracle {

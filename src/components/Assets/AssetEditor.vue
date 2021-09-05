@@ -6,140 +6,40 @@
       <q-input label="Subtitle?" v-model="subtitle" dense />
 
       <div class="row items-center q-mb-lg">
-        <q-toggle
-          class="q-mr-md"
-          label="Text input?"
-          v-model="hasMainInput"
-          dense
-          @click="mInputClick"
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasMainInput"
-          label="Input Label"
-          v-model="data.input.label"
-          dense
-        />
+        <q-toggle class="q-mr-md" label="Text input?" v-model="hasMainInput" dense @click="mInputClick" />
+        <q-input class="col-grow" v-if="hasMainInput" label="Input Label" v-model="data.input.label" dense />
       </div>
 
-      <p>
-        You can use the following subset of HTML tags to style your item text:
-      </p>
+      <p>You can use the following subset of HTML tags to style your item text:</p>
       <p>{{ validTags.toString().replace(/,/g, ', ') }}</p>
 
-      <q-input
-        label="First item text"
-        v-model="data.items[0].text"
-        dense
-        autogrow
-        hint="Item text can contain html for formatting"
-      />
+      <q-input label="First item text" v-model="data.items[0].text" dense autogrow hint="Item text can contain html for formatting" />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle
-          class="q-mr-md"
-          label="Text input?"
-          v-model="hasItem1Input"
-          dense
-          @click="item1Click"
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasItem1Input"
-          label="Input Label"
-          v-model="data.items[0].input.label"
-          dense
-        />
+        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem1Input" dense @click="item1Click" />
+        <q-input class="col-grow" v-if="hasItem1Input" label="Input Label" v-model="data.items[0].input.label" dense />
       </div>
 
-      <q-input
-        label="Second item text"
-        v-model="data.items[1].text"
-        dense
-        autogrow
-        hint="Item text can contain html for formatting"
-      />
+      <q-input label="Second item text" v-model="data.items[1].text" dense autogrow hint="Item text can contain html for formatting" />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle
-          class="q-mr-md"
-          label="Text input?"
-          v-model="hasItem2Input"
-          dense
-          @click="item2Click"
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasItem2Input"
-          label="Input Label"
-          v-model="data.items[1].input.label"
-          dense
-        />
+        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem2Input" dense @click="item2Click" />
+        <q-input class="col-grow" v-if="hasItem2Input" label="Input Label" v-model="data.items[1].input.label" dense />
       </div>
 
-      <q-input
-        label="Third item text"
-        v-model="data.items[2].text"
-        dense
-        autogrow
-        hint="Item text can contain html for formatting"
-      />
+      <q-input label="Third item text" v-model="data.items[2].text" dense autogrow hint="Item text can contain html for formatting" />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle
-          class="q-mr-md"
-          label="Text input?"
-          v-model="hasItem3Input"
-          dense
-          @click="item3Click"
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasItem3Input"
-          label="Input Label"
-          v-model="data.items[2].input.label"
-          dense
-        />
+        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem3Input" dense @click="item3Click" />
+        <q-input class="col-grow" v-if="hasItem3Input" label="Input Label" v-model="data.items[2].input.label" dense />
       </div>
 
       <div class="row items-center q-mb-lg">
-        <q-toggle
-          class="q-mr-md"
-          label="Resource track?"
-          v-model="hasTrack"
-          dense
-          @click="trackClick"
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasTrack"
-          label="Min"
-          type="number"
-          v-model.number="data.track.min"
-          dense
-        />
-        <q-input
-          class="col-grow"
-          v-if="hasTrack"
-          label="Max"
-          type="number"
-          v-model.number="data.track.max"
-          dense
-        />
+        <q-toggle class="q-mr-md" label="Resource track?" v-model="hasTrack" dense @click="trackClick" />
+        <q-input class="col-grow" v-if="hasTrack" label="Min" type="number" v-model.number="data.track.min" dense />
+        <q-input class="col-grow" v-if="hasTrack" label="Max" type="number" v-model.number="data.track.max" dense />
       </div>
 
       <div class="row justify-end">
-        <q-btn
-          color="positive"
-          icon="save"
-          label="save"
-          flat
-          @click="save(data)"
-        />
-        <q-btn
-          color="negative"
-          icon="close"
-          label="close"
-          flat
-          @click="close"
-        />
+        <q-btn color="positive" icon="save" label="save" flat @click="save(data)" />
+        <q-btn color="negative" icon="close" label="close" flat @click="close" />
       </div>
     </div>
 
@@ -192,45 +92,33 @@ export default defineComponent({
     watch(
       () => subtitle.value,
       () => {
-        subtitle.value
-          ? (data.value.subtitle = subtitle.value)
-          : (data.value.subtitle = undefined);
+        subtitle.value ? (data.value.subtitle = subtitle.value) : (data.value.subtitle = undefined);
       }
     );
 
     const hasMainInput = ref(false);
     const mInputClick = () => {
-      hasMainInput.value
-        ? (data.value.input = { label: '', text: '' })
-        : (data.value.input = undefined);
+      hasMainInput.value ? (data.value.input = { label: '', text: '' }) : (data.value.input = undefined);
     };
 
     const hasItem1Input = ref(false);
     const item1Click = () => {
-      hasItem1Input.value
-        ? (data.value.items[0].input = { label: '', text: '' })
-        : (data.value.items[0].input = undefined);
+      hasItem1Input.value ? (data.value.items[0].input = { label: '', text: '' }) : (data.value.items[0].input = undefined);
     };
 
     const hasItem2Input = ref(false);
     const item2Click = () => {
-      hasItem2Input.value
-        ? (data.value.items[1].input = { label: '', text: '' })
-        : (data.value.items[1].input = undefined);
+      hasItem2Input.value ? (data.value.items[1].input = { label: '', text: '' }) : (data.value.items[1].input = undefined);
     };
 
     const hasItem3Input = ref(false);
     const item3Click = () => {
-      hasItem3Input.value
-        ? (data.value.items[2].input = { label: '', text: '' })
-        : (data.value.items[2].input = undefined);
+      hasItem3Input.value ? (data.value.items[2].input = { label: '', text: '' }) : (data.value.items[2].input = undefined);
     };
 
     const hasTrack = ref(false);
     const trackClick = () => {
-      hasTrack.value
-        ? (data.value.track = { value: 0, min: 0, max: 3 })
-        : (data.value.track = undefined);
+      hasTrack.value ? (data.value.track = { value: 0, min: 0, max: 3 }) : (data.value.track = undefined);
     };
 
     // Load data if it's not a new asset

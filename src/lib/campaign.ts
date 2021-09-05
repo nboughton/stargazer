@@ -1,17 +1,26 @@
 import {
+  EPClass,
+  ERegion,
+  ESLocation,
   ICampaign,
+  INPC,
   ICharacter,
-  IDenizens,
   IDiff,
   IJournalEntry,
+  ILegacyBox,
   ILegacyTrack,
-  ILocation,
   IMenace,
-  INPC,
+  IPlanet,
   IProgressTrack,
-  ISite,
+  ISector,
+  ISectorCell,
+  ISettlement,
+  IStar,
+  IStarship,
 } from 'src/components/models';
 import { v4 as uuid } from 'uuid';
+import { Space } from './oracles/space';
+import { tableRoll } from './roll';
 
 export const Difficulty: { [index: number]: IDiff } = {
   1: <IDiff>{ label: 'Troublesome', mark: 3, harm: 1 },
@@ -24,18 +33,7 @@ export const Difficulty: { [index: number]: IDiff } = {
 export function NewMenace(): IMenace {
   return {
     name: '',
-    boxes: [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-    ],
+    boxes: Array(10).fill(false) as boolean[],
   };
 }
 
@@ -43,57 +41,21 @@ export function NewProgressTrack(): IProgressTrack {
   return {
     name: '',
     difficulty: 1,
-    boxes: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    boxes: Array(10).fill(0) as number[],
     showMenace: false,
   };
 }
 
 export function NewLegacyTrack(): ILegacyTrack {
-  return {
+  const track: ILegacyTrack = {
     plus10: false,
-    boxes: [
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-      {
-        ticks: 0,
-        xp: [false, false],
-      },
-    ],
+    boxes: Array(10).fill({
+      ticks: 0,
+      xp: [false, false],
+    }) as ILegacyBox[],
   };
+
+  return track;
 }
 
 export function NewCharacter(): ICharacter {
@@ -186,29 +148,87 @@ export function NewJournal(): IJournalEntry {
 
 export function NewNPC(): INPC {
   return {
-    name: 'New NPC',
-    description: '',
-  };
-}
-
-export function NewLocation(): ILocation {
-  return {
-    name: 'New Location',
-    description: '',
-    trouble: '',
-    region: '',
-  };
-}
-
-export function NewSite(): ISite {
-  return {
-    name: 'New Site',
-    objective: '',
-    theme: '',
-    domain: '',
+    name: '',
+    callsign: '',
+    firstLook: '',
+    disposition: '',
+    role: '',
+    goal: '',
+    aspect: '',
     track: NewProgressTrack(),
+    bond: false,
     notes: '',
-    denizens: <IDenizens>{},
+  };
+}
+
+export function NewCell(name?: string): ISectorCell {
+  const n = name ? name : '';
+  return {
+    id: '',
+    name: n,
+    stars: [],
+    planets: [],
+    settlements: [],
+    derelicts: [],
+    ships: [],
+    npcs: [],
+    creatures: [],
+    vaults: [],
+  };
+}
+export function NewSector(): ISector {
+  return {
+    name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
+    region: ERegion.Terminus,
+    control: '',
+    cells: [NewCell('You are here')],
+  };
+}
+
+export function NewStar(): IStar {
+  return {
+    name: '',
+    description: '',
+  };
+}
+
+export function NewPlanet(): IPlanet {
+  return {
+    type: EPClass.Desert,
+    name: '',
+    description: '',
+    atmosphere: '',
+    settlements: '',
+    observed: '',
+    feature: '',
+    life: '',
+    notes: '',
+  };
+}
+
+export function NewSettlement(): ISettlement {
+  return {
+    name: '',
+    location: ESLocation.Orbital,
+    population: '',
+    firstLook: '',
+    initialContact: '',
+    authority: '',
+    projects: '',
+    trouble: '',
+    notes: '',
+  };
+}
+
+export function NewShip(): IStarship {
+  return {
+    name: '',
+    class: '',
+    fleet: '',
+    initialContact: '',
+    firstLook: '',
+    mission: '',
+    notes: '',
   };
 }
 
@@ -232,8 +252,6 @@ export function NewCampaign(): ICampaign {
     },
     progressTracks: [NewProgressTrack()],
     journal: [NewJournal()],
-    npcs: [NewNPC()],
-    locations: [NewLocation()],
-    sites: [],
+    sectors: [NewSector()],
   };
 }

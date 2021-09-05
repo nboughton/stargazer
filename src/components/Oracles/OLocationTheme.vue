@@ -1,12 +1,6 @@
 <template>
   <div class="row items-center">
-    <q-select
-      class="col-grow"
-      label="Type"
-      v-model="data.type"
-      :options="Object.values(ELocTheme)"
-      dense
-    />
+    <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(ELocTheme)" dense />
     <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
   </div>
 
@@ -28,7 +22,7 @@ import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 export default defineComponent({
   components: { OInput, OBtns },
-  name: 'LocationTheme',
+  name: 'OLocationTheme',
   setup() {
     const data = ref({
       type: ELocTheme.Chaotic,
@@ -48,9 +42,7 @@ export default defineComponent({
         data.value.peril = tableRoll(LocationTheme[data.value.type].peril);
       },
       Opp: () => {
-        data.value.opportunity = tableRoll(
-          LocationTheme[data.value.type].opportunity
-        );
+        data.value.opportunity = tableRoll(LocationTheme[data.value.type].opportunity);
       },
     };
 

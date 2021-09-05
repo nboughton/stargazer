@@ -204,8 +204,7 @@ export const Assets: { [index: string]: IAsset } = {
   Bonded: {
     type: 'Deed',
     title: 'Bonded',
-    subtitle:
-      'One time only, once you [Forge a Bond](#Forge-a-Bond) with a special individual...',
+    subtitle: 'One time only, once you [Forge a Bond](#Forge-a-Bond) with a special individual...',
     input: {
       label: 'Bond-mate',
       text: ' ',

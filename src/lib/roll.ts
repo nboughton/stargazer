@@ -1,9 +1,4 @@
-import {
-  IRollData,
-  IOracle,
-  ISFTable,
-  ECoreCombo,
-} from 'src/components/models';
+import { IRollData, IOracle, ISFTable, ECoreCombo } from 'src/components/models';
 import { Core } from './oracles/core';
 
 export const d = (size: number) => {
@@ -34,29 +29,17 @@ export const NewRollData = (): IRollData => {
 };
 
 export const updateResults = (r: IRollData): IRollData => {
-  if (
-    r.action.score > r.challenge.die1.roll &&
-    r.action.score > r.challenge.die2.roll
-  ) {
+  if (r.action.score > r.challenge.die1.roll && r.action.score > r.challenge.die2.roll) {
     r.result = 'Strong Hit';
     r.action.color = 'text-positive';
     r.challenge.die1.color = 'text-positive';
     r.challenge.die2.color = 'text-positive';
-  } else if (
-    (r.action.score <= r.challenge.die1.roll &&
-      r.action.score > r.challenge.die2.roll) ||
-    (r.action.score <= r.challenge.die2.roll &&
-      r.action.score > r.challenge.die1.roll)
-  ) {
+  } else if ((r.action.score <= r.challenge.die1.roll && r.action.score > r.challenge.die2.roll) || (r.action.score <= r.challenge.die2.roll && r.action.score > r.challenge.die1.roll)) {
     r.result = 'Weak Hit';
     r.action.color = 'text-warning';
-    r.action.score <= r.challenge.die1.roll
-      ? (r.challenge.die1.color = 'text-negative')
-      : (r.challenge.die1.color = 'text-positive');
+    r.action.score <= r.challenge.die1.roll ? (r.challenge.die1.color = 'text-negative') : (r.challenge.die1.color = 'text-positive');
 
-    r.action.score <= r.challenge.die2.roll
-      ? (r.challenge.die2.color = 'text-negative')
-      : (r.challenge.die2.color = 'text-positive');
+    r.action.score <= r.challenge.die2.roll ? (r.challenge.die2.color = 'text-negative') : (r.challenge.die2.color = 'text-positive');
   } else {
     r.result = 'Miss';
     r.action.color = 'text-negative';
@@ -67,12 +50,7 @@ export const updateResults = (r: IRollData): IRollData => {
   return r;
 };
 
-export const moveRoll = (
-  attr: number,
-  adds: number,
-  momentum: number,
-  progress?: number
-): IRollData => {
+export const moveRoll = (attr: number, adds: number, momentum: number, progress?: number): IRollData => {
   let r = NewRollData();
   r.action.die = d(6);
   r.challenge.die1.roll = d(10);
@@ -130,9 +108,7 @@ export const tableRoll = (oracle: ISFTable): string => {
     }
   });
 
-  if (out === ECoreCombo.ActTheme)
-    out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
-  if (out === ECoreCombo.DescFoc)
-    out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
+  if (out === ECoreCombo.ActTheme) out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
+  if (out === ECoreCombo.DescFoc) out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
   return out;
 };

@@ -1,10 +1,4 @@
-import {
-  ECoreCombo,
-  ERegion,
-  IStarship,
-  IStarshipOracle,
-} from 'src/components/models';
-import { tableRoll } from 'src/lib/roll';
+import { ECoreCombo, ERegion, IStarshipOracle } from 'src/components/models';
 
 export const Starship: IStarshipOracle = {
   name: {
@@ -1081,15 +1075,4 @@ export const Starship: IStarshipOracle = {
       ],
     },
   },
-};
-
-export const RollStarship = (region: ERegion): IStarship => {
-  return {
-    name: tableRoll(Starship.name),
-    class: tableRoll(Starship.class),
-    fleet: tableRoll(Starship.fleet),
-    initialContact: tableRoll(Starship.initialContact),
-    firstLook: tableRoll(Starship.firstLook),
-    mission: tableRoll(Starship.mission[region]),
-  };
 };

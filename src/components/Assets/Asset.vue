@@ -13,59 +13,25 @@
       <div class="q-pb-sm" v-if="data.subtitle" v-html="data.subtitle" />
 
       <div v-if="data.input" class="q-pb-sm col">
-        <q-input
-          :label="data.input.label"
-          v-model="data.input.text"
-          :disable="browse"
-          dense
-          debounce="750"
-        />
+        <q-input :label="data.input.label" v-model="data.input.text" :disable="browse" dense debounce="750" />
       </div>
 
-      <div
-        v-for="(item, index) in data.items"
-        :key="index"
-        class="row items-start q-pb-sm"
-      >
-        <q-checkbox
-          v-model="data.items[index].marked"
-          dense
-          class="col-1"
-          :disable="browse"
-        />
+      <div v-for="(item, index) in data.items" :key="index" class="row items-start q-pb-sm">
+        <q-checkbox v-model="data.items[index].marked" dense class="col-1" :disable="browse" />
         <div class="col-11" v-html="item.text" />
         <div class="col-1" />
-        <q-input
-          class="col-11 self-end"
-          v-if="item.input"
-          :label="item.input.label"
-          :disable="browse"
-          dense
-          debounce="750"
-          v-model="data.items[index].input.text"
-        />
+        <q-input class="col-11 self-end" v-if="item.input" :label="item.input.label" :disable="browse" dense debounce="750" v-model="data.items[index].input.text" />
       </div>
     </q-card-section>
 
     <q-card-section class="row full-width">
-      <resource-track
-        class="col-grow"
-        v-if="data.track"
-        v-model="data.track"
-        reverse
-      />
+      <resource-track class="col-grow" v-if="data.track" v-model="data.track" reverse />
     </q-card-section>
 
     <q-separator v-if="browse" />
     <q-card-actions v-if="browse" class="col-grow items-end justify-center">
       <div class="row">
-        <q-btn
-          label="Add to character"
-          flat
-          dense
-          class="col-shrink"
-          @click="addToCharacter"
-        />
+        <q-btn label="Add to character" flat dense class="col-shrink" @click="addToCharacter" />
       </div>
     </q-card-actions>
   </q-card>

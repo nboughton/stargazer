@@ -14,7 +14,7 @@ import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 export default defineComponent({
   components: { OInput, OBtns },
-  name: 'Core',
+  name: 'OCore',
   setup() {
     const data = ref({
       action: '',

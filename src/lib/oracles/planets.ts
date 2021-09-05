@@ -1,13 +1,5 @@
-import {
-  EPClass,
-  ERegion,
-  EVault,
-  IPlanet,
-  ISFTable,
-  TPlanetOracles,
-} from 'src/components/models';
-import { d, tableRoll } from 'src/lib/roll';
-import { Core } from './core';
+import { ECoreCombo, EPClass, ERegion, EVault, ISFTable, TPlanetOracles } from 'src/components/models';
+import { d } from 'src/lib/roll';
 
 /* Planet template
   [EPClass]: {
@@ -50,8 +42,7 @@ export const Planets: TPlanetOracles = {
       'Umber',
       'Vermillion',
     ],
-    description:
-      'A pitiless planet of searing heat, blowing sand, and sunbaked rock.',
+    description: 'A pitiless planet of searing heat, blowing sand, and sunbaked rock.',
     match: [1, 15],
     atmosphere: {
       items: [
@@ -248,7 +239,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -313,8 +304,7 @@ export const Planets: TPlanetOracles = {
       'Vesta',
       'Vesuvius',
     ],
-    description:
-      'A planet with relentless volcanic activity, wreathed in fire and ash.',
+    description: 'A planet with relentless volcanic activity, wreathed in fire and ash.',
     match: [16, 30],
     atmosphere: {
       items: [
@@ -442,7 +432,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -506,7 +496,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -571,8 +561,7 @@ export const Planets: TPlanetOracles = {
       'Tartarus',
       'Thrace',
     ],
-    description:
-      'A once-thriving world—now a grim monument to a fallen civilization.',
+    description: 'A once-thriving world—now a grim monument to a fallen civilization.',
     match: [31, 35],
     atmosphere: {
       items: [
@@ -692,7 +681,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -756,7 +745,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -941,7 +930,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1005,7 +994,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1070,8 +1059,7 @@ export const Planets: TPlanetOracles = {
       'Velum',
       'Zephyr',
     ],
-    description:
-      'A massive planet with vast layers of dense gases surrounding a small rocky core.',
+    description: 'A massive planet with vast layers of dense gases surrounding a small rocky core.',
     match: [51, 65],
     atmosphere: {
       items: [
@@ -1195,7 +1183,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1259,7 +1247,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1324,8 +1312,7 @@ export const Planets: TPlanetOracles = {
       'Veris',
       'Viridian',
     ],
-    description:
-      'A humid, rain-soaked planet which keeps its secrets under a thick canopy of vegetation.',
+    description: 'A humid, rain-soaked planet which keeps its secrets under a thick canopy of vegetation.',
     match: [66, 70],
     atmosphere: {
       items: [
@@ -1461,7 +1448,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1525,7 +1512,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1722,7 +1709,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1786,7 +1773,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -1851,8 +1838,7 @@ export const Planets: TPlanetOracles = {
       'Themis',
       'Umbra',
     ],
-    description:
-      'A rugged planet scarred by eons of destructive asteroid impacts.',
+    description: 'A rugged planet scarred by eons of destructive asteroid impacts.',
     match: [76, 90],
     atmosphere: {
       items: [
@@ -1976,7 +1962,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2040,7 +2026,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2229,7 +2215,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2293,7 +2279,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2350,8 +2336,7 @@ export const Planets: TPlanetOracles = {
       'Verus',
       'Xanthous',
     ],
-    description:
-      'A foul planet wracked by a poisonous climate and virulent growths.',
+    description: 'A foul planet wracked by a poisonous climate and virulent growths.',
     match: [93, 98],
     atmosphere: {
       items: [
@@ -2467,7 +2452,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2531,7 +2516,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2588,8 +2573,7 @@ export const Planets: TPlanetOracles = {
       'Vale',
       'Valinor',
     ],
-    description:
-      'This diverse, life-bearing planet might provide some small measure of hope.',
+    description: 'This diverse, life-bearing planet might provide some small measure of hope.',
     match: [99, 100],
     atmosphere: {
       items: [
@@ -2717,7 +2701,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [89, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -2781,7 +2765,7 @@ export const Planets: TPlanetOracles = {
         },
         {
           match: [92, 98],
-          data: tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus),
+          data: ECoreCombo.DescFoc,
         },
         {
           match: [99, 100],
@@ -3254,18 +3238,6 @@ export const Opportunity: { [index: string]: ISFTable } = {
   },
 };
 
-export const RollPlanet = (region: ERegion): IPlanet => {
-  const n = d(100);
-  let p = <IPlanet>{};
-  Object.keys(Planets).forEach((k) => {
-    if (n >= Planets[k].match[0] && n <= Planets[k].match[1]) {
-      p = NewPlanet(k as EPClass, region);
-      return;
-    }
-  });
-  return p;
-};
-
 export const RollPlanetType = (): EPClass => {
   const n = d(100);
   let p = EPClass.Desert;
@@ -3276,33 +3248,4 @@ export const RollPlanetType = (): EPClass => {
     }
   });
   return p;
-};
-
-export const NewPlanet = (type: EPClass, region: ERegion): IPlanet => {
-  let o = tableRoll(Planets[type].observed);
-  o =
-    o === tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus)
-      ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
-      : o;
-
-  let f = tableRoll(Planets[type].feature);
-  f =
-    f === tableRoll(Core.descriptor) + ' ' + tableRoll(Core.focus)
-      ? `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`
-      : f;
-
-  return {
-    type: type,
-    name: Planets[type].names[
-      Math.floor(Math.random() * Planets[type].names.length)
-    ],
-    sector: '',
-    description: Planets[type].description,
-    atmosphere: tableRoll(Planets[type].atmosphere),
-    settlements: tableRoll(Planets[type].settlements[region]),
-    observed: o,
-    feature: f,
-    life: tableRoll(Planets[type].life),
-    notes: '',
-  };
 };

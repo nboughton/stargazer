@@ -1,25 +1,11 @@
 <template>
-  <q-dialog
-    v-model="showDialog"
-    full-width
-    full-height
-    transition-show="slide-up"
-    transition-hide="slide-down"
-  >
+  <q-dialog v-model="showDialog" full-width full-height transition-show="slide-up" transition-hide="slide-down">
     <q-layout container class="asset-bg">
       <q-card class="asset-bg">
         <q-header elevated>
           <q-toolbar class="bg-secondary">
             <q-toolbar-title>
-              <q-input
-                class="col-grow"
-                v-if="showEditor === false"
-                label="Filter by name or type"
-                v-model="filter"
-                borderless
-                clearable
-                debounce="750"
-              >
+              <q-input class="col-grow" v-if="showEditor === false" label="Filter by name or type" v-model="filter" borderless clearable debounce="750">
                 <template v-slot:prepend>
                   <q-icon name="search" />
                 </template>
@@ -70,13 +56,7 @@
               </template>
 
               <template v-slot:append v-if="a.id">
-                <q-btn
-                  icon="delete"
-                  flat
-                  dense
-                  size="sm"
-                  @click="customAssets.delete(a)"
-                >
+                <q-btn icon="delete" flat dense size="sm" @click="customAssets.delete(a)">
                   <q-tooltip>Delete custom asset</q-tooltip>
                 </q-btn>
               </template>

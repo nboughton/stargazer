@@ -1,6 +1,6 @@
-import { ECoreCombo, ICharOracle } from 'src/components/models';
+import { ECoreCombo, INPCOracle } from 'src/components/models';
 
-export const Character: ICharOracle = {
+export const Character: INPCOracle = {
   givenName: {
     items: [
       {

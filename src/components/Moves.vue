@@ -1,15 +1,6 @@
 <template>
   <div>
-    <q-input
-      class="q-my-sm"
-      label="Search name or key word"
-      v-model="filter"
-      debounce="500"
-      standout="bg-blue-grey text-white"
-      :input-style="{ color: '#ECEFF4' }"
-      dense
-      clearable
-    >
+    <q-input class="q-my-sm" label="Search name or key word" v-model="filter" debounce="500" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense clearable>
       <template v-slot:prepend>
         <q-icon name="search" />
       </template>

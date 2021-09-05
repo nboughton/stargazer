@@ -1,10 +1,5 @@
 <template>
-  <q-select
-    label="Region"
-    v-model="regionSelect"
-    :options="Object.values(ERegion)"
-    dense
-  />
+  <q-select label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
 
   <o-input label="Sighting" v-model="data.sighting" @roll="roll.Sight" />
 
@@ -28,7 +23,7 @@ import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
 export default defineComponent({
   components: { OInput, OBtns },
-  name: 'Space',
+  name: 'OSpace',
   setup() {
     const data = ref({
       sighting: '',
@@ -48,9 +43,7 @@ export default defineComponent({
         data.value.obj = tableRoll(Space.stellarObject);
       },
       Name: () => {
-        data.value.sectorName = `${tableRoll(Space.sectorPrefix)} ${tableRoll(
-          Space.sectorSuffix
-        )}`;
+        data.value.sectorName = `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`;
       },
       Peril: () => {
         data.value.peril = tableRoll(Space.peril);

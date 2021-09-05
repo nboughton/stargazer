@@ -20,9 +20,7 @@
         <q-route-tab to="/tale" label="The Tale" />
         <q-route-tab to="/truths" label="Truths" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
-        <q-route-tab to="/npcs" label="NPCs" />
-        <q-route-tab to="/locations" label="Locations" />
-        <q-route-tab to="/sites" label="Delves" />
+        <q-route-tab to="/sector" label="Sector" />
       </q-tabs>
     </q-header>
 
