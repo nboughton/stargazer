@@ -5,7 +5,7 @@
         <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          {{ campaign.data.name }}
+          <q-input input-class="custom-header text-h5" v-model="campaign.data.name" borderless />
         </q-toolbar-title>
         <q-btn icon="mdi-dice-6" flat dense @click="showRoller = !showRoller">
           <q-tooltip>Toggle Dice Roller</q-tooltip>
@@ -17,7 +17,6 @@
       </q-toolbar>
 
       <q-tabs align="center" dense>
-        <q-route-tab to="/tale" label="The Tale" />
         <q-route-tab to="/truths" label="Truths" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
         <q-route-tab to="/sector" label="Sector" />
@@ -26,31 +25,13 @@
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
       <!-- left drawer content -->
-      <q-btn
-        class="full-width"
-        label="New Campaign"
-        flat
-        @click="addCampaign"
-        icon-right="add"
-      />
+      <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
       <q-list>
-        <q-item
-          class="items-center"
-          v-for="(item, index) in config.data.index"
-          :key="index"
-          clickable
-          v-ripple
-        >
-          <q-item-section
-            @click="config.data.current = item.id"
-            class="row full-width no-wrap"
-          >
+        <q-item class="items-center" v-for="(item, index) in config.data.index" :key="index" clickable v-ripple>
+          <q-item-section @click="config.data.current = item.id" class="row full-width no-wrap">
             {{ item.name }}
           </q-item-section>
-          <q-item-section
-            class="col-shrink"
-            v-if="config.data.index.length > 1 && config.data.edit"
-          >
+          <q-item-section class="col-shrink" v-if="config.data.index.length > 1 && config.data.edit">
             <q-btn icon="delete" flat dense @click="removeCampaign(item.id)" />
           </q-item-section>
         </q-item>
@@ -65,10 +46,7 @@
           </q-item-section>
           <q-item-section>
             Export Campaign Data
-            <q-tooltip
-              >Download your current campaign database as a .json
-              file</q-tooltip
-            >
+            <q-tooltip>Download your current campaign database as a .json file</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -117,13 +95,7 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer
-      show-if-above
-      v-model="rightDrawerOpen"
-      side="right"
-      :width="width"
-      bordered
-    >
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" :width="width" bordered>
       <!-- right drawer content -->
       <div class="row">
         <q-expansion-item class="col-12">
@@ -145,24 +117,9 @@
 
       <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
         <span class="col-shrink text-h4 custom-header q-pr-sm">JOURNAL</span>
-        <q-input
-          v-model="filter"
-          class="col-grow q-mb-sm"
-          dense
-          standout="bg-blue-grey text-white"
-          :input-style="{ color: '#ECEFF4' }"
-          debounce="500"
-          clearable
-          label="Search by title or content"
-        >
+        <q-input v-model="filter" class="col-grow q-mb-sm" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="500" clearable label="Search by title or content">
           <template v-slot:before>
-            <q-btn
-              class="col-shrink"
-              icon="add_circle"
-              flat
-              dense
-              @click="addJournal"
-            >
+            <q-btn class="col-shrink" icon="add_circle" flat dense @click="addJournal">
               <q-tooltip>Add a journal entry</q-tooltip>
             </q-btn>
           </template>
@@ -175,38 +132,15 @@
       <div v-for="(journal, index) in campaign.data.journal" :key="index">
         <div class="q-pa-sm q-gutter-xs" v-if="showJournal(journal)">
           <div class="row">
-            <q-input
-              class="col-grow"
-              label="Title"
-              dense
-              standout="bg-blue-grey text-white"
-              :input-style="{ color: '#ECEFF4' }"
-              debounce="750"
-              v-model="campaign.data.journal[index].title"
-            >
+            <q-input class="col-grow" label="Title" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750" v-model="campaign.data.journal[index].title">
               <template v-slot:append v-if="config.data.edit">
-                <q-btn
-                  class="col-shrink q-pl-sm"
-                  flat
-                  dense
-                  icon="delete"
-                  @click="removeJournal(index)"
-                >
+                <q-btn class="col-shrink q-pl-sm" flat dense icon="delete" @click="removeJournal(index)">
                   <q-tooltip>Delete this journal entry</q-tooltip>
                 </q-btn>
               </template>
             </q-input>
           </div>
-          <q-input
-            class="row"
-            label="Content"
-            dense
-            standout="bg-blue-grey text-white"
-            :input-style="{ color: '#ECEFF4' }"
-            autogrow
-            debounce="750"
-            v-model="campaign.data.journal[index].content"
-          />
+          <q-input class="row" label="Content" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" autogrow debounce="750" v-model="campaign.data.journal[index].content" />
         </div>
       </div>
     </q-drawer>
@@ -217,71 +151,40 @@
 
     <q-dialog v-model="showDataLoad">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary">
-          Load Character Database
-        </q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> Load Character Database </q-card-section>
 
-        <q-card-section class="text-subtitle">
-          Please bear in mind that this data will overwrite any existing
-          versions of the same Campaigns
-        </q-card-section>
+        <q-card-section class="text-subtitle"> Please bear in mind that this data will overwrite any existing versions of the same Campaigns </q-card-section>
 
         <q-card-section>
-          <q-file
-            v-model="fileToLoad"
-            standout="bg-blue-grey text-white"
-            :input-style="{ color: '#ECEFF4' }"
-            label="Select File"
-          />
+          <q-file v-model="fileToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
         </q-card-section>
 
         <q-card-actions align="center">
           <q-btn label="load" color="primary" @click="loadData" flat />
-          <q-btn
-            label="close"
-            color="warning"
-            @click="showDataLoad = false"
-            flat
-          />
+          <q-btn label="close" color="warning" @click="showDataLoad = false" flat />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
     <q-dialog v-model="showAssetLoad">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary">
-          Load Custom Assets
-        </q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> Load Custom Assets </q-card-section>
 
         <q-card-section class="text-subtitle text-center">
           <q-icon name="warning" size="xl" color="warning" />
           <div class="text-justify">
-            Warning: loading user supplied asset data can be risky. Stargazer
-            attempts to strip any potentially malicious code (i.e script tags in
-            asset items) but cannot absolutely guarantee the safety of any data
-            loaded. Please check over the contents of the Asset file before
-            loading it. And always ensure you only load data from sources you
-            trust.
+            Warning: loading user supplied asset data can be risky. Stargazer attempts to strip any potentially malicious code (i.e script tags in asset items) but cannot absolutely guarantee the
+            safety of any data loaded. Please check over the contents of the Asset file before loading it. And always ensure you only load data from sources you trust.
           </div>
         </q-card-section>
 
         <q-card-section>
-          <q-file
-            v-model="assetsToLoad"
-            standout="bg-blue-grey text-white"
-            :input-style="{ color: '#ECEFF4' }"
-            label="Select File"
-          />
+          <q-file v-model="assetsToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
         </q-card-section>
 
         <q-card-actions align="center">
           <q-btn label="load" color="primary" @click="loadAssetData" flat />
-          <q-btn
-            label="close"
-            color="warning"
-            @click="showAssetLoad = false"
-            flat
-          />
+          <q-btn label="close" color="warning" @click="showAssetLoad = false" flat />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -290,13 +193,7 @@
       <q-card class="my-card">
         <q-card-section class="row bg-secondary text-h6 justify-between">
           <div class="col-grow">About</div>
-          <q-btn
-            class="col-shrink"
-            flat
-            dense
-            icon="close"
-            @click="showAbout = false"
-          />
+          <q-btn class="col-shrink" flat dense icon="close" @click="showAbout = false" />
         </q-card-section>
 
         <q-card-section class="about-text text-justify">
@@ -350,8 +247,7 @@ export default defineComponent({
     const removeCampaign = (id: string) => campaign.delete(id);
 
     const addJournal = () => campaign.data.journal.unshift(NewJournal());
-    const removeJournal = (index: number) =>
-      campaign.data.journal.splice(index, 1);
+    const removeJournal = (index: number) => campaign.data.journal.splice(index, 1);
 
     const filter = ref('');
     const showJournal = (journal: IJournalEntry): boolean => {

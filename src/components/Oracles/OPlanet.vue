@@ -39,21 +39,12 @@ import { Opportunity, Peril, Planets, RollPlanetType } from 'src/lib/oracles/pla
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
+import { NewPlanet } from 'src/lib/campaign';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OPlanet',
-  props: {
-    modelValue: {
-      type: Object as PropType<IPlanet>,
-    },
-  },
-  setup(props) {
-    const data = ref(
-      props.modelValue ||
-        <IPlanet>{
-          type: EPClass.Desert,
-        }
-    );
+  setup() {
+    const data = ref(NewPlanet());
     const regionSelect = ref(ERegion.Terminus);
     const poppers = ref({
       peril: '',

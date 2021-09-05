@@ -1,5 +1,4 @@
-import { ICreatureOracle, EEnv, ICreature } from 'src/components/models';
-import { tableRoll } from '../roll';
+import { ICreatureOracle, EEnv } from 'src/components/models';
 
 export const Creature: ICreatureOracle = {
   environment: {
@@ -952,22 +951,4 @@ export const Creature: ICreatureOracle = {
       },
     ],
   },
-};
-
-export const RollCreature = (env?: EEnv): ICreature => {
-  const e = env ? env : tableRoll(Creature.environment);
-  let s = tableRoll(Creature.scale);
-  if (s === 'Ultra-scale') {
-    s = tableRoll(Creature.ultraScale);
-  }
-
-  return {
-    name: '',
-    environment: e as EEnv,
-    scale: s,
-    form: tableRoll(Creature.form[e]),
-    firstLook: tableRoll(Creature.firstLook),
-    behaviour: tableRoll(Creature.behaviour),
-    aspect: tableRoll(Creature.aspect),
-  };
 };

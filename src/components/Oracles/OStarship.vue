@@ -26,16 +26,12 @@ import { Starship } from 'src/lib/oracles/starship';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
+import { NewShip } from 'src/lib/campaign';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OStarship',
-  props: {
-    modelValue: {
-      type: Object as PropType<IStarship>,
-    },
-  },
-  setup(props) {
-    const data = ref(props.modelValue || <IStarship>{});
+  setup() {
+    const data = ref(NewShip());
     const regionSelect = ref(ERegion.Terminus);
 
     const roll = {

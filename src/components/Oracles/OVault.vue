@@ -31,37 +31,19 @@
 <script lang="ts">
 import { Vault } from 'src/lib/oracles/vault';
 import { tableRoll } from 'src/lib/roll';
-import { defineComponent, PropType, ref } from 'vue';
-import { IVault, ESLocation } from '../models';
+import { defineComponent, ref } from 'vue';
+import { ESLocation, IVault } from '../models';
 
 import OInput from 'src/components/Oracles/OInput.vue';
 import OBtns from './OBtns.vue';
+import { NewVault } from 'src/lib/campaign';
+import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({
   name: 'OVault',
   components: { OInput, OBtns },
-  props: {
-    modelValue: {
-      type: Object as PropType<IVault>,
-    },
-  },
-  setup(props) {
-    const data = ref(
-      props.modelValue ||
-        <IVault>{
-          location: ESLocation.Planetside,
-          interior: {
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-          sanctum: {
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-        }
-    );
+  setup() {
+    const data = ref(NewVault());
 
     const roll = {
       Loc: () => {
@@ -116,31 +98,20 @@ export default defineComponent({
 
     const btns = {
       Clear: () => {
-        data.value = <IVault>{
-          location: ESLocation.Planetside,
-          interior: {
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-          sanctum: {
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-        };
+        const loc = data.value.location;
+        data.value = NewVault(loc);
       },
       Initial: () => {
         btns.Clear();
-        roll.Loc();
         roll.Scale();
         roll.Form();
         roll.Shape();
         roll.Material();
         roll.OuterFirst();
       },
-      Save: () => {
-        alert('Not yet implemented');
+      Save: (args: { sector: number; cell: number }) => {
+        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IVault;
+        useCampaign().data.sectors[args.sector].cells[args.cell].vaults.unshift(storeCopy);
       },
     };
 

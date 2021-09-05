@@ -1,12 +1,12 @@
 <template>
-  <!--q-input label="Name" v-model="data.name" dense debounce="750" /-->
-
   <div class="row items-center">
     <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
     <q-btn icon="mdi-dice-6" flat dense @click="roll.Loc" />
     <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(EDerelictType)" dense />
     <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
   </div>
+
+  <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
   <o-input label="Condition" v-model="data.condition" @roll="roll.Cond" />
 
@@ -30,35 +30,21 @@
 </template>
 
 <script lang="ts">
+import { NewDerelict } from 'src/lib/campaign';
 import { Derelict } from 'src/lib/oracles/derelict';
+import { Settlement } from 'src/lib/oracles/settlement';
+import { Starship } from 'src/lib/oracles/starship';
 import { tableRoll } from 'src/lib/roll';
-import { defineComponent, PropType, ref } from 'vue';
-import { IDerelict, ESLocation, EDerelictType, EDerelictZone } from '../models';
+import { useCampaign } from 'src/store/campaign';
+import { defineComponent, ref } from 'vue';
+import { ESLocation, EDerelictType, EDerelictZone, IDerelict } from '../models';
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'ODerelict',
-  props: {
-    modelValue: {
-      type: Object as PropType<IDerelict>,
-    },
-  },
-  setup(props) {
-    const data = ref(
-      props.modelValue ||
-        <IDerelict>{
-          location: ESLocation.Space,
-          type: EDerelictType.Starship,
-          currentZone: EDerelictZone.Access,
-          explore: {
-            area: '',
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-        }
-    );
+  setup() {
+    const data = ref(NewDerelict());
 
     const roll = {
       Loc: () => {
@@ -66,6 +52,9 @@ export default defineComponent({
       },
       Type: () => {
         data.value.type = tableRoll(Derelict.type[data.value.location]) as EDerelictType;
+      },
+      Name: () => {
+        data.value.name = data.value.type === EDerelictType.Starship ? tableRoll(Starship.name) : tableRoll(Settlement.name);
       },
       Cond: () => {
         data.value.condition = tableRoll(Derelict.condition);
@@ -97,27 +86,19 @@ export default defineComponent({
 
     const btns = {
       Clear: () => {
-        data.value = <IDerelict>{
-          location: ESLocation.Space,
-          type: EDerelictType.Starship,
-          currentZone: EDerelictZone.Access,
-          explore: {
-            area: '',
-            feature: '',
-            peril: '',
-            opportunity: '',
-          },
-        };
+        const loc = data.value.location;
+        const type = data.value.type;
+        data.value = NewDerelict(loc, type);
       },
       Initial: () => {
         btns.Clear();
-        roll.Loc();
-        roll.Type();
+        roll.Name();
         roll.Cond();
         roll.OuterFirst();
       },
-      Save: () => {
-        alert('Not yet implemented');
+      Save: (args: { sector: number; cell: number }) => {
+        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IDerelict;
+        useCampaign().data.sectors[args.sector].cells[args.cell].derelicts.unshift(storeCopy);
       },
     };
     return {

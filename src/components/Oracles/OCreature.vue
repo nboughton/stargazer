@@ -1,6 +1,4 @@
 <template>
-  <!--q-input label="Name" v-model="data.name" dense debounce="750" /-->
-
   <div class="row items-center">
     <q-select class="col-grow" label="Environment" v-model="data.environment" :options="Object.values(EEnv)" dense />
     <q-btn icon="mdi-dice-6" flat dense @click="roll.Env" />
@@ -16,27 +14,19 @@
 </template>
 
 <script lang="ts">
+import { NewCreature } from 'src/lib/campaign';
 import { Creature } from 'src/lib/oracles/creature';
 import { tableRoll } from 'src/lib/roll';
-import { defineComponent, PropType, ref } from 'vue';
-import { ICreature, EEnv } from '../models';
+import { useCampaign } from 'src/store/campaign';
+import { defineComponent, ref } from 'vue';
+import { EEnv, ICreature } from '../models';
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OCreature',
-  props: {
-    modelValue: {
-      type: Object as PropType<ICreature>,
-    },
-  },
-  setup(props) {
-    const data = ref(
-      props.modelValue ||
-        <ICreature>{
-          environment: EEnv.Land,
-        }
-    );
+  setup() {
+    const data = ref(NewCreature());
 
     const roll = {
       Env: () => {
@@ -67,19 +57,18 @@ export default defineComponent({
 
     const btns = {
       Clear: () => {
-        data.value = <ICreature>{
-          environment: EEnv.Land,
-        };
+        const env = data.value.environment;
+        data.value = NewCreature(env);
       },
       Initial: () => {
         btns.Clear();
-        roll.Env();
         roll.Scale();
         roll.Form();
         roll.First();
       },
-      Save: () => {
-        alert('Not yet implemented');
+      Save: (args: { sector: number; cell: number }) => {
+        const storeCopy = JSON.parse(JSON.stringify(data.value)) as ICreature;
+        useCampaign().data.sectors[args.sector].cells[args.cell].creatures.unshift(storeCopy);
       },
     };
     return {

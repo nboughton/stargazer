@@ -5,38 +5,33 @@
     </div>
 
     <div class="row q-gutter-sm q-mb-sm no-wrap">
-      <i-input class="col" label="Name" v-model="data.name" />
+      <i-input class="col-grow" label="Name" v-model="data.name" />
+      <q-select class="col-shrink" label="Type" v-model="data.location" :options="Object.values(ESLocation)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
+      <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+    </div>
+
+    <div class="row q-gutter-sm q-mb-sm">
       <i-input class="col" label="Scale" v-model="data.scale" />
-      <q-select class="col" label="Environment" v-model="data.environment" :options="Object.values(EEnv)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
-      <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
-    </div>
-
-    <div class="row q-gutter-sm q-mb-sm">
       <i-input class="col" label="Form" v-model="data.form" />
-      <i-input class="col" label="First Look" v-model="data.firstLook" />
+      <i-input class="col" label="Shape" v-model="data.shape" />
     </div>
 
-    <div class="row q-gutter-sm q-mb-sm">
-      <i-input class="col" label="Observed Behaviour" v-model="data.behaviour" />
-      <i-input class="col" label="Revealed Aspet" v-model="data.aspect" />
-    </div>
-
-    <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+    <i-input class="q-mb-sm" label="Notes" v-model="data.notes" />
     <q-separator />
   </div>
 </template>
 
 <script lang="ts">
 import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, ref, PropType, watch } from 'vue';
 import IInput from '../IInput.vue';
-import { ICreature, EEnv } from '../models';
+import { IVault, ESLocation } from '../models';
 export default defineComponent({
   components: { IInput },
-  name: 'SCreature',
+  name: 'SVault',
   props: {
     modelValue: {
-      type: Object as PropType<ICreature>,
+      type: Object as PropType<IVault>,
       required: true,
     },
   },
@@ -55,11 +50,10 @@ export default defineComponent({
     );
 
     const config = useConfig();
-
     return {
       data,
       config,
-      EEnv,
+      ESLocation,
     };
   },
 });

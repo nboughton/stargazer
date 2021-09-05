@@ -1,11 +1,4 @@
-import {
-  IVaultOracle,
-  ESLocation,
-  IVault,
-  ECoreCombo,
-} from 'src/components/models';
-
-import { tableRoll } from '../roll';
+import { IVaultOracle, ESLocation, ECoreCombo } from 'src/components/models';
 
 export const Vault: IVaultOracle = {
   location: {
@@ -1116,30 +1109,4 @@ export const Vault: IVaultOracle = {
       ],
     },
   },
-};
-
-export const RollVault = (loc?: ESLocation): IVault => {
-  const l = loc ? loc : tableRoll(Vault.location);
-
-  return {
-    name: '',
-    location: l as ESLocation,
-    scale: tableRoll(Vault.scale),
-    form: tableRoll(Vault.form),
-    shape: tableRoll(Vault.shape),
-    material: tableRoll(Vault.material),
-    outerFirstLook: tableRoll(Vault.outerFirstLook),
-    innerFirstLook: tableRoll(Vault.innerFirstLook),
-    purpose: tableRoll(Vault.purpose),
-    interior: {
-      feature: tableRoll(Vault.interior.feature),
-      peril: tableRoll(Vault.interior.peril),
-      opportunity: tableRoll(Vault.interior.opportunity),
-    },
-    sanctum: {
-      feature: tableRoll(Vault.sanctum.feature),
-      peril: tableRoll(Vault.sanctum.peril),
-      opportunity: tableRoll(Vault.sanctum.opportunity),
-    },
-  };
 };

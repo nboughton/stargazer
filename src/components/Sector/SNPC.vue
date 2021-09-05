@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row justify-between">
-      <div class="col text-h4 custom-header">{{ data.name }}</div>
+      <div class="col text-h5 custom-header">{{ data.name }}</div>
       <q-checkbox class="col-shrink" label="Bond" v-model="data.bond" dense />
     </div>
 

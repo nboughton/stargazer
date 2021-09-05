@@ -17,6 +17,12 @@ import {
   ISettlement,
   IStar,
   IStarship,
+  ICreature,
+  EEnv,
+  IDerelict,
+  EDerelictType,
+  EDerelictZone,
+  IVault,
 } from 'src/components/models';
 import { v4 as uuid } from 'uuid';
 import { Space } from './oracles/space';
@@ -161,11 +167,67 @@ export function NewNPC(): INPC {
   };
 }
 
+export function NewDerelict(loc?: ESLocation, type?: EDerelictType): IDerelict {
+  return {
+    name: '',
+    location: loc ? loc : ESLocation.Space,
+    type: type ? type : EDerelictType.Starship,
+    condition: '',
+    outerFirstLook: '',
+    innerFirstLook: '',
+    currentZone: EDerelictZone.Access,
+    explore: {
+      area: '',
+      feature: '',
+      peril: '',
+      opportunity: '',
+    },
+    notes: '',
+  };
+}
+
+export function NewCreature(env?: EEnv): ICreature {
+  return {
+    name: '',
+    environment: env ? env : EEnv.Land,
+    scale: '',
+    form: '',
+    firstLook: '',
+    behaviour: '',
+    aspect: '',
+    notes: '',
+  };
+}
+
+export function NewVault(loc?: ESLocation): IVault {
+  return {
+    name: '',
+    location: loc ? loc : ESLocation.Orbital,
+    scale: '',
+    form: '',
+    shape: '',
+    material: '',
+    outerFirstLook: '',
+    innerFirstLook: '',
+    purpose: '',
+    interior: {
+      feature: '',
+      peril: '',
+      opportunity: '',
+    },
+    sanctum: {
+      feature: '',
+      peril: '',
+      opportunity: '',
+    },
+    notes: '',
+  };
+}
+
 export function NewCell(name?: string): ISectorCell {
-  const n = name ? name : '';
   return {
     id: '',
-    name: n,
+    name: name ? name : '',
     stars: [],
     planets: [],
     settlements: [],
@@ -176,6 +238,7 @@ export function NewCell(name?: string): ISectorCell {
     vaults: [],
   };
 }
+
 export function NewSector(): ISector {
   return {
     name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,

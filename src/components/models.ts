@@ -445,6 +445,7 @@ export interface IDerelict {
     peril: string;
     opportunity: string;
   };
+  notes: '';
 }
 
 export interface IDerelictOracle {
@@ -472,6 +473,7 @@ export interface ICreature {
   firstLook: string;
   behaviour: string;
   aspect: string;
+  notes: '';
 }
 
 export interface ICreatureOracle {
@@ -489,6 +491,7 @@ export interface IVaultArea {
   peril: string;
   opportunity: string;
 }
+
 export interface IVault {
   name: string;
   location: ESLocation;
@@ -501,6 +504,7 @@ export interface IVault {
   purpose: string;
   interior: IVaultArea;
   sanctum: IVaultArea;
+  notes: string;
 }
 
 export interface IVaultAreaOracle {

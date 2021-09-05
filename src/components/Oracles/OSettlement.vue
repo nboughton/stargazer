@@ -34,13 +34,8 @@ import { NewSettlement } from 'src/lib/campaign';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OSettlement',
-  props: {
-    modelValue: {
-      type: Object as PropType<ISettlement>,
-    },
-  },
-  setup(props) {
-    const data = ref(props.modelValue || NewSettlement());
+  setup() {
+    const data = ref(NewSettlement());
     const regionSelect = ref(ERegion.Terminus);
 
     const roll = {

@@ -16,7 +16,7 @@
       <q-expansion-item v-if="show.stars()" header-class="text-h5 custom-header" label="Stars">
         <s-star
           class="q-mt-sm"
-          v-for="(star, i) in campaign.data.sectors[sectorID].cells[cellID].stars"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].stars"
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].stars[i]"
           @delete="remove.star(i)"
@@ -26,7 +26,7 @@
       <q-expansion-item v-if="show.planets()" header-class="text-h5 custom-header" label="Planets">
         <s-planet
           class="q-mt-sm"
-          v-for="(planet, i) in campaign.data.sectors[sectorID].cells[cellID].planets"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].planets"
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].planets[i]"
           @delete="remove.planet(i)"
@@ -36,7 +36,7 @@
       <q-expansion-item v-if="show.sett()" header-class="text-h5 custom-header" label="Settlements">
         <s-settlement
           class="q-mt-sm"
-          v-for="(sett, i) in campaign.data.sectors[sectorID].cells[cellID].settlements"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].settlements"
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].settlements[i]"
           @delete="remove.settlement(i)"
@@ -46,7 +46,7 @@
       <q-expansion-item v-if="show.ships()" header-class="text-h5 custom-header" label="Starships">
         <s-starship
           class="q-mt-sm"
-          v-for="(ship, i) in campaign.data.sectors[sectorID].cells[cellID].ships"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].ships"
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].ships[i]"
           @delete="remove.ship(i)"
@@ -56,10 +56,40 @@
       <q-expansion-item v-if="show.npcs()" header-class="text-h5 custom-header" label="People">
         <s-NPC
           class="q-mt-sm"
-          v-for="(npc, i) in campaign.data.sectors[sectorID].cells[cellID].npcs"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].npcs"
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].npcs[i]"
           @delete="remove.npc(i)"
+        />
+      </q-expansion-item>
+
+      <q-expansion-item v-if="show.creatures()" header-class="text-h5 custom-header" label="Creatures">
+        <s-creature
+          class="q-mt-sm"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].creatures"
+          :key="i"
+          v-model="campaign.data.sectors[sectorID].cells[cellID].creatures[i]"
+          @delete="remove.creature(i)"
+        />
+      </q-expansion-item>
+
+      <q-expansion-item v-if="show.derelicts()" header-class="text-h5 custom-header" label="Derelicts">
+        <s-derelict
+          class="q-mt-sm"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].derelicts"
+          :key="i"
+          v-model="campaign.data.sectors[sectorID].cells[cellID].derelicts[i]"
+          @delete="remove.derelict(i)"
+        />
+      </q-expansion-item>
+
+      <q-expansion-item v-if="show.vaults()" header-class="text-h5 custom-header" label="Vaults">
+        <s-vault
+          class="q-mt-sm"
+          v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].vaults"
+          :key="i"
+          v-model="campaign.data.sectors[sectorID].cells[cellID].vaults[i]"
+          @delete="remove.vault(i)"
         />
       </q-expansion-item>
     </q-card-section>
@@ -67,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import { NewStar, NewPlanet, NewSettlement, NewShip, NewNPC } from 'src/lib/campaign';
+import { NewStar, NewPlanet, NewSettlement, NewShip, NewNPC, NewCreature, NewDerelict, NewVault } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref } from 'vue';
 import { ESectorItem } from '../models';
@@ -76,8 +106,11 @@ import SSettlement from './SSettlement.vue';
 import SStar from './SStar.vue';
 import SStarship from './SStarship.vue';
 import SNPC from './SNPC.vue';
+import SCreature from './SCreature.vue';
+import SDerelict from './SDerelict.vue';
+import SVault from './SVault.vue';
 export default defineComponent({
-  components: { SStar, SPlanet, SSettlement, SStarship, SNPC },
+  components: { SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault },
   name: 'Cell',
   props: {
     sectorID: {
@@ -114,6 +147,18 @@ export default defineComponent({
           campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.unshift(NewNPC());
           break;
 
+        case ESectorItem.Creature:
+          campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.unshift(NewCreature());
+          break;
+
+        case ESectorItem.Derelict:
+          campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.unshift(NewDerelict());
+          break;
+
+        case ESectorItem.Vault:
+          campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.unshift(NewVault());
+          break;
+
         default:
           break;
       }
@@ -135,6 +180,15 @@ export default defineComponent({
       npc: (i: number) => {
         campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.splice(i, 1);
       },
+      creature: (i: number) => {
+        campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.splice(i, 1);
+      },
+      derelict: (i: number) => {
+        campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.splice(i, 1);
+      },
+      vault: (i: number) => {
+        campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.splice(i, 1);
+      },
     };
 
     const show = {
@@ -152,6 +206,15 @@ export default defineComponent({
       },
       npcs: (): boolean => {
         return campaign.data.sectors[props.sectorID].cells[props.cellID].npcs && campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.length > 0;
+      },
+      creatures: (): boolean => {
+        return campaign.data.sectors[props.sectorID].cells[props.cellID].creatures && campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.length > 0;
+      },
+      derelicts: (): boolean => {
+        return campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts && campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.length > 0;
+      },
+      vaults: (): boolean => {
+        return campaign.data.sectors[props.sectorID].cells[props.cellID].vaults && campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.length > 0;
       },
     };
 

@@ -80,10 +80,10 @@
     <legacy-track name="Discoveries" v-model="campaign.data.character.legacies.discoveries" />
     <q-separator />
     <!-- Bonds -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Bonds</div>
+    <!--div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Bonds</div>
     <progress-track class="q-mb-md" v-model="campaign.data.character.bonds" :showDifficulty="false" :setDifficulty="5" :showMenaceBtn="false" />
 
-    <q-separator />
+    <q-separator /-->
 
     <!-- Vows -->
     <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Vows<q-btn icon="add_circle" flat dense @click="addVow" /></div>

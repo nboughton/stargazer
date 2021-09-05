@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row justify-between">
-      <div class="col text-h4 custom-header">{{ data.name }}</div>
+      <div class="col text-h5 custom-header">{{ data.name }}</div>
     </div>
 
     <div class="row q-gutter-sm q-mb-sm no-wrap">
