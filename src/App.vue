@@ -2,7 +2,7 @@
   <router-view />
 </template>
 <script lang="ts">
-import { defineComponent, watch } from 'vue';
+import { defineComponent, watch, onBeforeMount } from 'vue';
 import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
 import { useQuasar } from 'quasar';
@@ -15,10 +15,12 @@ export default defineComponent({
     $q.dark.set(true);
 
     const campaign = useCampaign();
-    campaign.populateStore().catch((err) => console.log(err));
+    onBeforeMount(() => {
+      campaign.populateStore().catch((err) => console.log(err));
 
-    const assets = useAssets();
-    assets.populateStore().catch((err) => console.log(err));
+      const assets = useAssets();
+      assets.populateStore().catch((err) => console.log(err));
+    });
 
     const config = useConfig();
 

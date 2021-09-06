@@ -2,7 +2,7 @@
   <div class="q-mb-md">
     <div class="row text-h4 custom-header items-center">
       <div class="col-shrink q-mr-sm">{{ label }}</div>
-      <q-select class="col-grow" label="Select one or write your own" v-model="optSelect" map-options emit-value :options="opts()" dense borderless />
+      <q-select class="col-grow" label="Select one, write your own, or roll..." v-model="optSelect" map-options emit-value :options="opts()" dense borderless />
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="campaign.data.truths[id] = RollTruth(id)" />
       <q-select v-if="subOpts.length > 0" class="col-grow" label="Select" v-model="subOptSelect" :options="subOpts" dense borderless />
       <q-btn class="col-shrink" v-if="subOpts.length > 0" icon="mdi-dice-6" flat dense @click="rollSub" />

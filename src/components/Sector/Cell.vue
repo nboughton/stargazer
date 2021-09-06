@@ -13,7 +13,7 @@
 
     <!-- content -->
     <q-card-section>
-      <q-expansion-item v-if="show.stars()" header-class="text-h5 custom-header" label="Stars">
+      <div v-if="show.stars()">
         <s-star
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].stars"
@@ -21,9 +21,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].stars[i]"
           @delete="remove.star(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.planets()" header-class="text-h5 custom-header" label="Planets">
+      <div v-if="show.planets()">
         <s-planet
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].planets"
@@ -31,9 +31,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].planets[i]"
           @delete="remove.planet(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.sett()" header-class="text-h5 custom-header" label="Settlements">
+      <div v-if="show.sett()">
         <s-settlement
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].settlements"
@@ -41,9 +41,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].settlements[i]"
           @delete="remove.settlement(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.ships()" header-class="text-h5 custom-header" label="Starships">
+      <div v-if="show.ships()">
         <s-starship
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].ships"
@@ -51,9 +51,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].ships[i]"
           @delete="remove.ship(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.npcs()" header-class="text-h5 custom-header" label="People">
+      <div v-if="show.npcs()">
         <s-NPC
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].npcs"
@@ -61,9 +61,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].npcs[i]"
           @delete="remove.npc(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.creatures()" header-class="text-h5 custom-header" label="Creatures">
+      <div v-if="show.creatures()">
         <s-creature
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].creatures"
@@ -71,9 +71,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].creatures[i]"
           @delete="remove.creature(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.derelicts()" header-class="text-h5 custom-header" label="Derelicts">
+      <div v-if="show.derelicts()">
         <s-derelict
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].derelicts"
@@ -81,9 +81,9 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].derelicts[i]"
           @delete="remove.derelict(i)"
         />
-      </q-expansion-item>
+      </div>
 
-      <q-expansion-item v-if="show.vaults()" header-class="text-h5 custom-header" label="Vaults">
+      <div v-if="show.vaults()">
         <s-vault
           class="q-mt-sm"
           v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].vaults"
@@ -91,7 +91,7 @@
           v-model="campaign.data.sectors[sectorID].cells[cellID].vaults[i]"
           @delete="remove.vault(i)"
         />
-      </q-expansion-item>
+      </div>
     </q-card-section>
   </q-card>
 </template>

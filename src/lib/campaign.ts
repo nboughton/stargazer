@@ -188,7 +188,7 @@ export function NewDerelict(loc?: ESLocation, type?: EDerelictType): IDerelict {
 
 export function NewCreature(env?: EEnv): ICreature {
   return {
-    name: '',
+    name: 'New Creature',
     environment: env ? env : EEnv.Land,
     scale: '',
     form: '',
@@ -201,7 +201,7 @@ export function NewCreature(env?: EEnv): ICreature {
 
 export function NewVault(loc?: ESLocation): IVault {
   return {
-    name: '',
+    name: 'Mysterious Vault',
     location: loc ? loc : ESLocation.Orbital,
     scale: '',
     form: '',
@@ -250,14 +250,14 @@ export function NewSector(): ISector {
 
 export function NewStar(): IStar {
   return {
-    name: '',
+    name: 'New Star',
     description: '',
   };
 }
 
-export function NewPlanet(): IPlanet {
+export function NewPlanet(type?: EPClass): IPlanet {
   return {
-    type: EPClass.Desert,
+    type: type ? type : EPClass.Desert,
     name: '',
     description: '',
     atmosphere: '',
@@ -269,10 +269,10 @@ export function NewPlanet(): IPlanet {
   };
 }
 
-export function NewSettlement(): ISettlement {
+export function NewSettlement(loc?: ESLocation): ISettlement {
   return {
     name: '',
-    location: ESLocation.Orbital,
+    location: loc ? loc : ESLocation.Orbital,
     population: '',
     firstLook: '',
     initialContact: '',

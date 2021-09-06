@@ -40,12 +40,15 @@ import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
 import { NewPlanet } from 'src/lib/campaign';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OPlanet',
   setup() {
     const data = ref(NewPlanet());
+
     const regionSelect = ref(ERegion.Terminus);
+
     const poppers = ref({
       peril: '',
       opportunity: '',
@@ -86,9 +89,9 @@ export default defineComponent({
 
     const btns = {
       Clear: () => {
-        data.value = <IPlanet>{
-          type: EPClass.Desert,
-        };
+        const t = data.value.type;
+        data.value = NewPlanet(t);
+
         poppers.value = {
           peril: '',
           opportunity: '',

@@ -1,26 +1,23 @@
 <template>
   <div>
-    <div class="row justify-between">
-      <div class="col text-h5 custom-header">{{ data.name }}</div>
-    </div>
-
-    <div class="row q-gutter-sm q-mb-sm no-wrap">
-      <i-input class="col-grow" label="Name" v-model="data.name" />
-      <q-select label="Type" v-model="data.type" :options="Object.values(EPClass)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
-      <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
-    </div>
-    <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
-    <div class="row q-gutter-sm justify-between q-mb-sm">
-      <i-input class="col" label="Atmosphere" v-model="data.atmosphere" />
-      <i-input class="col" label="Life" v-model="data.life" />
-      <i-input class="col" label="Settlements" v-model="data.settlements" />
-    </div>
-    <div class="row q-gutter-sm q-mb-sm">
-      <i-input class="col" label="Observed from Space" v-model="data.observed" />
-      <i-input class="col" label="Planetside Features" v-model="data.feature" />
-    </div>
-    <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
-    <q-separator />
+    <q-expansion-item header-class="planet-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Planet">
+      <div class="row q-gutter-sm q-mb-sm no-wrap">
+        <i-input class="col-grow" label="Name" v-model="data.name" />
+        <q-select label="Type" v-model="data.type" :options="Object.values(EPClass)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
+        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+      </div>
+      <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
+      <div class="row q-gutter-sm justify-between q-mb-sm">
+        <i-input class="col" label="Atmosphere" v-model="data.atmosphere" />
+        <i-input class="col" label="Life" v-model="data.life" />
+        <i-input class="col" label="Settlements" v-model="data.settlements" />
+      </div>
+      <div class="row q-gutter-sm q-mb-sm">
+        <i-input class="col" label="Observed from Space" v-model="data.observed" />
+        <i-input class="col" label="Planetside Features" v-model="data.feature" />
+      </div>
+      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+    </q-expansion-item>
   </div>
 </template>
 
@@ -62,3 +59,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass">
+.planet-header
+  background-color: $planet
+  text-shadow: 1px 1px 1px $dark-page
+</style>
