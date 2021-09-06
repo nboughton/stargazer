@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { IPlanet, ERegion, EPClass } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { Opportunity, Peril, Planets, RollPlanetType } from 'src/lib/oracles/planets';

@@ -1,17 +1,22 @@
 <template>
-  <div class="q-pb-md">
-    <!-- content -->
-    <div class="row items-center q-pb-sm">
-      <div class="col-shrink text-h5 q-pr-sm">{{ label }}</div>
-      <q-select class="col-grow" v-model="select" :options="optsFn(id)" map-options emit-value dense label="Select one or write your own..." />
+  <div class="q-mb-md">
+    <div class="row text-h4 custom-header items-center">
+      <div class="col-shrink q-mr-sm">{{ label }}</div>
+      <q-select class="col-grow" label="Select one or write your own" v-model="optSelect" map-options emit-value :options="opts()" dense borderless />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="campaign.data.truths[id] = RollTruth(id)" />
+      <q-select v-if="subOpts.length > 0" class="col-grow" label="Select" v-model="subOptSelect" :options="subOpts" dense borderless />
+      <q-btn class="col-shrink" v-if="subOpts.length > 0" icon="mdi-dice-6" flat dense @click="rollSub" />
     </div>
-    <q-input v-model="data" autogrow dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750" />
+
+    <q-input label="Text" v-model="campaign.data.truths[id]" dense outlined autogrow />
   </div>
 </template>
 
 <script lang="ts">
 import { ISelectOpt } from 'src/components/models';
-import { Truths } from 'src/lib/truths';
+import { SFTruths, RollTruth } from 'src/lib/truths';
+import { tableRoll } from 'src/lib/roll';
+import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref, watch } from 'vue';
 export default defineComponent({
   name: 'Truths',
@@ -24,40 +29,60 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    modelValue: {
-      type: String,
-      required: true,
-    },
   },
-  emits: ['update:modelValue'],
-  setup(props, ctx) {
-    const data = ref(props.modelValue);
-    watch(
-      () => props.modelValue,
-      () => (data.value = props.modelValue)
-    );
-    watch(
-      () => data.value,
-      () => ctx.emit('update:modelValue', data.value)
-    );
+  setup(props) {
+    const campaign = useCampaign();
+    const subOptSelect = ref('');
+    let subOpts = ref([] as string[]);
 
-    const select = ref('');
-    watch(
-      () => select.value,
-      () => (data.value = select.value)
-    );
-    const optsFn = (label: string): ISelectOpt[] => {
+    const optSelect = ref('');
+    const optID = ref(0);
+    const opts = (): ISelectOpt[] => {
       const out: ISelectOpt[] = [];
-      Truths[label].forEach((t) => {
-        out.push({ label: `${t.substring(0, 70)}...`, value: t });
+      SFTruths[props.id].forEach((t) => {
+        const opt = { label: t.summary, value: t.text };
+        out.push(opt);
       });
       return out;
     };
 
+    watch(
+      () => optSelect.value,
+      () => {
+        subOpts.value = [];
+        SFTruths[props.id].forEach((t, i) => {
+          if (optSelect.value === t.text) campaign.data.truths[props.id] = `${t.summary} ${t.text}`;
+          if (optSelect.value === t.text && t.table) {
+            optID.value = i;
+            t.table.items.forEach((i) => {
+              subOpts.value.push(i.data);
+            });
+          }
+        });
+      }
+    );
+
+    watch(
+      () => subOptSelect.value,
+      () => {
+        campaign.data.truths[props.id] += subOptSelect.value;
+      }
+    );
+
+    const rollSub = () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      campaign.data.truths[props.id] += tableRoll(SFTruths[props.id][optID.value].table!);
+    };
+
     return {
-      data,
-      select,
-      optsFn,
+      campaign,
+      optSelect,
+      opts,
+      optID,
+      subOptSelect,
+      subOpts,
+      RollTruth,
+      rollSub,
     };
   },
 });

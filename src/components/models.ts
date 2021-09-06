@@ -299,12 +299,6 @@ export interface ITableItem {
   text: string;
 }
 
-export interface IOracle {
-  name: string;
-  d: number;
-  table: ITableItem[];
-}
-
 // Starforged Oracles
 export type TPlanetOracles = { [index: string]: IPlanetOracle };
 
@@ -314,8 +308,15 @@ export interface ISFTableItem {
 }
 
 export interface ISFTable {
-  name?: string;
+  match?: number[];
   items: ISFTableItem[];
+}
+
+export interface ITruthsSection {
+  match: number[];
+  summary: string;
+  text: string;
+  table?: ISFTable;
 }
 
 export interface ISFOracle {

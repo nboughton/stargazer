@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { ERegion, IStarship } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { Starship } from 'src/lib/oracles/starship';

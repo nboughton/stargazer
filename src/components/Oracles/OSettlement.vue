@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { ISettlement, ESLocation, ERegion } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { Settlement } from 'src/lib/oracles/settlement';

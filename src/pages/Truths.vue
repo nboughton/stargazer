@@ -1,17 +1,20 @@
 <template>
   <q-page padding>
     <!-- content -->
-    <truth v-model="campaign.data.truths.theOldWorld" label="The Old World" id="theOldWorld" />
-    <truth v-model="campaign.data.truths.iron" label="Iron" id="iron" />
-    <truth v-model="campaign.data.truths.legacies" label="Legacies" id="legacies" />
-    <truth v-model="campaign.data.truths.communities" label="Communities" id="communities" />
-    <truth v-model="campaign.data.truths.leaders" label="Leaders" id="leaders" />
-    <truth v-model="campaign.data.truths.defense" label="Defense" id="defense" />
-    <truth v-model="campaign.data.truths.mysticism" label="Mysticism" id="mysticism" />
-    <truth v-model="campaign.data.truths.religion" label="Religion" id="religion" />
-    <truth v-model="campaign.data.truths.firstBorn" label="Firstborn" id="firstBorn" />
-    <truth v-model="campaign.data.truths.beasts" label="Beasts" id="beasts" />
-    <truth v-model="campaign.data.truths.horrors" label="Horrors" id="horrors" />
+    <truth label="Cataclysm" id="cataclysm" />
+    <truth label="Exodus" id="exodus" />
+    <truth label="Communities" id="communities" />
+    <truth label="Iron" id="iron" />
+    <truth label="Laws" id="laws" />
+    <truth label="Religion" id="religion" />
+    <truth label="Magic" id="magic" />
+    <truth label="Communication and Data" id="communication" />
+    <truth label="Medicine" id="medicine" />
+    <truth label="Artificial Intelligence" id="ai" />
+    <truth label="War" id="war" />
+    <truth label="Lifeforms" id="lifeforms" />
+    <truth label="Precursors" id="precursors" />
+    <truth label="Horrors" id="horrors" />
   </q-page>
 </template>
 

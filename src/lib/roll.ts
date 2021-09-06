@@ -1,4 +1,4 @@
-import { IRollData, IOracle, ISFTable, ECoreCombo } from 'src/components/models';
+import { IRollData, ISFTable, ECoreCombo } from 'src/components/models';
 import { Core } from './oracles/core';
 
 export const d = (size: number) => {
@@ -77,22 +77,6 @@ export const moveRoll = (attr: number, adds: number, momentum: number, progress?
   return r;
 };
 
-export const oracleRoll = (oracle: IOracle): string => {
-  const n = d(oracle.d);
-  let out = 'No match';
-  oracle.table.forEach((item) => {
-    if (item.match.length === 1 && item.match[0] === n) {
-      out = item.text;
-      return;
-    }
-
-    if (n >= item.match[0] && n <= item.match[1]) {
-      out = item.text;
-    }
-  });
-  return out;
-};
-
 export const tableRoll = (oracle: ISFTable): string => {
   const n = d(100);
   let out = 'No match';
@@ -110,5 +94,6 @@ export const tableRoll = (oracle: ISFTable): string => {
 
   if (out === ECoreCombo.ActTheme) out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
   if (out === ECoreCombo.DescFoc) out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
+  if (/roll twice/i.test(out)) out = `${tableRoll(oracle)} ${tableRoll(oracle)}`;
   return out;
 };
