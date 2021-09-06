@@ -1,6 +1,6 @@
 {
   "name": "stargazer",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An app for journaling solo Ironsworn: Starforged campaigns",
   "productName": "Stargazer",
   "author": "Nick Boughton <nicholasboughton@gmail.com>",
@@ -26,6 +26,8 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
+    "electron": "^14.0.0",
+    "electron-packager": "^15.2.0",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.0.0"

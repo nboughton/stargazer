@@ -195,7 +195,7 @@ module.exports = configure(function (ctx) {
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-
+        platform: 'all'
         // OS X / Mac App Store
         // appBundleId: '',
         // appCategoryType: '',
