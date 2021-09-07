@@ -21,7 +21,7 @@
       <q-btn icon="add" label="New Location" outline @click="addCell" />
     </div>
     <div class="column q-mt-md">
-      <cell class="q-mb-md" v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells" :key="index" :sectorID="config.data.sector" :cellID="index" />
+      <cell class="q-mb-md" v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells" :key="index" :sectorID="config.data.sector" :cellID="index" @delete="removeCell(index)" />
     </div>
   </q-page>
 </template>
@@ -64,6 +64,11 @@ export default defineComponent({
       config.data.sector = 0;
       campaign.data.sectors.splice(d, 1);
     };
+
+    const removeCell = (index: number) => {
+      campaign.data.sectors[config.data.sector].cells.splice(index, 1);
+    };
+
     return {
       campaign,
       config,
@@ -72,6 +77,7 @@ export default defineComponent({
       sectorOpts,
       addSector,
       removeSector,
+      removeCell,
     };
   },
 });

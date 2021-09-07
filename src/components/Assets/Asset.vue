@@ -24,6 +24,11 @@
       </div>
     </q-card-section>
 
+    <q-card-section class="row q-gutter-sm justify-evenly" v-if="/(support|command) vehicle/i.test(data.type)">
+      <q-checkbox class="col" v-model="data.battered" label="Battered" dense :disable="browse" />
+      <q-checkbox class="col" v-if="/command/i.test(data.type)" v-model="data.cursed" label="Cursed" dense :disable="browse" />
+    </q-card-section>
+
     <q-card-section class="row full-width">
       <resource-track class="col-grow" v-if="data.track" v-model="data.track" reverse />
     </q-card-section>

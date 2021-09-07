@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item header-class="starship-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Starship">
+    <q-expansion-item icon="img:icons/space/spaceship.svg" header-class="starship-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Starship">
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Class" v-model="data.class" />

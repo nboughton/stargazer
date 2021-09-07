@@ -73,6 +73,7 @@
     <q-separator />
 
     <!-- Legacy tracks -->
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Legacy Tracks</div>
     <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
     <q-separator />
     <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
@@ -87,7 +88,7 @@
 
     <!-- Vows -->
     <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Vows<q-btn icon="add_circle" flat dense @click="addVow" /></div>
-    <progress-track class="q-mb-md" v-for="(vow, vIndex) in campaign.data.character.vows" :key="vIndex" v-model="campaign.data.character.vows[vIndex]">
+    <progress-track class="q-mb-md" v-for="(vow, vIndex) in campaign.data.character.vows" :key="vIndex" v-model="campaign.data.character.vows[vIndex]" :showMenaceBtn="false">
       <template v-slot:action v-if="config.data.edit">
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeVow(vIndex)" />
       </template>

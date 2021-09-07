@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item header-class="star-header text-h5 custom-header rounded-borders shadow-1" :label="data.name" caption="Star">
+    <q-expansion-item icon="img:icons/space/star-sattelites.svg" header-class="star-header text-h5 custom-header rounded-borders shadow-1" :label="data.name" caption="Star">
       <div class="q-mt-sm">
         <i-input class="q-mb-sm" label="Name" v-model="data.name">
           <template v-slot:append v-if="config.data.edit">
@@ -18,6 +18,7 @@ import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
 import IInput from '../IInput.vue';
 import { IStar } from '../models';
+
 export default defineComponent({
   components: { IInput },
   name: 'SStar',

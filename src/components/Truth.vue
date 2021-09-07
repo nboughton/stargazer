@@ -2,10 +2,13 @@
   <div class="q-mb-md">
     <div class="row text-h4 custom-header items-center">
       <div class="col-shrink q-mr-sm">{{ label }}</div>
+
       <q-select class="col-grow" label="Select one, write your own, or roll..." v-model="optSelect" map-options emit-value :options="opts()" dense borderless />
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="campaign.data.truths[id] = RollTruth(id)" />
-      <q-select v-if="subOpts.length > 0" class="col-grow" label="Select" v-model="subOptSelect" :options="subOpts" dense borderless />
-      <q-btn class="col-shrink" v-if="subOpts.length > 0" icon="mdi-dice-6" flat dense @click="rollSub" />
+    </div>
+    <div class="row items-center custom-header" v-if="subOpts.length > 0">
+      <q-select class="col-grow" label="Select" v-model="subOptSelect" :options="subOpts" dense borderless />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollSub" />
     </div>
 
     <q-input label="Text" v-model="campaign.data.truths[id]" dense outlined autogrow />
@@ -40,7 +43,7 @@ export default defineComponent({
     const opts = (): ISelectOpt[] => {
       const out: ISelectOpt[] = [];
       SFTruths[props.id].forEach((t) => {
-        const opt = { label: t.summary, value: t.text };
+        const opt = { label: `${t.summary.substring(0, 70)}...`, value: t.text };
         out.push(opt);
       });
       return out;
@@ -65,13 +68,13 @@ export default defineComponent({
     watch(
       () => subOptSelect.value,
       () => {
-        campaign.data.truths[props.id] += subOptSelect.value;
+        campaign.data.truths[props.id] += ' ' + subOptSelect.value;
       }
     );
 
     const rollSub = () => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      campaign.data.truths[props.id] += tableRoll(SFTruths[props.id][optID.value].table!);
+      campaign.data.truths[props.id] += ' ' + tableRoll(SFTruths[props.id][optID.value].table!);
     };
 
     return {

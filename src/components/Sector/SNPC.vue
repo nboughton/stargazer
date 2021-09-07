@@ -1,12 +1,24 @@
 <template>
   <div>
-    <q-expansion-item header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Person">
-      <div class="row q-gutter-sm q-mb-sm no-wrap">
+    <q-expansion-item icon="img:icons/life/character.svg" header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Person">
+      <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Callsign" v-model="data.callsign" />
         <i-input class="col" label="Role" v-model="data.role" />
         <q-checkbox class="col-shrink" dense label="Bond" v-model="data.bond" />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+      </div>
+      <div v-else>
+        <div class="row q-gutter-sm q-mb-sm no-wrap">
+          <i-input class="col" label="Name" v-model="data.name" />
+          <q-checkbox class="col-shrink" dense label="Bond" v-model="data.bond" />
+          <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+        </div>
+
+        <div class="row q-gutter-sm q-mb-sm">
+          <i-input class="col" label="Callsign" v-model="data.callsign" />
+          <i-input class="col" label="Role" v-model="data.role" />
+        </div>
       </div>
 
       <div class="row q-gutter-sm q-mb-sm">
@@ -25,6 +37,7 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
 import IInput from '../IInput.vue';
@@ -54,7 +67,9 @@ export default defineComponent({
     );
 
     const config = useConfig();
+    const $q = useQuasar();
     return {
+      $q,
       data,
       config,
     };

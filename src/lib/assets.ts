@@ -442,6 +442,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 6,
       min: 0,
     },
+    battered: false,
   },
   'Expanded Hold': {
     type: 'Module',
@@ -764,6 +765,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 3,
       min: 0,
     },
+    battered: false,
   },
   'Internal Refit': {
     type: 'Module',
@@ -1163,6 +1165,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 5,
       min: 0,
     },
+    battered: false,
   },
   Scavenger: {
     type: 'Path',
@@ -1266,6 +1269,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 4,
       min: 0,
     },
+    battered: false,
   },
   Shade: {
     type: 'Path',
@@ -1336,6 +1340,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 4,
       min: 0,
     },
+    battered: false,
   },
   Sidekick: {
     type: 'Companion',
@@ -1394,6 +1399,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 4,
       min: 0,
     },
+    battered: false,
   },
   Slayer: {
     type: 'Path',
@@ -1460,6 +1466,7 @@ export const Assets: { [index: string]: IAsset } = {
       max: 4,
       min: 0,
     },
+    battered: false,
   },
   Sprite: {
     type: 'Companion',
@@ -1514,6 +1521,8 @@ export const Assets: { [index: string]: IAsset } = {
       max: 5,
       min: 0,
     },
+    battered: false,
+    cursed: false,
   },
   'Stealth Tech': {
     type: 'Module',

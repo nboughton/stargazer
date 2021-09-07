@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Creature">
+    <q-expansion-item :icon="icon" header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Creature">
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Scale" v-model="data.scale" />
@@ -8,14 +8,22 @@
         <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
-      <div class="row q-gutter-sm q-mb-sm">
+      <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Form" v-model="data.form" />
         <i-input class="col" label="First Look" v-model="data.firstLook" />
       </div>
+      <div v-else>
+        <i-input class="q-mb-sm" label="Form" v-model="data.form" />
+        <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
+      </div>
 
-      <div class="row q-gutter-sm q-mb-sm">
+      <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Observed Behaviour" v-model="data.behaviour" />
         <i-input class="col" label="Revealed Aspet" v-model="data.aspect" />
+      </div>
+      <div v-else>
+        <i-input class="q-mb-sm" label="Observed Behaviour" v-model="data.behaviour" />
+        <i-input class="q-mb-sm" label="Revealed Aspet" v-model="data.aspect" />
       </div>
 
       <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
@@ -24,8 +32,9 @@
 </template>
 
 <script lang="ts">
+import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import IInput from '../IInput.vue';
 import { ICreature, EEnv } from '../models';
 export default defineComponent({
@@ -52,11 +61,19 @@ export default defineComponent({
     );
 
     const config = useConfig();
+    const $q = useQuasar();
 
+    const icon = computed((): string => {
+      return /(amoeba|amorphous|avian|beast|crustacean|fish|humanoid|insectoid|jellyfish|lizard|octopoid|plant|ray|snake|spider|starfish|worm)/i.test(data.value.form)
+        ? `img:icons/life/${data.value.form.split(' ')[0].toLowerCase()}.svg`
+        : 'img:icons/life/floating-tentacles.svg';
+    });
     return {
+      $q,
       data,
       config,
       EEnv,
+      icon,
     };
   },
 });

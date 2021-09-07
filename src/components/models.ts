@@ -212,6 +212,8 @@ export interface IAsset {
   type: string;
   items: IAssetItem[];
   track?: ITrack;
+  cursed?: boolean;
+  battered?: boolean;
 }
 
 export interface ICharacter {

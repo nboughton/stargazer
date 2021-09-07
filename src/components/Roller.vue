@@ -3,10 +3,18 @@
     <q-card class="column my-card">
       <q-card-section class="row items-center">
         <div class="col-12 text-h6 q-px-sm" v-if="d100Res > 0">
-          <div class="row items-center justify-between">
-            <div class="col-shrink" />
+          <div class="row items-baseline justify-between">
+            <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
             <div class="col-grow text-center q-mb-sm">{{ d100Res }}</div>
             <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
+          </div>
+        </div>
+
+        <div class="col-12 text-h6 q-px-sm" v-if="d6Res > 0">
+          <div class="row items-baseline justify-between">
+            <div class="col-shrink"><q-icon name="mdi-dice-6" /></div>
+            <div class="col-grow text-center q-mb-sm">{{ d6Res }}</div>
+            <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d6Res = 0" :size="btnSize" />
           </div>
         </div>
 
@@ -19,7 +27,9 @@
             </div>
           </div>
           <div class="row items-center justify-between q-mx-sm">
-            <q-icon v-if="!burnt" :name="adIcon" size="md" />
+            <q-btn v-if="!burnt" :icon="adIcon" size="md" flat dense @click="reroll(true, false, false)">
+              <q-tooltip>Reroll Action die</q-tooltip>
+            </q-btn>
             <span v-if="!burnt">+</span>
             <span v-if="!burnt">{{ attribute }}</span>
             <span v-if="!burnt">+</span>
@@ -28,9 +38,16 @@
             <span v-if="burnt">Momentum</span>
             <span v-if="burnt">=</span>
             <span :class="data.action.color">{{ data.action.score }}</span>
-            <span>vs</span> <span :class="data.challenge.die1.color">{{ data.challenge.die1.roll }}</span>
+            <span>vs</span>
+            <q-btn :class="data.challenge.die1.color" outline round size="md" @click="reroll(false, true, false)">
+              {{ data.challenge.die1.roll }}
+              <q-tooltip>Reroll Challenge die</q-tooltip>
+            </q-btn>
             <span>|</span>
-            <span :class="data.challenge.die2.color">{{ data.challenge.die2.roll }}</span>
+            <q-btn :class="data.challenge.die2.color" outline round size="md" @click="reroll(false, false, true)">
+              {{ data.challenge.die2.roll }}
+              <q-tooltip>Reroll Challenge die</q-tooltip>
+            </q-btn>
             <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="data.result = ''" :size="btnSize">
               <q-tooltip>Clear Roll Results</q-tooltip>
             </q-btn>
@@ -50,11 +67,17 @@
             <q-btn class="col-shrink" icon="expand_more" dense flat @click="close" :size="btnSize">
               <q-tooltip>Hide roller</q-tooltip>
             </q-btn>
-            <q-btn class="col-shrink" dense icon="mdi-dice-6" flat @click="roll" :size="btnSize">
+            <q-btn class="col-shrink" dense flat @click="roll" :size="btnSize">
+              <q-icon name="mdi-dice-6" />
+              <q-icon name="img:icons/dice/d10.svg" />
+              <q-icon name="img:icons/dice/d10.svg" />
               <q-tooltip>Roll +Attribute</q-tooltip>
             </q-btn>
             <q-btn class="col-shrink" dense flat :label="campaign.data.character.tracks.momentum.value" icon="mdi-fire" @click="burn" :size="btnSize">
               <q-tooltip>Burn Momentum</q-tooltip>
+            </q-btn>
+            <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
+              <q-tooltip>Roll a D6</q-tooltip>
             </q-btn>
             <q-btn class="col-shrink" dense flat icon="mdi-percent" @click="d100" :size="btnSize">
               <q-tooltip>Roll a D100</q-tooltip>
@@ -164,6 +187,35 @@ export default defineComponent({
     const d100Res = ref(0);
     const d100 = () => (d100Res.value = d(100));
 
+    const d6Res = ref(0);
+    const d6 = () => (d6Res.value = d(6));
+
+    const reroll = (action: boolean, cd1: boolean, cd2: boolean) => {
+      if (action) {
+        data.value.action.die = d(6);
+      }
+      if (cd1) {
+        data.value.challenge.die1.roll = d(10);
+      }
+      if (cd2) {
+        data.value.challenge.die2.roll = d(10);
+      }
+
+      data.value.action.score = +data.value.action.die + +adds.value + +attribute.value;
+      // Account for negative momentum
+      if (campaign.data.character.tracks.momentum.value < 0 && Math.abs(campaign.data.character.tracks.momentum.value) === Math.abs(data.value.action.die)) {
+        data.value.action.score -= data.value.action.die;
+      }
+
+      data.value.challenge.match = false;
+
+      if (data.value.challenge.die1.roll === data.value.challenge.die2.roll) {
+        data.value.challenge.match = true;
+      }
+
+      data.value = updateResults(data.value);
+    };
+
     return {
       show,
       close,
@@ -176,6 +228,7 @@ export default defineComponent({
       opts,
 
       roll,
+      reroll,
       burn,
       burnt,
       data,
@@ -184,6 +237,9 @@ export default defineComponent({
 
       d100,
       d100Res,
+
+      d6,
+      d6Res,
 
       clear,
     };

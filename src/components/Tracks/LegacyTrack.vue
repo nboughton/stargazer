@@ -7,37 +7,21 @@
   <div class="row no-wrap items-center justify-between q-mb-md">
     <div class="column items-center" v-for="(box, i) in data.boxes" :key="i">
       <div class="row">
-        <q-btn
-          :icon="boxIcon(data.boxes[i].ticks)"
-          flat
-          dense
-          size="xl"
-          @click="boxIncrement(i)"
-        />
+        <q-btn :icon="boxIcon(data.boxes[i].ticks)" flat dense :size="boxSize" @click="boxIncrement(i)" />
       </div>
       <div class="row">
-        <q-checkbox
-          v-model="data.boxes[i].xp[0]"
-          dense
-          size="sm"
-          @click="updateValue"
-        />
-        <q-checkbox
-          v-if="!data.plus10"
-          v-model="data.boxes[i].xp[1]"
-          dense
-          size="sm"
-          @click="updateValue"
-        />
+        <q-checkbox v-model="data.boxes[i].xp[0]" dense :size="checkSize" @click="updateValue" />
+        <q-checkbox v-if="!data.plus10" v-model="data.boxes[i].xp[1]" dense :size="checkSize" @click="updateValue" />
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from 'vue';
+import { defineComponent, ref, PropType, watch, computed } from 'vue';
 import { ILegacyTrack } from '../models';
 import { boxIcon } from 'src/lib/tracks';
+import { useQuasar } from 'quasar';
 export default defineComponent({
   name: 'LegacyTrack',
   props: {
@@ -88,8 +72,24 @@ export default defineComponent({
       updateValue();
     };
 
+    const $q = useQuasar();
+    const boxSize = computed(() => {
+      if ($q.screen.lt.sm) {
+        return 'md';
+      }
+      return 'xl';
+    });
+    const checkSize = computed(() => {
+      if ($q.screen.lt.sm) {
+        return 'xs';
+      }
+      return 'sm';
+    });
+
     return {
       data,
+      boxSize,
+      checkSize,
       boxIcon,
       boxIncrement,
       updateValue,

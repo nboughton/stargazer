@@ -7,12 +7,13 @@
         <div class="row full-width">
           <q-select class="col-grow" label="Add" v-model="addSelect" :options="Object.values(ESectorItem)" dense borderless />
           <q-btn class="col-shrink" icon="add" flat dense @click="add" />
+          <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
         </div>
       </div>
     </q-card-section>
 
     <!-- content -->
-    <q-card-section>
+    <q-card-section class="q-pa-sm">
       <div v-if="show.stars()">
         <s-star
           class="q-mt-sm"
@@ -109,6 +110,7 @@ import SNPC from './SNPC.vue';
 import SCreature from './SCreature.vue';
 import SDerelict from './SDerelict.vue';
 import SVault from './SVault.vue';
+import { useConfig } from 'src/store/config';
 export default defineComponent({
   components: { SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault },
   name: 'Cell',
@@ -218,7 +220,9 @@ export default defineComponent({
       },
     };
 
+    const config = useConfig();
     return {
+      config,
       campaign,
 
       ESectorItem,
