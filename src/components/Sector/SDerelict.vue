@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-expansion-item icon="img:icons/space/derelict.svg" header-class="derelict-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Derelict">
+      <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
         <q-select class="col" label="Location" v-model="data.location" :options="Object.values(ESLocation)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
@@ -21,18 +22,22 @@
 <script lang="ts">
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
+import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IDerelict, ESLocation, EDerelictType } from '../models';
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SDerelict',
   props: {
     modelValue: {
       type: Object as PropType<IDerelict>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(

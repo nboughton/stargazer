@@ -38,49 +38,89 @@
             <!-- use custom search func to Show() items based on searchText params -->
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Stars))) && iIndex === fOpts.Stars && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].stars" :key="i">
-                <s-star v-if="show.star(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].stars[i]" />
+                <s-star
+                  v-if="show.star(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].stars[i]"
+                  controls
+                  @move="campaign.moveStar(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Planets))) && iIndex === fOpts.Planets && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].planets" :key="i">
-                <s-planet v-if="show.planet(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].planets[i]" />
+                <s-planet
+                  v-if="show.planet(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].planets[i]"
+                  controls
+                  @move="campaign.movePlanet(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Settlements))) && iIndex === fOpts.Settlements && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].settlements" :key="i">
-                <s-settlement v-if="show.settlement(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].settlements[i]" />
+                <s-settlement
+                  v-if="show.settlement(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].settlements[i]"
+                  controls
+                  @move="campaign.moveSettlement(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Ships))) && iIndex === fOpts.Ships && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].ships" :key="i">
-                <s-starship v-if="show.ship(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].ships[i]" />
+                <s-starship
+                  v-if="show.ship(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].ships[i]"
+                  controls
+                  @move="campaign.moveStarship(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.NPCs))) && iIndex === fOpts.NPCs && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].npcs" :key="i">
-                <s-NPC v-if="show.npc(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].npcs[i]" />
+                <s-NPC
+                  v-if="show.npc(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].npcs[i]"
+                  controls
+                  @move="campaign.moveNPC(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Creatures))) && iIndex === fOpts.Creatures && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].creatures" :key="i">
-                <s-creature v-if="show.creature(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].creatures[i]" />
+                <s-creature
+                  v-if="show.creature(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].creatures[i]"
+                  controls
+                  @move="campaign.moveCreature(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Derelicts))) && iIndex === fOpts.Derelicts && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].derelicts" :key="i">
-                <s-derelict v-if="show.derelict(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].derelicts[i]" />
+                <s-derelict
+                  v-if="show.derelict(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].derelicts[i]"
+                  controls
+                  @move="campaign.moveDerelict(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
 
             <div v-if="((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Vaults))) && iIndex === fOpts.Vaults && item.length > 0">
               <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].vaults" :key="i">
-                <s-vault v-if="show.vault(o)" v-model="campaign.data.sectors[config.data.sector].cells[cIndex].vaults[i]" />
+                <s-vault
+                  v-if="show.vault(o)"
+                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].vaults[i]"
+                  controls
+                  @move="campaign.moveVault(i, { sector: config.data.sector, cell: cIndex }, $event)"
+                />
               </div>
             </div>
           </div>
@@ -91,13 +131,14 @@
 </template>
 
 <script lang="ts">
-import IInput from 'src/components/IInput.vue';
 import { ERegion, ICreature, IDerelict, INPC, IPlanet, ISelectOpt, ISettlement, IStar, IStarship, IVault } from 'src/components/models';
-import Cell from 'src/components/Sector/Cell.vue';
 import { NewCell, NewSector } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';
+
+import IInput from 'src/components/IInput.vue';
+import Cell from 'src/components/Sector/Cell.vue';
 import SStar from 'src/components/Sector/SStar.vue';
 import SPlanet from 'src/components/Sector/SPlanet.vue';
 import SSettlement from 'src/components/Sector/SSettlement.vue';

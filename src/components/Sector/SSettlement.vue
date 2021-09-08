@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-expansion-item icon="img:icons/space/settlement.svg" header-class="settlement-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Settlement">
+      <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col-grow" label="Name" v-model="data.name" />
         <q-select label="Type" v-model="data.location" :options="Object.values(ESLocation)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
@@ -40,18 +41,22 @@
 import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
+import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { ISettlement, ESLocation } from '../models';
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SSettlement',
   props: {
     modelValue: {
       type: Object as PropType<ISettlement>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(

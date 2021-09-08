@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ICampaign } from 'components/models';
+import { ICampaign, ICreature, IDerelict, INPC, IPlanet, ISettlement, IStar, IStarship, IVault } from 'components/models';
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
@@ -14,6 +14,47 @@ export const useCampaign = defineStore({
   },
 
   actions: {
+    moveStar(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].stars[index])) as IStar;
+      this.data.sectors[to.sector].cells[to.cell].stars.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].stars.splice(index, 1);
+    },
+    movePlanet(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].planets[index])) as IPlanet;
+      this.data.sectors[to.sector].cells[to.cell].planets.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].planets.splice(index, 1);
+    },
+    moveSettlement(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].settlements[index])) as ISettlement;
+      this.data.sectors[to.sector].cells[to.cell].settlements.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].settlements.splice(index, 1);
+    },
+    moveStarship(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].ships[index])) as IStarship;
+      this.data.sectors[to.sector].cells[to.cell].ships.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].ships.splice(index, 1);
+    },
+    moveNPC(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].npcs[index])) as INPC;
+      this.data.sectors[to.sector].cells[to.cell].npcs.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].npcs.splice(index, 1);
+    },
+    moveCreature(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].creatures[index])) as ICreature;
+      this.data.sectors[to.sector].cells[to.cell].creatures.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].creatures.splice(index, 1);
+    },
+    moveDerelict(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].derelicts[index])) as IDerelict;
+      this.data.sectors[to.sector].cells[to.cell].derelicts.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].derelicts.splice(index, 1);
+    },
+    moveVault(index: number, from: { sector: number; cell: number }, to: { sector: number; cell: number }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].vaults[index])) as IVault;
+      this.data.sectors[to.sector].cells[to.cell].vaults.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].vaults.splice(index, 1);
+    },
+
     async populateStore() {
       const config = useConfig();
       await config.populateStore();

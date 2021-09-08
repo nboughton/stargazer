@@ -1,10 +1,10 @@
 <template>
   <q-card class="my-card">
-    <!-- controls -->
     <q-card-section class="row items-center justify-between bg-secondary">
-      <q-input class="col-grow" label="Name" v-model="campaign.data.sectors[sectorID].cells[cellID].name" dense borderless debounce="750" />
+      <q-input class="col-grow" label="Location Name" v-model="campaign.data.sectors[sectorID].cells[cellID].name" dense borderless debounce="750" />
       <div class="col-shrink">
-        <div class="row full-width">
+        <div class="row q-gutter-sm full-width">
+          <q-toggle class="col-shrink" icon="mdi-cog" v-model="showControls" />
           <q-select class="col-grow" label="Add" v-model="addSelect" :options="Object.values(ESectorItem)" dense borderless />
           <q-btn class="col-shrink" icon="add" flat dense @click="add" />
           <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
@@ -21,6 +21,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].stars[i]"
           @delete="remove.star(i)"
+          :controls="showControls"
+          @move="campaign.moveStar(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -31,6 +33,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].planets[i]"
           @delete="remove.planet(i)"
+          :controls="showControls"
+          @move="campaign.movePlanet(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -41,6 +45,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].settlements[i]"
           @delete="remove.settlement(i)"
+          :controls="showControls"
+          @move="campaign.moveSettlement(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -51,6 +57,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].ships[i]"
           @delete="remove.ship(i)"
+          :controls="showControls"
+          @move="campaign.moveStarship(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -61,6 +69,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].npcs[i]"
           @delete="remove.npc(i)"
+          :controls="showControls"
+          @move="campaign.moveNPC(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -71,6 +81,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].creatures[i]"
           @delete="remove.creature(i)"
+          :controls="showControls"
+          @move="campaign.moveCreature(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -81,6 +93,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].derelicts[i]"
           @delete="remove.derelict(i)"
+          :controls="showControls"
+          @move="campaign.moveDerelict(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
 
@@ -91,6 +105,8 @@
           :key="i"
           v-model="campaign.data.sectors[sectorID].cells[cellID].vaults[i]"
           @delete="remove.vault(i)"
+          :controls="showControls"
+          @move="campaign.moveVault(i, { sector: sectorID, cell: cellID }, $event)"
         />
       </div>
     </q-card-section>
@@ -221,6 +237,7 @@ export default defineComponent({
     };
 
     const config = useConfig();
+    const showControls = ref(false);
     return {
       config,
       campaign,
@@ -230,6 +247,7 @@ export default defineComponent({
       add,
       remove,
       show,
+      showControls,
     };
   },
 });

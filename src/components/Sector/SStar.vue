@@ -2,6 +2,7 @@
   <div>
     <q-expansion-item icon="img:icons/space/star-sattelites.svg" header-class="star-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Star">
       <div class="q-mt-sm">
+        <controls v-if="controls" @move="$emit('move', $event)" />
         <i-input class="q-mb-sm" label="Name" v-model="data.name">
           <template v-slot:append v-if="config.data.edit">
             <q-btn icon="delete" flat dense @click="$emit('delete')" />
@@ -17,18 +18,22 @@
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
 import IInput from '../IInput.vue';
+import Controls from './Controls.vue';
 import { IStar } from '../models';
 
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SStar',
   props: {
     modelValue: {
       type: Object as PropType<IStar>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(

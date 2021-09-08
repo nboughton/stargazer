@@ -4,7 +4,7 @@
     <q-btn v-if="clear" icon="clear" flat @click="$emit('clear')" />
     <q-separator vertical v-if="save" />
     <div class="col q-ml-md" v-if="save">
-      <location-select @selected="$emit('save', $event.target.value)" />
+      <location-select @selected="$emit('save', $event)" />
     </div>
   </div>
 </template>

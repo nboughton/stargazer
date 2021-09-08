@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-expansion-item icon="img:icons/space/spaceship.svg" header-class="starship-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Starship">
+      <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Class" v-model="data.class" />
@@ -23,18 +24,22 @@
 <script lang="ts">
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
+import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IStarship } from '../models';
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SStarship',
   props: {
     modelValue: {
       type: Object as PropType<IStarship>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(

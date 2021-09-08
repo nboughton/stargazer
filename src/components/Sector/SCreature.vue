@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-expansion-item :icon="icon" header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Creature">
+      <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Scale" v-model="data.scale" />
@@ -36,17 +37,21 @@ import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import IInput from '../IInput.vue';
+import Controls from './Controls.vue';
 import { ICreature, EEnv } from '../models';
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SCreature',
   props: {
     modelValue: {
       type: Object as PropType<ICreature>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(

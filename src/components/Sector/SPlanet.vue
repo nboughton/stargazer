@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-expansion-item :icon="icon" header-class="planet-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Planet">
+      <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col-grow" label="Name" v-model="data.name" />
         <q-select label="Type" v-model="data.type" :options="Object.values(EPClass)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
@@ -41,18 +42,22 @@
 import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IPlanet, EPClass } from '../models';
 export default defineComponent({
-  components: { IInput },
+  components: { IInput, Controls },
   name: 'SPlanet',
   props: {
     modelValue: {
       type: Object as PropType<IPlanet>,
       required: true,
     },
+    controls: {
+      type: Boolean,
+    },
   },
-  emits: ['update:modelValue', 'delete'],
+  emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(
