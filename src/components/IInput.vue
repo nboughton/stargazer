@@ -1,5 +1,5 @@
 <template>
-  <q-input :label="label" v-model="data" :autogrow="autogrow" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750">
+  <q-input :label="label" v-model="data" :autogrow="autogrow" :clearable="clearable" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750">
     <template v-slot:append>
       <slot name="append" />
     </template>
@@ -15,6 +15,10 @@ export default defineComponent({
       type: String,
     },
     autogrow: {
+      type: Boolean,
+      default: false,
+    },
+    clearable: {
       type: Boolean,
       default: false,
     },

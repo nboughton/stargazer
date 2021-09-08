@@ -120,6 +120,7 @@ export default defineComponent({
     };
     const clear = () => {
       d100Res.value = 0;
+      d6Res.value = 0;
       data.value.result = '';
       adds.value = 0;
       otherAttr.value = 0;

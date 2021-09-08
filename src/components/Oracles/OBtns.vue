@@ -4,20 +4,16 @@
     <q-btn v-if="clear" icon="clear" flat @click="$emit('clear')" />
     <q-separator vertical v-if="save" />
     <div class="col q-ml-md" v-if="save">
-      <div class="row items-center no-wrap">
-        <q-select class="col-grow" label="Sector" v-model="sectorSelect" :options="sectorOpts" map-options emit-value borderless dense />
-        <q-select class="col-grow" label="Location" v-model="cellSelect" :options="cellOpts" map-options emit-value borderless dense />
-        <q-btn icon="save" flat dense @click="$emit('save', { sector: sectorSelect, cell: cellSelect })" />
-      </div>
+      <location-select @selected="$emit('save', $event.target.value)" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { useCampaign } from 'src/store/campaign';
-import { defineComponent, computed, ref } from 'vue';
-import { ISelectOpt } from '../models';
+import { defineComponent } from 'vue';
+import LocationSelect from '../LocationSelect.vue';
 export default defineComponent({
+  components: { LocationSelect },
   name: 'OBtns',
   props: {
     save: {
@@ -31,40 +27,5 @@ export default defineComponent({
     },
   },
   emits: ['save', 'clear', 'initial'],
-  setup() {
-    const campaign = useCampaign();
-
-    const sectorSelect = ref(0);
-    const sectorOpts = computed((): ISelectOpt[] => {
-      let opts: ISelectOpt[] = [];
-      campaign.data.sectors.forEach((s, si) => {
-        opts.push({
-          label: s.name,
-          value: si,
-        });
-      });
-      return opts;
-    });
-
-    const cellSelect = ref(0);
-    const cellOpts = computed((): ISelectOpt[] => {
-      let opts: ISelectOpt[] = [];
-      campaign.data.sectors[sectorSelect.value].cells.forEach((c, ci) => {
-        opts.push({
-          label: c.name,
-          value: ci,
-        });
-      });
-      return opts;
-    });
-
-    return {
-      sectorSelect,
-      sectorOpts,
-
-      cellSelect,
-      cellOpts,
-    };
-  },
 });
 </script>

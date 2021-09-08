@@ -48,17 +48,17 @@
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.supply" />
     </div>
     <div v-else>
-      <div class="row q-gutter-sm justify-between items-center">
+      <div class="row justify-between items-center">
         <span class="col-2 text-bold">Health</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.health" />
       </div>
 
-      <div class="row q-gutter-sm justify-between items-center">
+      <div class="row justify-between items-center">
         <span class="col-2 text-bold">Spirit</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.spirit" />
       </div>
 
-      <div class="row q-gutter-sm justify-between items-center">
+      <div class="row justify-between items-center">
         <span class="col-2 text-bold">Supply</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.supply" />
       </div>
@@ -80,11 +80,6 @@
     <q-separator />
     <legacy-track name="Discoveries" v-model="campaign.data.character.legacies.discoveries" />
     <q-separator />
-    <!-- Bonds -->
-    <!--div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Bonds</div>
-    <progress-track class="q-mb-md" v-model="campaign.data.character.bonds" :showDifficulty="false" :setDifficulty="5" :showMenaceBtn="false" />
-
-    <q-separator /-->
 
     <!-- Vows -->
     <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Vows<q-btn icon="add_circle" flat dense @click="addVow" /></div>

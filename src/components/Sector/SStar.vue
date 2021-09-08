@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/space/star-sattelites.svg" header-class="star-header text-h5 custom-header rounded-borders shadow-1" :label="data.name" caption="Star">
+    <q-expansion-item icon="img:icons/space/star-sattelites.svg" header-class="star-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Star">
       <div class="q-mt-sm">
         <i-input class="q-mb-sm" label="Name" v-model="data.name">
           <template v-slot:append v-if="config.data.edit">

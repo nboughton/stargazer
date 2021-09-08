@@ -29,7 +29,7 @@
       <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
       <i-input class="q-mb-sm" label="Revealed Aspect" v-model="data.aspect" />
 
-      <progress-track v-model="data.track" :showMenaceBtn="false" :showName="false" />
+      <progress-track class="q-mb-sm" v-model="data.track" :showMenaceBtn="false" :showName="false" />
 
       <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
     </q-expansion-item>
