@@ -17,7 +17,9 @@
       <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
     </div>
 
-    <!--div class="row">some kind of hex grid</div-->
+    <div class="row justify-center q-mb-sm">
+      <hex-map />
+    </div>
 
     <div class="row q-gutter-sm q-mb-sm">
       <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
@@ -147,8 +149,9 @@ import SNPC from 'src/components/Sector/SNPC.vue';
 import SCreature from 'src/components/Sector/SCreature.vue';
 import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
+import HexMap from 'src/components/Sector/HexMap.vue';
 export default defineComponent({
-  components: { IInput, Cell, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault },
+  components: { IInput, Cell, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap },
   name: 'Sector',
   setup() {
     const campaign = useCampaign();

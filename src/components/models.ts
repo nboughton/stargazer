@@ -250,13 +250,11 @@ export interface IStar {
   description: string;
 }
 
-export interface ILocation {
-  name: string;
-  region: string;
-  description: string;
-  trouble: string;
+export interface IHex {
+  id: string; // must correspond to a Cell.id
+  icon: string;
+  isPassage: boolean;
 }
-
 export interface ISectorCell {
   id: string;
   name: string;
@@ -275,6 +273,7 @@ export interface ISector {
   region: ERegion;
   control: string;
   cells: ISectorCell[];
+  hexes: IHex[];
 }
 export interface ICampaign {
   id: string;

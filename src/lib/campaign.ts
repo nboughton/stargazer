@@ -23,6 +23,7 @@ import {
   EDerelictType,
   EDerelictZone,
   IVault,
+  IHex,
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
@@ -227,7 +228,7 @@ export function NewVault(loc?: ESLocation): IVault {
 
 export function NewCell(name?: string): ISectorCell {
   return {
-    id: '',
+    id: uuid(),
     name: name ? name : '',
     stars: [],
     planets: [],
@@ -240,12 +241,21 @@ export function NewCell(name?: string): ISectorCell {
   };
 }
 
+export function NewHex(id?: string): IHex {
+  return {
+    id: id ? id : '',
+    icon: '',
+    isPassage: false,
+  };
+}
+
 export function NewSector(): ISector {
   return {
     name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
     region: ERegion.Terminus,
     control: '',
     cells: [NewCell('You are here')],
+    hexes: Array(319).fill(NewHex()) as IHex[],
   };
 }
 
