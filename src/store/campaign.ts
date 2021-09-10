@@ -72,10 +72,12 @@ export const useCampaign = defineStore({
     },
 
     async new() {
+      const config = useConfig();
+      config.data.sector = 0;
+
       const newCam = NewCampaign();
       this.data = newCam;
 
-      const config = useConfig();
       config.data.current = this.data.id;
       config.data.index.push({ name: this.data?.name, id: this.data.id });
 

@@ -1,26 +1,31 @@
 <template>
-  <div>
-    <q-btn color="white" icon="" flat dense @click="myAlert" />
+  <div class="hex-cell" :style="{ background: colour }" @mouseover="hover = true" @mouseleave="hover = false">
+    <q-btn icon="" flat dense />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, computed, ref } from 'vue';
 import { IHex } from '../models';
 export default defineComponent({
   name: 'HexCell',
   props: {
     cellData: {
       type: Object as PropType<IHex>,
+      required: true,
     },
   },
-  setup() {
-    const myAlert = () => {
-      alert('CLICK');
-    };
+  setup(props) {
+    const hover = ref(false);
+    const colour = computed((): string => {
+      if (hover.value) return 'lightgrey';
+      if (props.cellData.id !== '') return 'black';
+      return props.cellData.isPassage ? 'lightblue' : 'white';
+    });
 
     return {
-      myAlert,
+      hover,
+      colour,
     };
   },
 });

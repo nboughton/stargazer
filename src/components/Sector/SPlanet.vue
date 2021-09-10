@@ -75,7 +75,7 @@ export default defineComponent({
     const $q = useQuasar();
 
     const icon = computed((): string => {
-      return `img:icons/planets/${data.value.type.toLowerCase()}.svg`;
+      return `img:icons/planets/${data.value.type.toLowerCase()}.png`;
     });
     return {
       $q,
