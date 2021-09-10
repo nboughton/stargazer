@@ -182,6 +182,7 @@ export default defineComponent({
       campaign.data.sectors[config.data.sector].cells.unshift(NewCell());
     };
     const removeCell = (index: number) => {
+      campaign.unlinkCell(campaign.data.sectors[config.data.sector].cells[index].id);
       campaign.data.sectors[config.data.sector].cells.splice(index, 1);
     };
 

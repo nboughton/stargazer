@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/space/derelict.svg" header-class="derelict-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Derelict">
+    <q-expansion-item :icon="icon.derelict()" header-class="derelict-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Derelict">
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
@@ -25,6 +25,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IDerelict, ESLocation, EDerelictType } from '../models';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SDerelict',
@@ -57,6 +58,7 @@ export default defineComponent({
       config,
       ESLocation,
       EDerelictType,
+      icon,
     };
   },
 });

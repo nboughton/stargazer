@@ -252,7 +252,7 @@ export interface IStar {
 
 export interface IHex {
   id: string; // must correspond to a Cell.id
-  icon: string;
+  player: boolean;
   isPassage: boolean;
 }
 export interface ISectorCell {

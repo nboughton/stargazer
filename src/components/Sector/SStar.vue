@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/space/star-sattelites.svg" header-class="star-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Star">
+    <q-expansion-item :icon="icon.star()" header-class="star-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Star">
       <div class="q-mt-sm">
         <controls v-if="controls" @move="$emit('move', $event)" />
         <i-input class="q-mb-sm" label="Name" v-model="data.name">
@@ -20,6 +20,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 import IInput from '../IInput.vue';
 import Controls from './Controls.vue';
 import { IStar } from '../models';
+import { icon } from 'src/lib/icons';
 
 export default defineComponent({
   components: { IInput, Controls },
@@ -49,7 +50,7 @@ export default defineComponent({
 
     const config = useConfig();
 
-    return { data, config };
+    return { data, config, icon };
   },
 });
 </script>

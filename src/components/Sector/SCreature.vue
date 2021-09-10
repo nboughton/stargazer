@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item :icon="icon" header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Creature">
+    <q-expansion-item :icon="icon.creature(data.form)" header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Creature">
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
@@ -35,10 +35,11 @@
 <script lang="ts">
 import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import { defineComponent, PropType, ref, watch } from 'vue';
 import IInput from '../IInput.vue';
 import Controls from './Controls.vue';
 import { ICreature, EEnv } from '../models';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SCreature',
@@ -68,11 +69,6 @@ export default defineComponent({
     const config = useConfig();
     const $q = useQuasar();
 
-    const icon = computed((): string => {
-      return /(amoeba|amorphous|avian|beast|crustacean|fish|humanoid|insectoid|jellyfish|lizard|octopoid|plant|ray|snake|spider|starfish|worm)/i.test(data.value.form)
-        ? `img:icons/life/${data.value.form.split(' ')[0].toLowerCase()}.svg`
-        : 'img:icons/life/floating-tentacles.svg';
-    });
     return {
       $q,
       data,

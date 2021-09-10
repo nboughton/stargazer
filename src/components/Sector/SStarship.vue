@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/space/spaceship.svg" header-class="starship-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Starship">
+    <q-expansion-item :icon="icon.starship()" header-class="starship-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Starship">
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
@@ -27,6 +27,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IStarship } from '../models';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SStarship',
@@ -57,6 +58,7 @@ export default defineComponent({
     return {
       data,
       config,
+      icon,
     };
   },
 });

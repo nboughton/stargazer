@@ -244,7 +244,7 @@ export function NewCell(name?: string): ISectorCell {
 export function NewHex(id?: string): IHex {
   return {
     id: id ? id : '',
-    icon: '',
+    player: false,
     isPassage: false,
   };
 }

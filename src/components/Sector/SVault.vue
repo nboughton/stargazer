@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/space/vault.svg" header-class="vault-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Vault">
+    <q-expansion-item :icon="icon.vault()" header-class="vault-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Vault">
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col-grow" label="Name" v-model="data.name" />
@@ -31,6 +31,7 @@ import { defineComponent, ref, PropType, watch } from 'vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { IVault, ESLocation } from '../models';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SVault',
@@ -65,6 +66,7 @@ export default defineComponent({
       data,
       config,
       ESLocation,
+      icon,
     };
   },
 });

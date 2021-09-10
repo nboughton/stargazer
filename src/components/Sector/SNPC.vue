@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-expansion-item icon="img:icons/life/character.svg" header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Person">
+    <q-expansion-item :icon="icon.npc()" header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Person">
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Name" v-model="data.name" />
@@ -45,6 +45,7 @@ import { INPC } from '../models';
 import ProgressTrack from '../Tracks/ProgressTrack.vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   components: { IInput, ProgressTrack, Controls },
   name: 'SNPC',
@@ -77,6 +78,7 @@ export default defineComponent({
       $q,
       data,
       config,
+      icon,
     };
   },
 });

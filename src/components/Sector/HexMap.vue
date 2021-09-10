@@ -4,7 +4,13 @@
       <q-page>
         <div class="map">
           <div class="container">
-            <hex-cell v-for="(o, i) in campaign.data.sectors[config.data.sector].hexes" :key="i" :cellData="o" @click="clickHex(o, i)" />
+            <div v-for="(o, i) in campaign.data.sectors[config.data.sector].hexes" :key="i">
+              <hex-cell
+                style="padding: 0; margin: 0"
+                :cellData="campaign.data.sectors[config.data.sector].hexes[i]"
+                @click="clickHex(o, i)"
+              />
+            </div>
           </div>
         </div>
       </q-page>
@@ -12,20 +18,32 @@
 
     <q-dialog v-model="showDialog">
       <q-card>
-        <q-card-section class="row my-card justify-between items-center text-h5 custom-header">
-          <div class="col-shrink">Edit Cell</div>
+        <q-card-section class="row my-card justify-between custom-header text-h5 items-center">
+          <span class="col-shrink">Cell Details</span>
           <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
         </q-card-section>
 
         <q-card-section>
-          <div class="row items-center q-gutter-sm">
-            <span class="col-shrink text-h6">Set Location</span>
-            <location-select class="col" @selected="linkCell($event)" />
-          </div>
+          <cell class="q-mb-sm" v-if="selectedCell.found" :sectorID="config.data.sector" :cellID="selectedCell.cell" />
 
           <div class="row items-center q-gutter-sm">
-            <span class="col-shrink">Mark as </span>
-            <q-toggle class="col-shrink" label="Passage" v-model="campaign.data.sectors[config.data.sector].hexes[selectedHex].isPassage" />
+            <span class="col-shrink">Link location:</span>
+            <location-select icon="mdi-link" class="col" @selected="linkCell($event)" />
+          </div>
+
+          <div class="row items-center q-gutter-sm justify-evenly">
+            <q-toggle
+              class="col-shrink"
+              label="Mark as passage"
+              left-label
+              v-model="campaign.data.sectors[config.data.sector].hexes[selectedHex].isPassage"
+            />
+            <q-toggle
+              class="col-shrink"
+              label="Set player location"
+              left-label
+              v-model="campaign.data.sectors[config.data.sector].hexes[selectedHex].player"
+            />
           </div>
         </q-card-section>
       </q-card>
@@ -40,9 +58,10 @@ import { defineComponent, ref } from 'vue';
 import { IHex } from '../models';
 import HexCell from './HexCell.vue';
 import LocationSelect from 'src/components/LocationSelect.vue';
+import Cell from './Cell.vue';
 
 export default defineComponent({
-  components: { HexCell, LocationSelect },
+  components: { HexCell, LocationSelect, Cell },
   name: 'HexMap',
   setup() {
     const campaign = useCampaign();
@@ -50,26 +69,21 @@ export default defineComponent({
 
     const showDialog = ref(false);
     const selectedHex = ref(0);
+    const selectedCell = ref({ sector: 0, cell: 0, found: false });
+
     const clickHex = (o: IHex, i: number) => {
       selectedHex.value = i;
+      selectedCell.value = { sector: 0, cell: 0, found: false };
       if (!o.isPassage && o.id === '') {
         campaign.data.sectors[config.data.sector].hexes[i].isPassage = true;
         return;
       }
       if (o.isPassage || o.id !== '') {
+        if (o.id !== '') {
+          selectedCell.value = campaign.getCellLocation(o.id);
+        }
         showDialog.value = true;
       }
-    };
-
-    const unlinkCell = (id: string) => {
-      campaign.data.sectors.forEach((s, sI) => {
-        s.hexes.forEach((h, hI) => {
-          if (h.id === id) {
-            campaign.data.sectors[sI].hexes[hI].id = '';
-            return;
-          }
-        });
-      });
     };
 
     const linkCell = (args: { sector: number; cell: number }) => {
@@ -80,7 +94,8 @@ export default defineComponent({
       const id = campaign.data.sectors[args.sector].cells[args.cell].id;
 
       // unlink cell from any other maps
-      unlinkCell(id);
+      campaign.unlinkCell(id);
+      selectedCell.value = campaign.getCellLocation(id);
 
       // Set cell id for item
       campaign.data.sectors[config.data.sector].hexes[selectedHex.value].id = id;
@@ -91,6 +106,7 @@ export default defineComponent({
       config,
       showDialog,
       selectedHex,
+      selectedCell,
       clickHex,
       linkCell,
     };
@@ -119,7 +135,7 @@ export default defineComponent({
   display: inline-block;
   font-size: initial;
   clip-path: polygon(0% 25%, 0% 75%, 50% 100%, 100% 75%, 100% 25%, 50% 0%);
-  background: white;
+  background: black;
   margin-bottom: calc(var(--m) - var(--s) * 0.2885);
 }
 /*.container div:nth-child(odd) {
@@ -133,6 +149,6 @@ export default defineComponent({
   width: calc(var(--s) / 2 + var(--m));
   float: left;
   height: 120%;
-  shape-outside: repeating-linear-gradient(#0000 0 calc(var(--f) - 3px), #000 0 var(--f));
+  shape-outside: repeating-linear-gradient(#0000 0 calc(var(--f) - 1px), #000 0 var(--f));
 }
 </style>
