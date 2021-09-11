@@ -27,7 +27,7 @@
 <script lang="ts">
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, computed, ref } from 'vue';
-import { ISelectOpt } from './models';
+import { ECellStatus, ISelectOpt } from './models';
 export default defineComponent({
   name: 'LocationSelect',
   props: {
@@ -55,11 +55,13 @@ export default defineComponent({
     const cellSelect = ref(0);
     const cOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      Object.values(campaign.data.sectors[sectorSelect.value].cells).forEach((c, ci) => {
-        opts.push({
-          label: c.name,
-          value: ci,
-        });
+      Object.keys(campaign.data.sectors[sectorSelect.value].cells).forEach((c) => {
+        if (campaign.data.sectors[sectorSelect.value].cells[c].stat === ECellStatus.Location) {
+          opts.push({
+            label: campaign.data.sectors[sectorSelect.value].cells[c].name,
+            value: c,
+          });
+        }
       });
       return opts;
     });

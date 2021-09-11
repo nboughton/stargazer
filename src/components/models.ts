@@ -252,7 +252,6 @@ export interface IStar {
 
 export enum ECellStatus {
   Empty = 'empty',
-  Player = 'player',
   Passage = 'passage',
   Location = 'location',
 }
