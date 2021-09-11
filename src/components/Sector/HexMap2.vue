@@ -61,26 +61,26 @@ export default defineComponent({
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
 
     // Make initial render
-    let draw: Svg;
+    let map: Svg;
     const renderMap = () => {
-      draw.clear();
+      map.clear();
       grid.forEach((hex) => {
         const { x, y } = hex.toPoint();
         const id = h(hex.x, hex.y);
-        const poly = draw.polygon(points).addClass('hex').addClass(id);
+        const cell = map.polygon(points).addClass('hex').addClass(id);
 
-        // Initial draw for existing locations
+        // Initial map for existing locations
         if (campaign.data.sectors[config.data.sector].cells[id]) {
           const c = campaign.data.sectors[config.data.sector].cells[id];
-          poly.addClass(c.stat);
+          cell.addClass(c.stat);
         }
 
-        poly.translate(x, y);
+        cell.translate(x, y);
       });
     };
 
     onMounted(() => {
-      draw = SVG()
+      map = SVG()
         .addTo(hexmap.value as unknown as HTMLElement)
         .size('100%', '100%');
 
@@ -95,13 +95,13 @@ export default defineComponent({
       // Derive its ID and get the actual object
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const id = h(hex!.x, hex!.y);
-      const poly = draw.findOne('.' + id);
+      const cell = map.findOne('.' + id);
 
       // If no data exists for the cell then create it initially and make it a passage
       if (!campaign.data.sectors[config.data.sector].cells[id]) {
         campaign.data.sectors[config.data.sector].cells[id] = NewCell(id);
         campaign.data.sectors[config.data.sector].cells[id].stat = ECellStatus.Passage;
-        poly.addClass(ECellStatus.Passage);
+        cell.addClass(ECellStatus.Passage);
         return;
       }
 
