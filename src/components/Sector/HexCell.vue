@@ -1,11 +1,6 @@
 <template>
-  <div
-    class="row justify-center q-pa-none q-ma-none"
-    :style="{ background: colour }"
-    @mouseover="hover = true"
-    @mouseleave="hover = false"
-  >
-    <q-btn class="cell-icon self-center" size="sm" :icon="cellIcon" flat />
+  <div :style="{ background: colour }" @mouseover="hover = true" @mouseleave="hover = false">
+    <q-btn class="cell-icon" size="sm" :icon="cellIcon" flat />
   </div>
 </template>
 
@@ -27,8 +22,8 @@ export default defineComponent({
 
     const hover = ref(false);
     const colour = computed((): string => {
-      if (hover.value) return 'lightgrey';
-      if (props.cellData.player) return 'green';
+      if (hover.value) return '#D8DEE9';
+      if (props.cellData.player) return '#3b4252';
       if (props.cellData.id !== '') {
         const c = campaign.getCell(props.cellData.id);
         let bgk = 'linear-gradient(to bottom right, #3b4252';
@@ -43,13 +38,12 @@ export default defineComponent({
         bgk += ' 100%)';
         return bgk;
       }
-      return props.cellData.isPassage ? 'lightblue' : 'white';
+      return props.cellData.isPassage ? '#88c0d0' : 'black';
     });
 
     const cellIcon = computed((): string => {
-      let i = '';
+      let i = 'img:icons/space/stars.svg';
       if (props.cellData.id) {
-        i = 'img:icons/space/stars.svg';
         const c = campaign.getCell(props.cellData.id);
         if (c.npcs.length > 0) i = icon.npc();
         if (c.creatures.length > 0) i = icon.creature(c.creatures[0].form);

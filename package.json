@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@svgdotjs/svg.js": "^3.1.1",
     "core-js": "^3.6.5",
     "dexie": "^3.0.3",
+    "honeycomb-grid": "^3.1.8",
     "pinia": "^2.0.0-rc.6",
     "quasar": "^2.0.0",
     "sanitize-html": "^2.4.0",

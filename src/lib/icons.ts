@@ -20,7 +20,7 @@ export const icon = {
   },
 
   vault: (): string => {
-    return 'img:icons/space/spaceship.svg';
+    return 'img:icons/space/vault.svg';
   },
 
   creature: (form: string): string => {
