@@ -1,8 +1,8 @@
 <template>
-  <q-layout view="hHh lpR fFf" container style="width: 800px; min-height: 400px">
+  <q-layout view="hHh lpR fFf" container :style="{ width: `${dm.width}px`, 'min-height': `${dm.height}px` }">
     <q-page-container>
       <q-page>
-        <div ref="hexmap" style="height: 400px; width: 800px"></div>
+        <div class="hexmap" ref="hexmap" :style="{ width: `${dm.width}px`, height: `${dm.height}px` }"></div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -16,25 +16,33 @@ export default defineComponent({
   // name: 'ComponentName'
   setup() {
     const hexmap = ref(null);
+    const dm = {
+      height: 400,
+      width: 800,
+      hexSize: 20,
+    };
 
     onMounted(() => {
       const draw = SVG()
         .addTo(hexmap.value as unknown as HTMLElement)
         .size('100%', '100%');
-      const Hex = extendHex({ size: 20 });
+      const Hex = extendHex({ size: dm.hexSize });
       const Grid = defineGrid(Hex);
       const corners = Hex().corners();
-      Grid.rectangle({ width: 23, height: 11 }).forEach((hex) => {
-        const { x, y } = hex.toPoint();
-        draw
-          .polygon(corners.map((p) => `${p.x},${p.y}`).join(' '))
-          .addClass('hex')
-          .translate(x, y);
-      });
+      Grid.rectangle({ width: Math.floor(dm.width / dm.hexSize), height: Math.floor(dm.height / dm.hexSize) }).forEach(
+        (hex) => {
+          const { x, y } = hex.toPoint();
+          draw
+            .polygon(corners.map((p) => `${p.x},${p.y}`).join(' '))
+            .addClass('hex')
+            .translate(x, y);
+        }
+      );
     });
 
     return {
       hexmap,
+      dm,
     };
   },
 });
