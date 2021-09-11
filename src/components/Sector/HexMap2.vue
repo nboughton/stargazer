@@ -10,11 +10,20 @@
         ></div>
       </q-page>
     </q-page-container>
+
+    <q-dialog v-model="showDialog" full-width>
+      <q-card class="my-card">
+        <q-card-section class="row justify-between items-center custom-header text-h5">
+          <span class="col">Cell Details</span>
+          <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 
 <script lang="ts">
-import { Svg, SVG } from '@svgdotjs/svg.js';
+import { Polygon, Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
 import { NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
@@ -24,9 +33,12 @@ import { ECellStatus } from '../models';
 export default defineComponent({
   // name: 'ComponentName'
   setup() {
+    // Grab stores
     const campaign = useCampaign();
     const config = useConfig();
+    const showDialog = ref(false);
 
+    // Instantiate a null ref and set dimenions/id func
     const hexmap = ref(null);
     const dm = {
       height: 400,
@@ -36,10 +48,11 @@ export default defineComponent({
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
     };
+    const clearHexStatus = (p: Polygon) => Object.values(ECellStatus).forEach((s) => p.removeClass(s));
 
+    // Define initial grid data
     const Hex = extendHex({ size: dm.hexSize });
     const Grid = defineGrid(Hex);
-
     const grid = Grid.rectangle({
       width: Math.floor(dm.width / (dm.hexSize * 2)) + 2,
       height: Math.floor(dm.height / (dm.hexSize * 2)) + 3,
@@ -47,13 +60,10 @@ export default defineComponent({
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
 
+    // Make initial render
     let draw: Svg;
-
-    onMounted(() => {
-      draw = SVG()
-        .addTo(hexmap.value as unknown as HTMLElement)
-        .size('100%', '100%');
-
+    const renderMap = () => {
+      draw.clear();
       grid.forEach((hex) => {
         const { x, y } = hex.toPoint();
         const id = h(hex.x, hex.y);
@@ -67,8 +77,17 @@ export default defineComponent({
 
         poly.translate(x, y);
       });
+    };
+
+    onMounted(() => {
+      draw = SVG()
+        .addTo(hexmap.value as unknown as HTMLElement)
+        .size('100%', '100%');
+
+      renderMap();
     });
 
+    // GET CLICKY WITH IT
     const click = (ev: { offsetX: number; offsetY: number }) => {
       // Get the SVG hex that was clicked on
       const hex = grid.get(Grid.pointToHex(ev.offsetX, ev.offsetY));
@@ -85,12 +104,17 @@ export default defineComponent({
         poly.addClass(ECellStatus.Passage);
         return;
       }
+
+      // If we've reached here then we probably want to open the dialog and do something with it
+      // const c = campaign.data.sectors[config.data.sector].cells[id]
+      showDialog.value = true;
     };
 
     return {
       hexmap,
       dm,
       click,
+      showDialog,
     };
   },
 });
@@ -107,11 +131,19 @@ svg polygon.hex:hover {
   fill: lightgray;
 }
 
+svg polygon.empty {
+  fill: white;
+}
+
 svg polygon.passage {
   fill: lightblue;
 }
 
-svg polygon.loc {
+svg polygon.location {
   fill: green;
+}
+
+svg polygon.player {
+  fill: blueviolet;
 }
 </style>
