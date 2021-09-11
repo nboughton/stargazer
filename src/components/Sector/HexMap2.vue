@@ -29,6 +29,10 @@ export default defineComponent({
 
     const Hex = extendHex({ size: dm.hexSize });
     const Grid = defineGrid(Hex);
+    const grid = Grid.rectangle({
+      width: Math.floor(dm.width / dm.hexSize),
+      height: Math.floor(dm.height / dm.hexSize),
+    });
 
     onMounted(() => {
       const draw = SVG()
@@ -36,20 +40,18 @@ export default defineComponent({
         .size('100%', '100%');
 
       const corners = Hex().corners();
-      Grid.rectangle({ width: Math.floor(dm.width / dm.hexSize), height: Math.floor(dm.height / dm.hexSize) }).forEach(
-        (hex) => {
-          const { x, y } = hex.toPoint();
-          draw
-            .polygon(corners.map((p) => `${p.x},${p.y}`).join(' '))
-            .addClass('hex')
-            .translate(x, y);
-        }
-      );
+      grid.forEach((hex) => {
+        const { x, y } = hex.toPoint();
+        draw
+          .polygon(corners.map((p) => `${p.x},${p.y}`).join(' '))
+          .addClass('hex')
+          .translate(x, y);
+      });
     });
 
     const click = (ev: { offsetX: number; offsetY: number }) => {
       const hexCoordinates = Grid.pointToHex(ev.offsetX, ev.offsetY);
-      alert(hexCoordinates);
+      alert(grid.get(hexCoordinates));
     };
     return {
       hexmap,
