@@ -2,7 +2,12 @@
   <q-layout view="hHh lpR fFf" container :style="{ width: `${dm.width}px`, 'min-height': `${dm.height}px` }">
     <q-page-container>
       <q-page>
-        <div class="hexmap" ref="hexmap" :style="{ width: `${dm.width}px`, height: `${dm.height}px` }"></div>
+        <div
+          class="hexmap"
+          ref="hexmap"
+          :style="{ width: `${dm.width}px`, height: `${dm.height}px` }"
+          @click="click($event)"
+        ></div>
       </q-page>
     </q-page-container>
   </q-layout>
@@ -22,12 +27,14 @@ export default defineComponent({
       hexSize: 20,
     };
 
+    const Hex = extendHex({ size: dm.hexSize });
+    const Grid = defineGrid(Hex);
+
     onMounted(() => {
       const draw = SVG()
         .addTo(hexmap.value as unknown as HTMLElement)
         .size('100%', '100%');
-      const Hex = extendHex({ size: dm.hexSize });
-      const Grid = defineGrid(Hex);
+
       const corners = Hex().corners();
       Grid.rectangle({ width: Math.floor(dm.width / dm.hexSize), height: Math.floor(dm.height / dm.hexSize) }).forEach(
         (hex) => {
@@ -40,9 +47,14 @@ export default defineComponent({
       );
     });
 
+    const click = (ev: { offsetX: number; offsetY: number }) => {
+      const hexCoordinates = Grid.pointToHex(ev.offsetX, ev.offsetY);
+      alert(hexCoordinates);
+    };
     return {
       hexmap,
       dm,
+      click,
     };
   },
 });
