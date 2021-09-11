@@ -52,21 +52,22 @@
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
-      <q-btn class="col-shrink" icon="add_circle" flat dense @click="addCell">
+      <!--q-btn class="col-shrink" icon="add_circle" flat dense @click="addCell">
         <q-tooltip>Add location</q-tooltip>
-      </q-btn>
+      </q-btn-->
     </div>
 
     <div class="column q-mt-md">
       <div v-if="(!filters || filters.length === 0) && (!searchText || searchText.length === 0)">
-        <cell
-          class="q-mb-md"
-          v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells"
-          :key="index"
-          :sectorID="config.data.sector"
-          :cellID="index"
-          @delete="removeCell(index)"
-        />
+        <div v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells" :key="index">
+          <cell
+            class="q-mb-md"
+            v-if="cell.stat === ECellStatus.Location"
+            :sectorID="config.data.sector"
+            :cellID="index"
+          />
+        </div>
+        <!--@delete="removeCell(index)"-->
       </div>
       <div v-else>
         <div v-for="(cell, cIndex) in campaign.data.sectors[config.data.sector].cells" :key="cIndex">
@@ -217,6 +218,7 @@
 <script lang="ts">
 import {
   ERegion,
+  ECellStatus,
   ICreature,
   IDerelict,
   INPC,
@@ -227,7 +229,7 @@ import {
   IStarship,
   IVault,
 } from 'src/components/models';
-import { NewCell, NewSector } from 'src/lib/campaign';
+import { NewSector } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';
@@ -271,14 +273,15 @@ export default defineComponent({
       campaign.data.sectors.splice(d, 1);
     };
 
+    /*
     const addCell = () => {
       campaign.data.sectors[config.data.sector].cells.unshift(NewCell());
     };
     const removeCell = (index: number) => {
-      campaign.unlinkCell(campaign.data.sectors[config.data.sector].cells[index].id);
+      // campaign.unlinkCell(campaign.data.sectors[config.data.sector].cells[index].id);
       campaign.data.sectors[config.data.sector].cells.splice(index, 1);
     };
-
+*/
     // Search stuff
     enum fOpts { // values need to match the keys in ISectorCell
       Stars = 'stars',
@@ -333,14 +336,15 @@ export default defineComponent({
       campaign,
       config,
       ERegion,
+      ECellStatus,
 
       sectorOpts,
 
       addSector,
-      addCell,
+      // addCell,
 
       removeSector,
-      removeCell,
+      // removeCell,
 
       searchText,
       filters,

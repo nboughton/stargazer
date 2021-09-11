@@ -14,45 +14,79 @@
 </template>
 
 <script lang="ts">
-import { SVG } from '@svgdotjs/svg.js';
+import { Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
+import { NewCell } from 'src/lib/campaign';
+import { useCampaign } from 'src/store/campaign';
+import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref } from 'vue';
+import { ECellStatus } from '../models';
 export default defineComponent({
   // name: 'ComponentName'
   setup() {
+    const campaign = useCampaign();
+    const config = useConfig();
+
     const hexmap = ref(null);
     const dm = {
       height: 400,
       width: 800,
       hexSize: 20,
     };
+    const h = (x: number, y: number): string => {
+      return `h-${x}-${y}`;
+    };
 
     const Hex = extendHex({ size: dm.hexSize });
     const Grid = defineGrid(Hex);
+
     const grid = Grid.rectangle({
-      width: Math.floor(dm.width / dm.hexSize),
-      height: Math.floor(dm.height / dm.hexSize),
+      width: Math.floor(dm.width / (dm.hexSize * 2)) + 2,
+      height: Math.floor(dm.height / (dm.hexSize * 2)) + 3,
     });
+    const corners = Hex().corners();
+    const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
+
+    let draw: Svg;
 
     onMounted(() => {
-      const draw = SVG()
+      draw = SVG()
         .addTo(hexmap.value as unknown as HTMLElement)
         .size('100%', '100%');
 
-      const corners = Hex().corners();
       grid.forEach((hex) => {
         const { x, y } = hex.toPoint();
-        draw
-          .polygon(corners.map((p) => `${p.x},${p.y}`).join(' '))
-          .addClass('hex')
-          .translate(x, y);
+        const id = h(hex.x, hex.y);
+        const poly = draw.polygon(points).addClass('hex').addClass(id);
+
+        // Initial draw for existing locations
+        if (campaign.data.sectors[config.data.sector].cells[id]) {
+          const c = campaign.data.sectors[config.data.sector].cells[id];
+          poly.addClass(c.stat);
+        }
+
+        poly.translate(x, y);
       });
     });
 
     const click = (ev: { offsetX: number; offsetY: number }) => {
-      const hexCoordinates = Grid.pointToHex(ev.offsetX, ev.offsetY);
-      alert(grid.get(hexCoordinates));
+      // Get the SVG hex that was clicked on
+      const hex = grid.get(Grid.pointToHex(ev.offsetX, ev.offsetY));
+
+      // Derive its ID and get the actual object
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const id = h(hex!.x, hex!.y);
+      const poly = draw.findOne('.' + id);
+
+      // If no data exists for the cell then create it initially and make it a passage
+      if (!campaign.data.sectors[config.data.sector].cells[id]) {
+        campaign.data.sectors[config.data.sector].cells[id] = NewCell(id);
+        campaign.data.sectors[config.data.sector].cells[id].stat = ECellStatus.Passage;
+        poly.addClass(ECellStatus.Passage);
+        return;
+      }
     };
+
     return {
       hexmap,
       dm,
@@ -64,12 +98,20 @@ export default defineComponent({
 
 <style>
 svg polygon.hex {
-  fill: transparent;
-  stroke: rgba(0, 255, 255, 0.25);
+  fill: white;
+  stroke: black;
   stroke-width: 1pt;
 }
 
 svg polygon.hex:hover {
-  stroke: rgba(0, 255, 255, 1);
+  fill: lightgray;
+}
+
+svg polygon.passage {
+  fill: lightblue;
+}
+
+svg polygon.loc {
+  fill: green;
 }
 </style>

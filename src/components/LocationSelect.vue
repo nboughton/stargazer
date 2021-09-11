@@ -1,7 +1,25 @@
 <template>
   <div class="row items-center no-wrap">
-    <q-select class="col-grow" label="Sector" v-model="sectorSelect" :options="sOpts" map-options emit-value borderless dense />
-    <q-select class="col-grow" label="Location" v-model="cellSelect" :options="cOpts" map-options emit-value borderless dense />
+    <q-select
+      class="col-grow"
+      label="Sector"
+      v-model="sectorSelect"
+      :options="sOpts"
+      map-options
+      emit-value
+      borderless
+      dense
+    />
+    <q-select
+      class="col-grow"
+      label="Location"
+      v-model="cellSelect"
+      :options="cOpts"
+      map-options
+      emit-value
+      borderless
+      dense
+    />
     <q-btn :icon="icon" flat dense @click="$emit('selected', { sector: sectorSelect, cell: cellSelect })" />
   </div>
 </template>
@@ -37,7 +55,7 @@ export default defineComponent({
     const cellSelect = ref(0);
     const cOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      campaign.data.sectors[sectorSelect.value].cells.forEach((c, ci) => {
+      Object.values(campaign.data.sectors[sectorSelect.value].cells).forEach((c, ci) => {
         opts.push({
           label: c.name,
           value: ci,

@@ -250,13 +250,16 @@ export interface IStar {
   description: string;
 }
 
-export interface IHex {
-  id: string; // must correspond to a Cell.id
-  player: boolean;
-  isPassage: boolean;
+export enum ECellStatus {
+  Empty = 'empty',
+  Player = 'player',
+  Passage = 'passage',
+  Location = 'location',
 }
+
 export interface ISectorCell {
   id: string;
+  stat: ECellStatus;
   name: string;
   stars: IStar[];
   planets: IPlanet[];
@@ -272,8 +275,7 @@ export interface ISector {
   name: string;
   region: ERegion;
   control: string;
-  cells: ISectorCell[];
-  hexes: IHex[];
+  cells: { [index: string]: ISectorCell };
 }
 export interface ICampaign {
   id: string;

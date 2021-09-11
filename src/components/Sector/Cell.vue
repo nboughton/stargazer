@@ -1,11 +1,25 @@
 <template>
   <q-card class="my-card">
     <q-card-section class="row items-center justify-between bg-secondary">
-      <q-input class="col-grow" label="Location Name" v-model="campaign.data.sectors[sectorID].cells[cellID].name" dense borderless debounce="750" />
+      <q-input
+        class="col-grow"
+        label="Location Name"
+        v-model="campaign.data.sectors[sectorID].cells[cellID].name"
+        dense
+        borderless
+        debounce="750"
+      />
       <div class="col-shrink">
         <div class="row q-gutter-sm full-width">
           <q-toggle class="col-shrink" icon="mdi-cog" v-model="showControls" />
-          <q-select class="col-grow" label="Add" v-model="addSelect" :options="Object.values(ESectorItem)" dense borderless />
+          <q-select
+            class="col-grow"
+            label="Add"
+            v-model="addSelect"
+            :options="Object.values(ESectorItem)"
+            dense
+            borderless
+          />
           <q-btn class="col-shrink" icon="add" flat dense @click="add" />
           <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
         </div>
@@ -114,7 +128,16 @@
 </template>
 
 <script lang="ts">
-import { NewStar, NewPlanet, NewSettlement, NewShip, NewNPC, NewCreature, NewDerelict, NewVault } from 'src/lib/campaign';
+import {
+  NewStar,
+  NewPlanet,
+  NewSettlement,
+  NewShip,
+  NewNPC,
+  NewCreature,
+  NewDerelict,
+  NewVault,
+} from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref } from 'vue';
 import { ESectorItem } from '../models';
@@ -136,7 +159,7 @@ export default defineComponent({
       required: true,
     },
     cellID: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
@@ -211,28 +234,52 @@ export default defineComponent({
 
     const show = {
       stars: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].stars && campaign.data.sectors[props.sectorID].cells[props.cellID].stars.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].stars &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].stars.length > 0
+        );
       },
       planets: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].planets && campaign.data.sectors[props.sectorID].cells[props.cellID].planets.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].planets &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].planets.length > 0
+        );
       },
       sett: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].settlements && campaign.data.sectors[props.sectorID].cells[props.cellID].settlements.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].settlements &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].settlements.length > 0
+        );
       },
       ships: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].ships && campaign.data.sectors[props.sectorID].cells[props.cellID].ships.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].ships &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].ships.length > 0
+        );
       },
       npcs: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].npcs && campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].npcs &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.length > 0
+        );
       },
       creatures: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].creatures && campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].creatures &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.length > 0
+        );
       },
       derelicts: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts && campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.length > 0
+        );
       },
       vaults: (): boolean => {
-        return campaign.data.sectors[props.sectorID].cells[props.cellID].vaults && campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.length > 0;
+        return (
+          campaign.data.sectors[props.sectorID].cells[props.cellID].vaults &&
+          campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.length > 0
+        );
       },
     };
 
