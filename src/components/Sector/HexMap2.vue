@@ -28,7 +28,7 @@ import { extendHex, defineGrid } from 'honeycomb-grid';
 import { NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
 import { ECellStatus } from '../models';
 export default defineComponent({
   // name: 'ComponentName'
@@ -60,8 +60,8 @@ export default defineComponent({
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
 
-    // Make initial render
     let map: Svg;
+    // All map magic happens here
     const renderMap = () => {
       map.clear();
       grid.forEach((hex) => {
@@ -95,13 +95,13 @@ export default defineComponent({
       // Derive its ID and get the actual object
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const id = h(hex!.x, hex!.y);
-      const cell = map.findOne('.' + id);
 
       // If no data exists for the cell then create it initially and make it a passage
+      // Note that all changes to cell data should happen in the renderMap function as
+      // the map will re-render whenever the underlying cell data changes.
       if (!campaign.data.sectors[config.data.sector].cells[id]) {
         campaign.data.sectors[config.data.sector].cells[id] = NewCell(id);
         campaign.data.sectors[config.data.sector].cells[id].stat = ECellStatus.Passage;
-        cell.addClass(ECellStatus.Passage);
         return;
       }
 
@@ -109,6 +109,13 @@ export default defineComponent({
       // const c = campaign.data.sectors[config.data.sector].cells[id]
       showDialog.value = true;
     };
+
+    // Watch the cells for this sector and re-render on data change
+    watch(
+      () => campaign.data.sectors[config.data.sector].cells,
+      () => renderMap(),
+      { deep: true }
+    );
 
     return {
       hexmap,
