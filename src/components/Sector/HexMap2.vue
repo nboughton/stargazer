@@ -100,8 +100,11 @@ export default defineComponent({
       // Note that all changes to cell data should happen in the renderMap function as
       // the map will re-render whenever the underlying cell data changes.
       if (!campaign.data.sectors[config.data.sector].cells[id]) {
-        campaign.data.sectors[config.data.sector].cells[id] = NewCell(id);
-        campaign.data.sectors[config.data.sector].cells[id].stat = ECellStatus.Passage;
+        // Minimise sequential assignments to the store data to prevent excessive
+        // re-rendering of the map
+        const c = NewCell(id);
+        c.stat = ECellStatus.Passage;
+        campaign.data.sectors[config.data.sector].cells[id] = c;
         return;
       }
 
