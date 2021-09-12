@@ -42,6 +42,7 @@ import { NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch } from 'vue';
+import { icon } from 'src/lib/icons';
 import { ECellStatus, ISectorCell } from '../models';
 import Cell from './Cell.vue';
 export default defineComponent({
@@ -64,7 +65,6 @@ export default defineComponent({
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
     };
-    // const clearHexStatus = (p: Polygon) => Object.values(ECellStatus).forEach((s) => p.removeClass(s));
 
     // Define initial grid data
     const Hex = extendHex({ size: dm.hexSize });
@@ -97,12 +97,40 @@ export default defineComponent({
       return f;
     };
 
+    const locationIcon = (c: ISectorCell, x: number, y: number) => {
+      let path = '';
+      if (c.npcs.length > 0) path = icon.npc();
+      if (c.creatures.length > 0) path = icon.creature(c.creatures[0].form);
+      if (c.vaults.length > 0) path = icon.vault();
+      if (c.derelicts.length > 0) path = icon.derelict();
+      if (c.ships.length > 0) path = icon.starship();
+      if (c.settlements.length > 0) path = icon.settlement();
+      if (c.planets.length > 0) path = icon.planet(c.planets[0].type);
+      if (c.stars.length > 0) path = icon.stars();
+
+      const i = SVG()
+        .image(path.replace('img:', ''))
+        .addClass('icon')
+        .size(dm.hexSize, dm.hexSize)
+        .addTo(map)
+        .move(x + (dm.hexSize / 2) * 0.7, y + dm.hexSize / 2);
+
+      i.mouseenter(() => {
+        i.animate(250).transform({ scale: 1.3 });
+      });
+
+      i.mouseleave(() => {
+        i.animate(250).transform({ scale: 1 });
+      });
+    };
+
     const renderMap = () => {
       map.clear();
       grid.forEach((hex) => {
         const { x, y } = hex.toPoint();
         const id = h(hex.x, hex.y);
         const cell = map.polygon(points).addClass('hex').addClass(id);
+        cell.translate(x, y);
 
         // Render location data
         if (campaign.data.sectors[config.data.sector].cells[id]) {
@@ -111,6 +139,7 @@ export default defineComponent({
           switch (c.stat) {
             case ECellStatus.Location:
               cell.fill(locationFill(c));
+              locationIcon(c, x, y);
               break;
 
             case ECellStatus.Passage:
@@ -124,8 +153,6 @@ export default defineComponent({
         } else {
           cell.fill('white');
         }
-
-        cell.translate(x, y);
       });
     };
 
@@ -191,7 +218,9 @@ svg polygon.hex {
   stroke-width: 1pt;
 }
 
+/*
 svg polygon.hex:hover {
   fill: lightgray;
 }
+*/
 </style>
