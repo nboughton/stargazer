@@ -3,6 +3,10 @@ export const icon = {
     return 'img:icons/space/star-sattelites.svg';
   },
 
+  stars: (): string => {
+    return 'img:icons/space/stars.svg';
+  },
+
   planet: (type: string): string => {
     return `img:icons/planets/${type.toLowerCase()}.svg`;
   },

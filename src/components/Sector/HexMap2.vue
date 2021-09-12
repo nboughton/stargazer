@@ -116,11 +116,11 @@ export default defineComponent({
         .move(x + (dm.hexSize / 2) * 0.7, y + dm.hexSize / 2);
 
       i.mouseenter(() => {
-        i.animate(250).transform({ scale: 1.3 });
+        i.animate(100).transform({ scale: 1.3 });
       });
 
       i.mouseleave(() => {
-        i.animate(250).transform({ scale: 1 });
+        i.animate(100).transform({ scale: 1 });
       });
     };
 
