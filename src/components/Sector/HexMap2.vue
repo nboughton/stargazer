@@ -11,11 +11,24 @@
       </q-page>
     </q-page-container>
 
-    <q-dialog v-model="showDialog" full-width>
+    <q-dialog v-model="showDialog">
       <q-card class="my-card">
-        <q-card-section class="row justify-between items-center custom-header text-h5">
+        <q-card-section class="row justify-between items-center custom-header bg-secondary text-h5">
           <span class="col">Cell Details</span>
           <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
+        </q-card-section>
+
+        <q-card-section>
+          <q-select
+            label="Set cell status"
+            hint="Set to 'location' to save Oracle generated content and enable search for this cell"
+            v-model="campaign.data.sectors[config.data.sector].cells[selectedID].stat"
+            :options="Object.values(ECellStatus)"
+          />
+        </q-card-section>
+
+        <q-card-section>
+          <cell :sectorID="config.data.sector" :cellID="selectedID" />
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -23,20 +36,23 @@
 </template>
 
 <script lang="ts">
-import { Polygon, Svg, SVG } from '@svgdotjs/svg.js';
+import { Gradient, Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
 import { NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch } from 'vue';
-import { ECellStatus } from '../models';
+import { ECellStatus, ISectorCell } from '../models';
+import Cell from './Cell.vue';
 export default defineComponent({
+  components: { Cell },
   // name: 'ComponentName'
   setup() {
     // Grab stores
     const campaign = useCampaign();
     const config = useConfig();
     const showDialog = ref(false);
+    const selectedID = ref('');
 
     // Instantiate a null ref and set dimenions/id func
     const hexmap = ref(null);
@@ -48,7 +64,7 @@ export default defineComponent({
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
     };
-    const clearHexStatus = (p: Polygon) => Object.values(ECellStatus).forEach((s) => p.removeClass(s));
+    // const clearHexStatus = (p: Polygon) => Object.values(ECellStatus).forEach((s) => p.removeClass(s));
 
     // Define initial grid data
     const Hex = extendHex({ size: dm.hexSize });
@@ -62,6 +78,25 @@ export default defineComponent({
 
     let map: Svg;
     // All map magic happens here
+    const locationFill = (c: ISectorCell): Gradient => {
+      const f = map.gradient('linear', function (add) {
+        let count = 0;
+        const addFn = (colour: string) => {
+          add.stop(count, colour);
+          count++;
+        };
+        if (c.stars.length > 0) addFn('#6d72a4ff');
+        if (c.planets.length > 0) addFn('#7368b0ff');
+        if (c.settlements.length > 0) addFn('#9d5a9fff');
+        if (c.ships.length > 0) addFn('#ad6398ff');
+        if (c.derelicts.length > 0) addFn('#427a99ff');
+        if (c.vaults.length > 0) addFn('#427074ff');
+        if (c.creatures.length > 0) addFn('#3c8ab5ff');
+        if (c.npcs.length > 0) add.stop(count, '#9e708fff');
+      });
+      return f;
+    };
+
     const renderMap = () => {
       map.clear();
       grid.forEach((hex) => {
@@ -69,10 +104,25 @@ export default defineComponent({
         const id = h(hex.x, hex.y);
         const cell = map.polygon(points).addClass('hex').addClass(id);
 
-        // Initial map for existing locations
+        // Render location data
         if (campaign.data.sectors[config.data.sector].cells[id]) {
           const c = campaign.data.sectors[config.data.sector].cells[id];
           cell.addClass(c.stat);
+          switch (c.stat) {
+            case ECellStatus.Location:
+              cell.fill(locationFill(c));
+              break;
+
+            case ECellStatus.Passage:
+              cell.fill('lightblue');
+              break;
+
+            default:
+              cell.fill('white');
+              break;
+          }
+        } else {
+          cell.fill('white');
         }
 
         cell.translate(x, y);
@@ -105,11 +155,11 @@ export default defineComponent({
         const c = NewCell(id);
         c.stat = ECellStatus.Passage;
         campaign.data.sectors[config.data.sector].cells[id] = c;
-        return;
       }
 
       // If we've reached here then we probably want to open the dialog and do something with it
       // const c = campaign.data.sectors[config.data.sector].cells[id]
+      selectedID.value = id;
       showDialog.value = true;
     };
 
@@ -121,10 +171,15 @@ export default defineComponent({
     );
 
     return {
+      campaign,
+      config,
       hexmap,
       dm,
+
       click,
       showDialog,
+      selectedID,
+      ECellStatus,
     };
   },
 });
@@ -132,28 +187,11 @@ export default defineComponent({
 
 <style>
 svg polygon.hex {
-  fill: white;
   stroke: black;
   stroke-width: 1pt;
 }
 
 svg polygon.hex:hover {
   fill: lightgray;
-}
-
-svg polygon.empty {
-  fill: white;
-}
-
-svg polygon.passage {
-  fill: lightblue;
-}
-
-svg polygon.location {
-  fill: green;
-}
-
-svg polygon.player {
-  fill: blueviolet;
 }
 </style>

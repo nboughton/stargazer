@@ -230,7 +230,7 @@ export function NewCell(id: string, name?: string): ISectorCell {
   return {
     id: id,
     stat: ECellStatus.Empty,
-    name: name ? name : '',
+    name: name ? name : id,
     stars: [],
     planets: [],
     settlements: [],
