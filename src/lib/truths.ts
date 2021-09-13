@@ -5,7 +5,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
   ai: [
     {
       match: [1, 33],
-      summary: 'We no longer have access to advanced computer systems. Instead, we must rely on the specialists we call Adepts.',
+      summary:
+        'We no longer have access to advanced computer systems. Instead, we must rely on the specialists we call Adepts.',
       text: '"Our computers are limited to simple digital systems and the most basic machine intelligence. This is because: ______. The Adepts serve in place of those advanced systems. They utilize mind-altering drugs to see the universe as a dazzling lattice of data, identifying trends and predicting outcomes with uncanny accuracy. But to gain this insight they sacrifice much of themselves."',
       table: {
         items: [
@@ -31,7 +32,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [68, 100],
-      summary: 'Artificial consciousness emerged in the time before the Exodus, and sentient machines live with us here in the Forge.',
+      summary:
+        'Artificial consciousness emerged in the time before the Exodus, and sentient machines live with us here in the Forge.',
       text: 'Our ships, digital assistants, bots, and other systems often house advanced AI. For a lone traveler, machine intelligence can provide companionship and aid within the perilous depths of the Forge.',
     },
   ],
@@ -136,12 +138,14 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [34, 67],
-      summary: 'Information is life. We rely on a guild of spaceborne couriers—the Heralds—to transport messages and data across the vast distances between settlements.',
+      summary:
+        'Information is life. We rely on a guild of spaceborne couriers—the Heralds—to transport messages and data across the vast distances between settlements.',
       text: 'Direct communication and transmissions beyond the near-space of a ship or outpost is impossible due to the chaotic energies of the Forge. Digital archives are available at larger outposts, but the information is not always up-to-date or reliable. Therefore, the most important communications and discoveries are carried by the Heralds, sworn to see that data to its destination.',
     },
     {
       match: [68, 100],
-      summary: 'In settled domains, a network of data hubs called the Weave allow near-instantaneous communication and data-sharing between ships and outposts.',
+      summary:
+        'In settled domains, a network of data hubs called the Weave allow near-instantaneous communication and data-sharing between ships and outposts.',
       text: 'Because of their importance, Weave hubs are often targets for sabotage, and communication blackouts are not uncommon. Beyond the most populous sectors, travelers and outposts are still commonly isolated and entirely off the grid.',
     },
   ],
@@ -153,12 +157,14 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [34, 67],
-      summary: 'Dangers abound, but there is safety in numbers. Many ships and settlements are united under the banner of one of the Founder Clans.',
+      summary:
+        'Dangers abound, but there is safety in numbers. Many ships and settlements are united under the banner of one of the Founder Clans.',
       text: 'We have a tentative foothold in this galaxy. Each of the five Founder Clans honor the name and legacy of a leader who guided their people in the chaotic time after the Exodus. Vast reaches of the settled domains are claimed by the clans, and territorial skirmishes are common.',
     },
     {
       match: [68, 100],
-      summary: 'We have made our mark in this galaxy, but the energy storms we call balefires threaten to undo that progress, leaving our communities isolated and vulnerable.',
+      summary:
+        'We have made our mark in this galaxy, but the energy storms we call balefires threaten to undo that progress, leaving our communities isolated and vulnerable.',
       text: "Starships navigate along bustling trade routes between settlements. We've built burgeoning outposts on the fringes of known sectors, and bold spacers chart new paths into unexplored domains. But this hard-earned success is threatened by the chaotic balefires, intense energy anomalies which cut off trade routes and threaten entire planets.",
     },
   ],
@@ -184,7 +190,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
   horrors: [
     {
       match: [1, 33],
-      summary: 'Put enough alcohol in a spacer, and they’ll tell you stories of ghost ships crewed by vengeful undead. It’s nonsense.',
+      summary:
+        'Put enough alcohol in a spacer, and they’ll tell you stories of ghost ships crewed by vengeful undead. It’s nonsense.',
       text: "Within the Forge, space and time are as mutable and unstable as a flooding river. When reality can't be trusted, we are bound to encounter unsettling phenomenon.",
     },
     {
@@ -194,7 +201,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [68, 100],
-      summary: 'The strange energies of the Forge give unnatural life to the dead. The Soulbinders are an organization sworn to confront these horrifying entities.',
+      summary:
+        'The strange energies of the Forge give unnatural life to the dead. The Soulbinders are an organization sworn to confront these horrifying entities.',
       text: 'The woken dead are a plague within the Forge. Some of these beings are benevolent or seek absolution, but most are hollowed and corrupted by death. They are driven by hate and a hunger for the warmth of life which is forever lost to them. The Soulbinders are dedicated to putting them to rest—whatever the cost.',
     },
   ],
@@ -218,7 +226,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
   laws: [
     {
       match: [1, 33],
-      summary: 'Much of the settled domains are a lawless frontier. Criminal factions and corrupt leaders often hold sway.',
+      summary:
+        'Much of the settled domains are a lawless frontier. Criminal factions and corrupt leaders often hold sway.',
       text: 'Powers rise and fall in the Forge, so any authority is fleeting. In the end, we must fend for ourselves. A few communities are bastions of successful autonomy, but many are corrupted or preyed upon by petty despots, criminals, and raiders.',
     },
     {
@@ -229,7 +238,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [68, 100],
-      summary: 'Our communities are bound under the terms of the Covenant, a charter established after the Exodus. The organization called the Keepers is sworn to uphold those laws.',
+      summary:
+        'Our communities are bound under the terms of the Covenant, a charter established after the Exodus. The organization called the Keepers is sworn to uphold those laws.',
       text: 'Most settlements are still governed under the Covenant and yield to the authority of the Keepers. But a few view the Covenant as a dogmatic, impractical, and unjust relic of our past; in those places, the Keepers find no welcome.',
     },
   ],
@@ -241,12 +251,14 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [34, 67],
-      summary: 'Many sites and planets are infested by dreadful forgespawn. These abberant creatures threaten to overrun other life in the galaxy.',
+      summary:
+        'Many sites and planets are infested by dreadful forgespawn. These abberant creatures threaten to overrun other life in the galaxy.',
       text: 'The forgespawn are hostile creatures born of the chaotic energies of this galaxy. Hundreds of abandoned or devastated outposts and derelict ships stand as testament to their dreadful power and cunning.',
     },
     {
       match: [68, 100],
-      summary: 'Life in the Forge was seeded and engineered by the Essentia, ancient entities who enact their inscrutable will in this galaxy.',
+      summary:
+        'Life in the Forge was seeded and engineered by the Essentia, ancient entities who enact their inscrutable will in this galaxy.',
       text: 'The Essentia are the architects of life within the Forge. These omniscient beings are rarely encountered, and have powers and purpose beyond our comprehension. Some worship them. Others resist or rebel against them. But trying to defy the will of the Essentia is like standing at the shore of an ocean to thwart the tide. They are inevitable.',
     },
   ],
@@ -299,12 +311,14 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [34, 67],
-      summary: 'To help offset a scarcity of medical supplies and knowledge, the technicians we call riggers create basic organ and limb replacements.',
+      summary:
+        'To help offset a scarcity of medical supplies and knowledge, the technicians we call riggers create basic organ and limb replacements.',
       text: "Much was lost in the Exodus, and what remains of our medical technologies and expertise is co-opted by the privileged and powerful. For most, advanced medical care is simply out of reach. When someone suffers a grievous injury, they'll often turn to a rigger for a makeshift mechanical solution.",
     },
     {
       match: [68, 100],
-      summary: 'The Menders are an order of sworn healers who preserve our medical knowledge and train new generations of caregivers.',
+      summary:
+        'The Menders are an order of sworn healers who preserve our medical knowledge and train new generations of caregivers.',
       text: 'Advanced care is usually available only within the larger settlements, but even remote communities are often served by a novice Mender. Some Menders are travelers who offer preventative care and respond to emergencies in isolated communities.',
     },
   ],
@@ -323,7 +337,8 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
     },
     {
       match: [68, 100],
-      summary: 'The biomechanical lifeforms we call the Remnants, engineered by ancient civilizations as weapons in a cataclysmic war, survived the death of their creators.',
+      summary:
+        'The biomechanical lifeforms we call the Remnants, engineered by ancient civilizations as weapons in a cataclysmic war, survived the death of their creators.',
       text: 'On scarred planets and within ancient vaults throughout the Forge, the Remnants still guard ancient secrets and fight unending wars.',
     },
   ],
@@ -347,17 +362,20 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
   war: [
     {
       match: [1, 33],
-      summary: 'Here in the Forge, resources are too precious to support organized fighting forces or advanced weaponry.',
+      summary:
+        'Here in the Forge, resources are too precious to support organized fighting forces or advanced weaponry.',
       text: 'Weapons are simple and cheap. Starships are often cobbled together from salvage. Most communities rely on ragtag bands of poorly equipped conscripts or volunteers to defend their holdings, and raiders prowl the Forge in search of easy prey.',
     },
     {
       match: [34, 67],
-      summary: 'Those few with the ability to pay can call on the Legion—a guild of professional soldiers—to defend or expand their holdings. The rest of us are on our own.',
+      summary:
+        'Those few with the ability to pay can call on the Legion—a guild of professional soldiers—to defend or expand their holdings. The rest of us are on our own.',
       text: 'The Legion deploy skilled fighting forces and well-equipped starships on-demand. But their service always comes at a dire cost, and the members of the Legion are mercenaries who hold no loyalty except to the highest bidder.',
     },
     {
       match: [68, 100],
-      summary: 'War never ends. Talented weaponsmiths and shipwrights craft deadly, high-tech tools of destruction. Dominant factions wield mighty fleets and battle-hardened troops.',
+      summary:
+        'War never ends. Talented weaponsmiths and shipwrights craft deadly, high-tech tools of destruction. Dominant factions wield mighty fleets and battle-hardened troops.',
       text: 'Those in power have access to weapons of horrific destructive potential. Skirmishes and wars flare across the settled domains, and most are pawns or casualties in these destructive campaigns.',
     },
   ],
@@ -370,7 +388,8 @@ export const RollTruth = (truth: string): string => {
   let out = '';
   SFTruths[truth].forEach((t) => {
     if (n >= t.match[0] && n <= t.match[1]) {
-      out = `${t.summary} ${t.text}`;
+      out = t.text;
+      return;
       // if (t.table) out += ' ' + tableRoll(t.table);
     }
   });

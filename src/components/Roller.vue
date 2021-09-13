@@ -1,10 +1,19 @@
 <template>
-  <q-dialog v-model="show" position="bottom" transition-show="slide-up" transition-hide="slide-down" seamless class="roller">
+  <q-dialog
+    v-model="show"
+    position="bottom"
+    transition-show="slide-up"
+    transition-hide="slide-down"
+    seamless
+    class="roller"
+  >
     <q-card class="column my-card">
       <q-card-section class="row items-center">
         <div class="col-12 text-h6 q-px-sm" v-if="d100Res > 0">
           <div class="row items-baseline justify-between">
-            <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
+            <div class="col-shrink">
+              <q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" />
+            </div>
             <div class="col-grow text-center q-mb-sm">{{ d100Res }}</div>
             <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
           </div>
@@ -56,7 +65,16 @@
 
         <div class="col-12">
           <div class="row items-baseline justify-between">
-            <q-btn-toggle class="col-grow" :options="opts" label="Attribute" dense flat spread v-model="select" :size="btnSize" />
+            <q-btn-toggle
+              class="col-grow"
+              :options="opts"
+              label="Attribute"
+              dense
+              flat
+              spread
+              v-model="select"
+              :size="btnSize"
+            />
             <q-input class="col-1" type="number" label="Other" dense borderless hide-bottom-space v-model="otherAttr">
               <q-tooltip>Custom attribute value</q-tooltip>
             </q-input>
@@ -73,13 +91,21 @@
               <q-icon name="img:icons/dice/d10.svg" />
               <q-tooltip>Roll +Attribute</q-tooltip>
             </q-btn>
-            <q-btn class="col-shrink" dense flat :label="campaign.data.character.tracks.momentum.value" icon="mdi-fire" @click="burn" :size="btnSize">
+            <q-btn
+              class="col-shrink"
+              dense
+              flat
+              :label="campaign.data.character.tracks.momentum.value"
+              icon="mdi-fire"
+              @click="burn"
+              :size="btnSize"
+            >
               <q-tooltip>Burn Momentum</q-tooltip>
             </q-btn>
             <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
               <q-tooltip>Roll a D6</q-tooltip>
             </q-btn>
-            <q-btn class="col-shrink" dense flat icon="mdi-percent" @click="d100" :size="btnSize">
+            <q-btn class="col-shrink" dense flat icon="img:icons/dice/d100.svg" @click="d100" :size="btnSize">
               <q-tooltip>Roll a D100</q-tooltip>
             </q-btn>
           </div>
@@ -182,7 +208,9 @@ export default defineComponent({
 
     const adIcon = computed(() => {
       const m = campaign.data.character.tracks.momentum.value;
-      return m < 0 && Math.abs(m) === data.value.action.die ? `mdi-dice-${data.value.action.die}-outline` : `mdi-dice-${data.value.action.die}`;
+      return m < 0 && Math.abs(m) === data.value.action.die
+        ? `mdi-dice-${data.value.action.die}-outline`
+        : `mdi-dice-${data.value.action.die}`;
     });
 
     const d100Res = ref(0);
@@ -204,7 +232,10 @@ export default defineComponent({
 
       data.value.action.score = +data.value.action.die + +adds.value + +attribute.value;
       // Account for negative momentum
-      if (campaign.data.character.tracks.momentum.value < 0 && Math.abs(campaign.data.character.tracks.momentum.value) === Math.abs(data.value.action.die)) {
+      if (
+        campaign.data.character.tracks.momentum.value < 0 &&
+        Math.abs(campaign.data.character.tracks.momentum.value) === Math.abs(data.value.action.die)
+      ) {
         data.value.action.score -= data.value.action.die;
       }
 

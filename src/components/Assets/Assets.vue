@@ -5,7 +5,15 @@
         <q-header elevated>
           <q-toolbar class="bg-secondary">
             <q-toolbar-title>
-              <q-input class="col-grow" v-if="showEditor === false" label="Filter by name or type" v-model="filter" borderless clearable debounce="750">
+              <q-input
+                class="col-grow"
+                v-if="showEditor === false"
+                label="Filter by name or type"
+                v-model="filter"
+                borderless
+                clearable
+                debounce="750"
+              >
                 <template v-slot:prepend>
                   <q-icon name="search" />
                 </template>

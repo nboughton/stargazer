@@ -3,19 +3,51 @@
     <!-- Name, pronouns, callsign etc -->
     <div class="row full-width items-center">
       <q-input class="col-grow" label="Name" v-model="campaign.data.character.name" dense debounce="750" />
-      <q-input label="Pronouns" v-model="campaign.data.character.pronouns" dense debounce="750" />
+      <q-input class="col-4" label="Pronouns" v-model="campaign.data.character.pronouns" dense debounce="750" />
     </div>
     <div class="row full-width items-center">
-      <q-input class="col-xs-4 col-sm-3 col-2" label="Callsign" v-model="campaign.data.character.callsign" dense debounce="750" />
-      <q-input class="col-grow" label="Characteristics" v-model="campaign.data.character.characteristics" dense debounce="750" />
+      <q-input
+        class="col-xs-4 col-sm-3 col-2"
+        label="Callsign"
+        v-model="campaign.data.character.callsign"
+        dense
+        debounce="750"
+      />
+      <q-input
+        class="col-grow"
+        label="Characteristics"
+        v-model="campaign.data.character.characteristics"
+        dense
+        debounce="750"
+      />
     </div>
 
     <!-- Momentum -->
     <div class="row justify-between items-center q-gutter-sm" v-if="$q.screen.gt.xs">
       <span class="col-shrink text-bold">Momentum</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.momentum" />
-      <q-input class="col-xs-2 col-sm-1 col-1" label="Max" type="number" :max="10" :min="-6" v-model="campaign.data.character.tracks.momentum.max" dense borderless debounce="750" />
-      <q-input class="col-xs-2 col-sm-1 col-1" label="Reset" type="number" :max="4" :min="0" v-model="campaign.data.character.tracks.momentum.reset" dense borderless debounce="750" />
+      <q-input
+        class="col-xs-2 col-sm-1 col-1"
+        label="Max"
+        type="number"
+        :max="10"
+        :min="-6"
+        v-model="campaign.data.character.tracks.momentum.max"
+        dense
+        borderless
+        debounce="750"
+      />
+      <q-input
+        class="col-xs-2 col-sm-1 col-1"
+        label="Reset"
+        type="number"
+        :max="4"
+        :min="0"
+        v-model="campaign.data.character.tracks.momentum.reset"
+        dense
+        borderless
+        debounce="750"
+      />
       <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
         <q-tooltip>Burn momentum</q-tooltip>
       </q-btn>
@@ -23,8 +55,28 @@
     <div v-else>
       <div class="row items-center">
         <span class="col-grow text-h6">Momentum</span>
-        <q-input class="col-xs-2 col-sm-1 col-1" label="Max" type="number" :max="10" :min="-6" v-model="campaign.data.character.tracks.momentum.max" dense borderless debounce="750" />
-        <q-input class="col-xs-2 col-sm-1 col-1" label="Reset" type="number" :max="4" :min="0" v-model="campaign.data.character.tracks.momentum.reset" dense borderless debounce="750" />
+        <q-input
+          class="col-xs-2 col-sm-1 col-1"
+          label="Max"
+          type="number"
+          :max="10"
+          :min="-6"
+          v-model="campaign.data.character.tracks.momentum.max"
+          dense
+          borderless
+          debounce="750"
+        />
+        <q-input
+          class="col-xs-2 col-sm-1 col-1"
+          label="Reset"
+          type="number"
+          :max="4"
+          :min="0"
+          v-model="campaign.data.character.tracks.momentum.reset"
+          dense
+          borderless
+          debounce="750"
+        />
         <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
           <q-tooltip>Burn momentum</q-tooltip>
         </q-btn>
@@ -68,7 +120,15 @@
 
     <!-- Stats -->
     <stats class="q-mt-md" v-model="campaign.data.character.stats" />
-    <q-input class="q-mt-md q-mb-md" v-model="campaign.data.character.gear" label="Gear &amp; Notes" autogrow standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
+    <q-input
+      class="q-mt-md q-mb-md"
+      v-model="campaign.data.character.gear"
+      label="Gear &amp; Notes"
+      autogrow
+      standout="bg-blue-grey text-white"
+      :input-style="{ color: '#ECEFF4' }"
+      dense
+    />
 
     <q-separator />
 
@@ -82,8 +142,16 @@
     <q-separator />
 
     <!-- Vows -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Vows<q-btn icon="add_circle" flat dense @click="addVow" /></div>
-    <progress-track class="q-mb-md" v-for="(vow, vIndex) in campaign.data.character.vows" :key="vIndex" v-model="campaign.data.character.vows[vIndex]" :showMenaceBtn="false">
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+      Vows<q-btn icon="add_circle" flat dense @click="addVow" />
+    </div>
+    <progress-track
+      class="q-mb-md"
+      v-for="(vow, vIndex) in campaign.data.character.vows"
+      :key="vIndex"
+      v-model="campaign.data.character.vows[vIndex]"
+      :showMenaceBtn="false"
+    >
       <template v-slot:action v-if="config.data.edit">
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeVow(vIndex)" />
       </template>
@@ -92,8 +160,16 @@
     <q-separator />
 
     <!-- Progress -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Progress<q-btn icon="add_circle" flat dense @click="addTrack" /></div>
-    <progress-track class="q-mb-md" v-for="(track, pIndex) in campaign.data.progressTracks" :key="pIndex" v-model="campaign.data.progressTracks[pIndex]" :showMenaceBtn="false">
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+      Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
+    </div>
+    <progress-track
+      class="q-mb-md"
+      v-for="(track, pIndex) in campaign.data.progressTracks"
+      :key="pIndex"
+      v-model="campaign.data.progressTracks[pIndex]"
+      :showMenaceBtn="false"
+    >
       <template v-slot:action v-if="config.data.edit">
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeTrack(pIndex)" />
       </template>
@@ -101,7 +177,9 @@
 
     <q-separator />
 
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" /></div>
+    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+      Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
+    </div>
     <!-- Assets -->
     <div class="row justify-evenly q-gutter-lg q-mb-md">
       <asset v-for="(a, i) in campaign.data.character.assets" :key="i" v-model="campaign.data.character.assets[i]">
@@ -144,7 +222,6 @@ import Stats from 'src/components/Stats.vue';
 import Asset from 'src/components/Assets/Asset.vue';
 import Assets from 'src/components/Assets/Assets.vue';
 import { useCampaign } from 'src/store/campaign';
-import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 
 import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
@@ -199,8 +276,6 @@ export default defineComponent({
       campaign.data.character.tracks.momentum.value = n;
     };
 
-    const $q = useQuasar();
-
     const config = useConfig();
 
     return {
@@ -216,7 +291,6 @@ export default defineComponent({
       showAssetSelect,
 
       markImpact,
-      $q,
 
       burnMomentum,
       config,

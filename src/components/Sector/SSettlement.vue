@@ -1,10 +1,22 @@
 <template>
   <div>
-    <q-expansion-item :icon="icon.settlement()" header-class="settlement-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Settlement">
+    <q-expansion-item
+      :icon="icon.settlement()"
+      header-class="settlement-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm"
+      :label="data.name"
+      caption="Settlement"
+    >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col-grow" label="Name" v-model="data.name" />
-        <q-select label="Type" v-model="data.location" :options="Object.values(ESLocation)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
+        <q-select
+          label="Type"
+          v-model="data.location"
+          :options="Object.values(ESLocation)"
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
@@ -38,7 +50,6 @@
 </template>
 
 <script lang="ts">
-import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
 import Controls from './Controls.vue';
@@ -73,10 +84,7 @@ export default defineComponent({
 
     const config = useConfig();
 
-    const $q = useQuasar();
-
     return {
-      $q,
       data,
       config,
       ESLocation,

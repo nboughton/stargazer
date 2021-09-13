@@ -1,6 +1,11 @@
 <template>
   <div>
-    <q-expansion-item :icon="icon.npc()" header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Person">
+    <q-expansion-item
+      :icon="icon.npc()"
+      header-class="person-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm"
+      :label="data.name"
+      caption="Person"
+    >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Name" v-model="data.name" />
@@ -38,7 +43,6 @@
 </template>
 
 <script lang="ts">
-import { useQuasar } from 'quasar';
 import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
 import { INPC } from '../models';
@@ -73,9 +77,8 @@ export default defineComponent({
     );
 
     const config = useConfig();
-    const $q = useQuasar();
+
     return {
-      $q,
       data,
       config,
       icon,

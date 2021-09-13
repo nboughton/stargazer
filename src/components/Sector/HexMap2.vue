@@ -70,7 +70,7 @@ export default defineComponent({
     const Hex = extendHex({ size: dm.hexSize });
     const Grid = defineGrid(Hex);
     const grid = Grid.rectangle({
-      width: Math.floor(dm.width / (dm.hexSize * 2)) + 2,
+      width: Math.floor(dm.width / (dm.hexSize * 2)) + 3,
       height: Math.floor(dm.height / (dm.hexSize * 2)) + 3,
     });
     const corners = Hex().corners();
@@ -147,11 +147,11 @@ export default defineComponent({
               break;
 
             default:
-              cell.fill('white');
+              cell.fill('none');
               break;
           }
         } else {
-          cell.fill('white');
+          cell.fill('none');
         }
       });
     };
@@ -216,15 +216,8 @@ export default defineComponent({
 });
 </script>
 
-<style>
-svg polygon.hex {
-  stroke: black;
-  stroke-width: 1pt;
-}
-
-/*
-svg polygon.hex:hover {
-  fill: lightgray;
-}
-*/
+<style lang="sass">
+svg polygon.hex
+  stroke: $secondary
+  stroke-width: 1pt
 </style>

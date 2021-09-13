@@ -109,14 +109,14 @@ export const Assets: { [index: string]: IAsset } = {
   Augmented: {
     type: 'Path',
     title: 'Augmented',
-    input: {
-      label: 'One',
-      text: ' ',
-    },
     items: [
       {
         text: '<p>You are equipped with an advanced prosthetic, implant, or mechanical enhancement. When you make a move directly aided by the augment, envision how it gives you exceptional capabilities and add +1. On a strong hit with a match, your augment exceeds expectations; take +2 momentum. On a miss with a match, the augment is broken; you must <i>Repair</i> and spend 3 repair points to bring it back to working condition.</p>\n',
         marked: true,
+        input: {
+          label: 'One',
+          text: ' ',
+        },
       },
       {
         text: '<p>You are equipped with a second augment. It functions as above, but the benefits of the two augments do not stack.</p>\n',
@@ -204,7 +204,7 @@ export const Assets: { [index: string]: IAsset } = {
   Bonded: {
     type: 'Deed',
     title: 'Bonded',
-    subtitle: 'One time only, once you [Forge a Bond](#Forge-a-Bond) with a special individual...',
+    subtitle: 'One time only, once you <i>Forge a Bond</i> with a special individual...',
     input: {
       label: 'Bond-mate',
       text: ' ',
@@ -337,7 +337,7 @@ export const Assets: { [index: string]: IAsset } = {
     type: 'Path',
     title: 'Devotant',
     input: {
-      label: 'Name',
+      label: 'Name/Linked stat',
       text: ' ',
     },
     items: [
@@ -348,10 +348,6 @@ export const Assets: { [index: string]: IAsset } = {
       {
         text: '<p>When you <i>Swear an Iron Vow</i> in service to your faith, roll +linked stat. On a strong hit, mark progress. When you <i>Fulfill Your Vow</i> on a divine quest (formidable or greater) and score a hit, also mark 2 ticks on your bonds legacy track.</p>\n',
         marked: false,
-        input: {
-          label: 'Linked Stat',
-          text: ' ',
-        },
       },
       {
         text: '<p>When you <i>Hearten</i> through contemplation or sharing of your faith, you may roll +linked stat. If you do, take +1 spirit or +1 momentum on a strong hit.</p>\n',
@@ -969,7 +965,7 @@ export const Assets: { [index: string]: IAsset } = {
   Oathbreaker: {
     type: 'Deed',
     title: 'Oathbreaker',
-    subtitle: 'Once you [Forsake Your Vow](#Forsake-Your-Vow)...',
+    subtitle: 'Once you <i>Forsake Your Vow</i>...',
 
     items: [
       {
@@ -1095,7 +1091,7 @@ export const Assets: { [index: string]: IAsset } = {
   Revenant: {
     type: 'Deed',
     title: 'Revenant',
-    subtitle: 'Once you [Face Death](#Face-Death)...',
+    subtitle: 'Once you <i>Face Death</i>...',
 
     items: [
       {
