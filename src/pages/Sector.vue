@@ -52,9 +52,6 @@
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
-      <!--q-btn class="col-shrink" icon="add_circle" flat dense @click="addCell">
-        <q-tooltip>Add location</q-tooltip>
-      </q-btn-->
     </div>
 
     <div class="column q-mt-md">
@@ -67,7 +64,6 @@
             :cellID="index"
           />
         </div>
-        <!--@delete="removeCell(index)"-->
       </div>
       <div v-else>
         <div v-for="(cell, cIndex) in campaign.data.sectors[config.data.sector].cells" :key="cIndex">

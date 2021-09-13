@@ -221,6 +221,7 @@ export interface ICharacter {
   pronouns: string;
   callsign: string;
   characteristics: string;
+  location: string;
   stats: IStats;
   tracks: ITracks;
   impacts: IImpacts;

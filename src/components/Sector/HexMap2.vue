@@ -79,7 +79,7 @@ export default defineComponent({
     let map: Svg;
     // All map magic happens here
     const locationFill = (c: ISectorCell): Gradient => {
-      const f = map.gradient('linear', function (add) {
+      const f = map.gradient('radial', function (add) {
         let count = 0;
         const addFn = (colour: string) => {
           add.stop(count, colour);
@@ -176,12 +176,16 @@ export default defineComponent({
       // If no data exists for the cell then create it initially and make it a passage
       // Note that all changes to cell data should happen in the renderMap function as
       // the map will re-render whenever the underlying cell data changes.
-      if (!campaign.data.sectors[config.data.sector].cells[id]) {
+      if (
+        !campaign.data.sectors[config.data.sector].cells[id] ||
+        campaign.data.sectors[config.data.sector].cells[id].stat == ECellStatus.Empty
+      ) {
         // Minimise sequential assignments to the store data to prevent excessive
         // re-rendering of the map
         const c = NewCell(id);
         c.stat = ECellStatus.Passage;
         campaign.data.sectors[config.data.sector].cells[id] = c;
+        return;
       }
 
       // If we've reached here then we probably want to open the dialog and do something with it
