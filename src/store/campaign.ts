@@ -24,67 +24,6 @@ export const useCampaign = defineStore({
   },
 
   actions: {
-    /*
-    unsetPlayerLocation() {
-      let done = false;
-      this.data.sectors.forEach((s, sI) => {
-        s.hexes.forEach((h, hI) => {
-          if (h.player) {
-            this.data.sectors[sI].hexes[hI].player = false;
-            done = true;
-            return;
-          }
-        });
-        if (done) return;
-      });
-    },
-
-    unlinkCell(id: string) {
-      let found = false;
-      this.data.sectors.forEach((s, sI) => {
-        s.hexes.forEach((h, hI) => {
-          if (h.id === id) {
-            found = true;
-            this.data.sectors[sI].hexes[hI].id = '';
-            return;
-          }
-        });
-        if (found) return;
-      });
-    },
-
-    // Returns a copy of a cell found by id string
-    getCell(id: string): ISectorCell {
-      let cell = <ISectorCell>{};
-      let found = false;
-      this.data.sectors.forEach((s) => {
-        s.cells.forEach((c) => {
-          if (c.id === id) {
-            found = true;
-            cell = JSON.parse(JSON.stringify(c)) as ISectorCell;
-            return;
-          }
-        });
-        if (found) return;
-      });
-      return cell;
-    },
-
-    // returns the sector/cell numbers from an ID search
-    getCellLocation(id: string): { sector: number; cell: string; found: boolean } {
-      let out = { sector: 0, cell: 0, found: false };
-      this.data.sectors.forEach((s, sI) => {
-        s.cells.forEach((c, cI) => {
-          if (c.id === id) {
-            out = { sector: sI, cell: cI, found: true };
-            return;
-          }
-        });
-        if (out.found) return;
-      });
-      return out;
-    },
-*/
     moveStar(index: number, from: { sector: number; cell: string }, to: { sector: number; cell: string }) {
       const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].stars[index])) as IStar;
       this.data.sectors[to.sector].cells[to.cell].stars.unshift(o);

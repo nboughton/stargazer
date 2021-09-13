@@ -1,4 +1,4 @@
-import { ECoreCombo, ERegion, ESLocation, ISettlementOracle } from 'src/components/models';
+import { ECoreCombo, ERegion, ESLocation, ESettPop, ISettlementOracle } from 'src/components/models';
 
 export const Settlement: ISettlementOracle = {
   name: {
@@ -426,23 +426,23 @@ export const Settlement: ISettlementOracle = {
       items: [
         {
           match: [1, 10],
-          data: 'Few',
+          data: ESettPop.Few,
         },
         {
           match: [11, 25],
-          data: 'Dozens',
+          data: ESettPop.Dozens,
         },
         {
           match: [26, 55],
-          data: 'Hundreds',
+          data: ESettPop.Hundreds,
         },
         {
           match: [56, 85],
-          data: 'Thousands',
+          data: ESettPop.Thousands,
         },
         {
           match: [86, 100],
-          data: 'Tens of thousands',
+          data: ESettPop.TensOfThou,
         },
       ],
     },
@@ -450,23 +450,23 @@ export const Settlement: ISettlementOracle = {
       items: [
         {
           match: [1, 15],
-          data: 'Few',
+          data: ESettPop.Few,
         },
         {
           match: [16, 35],
-          data: 'Dozens',
+          data: ESettPop.Dozens,
         },
         {
           match: [36, 65],
-          data: 'Hundreds',
+          data: ESettPop.Hundreds,
         },
         {
           match: [66, 90],
-          data: 'Thousands',
+          data: ESettPop.Thousands,
         },
         {
           match: [91, 100],
-          data: 'Tens of thousands',
+          data: ESettPop.TensOfThou,
         },
       ],
     },
@@ -474,23 +474,23 @@ export const Settlement: ISettlementOracle = {
       items: [
         {
           match: [1, 20],
-          data: 'Few',
+          data: ESettPop.Few,
         },
         {
           match: [21, 50],
-          data: 'Dozens',
+          data: ESettPop.Dozens,
         },
         {
           match: [51, 80],
-          data: 'Hundreds',
+          data: ESettPop.Hundreds,
         },
         {
           match: [81, 95],
-          data: 'Thousands',
+          data: ESettPop.Thousands,
         },
         {
           match: [96, 100],
-          data: 'Tens of thousands',
+          data: ESettPop.TensOfThou,
         },
       ],
     },

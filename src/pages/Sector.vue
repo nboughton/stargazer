@@ -35,7 +35,7 @@
     </div>
 
     <div class="row justify-center q-mb-sm">
-      <hex-map-2 />
+      <hex-map />
     </div>
 
     <div class="row q-gutter-sm q-mb-sm">
@@ -240,9 +240,9 @@ import SNPC from 'src/components/Sector/SNPC.vue';
 import SCreature from 'src/components/Sector/SCreature.vue';
 import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
-import HexMap2 from 'src/components/Sector/HexMap2.vue';
+import HexMap from 'src/components/Sector/HexMap.vue';
 export default defineComponent({
-  components: { IInput, Cell, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap2 },
+  components: { IInput, Cell, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap },
   name: 'Sector',
   setup() {
     const campaign = useCampaign();

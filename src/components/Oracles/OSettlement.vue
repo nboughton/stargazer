@@ -7,7 +7,10 @@
 
   <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
-  <o-input label="Population" v-model="data.population" @roll="roll.Pop" />
+  <div class="row items-center">
+    <q-select class="col-grow" label="Population" v-model="data.population" :options="Object.values(ESettPop)" dense />
+    <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll.Pop" />
+  </div>
 
   <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
 
@@ -24,7 +27,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { ISettlement, ESLocation, ERegion } from 'src/components/models';
+import { ISettlement, ESLocation, ERegion, ESettPop } from 'src/components/models';
 import { tableRoll } from 'src/lib/roll';
 import { Settlement } from 'src/lib/oracles/settlement';
 import OInput from './OInput.vue';
@@ -88,6 +91,7 @@ export default defineComponent({
       regionSelect,
       ERegion,
       ESLocation,
+      ESettPop,
       roll,
       btns,
     };

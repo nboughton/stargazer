@@ -11,6 +11,14 @@ export enum ESLocation {
   Space = 'Deep Space',
 }
 
+export enum ESettPop {
+  Few = 'Few',
+  Dozens = 'Dozens',
+  Hundreds = 'Hundreds',
+  Thousands = 'Thousands',
+  TensOfThou = 'Tens of thousands',
+}
+
 export enum EPClass {
   Desert = 'Desert',
   Furnace = 'Furnace',

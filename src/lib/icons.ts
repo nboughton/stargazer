@@ -1,4 +1,7 @@
 export const icon = {
+  player: (): string => {
+    return 'img:icons/space/player-ship.svg';
+  },
   star: (): string => {
     return 'img:icons/space/star-sattelites.svg';
   },

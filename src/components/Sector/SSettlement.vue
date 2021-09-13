@@ -22,13 +22,29 @@
 
       <div class="row q-gutter-sm justify-between q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Authority" v-model="data.authority" />
-        <i-input class="col" label="Population" v-model="data.population" />
+        <q-select
+          class="col"
+          label="Population"
+          v-model="data.population"
+          :options="Object.values(ESettPop)"
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
         <i-input class="col" label="Projects" v-model="data.projects" />
       </div>
       <div v-else>
         <div class="row q-gutter-sm justify-between q-mb-sm">
           <i-input class="col" label="Authority" v-model="data.authority" />
-          <i-input class="col" label="Population" v-model="data.population" />
+          <q-select
+            class="col"
+            label="Population"
+            v-model="data.population"
+            :options="Object.values(ESettPop)"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            dense
+          />
         </div>
 
         <i-input class="q-mb-sm" label="Projects" v-model="data.projects" />
@@ -55,7 +71,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { icon } from 'src/lib/icons';
-import { ISettlement, ESLocation } from '../models';
+import { ISettlement, ESLocation, ESettPop } from '../models';
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SSettlement',
@@ -88,6 +104,7 @@ export default defineComponent({
       data,
       config,
       ESLocation,
+      ESettPop,
       icon,
     };
   },
