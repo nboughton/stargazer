@@ -53,15 +53,16 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch } from 'vue';
 import { icon } from 'src/lib/icons';
+import seedrandom from 'seedrandom';
 import { ECellStatus, ESettPop, ISectorCell } from '../models';
 import Cell from './Cell.vue';
-import { useQuasar } from 'quasar';
+// import { useQuasar } from 'quasar';
 export default defineComponent({
   components: { Cell },
   name: 'HexMap',
   setup() {
     // Grab stores
-    const $q = useQuasar();
+    // const $q = useQuasar();
     const campaign = useCampaign();
     const config = useConfig();
     const showDialog = ref(false);
@@ -210,27 +211,45 @@ export default defineComponent({
       });
 
       // Render a star field
+      // We're going to use procgen by hashing the sector name:region strings and using
+      // the ASCII codes of each character to create a psuedorandom seed
+
+      // Get a pseudorandom generator to produce consistent results
+      const random = seedrandom(
+        campaign.data.sectors[config.data.sector].name + ':' + campaign.data.sectors[config.data.sector].region
+      );
+
       const star = SVG().polygon('50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40');
       for (let i = 0; i < Math.floor(grid.length * 1.5); i++) {
         const n = star.clone();
 
-        const hw = Math.floor(Math.random() * (dm.hexSize / 2.5));
-        const x = Math.floor(Math.random() * dm.width);
-        const y = Math.floor(Math.random() * dm.height);
+        const hw = Math.floor(random() * (dm.hexSize / 1.8));
+        const x = Math.floor(random() * dm.width);
+        const y = Math.floor(random() * dm.height);
 
-        const r = Math.floor(Math.random() * 128) + 100;
-        const g = Math.floor(Math.random() * 128) + 50;
-        const b = Math.floor(Math.random() * 128) + 100;
+        const r = Math.floor(random() * 128) + 100;
+        const g = Math.floor(random() * 128) + 50;
+        const b = Math.floor(random() * 128) + 100;
 
-        n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(map).move(x, y).back();
+        n.fill(
+          map.gradient('radial', function (add) {
+            add.stop(0, '#ddd');
+            add.stop(1, `rgb(${r}, ${g}, ${b})`);
+          })
+        )
+          .size(hw, hw)
+          .addTo(map)
+          .move(x, y)
+          //.rotate(Math.floor(random() * 360))
+          .back();
 
-        if (!$q.platform.is.mobile) {
-          if (i % 10 == 0) {
-            n.animate(1000 + Math.floor(Math.random() * 5000), Math.floor(Math.random() * 10000))
-              .attr({ fill: '#ddd' })
-              .loop();
-          }
+        //if (!$q.platform.is.mobile) {
+        if (i % 10 == 0) {
+          n.animate(2000 + Math.floor(Math.random() * 5000), Math.floor(Math.random() * 10000))
+            .attr({ fill: '#2e3440' })
+            .loop();
         }
+        //}
       }
 
       // Move player ship to the front

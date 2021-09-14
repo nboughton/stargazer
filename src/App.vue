@@ -15,11 +15,11 @@ export default defineComponent({
     $q.dark.set(true);
 
     const campaign = useCampaign();
-    onBeforeMount(() => {
-      campaign.populateStore().catch((err) => console.log(err));
+    onBeforeMount(async () => {
+      await campaign.populateStore().catch((err) => console.log(err));
 
       const assets = useAssets();
-      assets.populateStore().catch((err) => console.log(err));
+      await assets.populateStore().catch((err) => console.log(err));
     });
 
     const config = useConfig();
