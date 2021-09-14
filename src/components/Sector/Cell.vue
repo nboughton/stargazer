@@ -2,32 +2,30 @@
   <q-card class="my-card">
     <q-card-section class="row items-center justify-between bg-secondary">
       <q-input
-        class="col-grow"
+        class="col"
         label="Location Name"
         v-model="campaign.data.sectors[sectorID].cells[cellID].name"
         dense
         borderless
         debounce="750"
       />
-      <div class="col-shrink">
-        <div class="row q-gutter-sm full-width">
-          <q-toggle class="col-shrink" icon="mdi-cog" v-model="showControls" />
-          <q-select
-            class="col-grow"
-            label="Add"
-            v-model="addSelect"
-            :options="Object.values(ESectorItem)"
-            dense
-            borderless
-          />
-          <q-btn class="col-shrink" icon="add" flat dense @click="add" />
-          <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
-        </div>
-      </div>
     </q-card-section>
 
     <!-- content -->
     <q-card-section class="q-pa-sm">
+      <div class="row full-width">
+        <q-toggle class="col" icon="mdi-cog" v-model="showControls" />
+        <q-select
+          class="col-shrink self-end"
+          label="Add"
+          v-model="addSelect"
+          :options="Object.values(ESectorItem)"
+          dense
+          borderless
+        />
+        <q-btn class="col-shrink" icon="add" flat dense @click="add" />
+        <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+      </div>
       <div v-if="show.stars()">
         <s-star
           class="q-mt-sm"

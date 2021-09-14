@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.vault()"
-      header-class="vault-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm"
+      header-class="vault-header text-h5 sf-header rounded-borders shadow-1 q-mb-sm"
       :label="data.name"
       caption="Vault"
     >

@@ -1,11 +1,15 @@
 <template>
-  <q-layout view="hHh lpR fFf" container :style="{ width: `${dm.width}px`, 'min-height': `${dm.height}px` }">
+  <q-layout
+    view="hHh lpR fFf"
+    container
+    :style="{ width: `${mapConfig.width}px`, 'min-height': `${mapConfig.height}px` }"
+  >
     <q-page-container>
       <q-page>
         <div
           class="hexmap"
           ref="hexmap"
-          :style="{ width: `${dm.width}px`, height: `${dm.height}px` }"
+          :style="{ width: `${mapConfig.width}px`, height: `${mapConfig.height}px` }"
           @click="click($event)"
         ></div>
       </q-page>
@@ -13,8 +17,8 @@
 
     <q-dialog v-model="showDialog">
       <q-card class="my-card">
-        <q-card-section class="row justify-between items-center custom-header bg-secondary text-h5">
-          <span class="col">Cell Details</span>
+        <q-card-section class="row justify-between items-center bg-secondary text-h5">
+          <span class="col sf-header">Cell Details</span>
           <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
         </q-card-section>
 
@@ -56,13 +60,11 @@ import { icon } from 'src/lib/icons';
 import seedrandom from 'seedrandom';
 import { ECellStatus, ESettPop, ISectorCell } from '../models';
 import Cell from './Cell.vue';
-// import { useQuasar } from 'quasar';
 export default defineComponent({
   components: { Cell },
   name: 'HexMap',
   setup() {
     // Grab stores
-    // const $q = useQuasar();
     const campaign = useCampaign();
     const config = useConfig();
     const showDialog = ref(false);
@@ -70,21 +72,22 @@ export default defineComponent({
 
     // Instantiate a null ref and set dimenions/id func
     const hexmap = ref(null);
-    const dm = {
+    const mapConfig = {
       height: 400,
       width: 800,
       hexSize: 20,
+      animations: false,
     };
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
     };
 
     // Define initial grid data
-    const Hex = extendHex({ size: dm.hexSize });
+    const Hex = extendHex({ size: mapConfig.hexSize });
     const Grid = defineGrid(Hex);
     const grid = Grid.rectangle({
-      width: Math.floor(dm.width / (dm.hexSize * 2)) + 3,
-      height: Math.floor(dm.height / (dm.hexSize * 2)) + 3,
+      width: Math.floor(mapConfig.width / (mapConfig.hexSize * 2)) + 3,
+      height: Math.floor(mapConfig.height / (mapConfig.hexSize * 2)) + 3,
     });
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
@@ -124,9 +127,9 @@ export default defineComponent({
       const i = SVG()
         .image(path.replace('img:', ''))
         .addClass('icon')
-        .size(dm.hexSize, dm.hexSize)
+        .size(mapConfig.hexSize, mapConfig.hexSize)
         .addTo(map)
-        .move(x + (dm.hexSize / 2) * 0.7, y + dm.hexSize / 2);
+        .move(x + (mapConfig.hexSize / 2) * 0.7, y + mapConfig.hexSize / 2);
 
       i.mouseenter(() => {
         i.animate(100).transform({ scale: 1.3 });
@@ -140,11 +143,11 @@ export default defineComponent({
     const locationLabel = (c: ISectorCell, x: number, y: number) => {
       let label = c.name;
       const v: { [index: string]: number } = {
-        [ESettPop.Few]: 0,
-        [ESettPop.Dozens]: 1,
-        [ESettPop.Hundreds]: 2,
-        [ESettPop.Thousands]: 3,
-        [ESettPop.TensOfThou]: 4,
+        [ESettPop.Few]: 1,
+        [ESettPop.Dozens]: 2,
+        [ESettPop.Hundreds]: 3,
+        [ESettPop.Thousands]: 4,
+        [ESettPop.TensOfThou]: 5,
       };
 
       if (c.settlements.length > 0) {
@@ -161,9 +164,9 @@ export default defineComponent({
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: '#fff', family: 'Roboto', size: dm.hexSize * 0.9 });
+        .font({ fill: '#fff', family: 'Encode', size: mapConfig.hexSize * 0.9 });
 
-      t.move(x - dm.hexSize / 2, y + dm.hexSize * 2);
+      t.move(x - mapConfig.hexSize / 2, y + mapConfig.hexSize * 2);
     };
 
     let playerShip: Image; // Declare this out here so it can be manipulated in a watch func
@@ -204,9 +207,9 @@ export default defineComponent({
 
           playerShip
             .addClass('ship')
-            .size(dm.hexSize, dm.hexSize)
+            .size(mapConfig.hexSize, mapConfig.hexSize)
             .addTo(map)
-            .move(x + dm.hexSize, y);
+            .move(x + mapConfig.hexSize, y);
         }
       });
 
@@ -221,35 +224,36 @@ export default defineComponent({
 
       const star = SVG().polygon('50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40');
       for (let i = 0; i < Math.floor(grid.length * 1.5); i++) {
-        const n = star.clone();
+        const hw = Math.floor(random() * (mapConfig.hexSize / 1.8));
+        const x = Math.floor(random() * mapConfig.width - 1);
+        const y = Math.floor(random() * mapConfig.height - 1);
 
-        const hw = Math.floor(random() * (dm.hexSize / 1.8));
-        const x = Math.floor(random() * dm.width);
-        const y = Math.floor(random() * dm.height);
-
+        /*
         const r = Math.floor(random() * 128) + 100;
         const g = Math.floor(random() * 128) + 50;
         const b = Math.floor(random() * 128) + 100;
+        */
 
+        const n = star.clone();
         n.fill(
-          map.gradient('radial', function (add) {
+          /*map.gradient('radial', function (add) {
             add.stop(0, '#ddd');
             add.stop(1, `rgb(${r}, ${g}, ${b})`);
-          })
+          })*/
+          '#ccc'
         )
           .size(hw, hw)
           .addTo(map)
           .move(x, y)
-          //.rotate(Math.floor(random() * 360))
           .back();
 
-        //if (!$q.platform.is.mobile) {
-        if (i % 10 == 0) {
-          n.animate(2000 + Math.floor(Math.random() * 5000), Math.floor(Math.random() * 10000))
-            .attr({ fill: '#2e3440' })
-            .loop();
+        if (mapConfig.animations) {
+          if (i % 10 == 0) {
+            n.animate(2000 + Math.floor(Math.random() * 5000))
+              .attr({ fill: '#2e3440' })
+              .loop();
+          }
         }
-        //}
       }
 
       // Move player ship to the front
@@ -314,7 +318,7 @@ export default defineComponent({
       campaign,
       config,
       hexmap,
-      dm,
+      mapConfig,
 
       click,
       showDialog,

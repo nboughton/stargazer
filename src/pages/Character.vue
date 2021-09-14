@@ -133,7 +133,7 @@
     <q-separator />
 
     <!-- Legacy tracks -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">Legacy Tracks</div>
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">Legacy Tracks</div>
     <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
     <q-separator />
     <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
@@ -142,7 +142,7 @@
     <q-separator />
 
     <!-- Vows -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
       Vows<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
     <progress-track
@@ -160,7 +160,7 @@
     <q-separator />
 
     <!-- Progress -->
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
       Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
     </div>
     <progress-track
@@ -177,7 +177,7 @@
 
     <q-separator />
 
-    <div class="text-h4 custom-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
     <!-- Assets -->
@@ -195,7 +195,7 @@
 
     <div class="row">
       <!-- Impacts -->
-      <div class="col-12 text-h4 custom-header text-center q-pt-md">Impacts</div>
+      <div class="col-12 text-h4 sf-header text-center q-pt-md">Impacts</div>
       <div class="col-xs-6 col-sm-3 col-3" v-for="(set, setIndex) in campaign.data.character.impacts" :key="setIndex">
         <div class="text-bold">{{ setIndex }}</div>
         <q-checkbox

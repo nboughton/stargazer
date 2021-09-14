@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center justify-between">
-    <span class="text-h5 custom-header">{{ name }}</span>
+    <span class="text-h5 sf-header">{{ name }}</span>
     <q-checkbox label="+10" v-model="data.plus10" @click="p10" />
   </div>
 

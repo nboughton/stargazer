@@ -1,11 +1,32 @@
 <template>
   <div>
-    <q-expansion-item :icon="icon.derelict()" header-class="derelict-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Derelict">
+    <q-expansion-item
+      :icon="icon.derelict()"
+      header-class="derelict-header text-h5 sf-header rounded-borders shadow-1 q-mb-sm"
+      :label="data.name"
+      caption="Derelict"
+    >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
         <i-input class="col" label="Name" v-model="data.name" />
-        <q-select class="col" label="Location" v-model="data.location" :options="Object.values(ESLocation)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
-        <q-select class="col" label="Type" v-model="data.type" :options="Object.values(EDerelictType)" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense />
+        <q-select
+          class="col"
+          label="Location"
+          v-model="data.location"
+          :options="Object.values(ESLocation)"
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
+        <q-select
+          class="col"
+          label="Type"
+          v-model="data.type"
+          :options="Object.values(EDerelictType)"
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 

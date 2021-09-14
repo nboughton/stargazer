@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.creature(data.form)"
-      header-class="creature-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm"
+      header-class="creature-header text-h6 rounded-borders shadow-1 q-mb-sm"
       :label="data.name"
       caption="Creature"
     >

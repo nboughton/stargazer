@@ -1,10 +1,10 @@
 <template>
   <div class="q-mb-md">
-    <div class="row text-h4 custom-header items-center">
-      <div class="col-shrink q-mr-sm">{{ label }}</div>
+    <div class="row text-h4 items-center">
+      <div class="col-shrink sf-header q-mr-sm">{{ label }}</div>
     </div>
 
-    <div class="row items-center custom-header no-wrap">
+    <div class="row items-center no-wrap">
       <q-select
         class="col-grow"
         label="Select one, write your own, or roll..."
@@ -18,7 +18,7 @@
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollMain(id)" />
     </div>
 
-    <div class="row items-center custom-header" v-if="subOpts.length > 0">
+    <div class="row items-center" v-if="subOpts.length > 0">
       <q-select class="col-grow" label="Select" v-model="subOptSelect" :options="subOpts" dense borderless />
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollSub" />
     </div>

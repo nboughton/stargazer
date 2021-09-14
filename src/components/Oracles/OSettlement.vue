@@ -72,7 +72,8 @@ export default defineComponent({
 
     const btns = {
       Clear: () => {
-        data.value = <ISettlement>{ location: ESLocation.Planetside };
+        const loc = data.value.location;
+        data.value = NewSettlement(loc);
       },
       Initial: () => {
         btns.Clear();

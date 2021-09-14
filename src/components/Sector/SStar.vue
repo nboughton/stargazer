@@ -1,6 +1,11 @@
 <template>
   <div>
-    <q-expansion-item :icon="icon.star()" header-class="star-header text-h5 custom-header rounded-borders shadow-1 q-mb-sm" :label="data.name" caption="Star">
+    <q-expansion-item
+      :icon="icon.star()"
+      header-class="star-header text-h5 sf-header rounded-borders shadow-1 q-mb-sm"
+      :label="data.name"
+      caption="Star"
+    >
       <div class="q-mt-sm">
         <controls v-if="controls" @move="$emit('move', $event)" />
         <i-input class="q-mb-sm" label="Name" v-model="data.name">

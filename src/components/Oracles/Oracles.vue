@@ -1,42 +1,42 @@
 <template>
   <div class="content-start items-start">
-    <q-expansion-item header-class="text-h5 custom-header" label="Core">
+    <q-expansion-item header-class="text-h6" label="Core">
       <o-core />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Space">
+    <q-expansion-item header-class="text-h6" label="Space">
       <o-space />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Planet">
+    <q-expansion-item header-class="text-h6" label="Planet">
       <o-planet />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Settlement">
+    <q-expansion-item header-class="text-h6" label="Settlement">
       <o-settlement />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Starship">
+    <q-expansion-item header-class="text-h6" label="Starship">
       <o-starship />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Character">
+    <q-expansion-item header-class="text-h6" label="Character">
       <o-NPC />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Creature">
+    <q-expansion-item header-class="text-h6" label="Creature">
       <o-creature />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Derelict">
+    <q-expansion-item header-class="text-h6" label="Derelict">
       <o-derelict />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Vault">
+    <q-expansion-item header-class="text-h6" label="Vault">
       <o-vault />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h5 custom-header" label="Location Theme">
+    <q-expansion-item header-class="text-h6" label="Location Theme">
       <o-location-theme />
     </q-expansion-item>
   </div>

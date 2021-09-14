@@ -5,7 +5,7 @@
         <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-          <q-input input-class="custom-header text-h5" v-model="campaign.data.name" borderless />
+          <q-input input-class="sf-header text-h5" v-model="campaign.data.name" borderless />
         </q-toolbar-title>
         <q-btn icon="mdi-dice-6" flat dense @click="showRoller = !showRoller">
           <q-tooltip>Toggle Dice Roller</q-tooltip>
@@ -100,7 +100,7 @@
       <div class="row">
         <q-expansion-item class="col-12">
           <template v-slot:header>
-            <div class="text-h4 custom-header col-grow">ORACLES</div>
+            <div class="text-h4 sf-header col-grow">ORACLES</div>
           </template>
           <oracles class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
@@ -109,15 +109,24 @@
       <div class="row">
         <q-expansion-item class="col-12">
           <template v-slot:header>
-            <div class="text-h4 custom-header col-grow">MOVES</div>
+            <div class="text-h4 sf-header col-grow">MOVES</div>
           </template>
           <moves class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
       </div>
 
       <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
-        <span class="col-shrink text-h4 custom-header q-pr-sm">JOURNAL</span>
-        <q-input v-model="filter" class="col-grow q-mb-sm" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="500" clearable label="Search by title or content">
+        <span class="col-shrink text-h4 sf-header q-pr-sm">JOURNAL</span>
+        <q-input
+          v-model="filter"
+          class="col-grow q-mb-sm"
+          dense
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          debounce="500"
+          clearable
+          label="Search by title or content"
+        >
           <template v-slot:before>
             <q-btn class="col-shrink" icon="add_circle" flat dense @click="addJournal">
               <q-tooltip>Add a journal entry</q-tooltip>
@@ -132,7 +141,15 @@
       <div v-for="(journal, index) in campaign.data.journal" :key="index">
         <div class="q-pa-sm q-gutter-xs" v-if="showJournal(journal)">
           <div class="row">
-            <q-input class="col-grow" label="Title" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750" v-model="campaign.data.journal[index].title">
+            <q-input
+              class="col-grow"
+              label="Title"
+              dense
+              standout="bg-blue-grey text-white"
+              :input-style="{ color: '#ECEFF4' }"
+              debounce="750"
+              v-model="campaign.data.journal[index].title"
+            >
               <template v-slot:append v-if="config.data.edit">
                 <q-btn class="col-shrink q-pl-sm" flat dense icon="delete" @click="removeJournal(index)">
                   <q-tooltip>Delete this journal entry</q-tooltip>
@@ -140,7 +157,16 @@
               </template>
             </q-input>
           </div>
-          <q-input class="row" label="Content" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" autogrow debounce="750" v-model="campaign.data.journal[index].content" />
+          <q-input
+            class="row"
+            label="Content"
+            dense
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            autogrow
+            debounce="750"
+            v-model="campaign.data.journal[index].content"
+          />
         </div>
       </div>
     </q-drawer>
@@ -153,10 +179,17 @@
       <q-card>
         <q-card-section class="text-center text-bold bg-secondary"> Load Character Database </q-card-section>
 
-        <q-card-section class="text-subtitle"> Please bear in mind that this data will overwrite any existing versions of the same Campaigns </q-card-section>
+        <q-card-section class="text-subtitle">
+          Please bear in mind that this data will overwrite any existing versions of the same Campaigns
+        </q-card-section>
 
         <q-card-section>
-          <q-file v-model="fileToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
+          <q-file
+            v-model="fileToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select File"
+          />
         </q-card-section>
 
         <q-card-actions align="center">
@@ -173,13 +206,20 @@
         <q-card-section class="text-subtitle text-center">
           <q-icon name="warning" size="xl" color="warning" />
           <div class="text-justify">
-            Warning: loading user supplied asset data can be risky. Stargazer attempts to strip any potentially malicious code (i.e script tags in asset items) but cannot absolutely guarantee the
-            safety of any data loaded. Please check over the contents of the Asset file before loading it. And always ensure you only load data from sources you trust.
+            Warning: loading user supplied asset data can be risky. Stargazer attempts to strip any potentially
+            malicious code (i.e script tags in asset items) but cannot absolutely guarantee the safety of any data
+            loaded. Please check over the contents of the Asset file before loading it. And always ensure you only load
+            data from sources you trust.
           </div>
         </q-card-section>
 
         <q-card-section>
-          <q-file v-model="assetsToLoad" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" label="Select File" />
+          <q-file
+            v-model="assetsToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select File"
+          />
         </q-card-section>
 
         <q-card-actions align="center">

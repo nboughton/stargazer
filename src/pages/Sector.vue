@@ -55,7 +55,7 @@
     </div>
 
     <div class="column q-mt-md">
-      <div v-if="(!filters || filters.length === 0) && (!searchText || searchText.length === 0)">
+      <!--div v-if="(!filters || filters.length === 0) && (!searchText || searchText.length === 0)">
         <div v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells" :key="index">
           <cell
             class="q-mb-md"
@@ -64,8 +64,8 @@
             :cellID="index"
           />
         </div>
-      </div>
-      <div v-else>
+      </div-->
+      <div>
         <div v-for="(cell, cIndex) in campaign.data.sectors[config.data.sector].cells" :key="cIndex">
           <div v-for="(item, iIndex) in campaign.data.sectors[config.data.sector].cells[cIndex]" :key="iIndex">
             <!-- use custom search func to Show() items based on searchText params -->
@@ -231,7 +231,7 @@ import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';
 
 import IInput from 'src/components/IInput.vue';
-import Cell from 'src/components/Sector/Cell.vue';
+//import Cell from 'src/components/Sector/Cell.vue';
 import SStar from 'src/components/Sector/SStar.vue';
 import SPlanet from 'src/components/Sector/SPlanet.vue';
 import SSettlement from 'src/components/Sector/SSettlement.vue';
@@ -242,7 +242,7 @@ import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
 import HexMap from 'src/components/Sector/HexMap.vue';
 export default defineComponent({
-  components: { IInput, Cell, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap },
+  components: { IInput, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap },
   name: 'Sector',
   setup() {
     const campaign = useCampaign();
@@ -269,15 +269,6 @@ export default defineComponent({
       campaign.data.sectors.splice(d, 1);
     };
 
-    /*
-    const addCell = () => {
-      campaign.data.sectors[config.data.sector].cells.unshift(NewCell());
-    };
-    const removeCell = (index: number) => {
-      // campaign.unlinkCell(campaign.data.sectors[config.data.sector].cells[index].id);
-      campaign.data.sectors[config.data.sector].cells.splice(index, 1);
-    };
-*/
     // Search stuff
     enum fOpts { // values need to match the keys in ISectorCell
       Stars = 'stars',
