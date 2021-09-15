@@ -231,28 +231,29 @@
 
     <q-dialog v-model="showAbout">
       <q-card class="my-card">
-        <q-card-section class="row bg-secondary text-h6 justify-between">
-          <div class="col-grow">About</div>
+        <q-card-section class="row bg-secondary text-h5 justify-between">
+          <div class="col-grow sf-header">About</div>
           <q-btn class="col-shrink" flat dense icon="close" @click="showAbout = false" />
         </q-card-section>
 
         <q-card-section class="about-text text-justify">
           <div class="q-my-sm">
-            Ironsworn and Ironsworn Delve are &copy;
+            Ironsworn: Starforged is &copy;
             <a href="https://www.ironswornrpg.com">Shawn Tomkin</a>
           </div>
           <div class="q-my-sm">
-            Code &copy;
-            <a href="https://twitter.com/tiberianpun">Nick Boughton</a>, 2021
+            Iron Journal: Stargazer is &copy;
+            <a href="https://twitter.com/tiberianpun">Nick Boughton</a>
           </div>
           <div class="q-my-sm">
             If you like this app and want to say thanks you can
             <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a>
           </div>
           <div class="q-my-sm">
-            With extra thanks to
+            With many thanks to
             <a href="https://twitter.com/r_sek">rsek</a> for the amazing
-            <a href="https://github.com/rsek/datasworn">Datasworn repository</a>
+            <a href="https://github.com/rsek/dataforged">Dataforged repository</a> and all their contributions to
+            Stargazer's development. This app could not have been made without them.
           </div>
         </q-card-section>
       </q-card>
