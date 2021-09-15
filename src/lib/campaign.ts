@@ -2,6 +2,7 @@ import {
   EPClass,
   ERegion,
   ESLocation,
+  ESettPop,
   ICampaign,
   INPC,
   ICharacter,
@@ -241,6 +242,35 @@ export function NewCell(id: string, name?: string): ISectorCell {
     creatures: [],
     vaults: [],
   };
+}
+
+export function CellLabel(c: ISectorCell): string {
+  let label = c.name;
+  const v: { [index: string]: number } = {
+    [ESettPop.Few]: 1,
+    [ESettPop.Dozens]: 2,
+    [ESettPop.Hundreds]: 3,
+    [ESettPop.Thousands]: 4,
+    [ESettPop.TensOfThou]: 5,
+  };
+
+  if (c.npcs.length > 0) label = c.npcs[0].name;
+  if (c.creatures.length > 0) label = c.creatures[0].name;
+  if (c.vaults.length > 0) label = c.vaults[0].name;
+  if (c.derelicts.length > 0) label = c.derelicts[0].name;
+  if (c.ships.length > 0) label = c.ships[0].name;
+  if (c.planets.length > 0) label = c.planets[0].name;
+  if (c.stars.length > 0) label = c.stars[0].name;
+  if (c.settlements.length > 0) {
+    let largest = 0;
+    c.settlements.forEach((s) => {
+      if (v[s.population] && v[s.population] > largest) {
+        largest = v[s.population];
+        label = s.name;
+      }
+    });
+  }
+  return label;
 }
 
 export function NewSector(): ISector {

@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts">
+import { CellLabel } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';
@@ -64,7 +65,7 @@ export default defineComponent({
       Object.keys(campaign.data.sectors[sectorSelect.value].cells).forEach((c) => {
         if (campaign.data.sectors[sectorSelect.value].cells[c].stat === ECellStatus.Location) {
           opts.push({
-            label: campaign.data.sectors[sectorSelect.value].cells[c].name,
+            label: CellLabel(campaign.data.sectors[sectorSelect.value].cells[c]),
             value: c,
           });
         }

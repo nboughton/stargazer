@@ -59,14 +59,14 @@
 <script lang="ts">
 import { Gradient, Image, Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
-import { NewCell } from 'src/lib/campaign';
+import { CellLabel, NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
 import { icon } from 'src/lib/icons';
 import { colours } from 'src/lib/colours';
 import seedrandom from 'seedrandom';
-import { ECellStatus, ESectorOpts, ESettPop, ISearchResults, ISectorCell } from '../models';
+import { ECellStatus, ESectorOpts, ISearchResults, ISectorCell } from '../models';
 import Cell from './Cell.vue';
 export default defineComponent({
   components: { Cell },
@@ -109,7 +109,7 @@ export default defineComponent({
     let map: Svg;
     // All map magic happens here
     const locationFill = (c: ISectorCell): Gradient => {
-      const f = map.gradient('radial', function (add) {
+      const f = map.gradient('linear', function (add) {
         let count = 0;
         const addFn = (n: number, colour: string) => {
           add.stop(count, colour);
@@ -155,31 +155,7 @@ export default defineComponent({
     };
 
     const locationLabel = (c: ISectorCell, x: number, y: number) => {
-      let label = c.name;
-      const v: { [index: string]: number } = {
-        [ESettPop.Few]: 1,
-        [ESettPop.Dozens]: 2,
-        [ESettPop.Hundreds]: 3,
-        [ESettPop.Thousands]: 4,
-        [ESettPop.TensOfThou]: 5,
-      };
-
-      if (c.npcs.length > 0) label = c.npcs[0].name;
-      if (c.creatures.length > 0) label = c.creatures[0].name;
-      if (c.vaults.length > 0) label = c.vaults[0].name;
-      if (c.derelicts.length > 0) label = c.derelicts[0].name;
-      if (c.ships.length > 0) label = c.ships[0].name;
-      if (c.planets.length > 0) label = c.planets[0].name;
-      if (c.stars.length > 0) label = c.stars[0].name;
-      if (c.settlements.length > 0) {
-        let largest = 0;
-        c.settlements.forEach((s) => {
-          if (v[s.population] && v[s.population] > largest) {
-            largest = v[s.population];
-            label = s.name;
-          }
-        });
-      }
+      let label = CellLabel(c);
 
       const t = SVG()
         .text(label)
@@ -382,5 +358,5 @@ svg polygon.hex
   stroke-width: 1pt
 
 svg .search-label
-  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.5)
+  text-shadow: 1px 1px 2px red, 0 0 1em black, 0 0 0.2em blue
 </style>
