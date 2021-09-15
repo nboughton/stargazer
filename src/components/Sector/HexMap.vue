@@ -262,7 +262,7 @@ export default defineComponent({
               text
                 .addClass('search-label')
                 .addTo(map)
-                .font({ fill: 'lightgreen', family: 'Encode', size: mapConfig.hexSize * 0.7 });
+                .font({ fill: 'lightgreen', family: 'Encode', size: mapConfig.hexSize * 0.7, weight: 'bold' });
 
               text.move(x, y + mapConfig.hexSize * 2);
             }
@@ -358,5 +358,5 @@ svg polygon.hex
   stroke-width: 1pt
 
 svg .search-label, .label
-  text-shadow: 0px 0px 4px black, 0px 0px 4px black, 0px 0px 4px black, 0px 0px 4px black
+  text-shadow: 1px 1px 3px black
 </style>
