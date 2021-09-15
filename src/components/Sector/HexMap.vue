@@ -260,7 +260,10 @@ export default defineComponent({
       }
 
       // Move player ship to the front
-      map.findOne('.ship').front();
+      const ship = map.find('.ship');
+      if (ship.length > 0) {
+        ship[0].front();
+      }
       // Move all the text to the front
       map.find('.label').forEach((e) => e.front());
     };
