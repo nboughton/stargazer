@@ -58,18 +58,14 @@
       <!--Raw: {{ results }}-->
       <div v-if="results != {}">
         <div class="q-mb-lg" v-for="(sector, sID) in results" :key="sID">
-          <!--Sector: {{ campaign.data.sectors[+sID].name }}-->
           <div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div>
 
           <q-card class="q-mb-md" v-for="(cell, cID) in sector" :key="cID">
-            <!--Cell: {{ campaign.data.sectors[+sID].cells[cID].name }}-->
             <q-card-section class="row my-card sf-header text-h5"
               >Cell: {{ campaign.data.sectors[+sID].cells[cID].name }}</q-card-section
             >
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
-              <!--{{ oType }}: {{ itemIDs }}-->
               <div v-for="oID in itemIDs" :key="oID">
-                <!--{{ campaign.data.sectors[+sID].cells[cID][oType][+oID].name }}-->
                 <div v-if="oType === fOpts.Settlements">
                   <s-settlement v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>

@@ -1,8 +1,8 @@
 <template>
-  <router-view />
+  <router-view v-if="loaded" />
 </template>
 <script lang="ts">
-import { defineComponent, watch, onBeforeMount } from 'vue';
+import { defineComponent, watch, onBeforeMount, ref } from 'vue';
 import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
 import { useQuasar } from 'quasar';
@@ -11,6 +11,7 @@ import { useAssets } from './store/assets';
 export default defineComponent({
   name: 'App',
   setup() {
+    const loaded = ref(false);
     const $q = useQuasar();
     $q.dark.set(true);
 
@@ -20,6 +21,7 @@ export default defineComponent({
 
       const assets = useAssets();
       await assets.populateStore().catch((err) => console.log(err));
+      loaded.value = true;
     });
 
     const config = useConfig();
@@ -46,6 +48,10 @@ export default defineComponent({
       },
       { deep: true }
     );
+
+    return {
+      loaded,
+    };
   },
 });
 </script>
