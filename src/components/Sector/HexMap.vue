@@ -2,7 +2,7 @@
   <q-layout
     view="hHh lpR fFf"
     container
-    :style="{ width: `${mapConfig.width}px`, 'min-height': `${mapConfig.height}px` }"
+    :style="{ width: `${mapConfig.width}px`, 'min-height': `${mapConfig.height + 20}px` }"
   >
     <q-page-container>
       <q-page>
