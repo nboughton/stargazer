@@ -55,156 +55,55 @@
     </div>
 
     <div class="column q-mt-md">
-      <!--div v-if="(!filters || filters.length === 0) && (!searchText || searchText.length === 0)">
-        <div v-for="(cell, index) in campaign.data.sectors[config.data.sector].cells" :key="index">
-          <cell
-            class="q-mb-md"
-            v-if="cell.stat === ECellStatus.Location"
-            :sectorID="config.data.sector"
-            :cellID="index"
-          />
-        </div>
-      </div-->
-      <div>
-        <div v-for="(cell, cIndex) in campaign.data.sectors[config.data.sector].cells" :key="cIndex">
-          <div v-for="(item, iIndex) in campaign.data.sectors[config.data.sector].cells[cIndex]" :key="iIndex">
-            <!-- use custom search func to Show() items based on searchText params -->
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Stars))) &&
-                iIndex === fOpts.Stars &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].stars" :key="i">
-                <s-star
-                  v-if="show.star(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].stars[i]"
-                  controls
-                  @move="campaign.moveStar(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+      <!--Raw: {{ results }}-->
+      <div v-if="results != {}">
+        <div class="q-mb-lg" v-for="(sector, sID) in results" :key="sID">
+          <!--Sector: {{ campaign.data.sectors[+sID].name }}-->
+          <div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Planets))) &&
-                iIndex === fOpts.Planets &&
-                item.length > 0
-              "
+          <q-card class="q-mb-md" v-for="(cell, cID) in sector" :key="cID">
+            <!--Cell: {{ campaign.data.sectors[+sID].cells[cID].name }}-->
+            <q-card-section class="row my-card sf-header text-h5"
+              >Cell: {{ campaign.data.sectors[+sID].cells[cID].name }}</q-card-section
             >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].planets" :key="i">
-                <s-planet
-                  v-if="show.planet(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].planets[i]"
-                  controls
-                  @move="campaign.movePlanet(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+            <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
+              <!--{{ oType }}: {{ itemIDs }}-->
+              <div v-for="oID in itemIDs" :key="oID">
+                <!--{{ campaign.data.sectors[+sID].cells[cID][oType][+oID].name }}-->
+                <div v-if="oType === fOpts.Settlements">
+                  <s-settlement v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Settlements))) &&
-                iIndex === fOpts.Settlements &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].settlements" :key="i">
-                <s-settlement
-                  v-if="show.settlement(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].settlements[i]"
-                  controls
-                  @move="campaign.moveSettlement(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+                <div v-if="oType === fOpts.NPCs">
+                  <s-NPC v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Ships))) &&
-                iIndex === fOpts.Ships &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].ships" :key="i">
-                <s-starship
-                  v-if="show.ship(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].ships[i]"
-                  controls
-                  @move="campaign.moveStarship(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+                <div v-if="oType === fOpts.Stars">
+                  <s-star v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.NPCs))) &&
-                iIndex === fOpts.NPCs &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].npcs" :key="i">
-                <s-NPC
-                  v-if="show.npc(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].npcs[i]"
-                  controls
-                  @move="campaign.moveNPC(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+                <div v-if="oType === fOpts.Planets">
+                  <s-planet v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Creatures))) &&
-                iIndex === fOpts.Creatures &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].creatures" :key="i">
-                <s-creature
-                  v-if="show.creature(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].creatures[i]"
-                  controls
-                  @move="campaign.moveCreature(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+                <div v-if="oType === fOpts.Ships">
+                  <s-starship v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Derelicts))) &&
-                iIndex === fOpts.Derelicts &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].derelicts" :key="i">
-                <s-derelict
-                  v-if="show.derelict(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].derelicts[i]"
-                  controls
-                  @move="campaign.moveDerelict(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
-              </div>
-            </div>
+                <div v-if="oType === fOpts.Derelicts">
+                  <s-derelict v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
 
-            <div
-              v-if="
-                ((searchText && !applyFilters) || (applyFilters && filters.includes(fOpts.Vaults))) &&
-                iIndex === fOpts.Vaults &&
-                item.length > 0
-              "
-            >
-              <div v-for="(o, i) in campaign.data.sectors[config.data.sector].cells[cIndex].vaults" :key="i">
-                <s-vault
-                  v-if="show.vault(o)"
-                  v-model="campaign.data.sectors[config.data.sector].cells[cIndex].vaults[i]"
-                  controls
-                  @move="campaign.moveVault(i, { sector: config.data.sector, cell: cIndex }, $event)"
-                />
+                <div v-if="oType === fOpts.Vaults">
+                  <s-vault v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
+
+                <div v-if="oType === fOpts.Creatures">
+                  <s-creature v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                </div>
               </div>
-            </div>
-          </div>
+            </q-card-section>
+          </q-card>
         </div>
       </div>
     </div>
@@ -224,6 +123,7 @@ import {
   IStar,
   IStarship,
   IVault,
+  ISearchResults,
 } from 'src/components/models';
 import { NewSector } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
@@ -231,18 +131,21 @@ import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';
 
 import IInput from 'src/components/IInput.vue';
-//import Cell from 'src/components/Sector/Cell.vue';
+/*
+import Cell from 'src/components/Sector/Cell.vue';
+*/
+import SSettlement from 'src/components/Sector/SSettlement.vue';
+import SNPC from 'src/components/Sector/SNPC.vue';
 import SStar from 'src/components/Sector/SStar.vue';
 import SPlanet from 'src/components/Sector/SPlanet.vue';
-import SSettlement from 'src/components/Sector/SSettlement.vue';
 import SStarship from 'src/components/Sector/SStarship.vue';
-import SNPC from 'src/components/Sector/SNPC.vue';
-import SCreature from 'src/components/Sector/SCreature.vue';
 import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
+import SCreature from 'src/components/Sector/SCreature.vue';
+
 import HexMap from 'src/components/Sector/HexMap.vue';
 export default defineComponent({
-  components: { IInput, SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, HexMap },
+  components: { IInput, HexMap, SSettlement, SNPC, SStar, SPlanet, SStarship, SDerelict, SCreature, SVault },
   name: 'Sector',
   setup() {
     const campaign = useCampaign();
@@ -291,30 +194,123 @@ export default defineComponent({
       return RegExp(searchText.value, 'i').test(s);
     };
 
+    const results = computed((): ISearchResults => {
+      const res = <ISearchResults>{};
+      const ensureData = (sector: number, cell: string, oType: string) => {
+        if (!res[sector]) res[sector] = {};
+        if (!res[sector][cell]) res[sector][cell] = {};
+        if (!res[sector][cell][oType]) res[sector][cell][oType] = [];
+      };
+
+      // Do nothing if filters and search text are empty
+      if (!searchText.value && (!filters.value || filters.value.length === 0)) return res;
+
+      // Construct results
+      campaign.data.sectors.forEach((sector, sectorI) => {
+        Object.keys(sector.cells).forEach((cellI) => {
+          Object.values(fOpts).forEach((oType) => {
+            for (let i = 0; i < sector.cells[cellI][oType].length; i++) {
+              if (sector.cells[cellI].stat === ECellStatus.Location) {
+                switch (oType) {
+                  case fOpts.Stars:
+                    if (show.star(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Planets:
+                    if (show.planet(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Settlements:
+                    if (show.settlement(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Ships:
+                    if (show.ship(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.NPCs:
+                    if (show.npc(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Creatures:
+                    if (show.creature(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Derelicts:
+                    if (show.derelict(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  case fOpts.Vaults:
+                    if (show.vault(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
+                  default:
+                    break;
+                }
+              }
+            }
+          });
+        });
+      });
+
+      return res;
+    });
+
     const show = {
       star: (o: IStar): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Stars)) return false;
         return t(o.name) || t(o.description);
       },
       planet: (o: IPlanet): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Planets)) return false;
         return t(o.name) || t(o.type) || t(o.description) || t(o.notes);
       },
       settlement: (o: ISettlement): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Settlements)) return false;
         return t(o.name) || t(o.notes);
       },
       ship: (o: IStarship): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Ships)) return false;
         return t(o.name) || t(o.notes);
       },
       npc: (o: INPC): boolean => {
-        if (t('bond') && o.bond) return true;
-        return t(o.name) || t(o.role) || t(o.notes);
+        if (applyFilters.value && !filters.value.includes(fOpts.NPCs)) return false;
+        return (t('bond') && o.bond) || t(o.name) || t(o.role) || t(o.notes);
       },
       creature: (o: ICreature): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Creatures)) return false;
         return t(o.name) || t(o.environment) || t(o.notes);
       },
       derelict: (o: IDerelict): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Derelicts)) return false;
         return t(o.name) || t(o.type) || t(o.notes);
       },
       vault: (o: IVault): boolean => {
+        if (applyFilters.value && !filters.value.includes(fOpts.Vaults)) return false;
         return t(o.name) || t(o.notes);
       },
     };
@@ -337,7 +333,7 @@ export default defineComponent({
       filters,
       applyFilters,
       fOpts,
-      show,
+      results,
     };
   },
 });

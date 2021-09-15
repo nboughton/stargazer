@@ -18,7 +18,14 @@
     <q-dialog v-model="showDialog">
       <q-card class="my-card">
         <q-card-section class="row justify-between items-center bg-secondary text-h5">
-          <span class="col sf-header">Cell Details</span>
+          <q-input
+            class="col"
+            label="Cell Name"
+            v-model="campaign.data.sectors[config.data.sector].cells[selectedID].name"
+            dense
+            borderless
+            debounce="750"
+          />
           <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
         </q-card-section>
 
@@ -55,15 +62,21 @@ import { extendHex, defineGrid } from 'honeycomb-grid';
 import { NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { defineComponent, onMounted, ref, watch } from 'vue';
+import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
 import { icon } from 'src/lib/icons';
 import seedrandom from 'seedrandom';
-import { ECellStatus, ESettPop, ISectorCell } from '../models';
+import { ECellStatus, ESettPop, ISearchResults, ISectorCell } from '../models';
 import Cell from './Cell.vue';
 export default defineComponent({
   components: { Cell },
   name: 'HexMap',
-  setup() {
+  props: {
+    searchResults: {
+      type: Object as PropType<ISearchResults>,
+      default: <ISearchResults>{},
+    },
+  },
+  setup(props) {
     // Grab stores
     const campaign = useCampaign();
     const config = useConfig();
@@ -122,7 +135,7 @@ export default defineComponent({
       if (c.ships.length > 0) path = icon.starship();
       if (c.settlements.length > 0) path = icon.settlement();
       if (c.planets.length > 0) path = icon.planet(c.planets[0].type);
-      if (c.stars.length > 0) path = icon.stars();
+      if (c.stars.length > 0) path = icon.star();
 
       const i = SVG()
         .image(path.replace('img:', ''))
@@ -214,38 +227,24 @@ export default defineComponent({
       });
 
       // Render a star field
-      // We're going to use procgen by hashing the sector name:region strings and using
-      // the ASCII codes of each character to create a psuedorandom seed
-
       // Get a pseudorandom generator to produce consistent results
       const random = seedrandom(
         campaign.data.sectors[config.data.sector].name + ':' + campaign.data.sectors[config.data.sector].region
       );
 
-      const star = SVG().polygon('50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40');
+      // const star = SVG().polygon('50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40');
+      const star = SVG().circle('10');
       for (let i = 0; i < Math.floor(grid.length * 1.5); i++) {
-        const hw = Math.floor(random() * (mapConfig.hexSize / 1.8));
+        const hw = Math.floor(random() * (mapConfig.hexSize / 4));
         const x = Math.floor(random() * mapConfig.width - 1);
         const y = Math.floor(random() * mapConfig.height - 1);
 
-        /*
-        const r = Math.floor(random() * 128) + 100;
-        const g = Math.floor(random() * 128) + 50;
-        const b = Math.floor(random() * 128) + 100;
-        */
+        const r = Math.floor(random() * 64) + 194;
+        const g = Math.floor(random() * 64) + 194;
+        const b = Math.floor(random() * 64) + 194;
 
         const n = star.clone();
-        n.fill(
-          /*map.gradient('radial', function (add) {
-            add.stop(0, '#ddd');
-            add.stop(1, `rgb(${r}, ${g}, ${b})`);
-          })*/
-          '#ccc'
-        )
-          .size(hw, hw)
-          .addTo(map)
-          .move(x, y)
-          .back();
+        n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(map).move(x, y).back();
 
         if (mapConfig.animations) {
           if (i % 10 == 0) {
@@ -254,6 +253,10 @@ export default defineComponent({
               .loop();
           }
         }
+      }
+
+      // Render search results
+      if (props.searchResults != {}) {
       }
 
       // Move player ship to the front

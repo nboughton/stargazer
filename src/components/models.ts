@@ -265,6 +265,15 @@ export enum ECellStatus {
   Location = 'location',
 }
 
+// SearchResults as follows:
+// [sector][cell][objectType]number[] <- object indices
+export interface ISearchResults {
+  [index: number]: {
+    [index: string]: {
+      [index: string]: number[];
+    };
+  };
+}
 export interface ISectorCell {
   id: string;
   stat: ECellStatus;

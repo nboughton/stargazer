@@ -71,6 +71,31 @@ export const useCampaign = defineStore({
       this.data.sectors[from.sector].cells[from.cell].vaults.splice(index, 1);
     },
 
+    removeStar(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].stars.splice(index, 1);
+    },
+    removePlanet(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].planets.splice(index, 1);
+    },
+    removeSettlement(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].settlements.splice(index, 1);
+    },
+    removeShip(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].ships.splice(index, 1);
+    },
+    removeNPC(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].npcs.splice(index, 1);
+    },
+    removeCreature(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].creatures.splice(index, 1);
+    },
+    removeDerelict(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].derelicts.splice(index, 1);
+    },
+    removeVault(sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell].vaults.splice(index, 1);
+    },
+
     async populateStore() {
       const config = useConfig();
       await config.populateStore();
