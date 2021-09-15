@@ -300,7 +300,7 @@ export default defineComponent({
       // Get the SVG hex that was clicked on
       const hex = grid.get(Grid.pointToHex(ev.offsetX, ev.offsetY));
 
-      // Derive its ID and get the actual object
+      // Derive its ID
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const id = h(hex!.x, hex!.y);
 
@@ -330,7 +330,7 @@ export default defineComponent({
       () => renderMap(),
       { deep: true }
     );
-    // Watch the cells for this sector and re-render on data change
+
     watch(
       () => campaign.data.sectors[config.data.sector].cells,
       () => renderMap(),
@@ -357,6 +357,6 @@ svg polygon.hex
   stroke: $secondary
   stroke-width: 1pt
 
-svg .search-label
-  text-shadow: 1px 1px 2px red, 0 0 1em black, 0 0 0.2em blue
+svg .search-label, .label
+  text-shadow: 0px 0px 4px black, 0px 0px 4px black, 0px 0px 4px black, 0px 0px 4px black
 </style>

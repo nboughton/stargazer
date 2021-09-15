@@ -62,7 +62,7 @@
 
           <q-card class="q-mb-md" v-for="(cell, cID) in sector" :key="cID">
             <q-card-section class="row my-card sf-header text-h5"
-              >Cell: {{ campaign.data.sectors[+sID].cells[cID].name }}</q-card-section
+              >Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]) }}</q-card-section
             >
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
@@ -125,6 +125,7 @@ import {
 import { NewSector } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
+import { CellLabel } from 'src/lib/campaign';
 import { defineComponent, computed, ref } from 'vue';
 
 import IInput from 'src/components/IInput.vue';
@@ -308,6 +309,7 @@ export default defineComponent({
       config,
       ERegion,
       ECellStatus,
+      CellLabel,
 
       sectorOpts,
 
