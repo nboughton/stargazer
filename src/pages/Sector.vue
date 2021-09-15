@@ -35,7 +35,7 @@
     </div>
 
     <div class="row justify-center q-mb-sm">
-      <hex-map />
+      <hex-map :searchResults="results" />
     </div>
 
     <div class="row q-gutter-sm q-mb-sm">
@@ -45,7 +45,7 @@
         class="col"
         label="Filters"
         v-model="filters"
-        :options="Object.values(fOpts)"
+        :options="Object.values(ESectorOpts)"
         multiple
         clearable
         standout="bg-blue-grey text-white"
@@ -66,35 +66,35 @@
             >
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
-                <div v-if="oType === fOpts.Settlements">
+                <div v-if="oType === ESectorOpts.Settlements">
                   <s-settlement v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.NPCs">
+                <div v-if="oType === ESectorOpts.NPCs">
                   <s-NPC v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Stars">
+                <div v-if="oType === ESectorOpts.Stars">
                   <s-star v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Planets">
+                <div v-if="oType === ESectorOpts.Planets">
                   <s-planet v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Ships">
+                <div v-if="oType === ESectorOpts.Ships">
                   <s-starship v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Derelicts">
+                <div v-if="oType === ESectorOpts.Derelicts">
                   <s-derelict v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Vaults">
+                <div v-if="oType === ESectorOpts.Vaults">
                   <s-vault v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
 
-                <div v-if="oType === fOpts.Creatures">
+                <div v-if="oType === ESectorOpts.Creatures">
                   <s-creature v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
                 </div>
               </div>
@@ -110,6 +110,7 @@
 import {
   ERegion,
   ECellStatus,
+  ESectorOpts,
   ICreature,
   IDerelict,
   INPC,
@@ -169,18 +170,9 @@ export default defineComponent({
     };
 
     // Search stuff
-    enum fOpts { // values need to match the keys in ISectorCell
-      Stars = 'stars',
-      Planets = 'planets',
-      Settlements = 'settlements',
-      Ships = 'ships',
-      NPCs = 'npcs',
-      Creatures = 'creatures',
-      Derelicts = 'derelicts',
-      Vaults = 'vaults',
-    }
+
     const searchText = ref('');
-    const filters = ref([] as fOpts[]);
+    const filters = ref([] as ESectorOpts[]);
     const applyFilters = computed((): boolean => {
       return filters.value != null && filters.value.length > 0;
     });
@@ -204,60 +196,60 @@ export default defineComponent({
       // Construct results
       campaign.data.sectors.forEach((sector, sectorI) => {
         Object.keys(sector.cells).forEach((cellI) => {
-          Object.values(fOpts).forEach((oType) => {
+          Object.values(ESectorOpts).forEach((oType) => {
             for (let i = 0; i < sector.cells[cellI][oType].length; i++) {
               if (sector.cells[cellI].stat === ECellStatus.Location) {
                 switch (oType) {
-                  case fOpts.Stars:
+                  case ESectorOpts.Stars:
                     if (show.star(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Planets:
+                  case ESectorOpts.Planets:
                     if (show.planet(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Settlements:
+                  case ESectorOpts.Settlements:
                     if (show.settlement(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Ships:
+                  case ESectorOpts.Ships:
                     if (show.ship(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.NPCs:
+                  case ESectorOpts.NPCs:
                     if (show.npc(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Creatures:
+                  case ESectorOpts.Creatures:
                     if (show.creature(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Derelicts:
+                  case ESectorOpts.Derelicts:
                     if (show.derelict(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
                     }
                     break;
 
-                  case fOpts.Vaults:
+                  case ESectorOpts.Vaults:
                     if (show.vault(sector.cells[cellI][oType][i])) {
                       ensureData(sectorI, cellI, oType);
                       res[sectorI][cellI][oType].push(i);
@@ -278,35 +270,35 @@ export default defineComponent({
 
     const show = {
       star: (o: IStar): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Stars)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Stars)) return false;
         return t(o.name) || t(o.description);
       },
       planet: (o: IPlanet): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Planets)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Planets)) return false;
         return t(o.name) || t(o.type) || t(o.description) || t(o.notes);
       },
       settlement: (o: ISettlement): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Settlements)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Settlements)) return false;
         return t(o.name) || t(o.notes);
       },
       ship: (o: IStarship): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Ships)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Ships)) return false;
         return t(o.name) || t(o.notes);
       },
       npc: (o: INPC): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.NPCs)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.NPCs)) return false;
         return (t('bond') && o.bond) || t(o.name) || t(o.role) || t(o.notes);
       },
       creature: (o: ICreature): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Creatures)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Creatures)) return false;
         return t(o.name) || t(o.environment) || t(o.notes);
       },
       derelict: (o: IDerelict): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Derelicts)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Derelicts)) return false;
         return t(o.name) || t(o.type) || t(o.notes);
       },
       vault: (o: IVault): boolean => {
-        if (applyFilters.value && !filters.value.includes(fOpts.Vaults)) return false;
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Vaults)) return false;
         return t(o.name) || t(o.notes);
       },
     };
@@ -328,7 +320,7 @@ export default defineComponent({
       searchText,
       filters,
       applyFilters,
-      fOpts,
+      ESectorOpts,
       results,
     };
   },

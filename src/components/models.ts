@@ -111,6 +111,17 @@ export enum ESectorItem {
   Derelict = 'Derelict',
   Vault = 'Vault',
 }
+
+export enum ESectorOpts { // values need to match the keys in ISectorCell
+  Stars = 'stars',
+  Planets = 'planets',
+  Settlements = 'settlements',
+  Ships = 'ships',
+  NPCs = 'npcs',
+  Creatures = 'creatures',
+  Derelicts = 'derelicts',
+  Vaults = 'vaults',
+}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;

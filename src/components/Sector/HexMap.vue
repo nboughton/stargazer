@@ -64,8 +64,9 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
 import { icon } from 'src/lib/icons';
+import { colours } from 'src/lib/colours';
 import seedrandom from 'seedrandom';
-import { ECellStatus, ESettPop, ISearchResults, ISectorCell } from '../models';
+import { ECellStatus, ESectorOpts, ESettPop, ISearchResults, ISectorCell } from '../models';
 import Cell from './Cell.vue';
 export default defineComponent({
   components: { Cell },
@@ -114,14 +115,14 @@ export default defineComponent({
           add.stop(count, colour);
           count += n + 1;
         };
-        if (c.stars.length > 0) addFn(c.stars.length, '#6d72a4ff');
-        if (c.planets.length > 0) addFn(c.planets.length, '#7368b0ff');
-        if (c.settlements.length > 0) addFn(c.settlements.length, '#9d5a9fff');
-        if (c.ships.length > 0) addFn(c.ships.length, '#ad6398ff');
-        if (c.derelicts.length > 0) addFn(c.derelicts.length, '#427a99ff');
-        if (c.vaults.length > 0) addFn(c.vaults.length, '#427074ff');
-        if (c.creatures.length > 0) addFn(c.creatures.length, '#3c8ab5ff');
-        if (c.npcs.length > 0) add.stop(c.npcs.length, '#9e708fff');
+        if (c.stars.length > 0) addFn(c.stars.length, colours[ESectorOpts.Stars]);
+        if (c.planets.length > 0) addFn(c.planets.length, colours[ESectorOpts.Planets]);
+        if (c.settlements.length > 0) addFn(c.settlements.length, colours[ESectorOpts.Settlements]);
+        if (c.ships.length > 0) addFn(c.ships.length, colours[ESectorOpts.Ships]);
+        if (c.derelicts.length > 0) addFn(c.derelicts.length, colours[ESectorOpts.Derelicts]);
+        if (c.vaults.length > 0) addFn(c.vaults.length, colours[ESectorOpts.Vaults]);
+        if (c.creatures.length > 0) addFn(c.creatures.length, colours[ESectorOpts.Creatures]);
+        if (c.npcs.length > 0) add.stop(c.npcs.length, colours[ESectorOpts.NPCs]);
       });
       return f;
     };
@@ -163,6 +164,13 @@ export default defineComponent({
         [ESettPop.TensOfThou]: 5,
       };
 
+      if (c.npcs.length > 0) label = c.npcs[0].name;
+      if (c.creatures.length > 0) label = c.creatures[0].name;
+      if (c.vaults.length > 0) label = c.vaults[0].name;
+      if (c.derelicts.length > 0) label = c.derelicts[0].name;
+      if (c.ships.length > 0) label = c.ships[0].name;
+      if (c.planets.length > 0) label = c.planets[0].name;
+      if (c.stars.length > 0) label = c.stars[0].name;
       if (c.settlements.length > 0) {
         let largest = 0;
         c.settlements.forEach((s) => {
@@ -179,52 +187,13 @@ export default defineComponent({
         .addTo(map)
         .font({ fill: '#fff', family: 'Encode', size: mapConfig.hexSize * 0.9 });
 
-      t.move(x - mapConfig.hexSize / 2, y + mapConfig.hexSize * 2);
+      t.move(x + mapConfig.hexSize * 2, y + mapConfig.hexSize / 2.4);
     };
 
     let playerShip: Image; // Declare this out here so it can be manipulated in a watch func
 
     const renderMap = () => {
       map.clear();
-      grid.forEach((hex) => {
-        const { x, y } = hex.toPoint();
-        const id = h(hex.x, hex.y);
-        const cell = map.polygon(points).addClass('hex').addClass(id);
-        cell.translate(x, y);
-
-        // Render location data
-        if (campaign.data.sectors[config.data.sector].cells[id]) {
-          const c = campaign.data.sectors[config.data.sector].cells[id];
-          cell.addClass(c.stat);
-          switch (c.stat) {
-            case ECellStatus.Location:
-              cell.fill(locationFill(c));
-              locationIcon(c, x, y);
-              locationLabel(c, x, y);
-              break;
-
-            case ECellStatus.Passage:
-              cell.fill('#393B61');
-              break;
-
-            default:
-              cell.fill('none');
-              break;
-          }
-        } else {
-          cell.fill('none');
-        }
-
-        if (campaign.data.character.location === id) {
-          playerShip = SVG().image(icon.player().replace('img:', ''));
-
-          playerShip
-            .addClass('ship')
-            .size(mapConfig.hexSize, mapConfig.hexSize)
-            .addTo(map)
-            .move(x + mapConfig.hexSize, y);
-        }
-      });
 
       // Render a star field
       // Get a pseudorandom generator to produce consistent results
@@ -255,9 +224,75 @@ export default defineComponent({
         }
       }
 
-      // Render search results
-      if (props.searchResults != {}) {
-      }
+      // Place hexes and content
+      grid.forEach((hex) => {
+        const { x, y } = hex.toPoint();
+        const id = h(hex.x, hex.y);
+        const cell = map.polygon(points).addClass('hex').addClass(id);
+        cell.translate(x, y);
+
+        // Render location data
+        if (campaign.data.sectors[config.data.sector].cells[id]) {
+          const c = campaign.data.sectors[config.data.sector].cells[id];
+          cell.addClass(c.stat);
+          switch (c.stat) {
+            case ECellStatus.Location:
+              cell.fill(locationFill(c));
+              locationIcon(c, x, y);
+              locationLabel(c, x, y);
+              break;
+
+            case ECellStatus.Passage:
+              cell.fill('#393B61');
+              break;
+
+            default:
+              cell.fill('none');
+              break;
+          }
+        } else {
+          cell.fill('none');
+        }
+
+        // Add player ship
+        if (campaign.data.character.location === id) {
+          playerShip = SVG().image(icon.player().replace('img:', ''));
+
+          playerShip
+            .addClass('ship')
+            .size(mapConfig.hexSize, mapConfig.hexSize)
+            .addTo(map)
+            .move(x + mapConfig.hexSize, y);
+        }
+
+        // Add search results
+        if (props.searchResults != {} && props.searchResults[config.data.sector]) {
+          if (props.searchResults[config.data.sector][id]) {
+            const cell = props.searchResults[config.data.sector][id];
+            const hex = map.find(`.${id}`);
+
+            if (hex.length > 0) {
+              const text = SVG().text(function (add) {
+                Object.keys(cell).forEach((oType) => {
+                  cell[oType].forEach((i) => {
+                    add
+                      .tspan(campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i].name)
+                      .fill(colours[oType])
+                      .newLine();
+                  });
+                });
+              });
+
+              text
+                .addClass('search-label')
+                .addTo(map)
+                .font({ fill: 'lightgreen', family: 'Encode', size: mapConfig.hexSize * 0.7 });
+
+              text.move(x, y + mapConfig.hexSize * 2);
+            }
+          }
+        }
+      });
 
       // Move player ship to the front
       const ship = map.find('.ship');
@@ -266,6 +301,7 @@ export default defineComponent({
       }
       // Move all the text to the front
       map.find('.label').forEach((e) => e.front());
+      map.find('.search-label').forEach((e) => e.front());
     };
 
     watch(
@@ -313,6 +349,11 @@ export default defineComponent({
       showDialog.value = true;
     };
 
+    watch(
+      () => props.searchResults,
+      () => renderMap(),
+      { deep: true }
+    );
     // Watch the cells for this sector and re-render on data change
     watch(
       () => campaign.data.sectors[config.data.sector].cells,
@@ -339,4 +380,7 @@ export default defineComponent({
 svg polygon.hex
   stroke: $secondary
   stroke-width: 1pt
+
+svg .search-label
+  text-shadow: 0px 0px 1px rgba(255, 255, 255, 0.5)
 </style>
