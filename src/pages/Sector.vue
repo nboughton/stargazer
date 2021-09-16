@@ -247,7 +247,7 @@ export default defineComponent({
       };
 
       // Do nothing if filters and search text are empty
-      if (!searchText.value && (!filters.value || filters.value.length === 0)) return res;
+      // if (!searchText.value && (!filters.value || filters.value.length === 0)) return res;
 
       // Construct results
       campaign.data.sectors.forEach((sector, sectorI) => {
