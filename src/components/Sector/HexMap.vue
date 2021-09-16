@@ -253,6 +253,7 @@ export default defineComponent({
                   cell[oType].forEach((i) => {
                     add
                       .tspan(campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i].name)
+                      .stroke({ color: 'black', width: 1 })
                       .fill(colours[oType])
                       .newLine();
                   });
@@ -358,5 +359,5 @@ svg polygon.hex
   stroke-width: 1pt
 
 svg .search-label, .label
-  text-shadow: 1px 1px 3px black
+  paint-order: stroke fill
 </style>
