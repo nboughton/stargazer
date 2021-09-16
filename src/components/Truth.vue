@@ -55,7 +55,7 @@ export default defineComponent({
     const opts = (): ISelectOpt[] => {
       const out: ISelectOpt[] = [];
       SFTruths[props.id].forEach((t) => {
-        const opt = { label: `${t.summary.substring(0, 50)}...`, value: t.text };
+        const opt = { label: `${t.summary.substring(0, 30)}...`, value: t.text };
         out.push(opt);
       });
       return out;

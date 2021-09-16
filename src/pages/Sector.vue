@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- content -->
-    <div class="row q-gutter-sm q-mb-md">
+    <div class="row q-gutter-sm q-mb-md" v-if="$q.screen.gt.xs">
       <q-btn class="col-shrink" flat dense icon="add_circle" @click="addSector" />
       <q-select
         class="col"
@@ -33,12 +33,48 @@
       />
       <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
     </div>
+    <div v-else>
+      <div class="row q-mb-sm">
+        <q-btn class="col-shrink" flat dense icon="add_circle" @click="addSector" />
+        <q-select
+          class="col"
+          label="Sector"
+          v-model="config.data.sector"
+          :options="sectorOpts"
+          map-options
+          emit-value
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
+        <q-btn
+          v-if="campaign.data.sectors.length > 1 && config.data.edit"
+          class="col-shrink"
+          flat
+          dense
+          icon="delete"
+          @click="removeSector"
+        />
+      </div>
+      <div class="row q-gutter-sm q-mb-sm">
+        <q-select
+          class="col"
+          label="Region"
+          v-model="campaign.data.sectors[config.data.sector].region"
+          :options="Object.values(ERegion)"
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
+        <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
+      </div>
+    </div>
 
     <div class="row justify-center q-mb-sm">
       <hex-map :searchResults="results" />
     </div>
 
-    <div class="row q-gutter-sm q-mb-sm">
+    <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
       <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
       <i-input class="col" label="Search" v-model="searchText" clearable />
       <q-select
@@ -52,6 +88,25 @@
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
+    </div>
+    <div v-else>
+      <div class="row q-mb-sm">
+        <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
+      </div>
+      <div class="row q-gutter-sm q-mb-sm">
+        <i-input class="col" label="Search" v-model="searchText" clearable />
+        <q-select
+          class="col"
+          label="Filters"
+          v-model="filters"
+          :options="Object.values(ESectorOpts)"
+          multiple
+          clearable
+          standout="bg-blue-grey text-white"
+          :input-style="{ color: '#ECEFF4' }"
+          dense
+        />
+      </div>
     </div>
 
     <div class="column q-mt-md">
