@@ -34,12 +34,19 @@ export const updateResults = (r: IRollData): IRollData => {
     r.action.color = 'text-positive';
     r.challenge.die1.color = 'text-positive';
     r.challenge.die2.color = 'text-positive';
-  } else if ((r.action.score <= r.challenge.die1.roll && r.action.score > r.challenge.die2.roll) || (r.action.score <= r.challenge.die2.roll && r.action.score > r.challenge.die1.roll)) {
+  } else if (
+    (r.action.score <= r.challenge.die1.roll && r.action.score > r.challenge.die2.roll) ||
+    (r.action.score <= r.challenge.die2.roll && r.action.score > r.challenge.die1.roll)
+  ) {
     r.result = 'Weak Hit';
     r.action.color = 'text-warning';
-    r.action.score <= r.challenge.die1.roll ? (r.challenge.die1.color = 'text-negative') : (r.challenge.die1.color = 'text-positive');
+    r.action.score <= r.challenge.die1.roll
+      ? (r.challenge.die1.color = 'text-negative')
+      : (r.challenge.die1.color = 'text-positive');
 
-    r.action.score <= r.challenge.die2.roll ? (r.challenge.die2.color = 'text-negative') : (r.challenge.die2.color = 'text-positive');
+    r.action.score <= r.challenge.die2.roll
+      ? (r.challenge.die2.color = 'text-negative')
+      : (r.challenge.die2.color = 'text-positive');
   } else {
     r.result = 'Miss';
     r.action.color = 'text-negative';
@@ -94,6 +101,10 @@ export const tableRoll = (oracle: ISFTable): string => {
 
   if (out === ECoreCombo.ActTheme) out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
   if (out === ECoreCombo.DescFoc) out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
-  if (/roll twice/i.test(out)) out = `${tableRoll(oracle)} ${tableRoll(oracle)}`;
+  if (/roll twice/i.test(out)) {
+    while (/roll twice/i.test(out)) {
+      out = `${tableRoll(oracle)}, ${tableRoll(oracle)}`;
+    }
+  }
   return out;
 };

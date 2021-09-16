@@ -39,6 +39,10 @@
     <q-expansion-item header-class="text-h6" label="Location Theme">
       <o-location-theme />
     </q-expansion-item>
+
+    <q-expansion-item header-class="text-h6" label="Misc">
+      <o-misc />
+    </q-expansion-item>
   </div>
 </template>
 
@@ -55,6 +59,7 @@ import OCore from './OCore.vue';
 import OVault from './OVault.vue';
 import ONPC from './ONPC.vue';
 import OLocationTheme from './OLocationTheme.vue';
+import OMisc from './OMisc.vue';
 
 export default defineComponent({
   name: 'Oracles',
@@ -69,6 +74,7 @@ export default defineComponent({
     OVault,
     ONPC,
     OLocationTheme,
+    OMisc,
   },
 });
 </script>

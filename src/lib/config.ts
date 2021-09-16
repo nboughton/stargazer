@@ -7,5 +7,12 @@ export function NewConfig(): IConfig {
     sector: 0,
     index: [],
     edit: true,
+    map: {
+      height: 400,
+      width: 800,
+      hexSize: 20,
+      animations: false,
+      starfield: true,
+    },
   };
 }

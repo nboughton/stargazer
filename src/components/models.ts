@@ -140,6 +140,13 @@ export interface IConfig {
   sector: number;
   index: IIndexItem[];
   edit: boolean;
+  map: {
+    height: number;
+    width: number;
+    hexSize: number;
+    animations: boolean;
+    starfield: boolean;
+  };
 }
 
 // Stats and Tracks

@@ -2,62 +2,66 @@
   <q-layout
     view="hHh lpR fFf"
     container
-    :style="{ width: `${mapConfig.width}px`, 'min-height': `${mapConfig.height + 20}px` }"
+    :style="{ width: `${config.data.map.width}px`, 'min-height': `${config.data.map.height + 20}px` }"
   >
     <q-page-container>
       <q-page>
         <div
           class="hexmap"
           ref="hexmap"
-          :style="{ width: `${mapConfig.width}px`, height: `${mapConfig.height}px` }"
+          :style="{ width: `${config.data.map.width}px`, height: `${config.data.map.height}px` }"
           @click="click($event)"
         ></div>
       </q-page>
     </q-page-container>
-
-    <q-dialog v-model="showDialog">
-      <q-card class="my-card">
-        <q-card-section class="row justify-between items-center bg-secondary text-h5">
-          <q-input
-            class="col"
-            label="Cell Name"
-            v-model="campaign.data.sectors[config.data.sector].cells[selectedID].name"
-            dense
-            borderless
-            debounce="750"
-          />
-          <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
-        </q-card-section>
-
-        <q-card-section>
-          <div class="row q-gutter-sm items-center">
-            <q-select
-              class="col-grow"
-              label="Set cell status"
-              hint="Set to 'location' to save Oracle generated content and enable search for this cell"
-              v-model="campaign.data.sectors[config.data.sector].cells[selectedID].stat"
-              :options="Object.values(ECellStatus)"
-            />
-            <q-btn
-              class="col-shrink"
-              dense
-              outline
-              label="Go here"
-              @click="campaign.data.character.location = selectedID"
-            />
-          </div>
-        </q-card-section>
-
-        <q-card-section>
-          <cell :sectorID="config.data.sector" :cellID="selectedID" />
-        </q-card-section>
-      </q-card>
-    </q-dialog>
   </q-layout>
+  <div class="row items-center">
+    <q-toggle label="Stars" v-model="config.data.map.starfield" />
+    <q-toggle label="Animations" v-model="config.data.map.animations" />
+  </div>
+
+  <q-dialog v-model="showDialog">
+    <q-card class="my-card">
+      <q-card-section class="row justify-between items-center bg-secondary text-h5">
+        <q-input
+          class="col"
+          label="Cell Name"
+          v-model="campaign.data.sectors[config.data.sector].cells[selectedID].name"
+          dense
+          borderless
+          debounce="750"
+        />
+        <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
+      </q-card-section>
+
+      <q-card-section>
+        <div class="row q-gutter-sm items-center">
+          <q-select
+            class="col-grow"
+            label="Set cell status"
+            hint="Set to 'location' to save Oracle generated content and enable search for this cell"
+            v-model="campaign.data.sectors[config.data.sector].cells[selectedID].stat"
+            :options="Object.values(ECellStatus)"
+          />
+          <q-btn
+            class="col-shrink"
+            dense
+            outline
+            label="Go here"
+            @click="campaign.data.character.location = selectedID"
+          />
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        <cell :sectorID="config.data.sector" :cellID="selectedID" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script lang="ts">
-import { Gradient, Image, Svg, SVG } from '@svgdotjs/svg.js';
+import { G, Gradient, Image, Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
 import { CellLabel, NewCell } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
@@ -86,22 +90,16 @@ export default defineComponent({
 
     // Instantiate a null ref and set dimenions/id func
     const hexmap = ref(null);
-    const mapConfig = {
-      height: 400,
-      width: 800,
-      hexSize: 20,
-      animations: false,
-    };
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
     };
 
     // Define initial grid data
-    const Hex = extendHex({ size: mapConfig.hexSize });
+    const Hex = extendHex({ size: config.data.map.hexSize });
     const Grid = defineGrid(Hex);
     const grid = Grid.rectangle({
-      width: Math.floor(mapConfig.width / (mapConfig.hexSize * 2)) + 3,
-      height: Math.floor(mapConfig.height / (mapConfig.hexSize * 2)) + 3,
+      width: Math.floor(config.data.map.width / (config.data.map.hexSize * 2)) + 3,
+      height: Math.floor(config.data.map.height / (config.data.map.hexSize * 2)) + 3,
     });
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
@@ -141,9 +139,9 @@ export default defineComponent({
       const i = SVG()
         .image(path.replace('img:', ''))
         .addClass('icon')
-        .size(mapConfig.hexSize, mapConfig.hexSize)
+        .size(config.data.map.hexSize, config.data.map.hexSize)
         .addTo(map)
-        .move(x + (mapConfig.hexSize / 2) * 0.7, y + mapConfig.hexSize / 2);
+        .move(x + (config.data.map.hexSize / 2) * 0.7, y + config.data.map.hexSize / 2);
 
       i.mouseenter(() => {
         i.animate(100).transform({ scale: 1.3 });
@@ -161,37 +159,36 @@ export default defineComponent({
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: '#fff', family: 'Encode', size: mapConfig.hexSize * 0.9 });
+        .font({ fill: '#fff', family: 'Encode', size: config.data.map.hexSize * 0.9 });
 
-      t.move(x + mapConfig.hexSize * 2, y + mapConfig.hexSize / 2.4);
+      t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 2.4);
     };
 
     let playerShip: Image; // Declare this out here so it can be manipulated in a watch func
 
-    const renderMap = () => {
-      map.clear();
-
+    const renderStarfield = (): G => {
+      console.log('rendering starfield');
       // Render a star field
-      // Get a pseudorandom generator to produce consistent results
+      const stars = SVG().group();
+      // Get a pseudorandom generator to produce consistent results)
       const random = seedrandom(
         campaign.data.sectors[config.data.sector].name + ':' + campaign.data.sectors[config.data.sector].region
       );
 
-      // const star = SVG().polygon('50,0 60,40 100,50 60,60 50,100 40,60 0,50 40,40');
       const star = SVG().circle('10');
       for (let i = 0; i < Math.floor(grid.length * 1.5); i++) {
-        const hw = Math.floor(random() * (mapConfig.hexSize / 4));
-        const x = Math.floor(random() * mapConfig.width - 1);
-        const y = Math.floor(random() * mapConfig.height - 1);
+        const hw = Math.floor(random() * (config.data.map.hexSize / 4));
+        const x = Math.floor(random() * config.data.map.width - 1);
+        const y = Math.floor(random() * config.data.map.height - 1);
 
         const r = Math.floor(random() * 64) + 194;
         const g = Math.floor(random() * 64) + 194;
         const b = Math.floor(random() * 64) + 194;
 
         const n = star.clone();
-        n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(map).move(x, y).back();
+        n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(stars).dx(x).dy(y);
 
-        if (mapConfig.animations) {
+        if (config.data.map.animations) {
           if (i % 10 == 0) {
             n.animate(2000 + Math.floor(Math.random() * 5000))
               .attr({ fill: '#2e3440' })
@@ -199,6 +196,26 @@ export default defineComponent({
           }
         }
       }
+
+      return stars;
+    };
+
+    let starfield: G;
+    if (config.data.map.starfield) starfield = renderStarfield();
+
+    watch(
+      () => config.data.sector,
+      () => {
+        starfield = renderStarfield();
+        renderMap();
+      }
+    );
+
+    const renderMap = () => {
+      //console.log('rendering map');
+      map.clear();
+
+      if (config.data.map.starfield) starfield.addTo(map).move(0, 0).back();
 
       // Place hexes and content
       grid.forEach((hex) => {
@@ -236,9 +253,9 @@ export default defineComponent({
 
           playerShip
             .addClass('ship')
-            .size(mapConfig.hexSize, mapConfig.hexSize)
+            .size(config.data.map.hexSize, config.data.map.hexSize)
             .addTo(map)
-            .move(x + mapConfig.hexSize, y);
+            .move(x + config.data.map.hexSize, y);
         }
 
         // Add search results
@@ -263,9 +280,9 @@ export default defineComponent({
               text
                 .addClass('search-label')
                 .addTo(map)
-                .font({ fill: 'lightgreen', family: 'Encode', size: mapConfig.hexSize * 0.7, weight: 'bold' });
+                .font({ fill: 'lightgreen', family: 'Encode', size: config.data.map.hexSize * 0.7, weight: 'bold' });
 
-              text.move(x, y + mapConfig.hexSize * 2);
+              text.move(x, y + config.data.map.hexSize * 2);
             }
           }
         }
@@ -281,18 +298,11 @@ export default defineComponent({
       map.find('.search-label').forEach((e) => e.front());
     };
 
-    watch(
-      () => campaign.data.character.location,
-      () => {
-        renderMap();
-      }
-    );
-
     onMounted(() => {
       map = SVG()
         .addTo(hexmap.value as unknown as HTMLElement)
         .size('100%', '100%');
-
+      console.log('initial map render');
       renderMap();
     });
 
@@ -327,14 +337,39 @@ export default defineComponent({
     };
 
     watch(
+      () => config.data.map,
+      () => {
+        console.log('Config triggered render');
+        if (config.data.map.starfield) {
+          starfield = renderStarfield();
+        }
+        renderMap();
+      },
+      { deep: true }
+    );
+    watch(
+      () => campaign.data.character.location,
+      () => {
+        console.log('Character location triggered map render');
+        renderMap();
+      }
+    );
+
+    watch(
       () => props.searchResults,
-      () => renderMap(),
+      () => {
+        console.log('Search result triggered map render');
+        renderMap();
+      },
       { deep: true }
     );
 
     watch(
       () => campaign.data.sectors[config.data.sector].cells,
-      () => renderMap(),
+      () => {
+        console.log('Data change triggered map render');
+        renderMap();
+      },
       { deep: true }
     );
 
@@ -342,7 +377,6 @@ export default defineComponent({
       campaign,
       config,
       hexmap,
-      mapConfig,
 
       click,
       showDialog,

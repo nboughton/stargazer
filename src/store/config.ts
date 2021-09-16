@@ -17,6 +17,16 @@ export const useConfig = defineStore({
       if ((await db.config.count()) > 0) {
         try {
           this.data = (await db.config.where('id').equals(1).first()) as IConfig;
+          // Remove this on release
+          if (!this.data.map) {
+            this.data.map = {
+              height: 400,
+              width: 800,
+              hexSize: 20,
+              animations: false,
+              starfield: true,
+            };
+          }
         } catch (err) {
           console.log(err);
         }
