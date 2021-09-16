@@ -20,24 +20,33 @@ export default defineComponent({
   name: 'App',
   setup() {
     const loaded = ref(false);
-    const msg = ref(<string[]>['::booting system::']);
+    const msg = ref(<string[]>['']);
+
+    const writeLine = async (text: string) => {
+      msg.value.push('');
+      for (let i = 0; i < text.length; i++) {
+        await sleep(40);
+        msg.value[msg.value.length - 1] += text.charAt(i);
+      }
+    };
 
     const $q = useQuasar();
     $q.dark.set(true);
 
     const campaign = useCampaign();
     onMounted(async () => {
+      await writeLine('::booting system::');
       await sleep(500);
-      msg.value.push('::loading data::');
+      await writeLine('::loading data::');
       await campaign.populateStore().catch((err) => console.log(err));
       await sleep(500);
 
-      msg.value.push('::loading assets::');
+      await writeLine('::loading assets::');
       const assets = useAssets();
       await assets.populateStore().catch((err) => console.log(err));
       await sleep(500);
 
-      msg.value.push('::welcome ' + campaign.data.character.name + '::');
+      await writeLine('::welcome ' + campaign.data.character.name + '::');
       await sleep(500);
       loaded.value = true;
     });

@@ -88,10 +88,12 @@
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
+      <q-btn class="col-shrink" flat dense icon="mdi-cog" @click="showMapConfig = true" />
     </div>
     <div v-else>
-      <div class="row q-mb-sm">
+      <div class="row q-gutter-sm q-mb-sm">
         <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
+        <q-btn class="col-shrink" flat dense icon="mdi-cog" @click="showMapConfig = true" />
       </div>
       <div class="row q-gutter-sm q-mb-sm">
         <i-input class="col" label="Search" v-model="searchText" clearable />
@@ -158,6 +160,20 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="showMapConfig">
+      <q-card>
+        <q-card-section class="my-card row justify-between items-center text-h5 sf-header">
+          <div class="sf-header col-grow">Options</div>
+          <q-btn class="col-shrink" flat dense icon="close" @click="showMapConfig = false" />
+        </q-card-section>
+
+        <q-card-section>
+          <q-toggle label="Stars" v-model="config.data.map.starfield" />
+          <q-toggle label="Animations" v-model="config.data.map.animations" />
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -203,6 +219,7 @@ export default defineComponent({
   setup() {
     const campaign = useCampaign();
     const config = useConfig();
+    const showMapConfig = ref(false);
 
     const sectorOpts = computed(() => {
       const out: ISelectOpt[] = [];
@@ -362,6 +379,7 @@ export default defineComponent({
     return {
       campaign,
       config,
+      showMapConfig,
       ERegion,
       ECellStatus,
       CellLabel,

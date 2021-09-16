@@ -15,10 +15,6 @@
       </q-page>
     </q-page-container>
   </q-layout>
-  <div class="row full-width items-center">
-    <q-toggle label="Stars" v-model="config.data.map.starfield" />
-    <q-toggle label="Animations" v-model="config.data.map.animations" />
-  </div>
 
   <q-dialog v-model="showDialog" transition-show="fade" transition-hide="fade">
     <q-card class="my-card" style="min-width: 40%">
@@ -159,7 +155,8 @@ export default defineComponent({
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: '#fff', family: 'Encode', size: config.data.map.hexSize * 0.9 });
+        .font({ fill: '#fff', family: 'Encode', size: config.data.map.hexSize * 0.9 })
+        .stroke({ color: 'black', width: 1 });
 
       t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 2.4);
     };
