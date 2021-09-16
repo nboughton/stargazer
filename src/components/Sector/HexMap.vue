@@ -15,7 +15,7 @@
       </q-page>
     </q-page-container>
   </q-layout>
-  <div class="row items-center">
+  <div class="row full-width items-center">
     <q-toggle label="Stars" v-model="config.data.map.starfield" />
     <q-toggle label="Animations" v-model="config.data.map.animations" />
   </div>
