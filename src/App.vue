@@ -1,5 +1,10 @@
 <template>
   <router-view v-if="loaded" />
+  <q-dialog v-model="showLoading" maximized transition-hide="fade">
+    <div class="column items-center text-center justify-center sf-header text-h1 text-positive">
+      {{ dots }}
+    </div>
+  </q-dialog>
 </template>
 <script lang="ts">
 import { defineComponent, watch, onBeforeMount, ref } from 'vue';
@@ -7,21 +12,34 @@ import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
 import { useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
+import { sleep } from './lib/util';
 
 export default defineComponent({
   name: 'App',
   setup() {
     const loaded = ref(false);
+    const showLoading = ref(true);
+    const dots = ref('.');
+
     const $q = useQuasar();
     $q.dark.set(true);
 
     const campaign = useCampaign();
     onBeforeMount(async () => {
+      await sleep(500);
+      dots.value = '..';
       await campaign.populateStore().catch((err) => console.log(err));
+      await sleep(500);
 
+      dots.value = '...';
       const assets = useAssets();
       await assets.populateStore().catch((err) => console.log(err));
+      await sleep(500);
+
+      dots.value = '....';
+      await sleep(500);
       loaded.value = true;
+      showLoading.value = false;
     });
 
     const config = useConfig();
@@ -51,6 +69,8 @@ export default defineComponent({
 
     return {
       loaded,
+      showLoading,
+      dots,
     };
   },
 });

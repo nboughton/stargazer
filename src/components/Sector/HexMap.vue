@@ -20,8 +20,8 @@
     <q-toggle label="Animations" v-model="config.data.map.animations" />
   </div>
 
-  <q-dialog v-model="showDialog">
-    <q-card class="my-card">
+  <q-dialog v-model="showDialog" transition-show="fade" transition-hide="fade">
+    <q-card class="my-card" style="min-width: 40%">
       <q-card-section class="row justify-between items-center bg-secondary text-h5">
         <q-input
           class="col"
@@ -34,7 +34,7 @@
         <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
       </q-card-section>
 
-      <q-card-section>
+      <q-card-section class="q-pa-sm q-mb-sm">
         <div class="row q-gutter-sm items-center">
           <q-select
             class="col-grow"
@@ -53,7 +53,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section>
+      <q-card-section class="q-pa-sm">
         <cell :sectorID="config.data.sector" :cellID="selectedID" />
       </q-card-section>
     </q-card>
