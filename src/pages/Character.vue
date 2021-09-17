@@ -173,7 +173,7 @@
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
     <!-- Assets -->
-    <div class="row justify-evenly q-gutter-lg q-mb-md">
+    <div class="row justify-evenly q-gutter-md q-mb-md">
       <asset v-for="(a, i) in campaign.data.character.assets" :key="i" v-model="campaign.data.character.assets[i]">
         <template v-slot:append>
           <q-btn icon="delete" flat dense size="sm" @click="removeAsset(i)" v-if="config.data.edit">
@@ -211,7 +211,7 @@ import { defineComponent, ref } from 'vue';
 import { NewProgressTrack } from 'src/lib/campaign';
 
 import Stats from 'src/components/Stats.vue';
-import Asset from 'src/components/Assets/Asset.vue';
+import Asset from 'src/components/Assets2/Asset.vue';
 import Assets from 'src/components/Assets/Assets.vue';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';

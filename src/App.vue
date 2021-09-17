@@ -100,4 +100,9 @@ export default defineComponent({
 p
   margin-bottom: 5px
   padding-bottom: 0px
+
+.asset-text > ul
+  padding: 5px
+  margin: 0
+  list-style-type: none
 </style>

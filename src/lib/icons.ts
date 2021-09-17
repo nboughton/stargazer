@@ -41,4 +41,10 @@ export const icon = {
   npc: (): string => {
     return 'img:icons/life/character.svg';
   },
+
+  asset: (name: string): string => {
+    const baseUrl =
+      'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/src/app/img/icons/';
+    return `img:${baseUrl}asset-${name.toLowerCase().replace(' ', '-')}.svg`;
+  },
 };

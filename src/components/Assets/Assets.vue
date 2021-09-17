@@ -1,12 +1,12 @@
 <template>
-  <q-dialog v-model="showDialog" full-width full-height transition-show="slide-up" transition-hide="slide-down">
-    <q-layout container class="asset-bg">
+  <q-dialog v-model="showDialog" transition-show="slide-up" transition-hide="slide-down">
+    <q-layout container class="asset-bg" view="hHh lpR fFf" style="min-width: 50%">
       <q-card class="asset-bg">
         <q-header elevated>
           <q-toolbar class="bg-secondary">
+            <q-btn flat dense icon="menu" @click="showList = !showList" />
             <q-toolbar-title>
               <q-input
-                class="col-grow"
                 v-if="showEditor === false"
                 label="Filter by name or type"
                 v-model="filter"
@@ -20,12 +20,52 @@
               </q-input>
             </q-toolbar-title>
 
-            <q-btn class="col-shrink" icon="close" flat dense @click="close" />
+            <q-btn icon="close" flat dense @click="close" />
           </q-toolbar>
         </q-header>
 
+        <q-drawer side="left" v-model="showList" bordered :breakpoint="400" :width="220">
+          <q-list separator padding>
+            <q-item v-for="(a, i) in cards" :key="i" clickable v-ripple @click="selectAsset(i)">
+              <q-item-section avatar>
+                <q-avatar :icon="icon.asset(a.title)" size="lg" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>{{ a.title }}</q-item-label>
+                <q-item-label caption>{{ a.type }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-drawer>
+
+        <q-page-container>
+          <q-page class="q-pa-sm">
+            <div class="row items-center">
+              <div class="col-shrink text-h5 sf-header">{{ ca.type }}</div>
+              <div class="col-shrink sf-header text-h4">::{{ ca.title }}</div>
+            </div>
+
+            <div class="q-mb-sm" v-if="ca.subtitle" v-html="ca.subtitle" />
+
+            <div
+              class="q-py-sm text-justify row items-start no-wrap"
+              v-for="(a, i) in ca.items"
+              :key="i"
+              style="border-bottom: 1px solid grey"
+            >
+              <q-checkbox class="col-1" disable dense v-model="a.marked" />
+              <div class="col-10 q-ml-xs asset-text" v-html="a.text" />
+            </div>
+
+            <div class="row full-width justify-end items-end">
+              <q-btn class="q-ma-md" outline label="Mine!" @click="addAsset(ca.title)" />
+            </div>
+          </q-page>
+        </q-page-container>
+        <!--
         <q-card-section class="q-mt-xl" v-if="showEditor === false">
-          <div class="q-mb-sm row q-gutter-lg justify-evenly">
+          <div class="q-mb-sm row q-gutter-lg justify-between">
             <q-card class="my-card asset-card">
               <q-card-section class="text-bold bg-secondary">
                 <div class="row items-center">
@@ -75,6 +115,7 @@
         <q-card-section v-else>
           <asset-editor :id="editID" v-model="showEditor" />
         </q-card-section>
+-->
       </q-card>
     </q-layout>
   </q-dialog>
@@ -83,14 +124,16 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
 import { Assets } from 'src/lib/assets';
-import Asset from 'src/components/Assets2/Asset.vue';
+//import Asset from 'src/components/Assets2/Asset.vue';
 import { IAsset } from 'src/components/models';
-import AssetEditor from './AssetEditor.vue';
+//import AssetEditor from './AssetEditor.vue';
 import { useAssets } from 'src/store/assets';
+import { useCampaign } from 'src/store/campaign';
+import { icon } from 'src/lib/icons';
 
 export default defineComponent({
   name: 'Assets',
-  components: { Asset, AssetEditor },
+  //components: { Asset, AssetEditor },
   props: {
     modelValue: {
       type: Boolean,
@@ -98,6 +141,7 @@ export default defineComponent({
     },
   },
   setup(props, ctx) {
+    const campaign = useCampaign();
     const showDialog = ref(props.modelValue);
     watch(
       () => props.modelValue,
@@ -144,8 +188,19 @@ export default defineComponent({
       return out;
     });
 
+    const selectAsset = (id: string) => {
+      ca.value = cards.value[id];
+    };
+
+    const addAsset = (id: string) => {
+      const dataCopy = JSON.parse(JSON.stringify(cards.value[id])) as IAsset;
+      campaign.data.character.assets.push(dataCopy);
+    };
+
     const showEditor = ref(false);
+    const showList = ref(true);
     const editID = ref('new');
+    const ca = ref(Assets['Ace']);
 
     return {
       showDialog,
@@ -155,8 +210,14 @@ export default defineComponent({
       cards,
 
       showEditor,
+      showList,
       editID,
       customAssets,
+      selectAsset,
+      addAsset,
+      ca,
+
+      icon,
     };
   },
 });
