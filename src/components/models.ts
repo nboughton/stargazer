@@ -265,6 +265,7 @@ export interface ICharacter {
 export interface IJournalEntry {
   title: string;
   content: string;
+  image?: boolean;
 }
 
 // Truths
@@ -296,6 +297,7 @@ export interface ISectorCell {
   id: string;
   stat: ECellStatus;
   name: string;
+  notes: string;
   stars: IStar[];
   planets: IPlanet[];
   settlements: ISettlement[];

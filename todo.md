@@ -11,4 +11,8 @@
 
 - Fonts
   [ ] Try Exo for headers
-  [ ] Try Encode for body text
+  [*] Try Encode for body text
+
+- Sector
+  [*] Add notes field per sector
+  [*] Add last-rendered to prevent double render on passage mark

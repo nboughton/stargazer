@@ -1,7 +1,7 @@
 <template>
   <router-view v-if="loaded" />
   <div v-else>
-    <div class="column q-pa-md text-h5 self-center text-positive" style="height: 100% width: 100%">
+    <div class="column q-pa-xl text-h5 self-center text-positive" style="height: 100% width: 100%">
       <div class="sf-header" v-for="(line, i) in msg" :key="i">
         {{ line }}
       </div>
@@ -35,18 +35,18 @@ export default defineComponent({
 
     const campaign = useCampaign();
     onMounted(async () => {
-      await writeLine('::booting system::');
+      await writeLine('::booting system...');
       await sleep(500);
-      await writeLine('::loading data::');
+      await writeLine('::assessing damage...');
       await campaign.populateStore().catch((err) => console.log(err));
       await sleep(500);
 
-      await writeLine('::loading assets::');
+      await writeLine('::loading protocols...');
       const assets = useAssets();
       await assets.populateStore().catch((err) => console.log(err));
       await sleep(500);
 
-      await writeLine('::welcome ' + campaign.data.character.name + '::');
+      await writeLine('::welcome ' + campaign.data.character.name);
       await sleep(500);
       loaded.value = true;
     });

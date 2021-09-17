@@ -208,8 +208,19 @@ export default defineComponent({
       }
     );
 
+    let lastRender = 0;
+    let lastSector = config.data.sector;
+    const passageColour = '#393B61';
     const renderMap = () => {
-      //console.log('rendering map');
+      // Prevent excessive rendering on passage mark/sector change
+      const renderTimestamp = Date.now();
+      if (renderTimestamp - lastRender < 500 && lastSector == config.data.sector) {
+        console.log('ignoring double render');
+        return;
+      }
+      lastRender = renderTimestamp;
+      lastSector = config.data.sector;
+
       map.clear();
 
       if (config.data.map.starfield) starfield.addTo(map).move(0, 0).back();
@@ -233,7 +244,7 @@ export default defineComponent({
               break;
 
             case ECellStatus.Passage:
-              cell.fill('#393B61');
+              cell.fill(passageColour);
               break;
 
             default:
@@ -319,8 +330,13 @@ export default defineComponent({
         !campaign.data.sectors[config.data.sector].cells[id] ||
         campaign.data.sectors[config.data.sector].cells[id].stat == ECellStatus.Empty
       ) {
-        // Minimise sequential assignments to the store data to prevent excessive
-        // re-rendering of the map
+        // Set hex fill here (rather than trigger a map re-render) for better mobile performance
+        const mapCells = map.find(`.${id}`); // Should only return 1 item but err on the side of caution
+        if (mapCells.length > 0) {
+          mapCells[0].fill(passageColour);
+          lastRender = Date.now(); // Setting this will prevent an immediate re-render when the data changes
+        }
+
         const c = NewCell(id);
         c.stat = ECellStatus.Passage;
         campaign.data.sectors[config.data.sector].cells[id] = c;
