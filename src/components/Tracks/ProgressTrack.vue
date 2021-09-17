@@ -1,21 +1,8 @@
 <template>
   <div class="q-pa-sm my-card rounded-borders">
-    <div class="row" v-if="showName">
-      <q-input
-        class="col-grow"
-        name="Name"
-        dense
-        standout="bg-blue-grey text-white"
-        :input-style="{ color: '#ECEFF4' }"
-        autogrow
-        v-model="data.name"
-        debounce="750"
-        @update:modelValue="updateValue"
-      >
-        <template v-slot:append>
-          <slot name="action" class="col-shrink" />
-        </template>
-      </q-input>
+    <div class="row q-gutter-sm" v-if="showName">
+      <i-input class="col-grow" v-model="data.name" @update:modelValue="updateValue" />
+      <slot name="action" class="col-shrink" />
     </div>
 
     <div v-if="rollData.result" class="col-12 text-h6">
@@ -24,22 +11,11 @@
           {{ rollData.result }}
           <span v-if="rollData.challenge.match">with a match</span>:
         </div>
-        <span :class="rollData.action.color">{{ rollData.action.score }}</span
-        ><span>vs</span>
-        <span :class="rollData.challenge.die1.color">{{
-          rollData.challenge.die1.roll
-        }}</span
-        ><span>|</span>
-        <span :class="rollData.challenge.die2.color">{{
-          rollData.challenge.die2.roll
-        }}</span>
-        <q-btn
-          icon="mdi-close-circle"
-          flat
-          dense
-          :size="btnSize"
-          @click="rollData.result = ''"
-        >
+        <span :class="rollData.action.color"> {{ rollData.action.score }}</span>
+        <span> vs </span> <span :class="rollData.challenge.die1.color"> {{ rollData.challenge.die1.roll }}</span>
+        <span>|</span>
+        <span :class="rollData.challenge.die2.color">{{ rollData.challenge.die2.roll }}</span>
+        <q-btn icon="mdi-close-circle" flat dense :size="btnSize" @click="rollData.result = ''">
           <q-tooltip>Clear roll result</q-tooltip>
         </q-btn>
       </div>
@@ -70,22 +46,12 @@
         :options="diffOpts"
         @update:modelValue="updateValue"
       />
-      <q-btn
-        v-if="showMenaceBtn"
-        :icon="menaceIcon"
-        flat
-        dense
-        :size="btnSize"
-        @click="menaceToggle"
-      >
+      <q-btn v-if="showMenaceBtn" :icon="menaceIcon" flat dense :size="btnSize" @click="menaceToggle">
         <q-tooltip>Toggle Menace Track</q-tooltip>
       </q-btn>
     </div>
 
-    <div
-      class="row justify-evenly"
-      v-if="data.showMenace && data.menace !== undefined"
-    >
+    <div class="row justify-evenly" v-if="data.showMenace && data.menace !== undefined">
       <q-input
         class="col-12 q-pb-sm"
         label="Menace"
@@ -115,9 +81,11 @@ import { sleep } from 'src/lib/util';
 import { useQuasar } from 'quasar';
 import { moveRoll, NewRollData } from 'src/lib/roll';
 import { boxIcon } from 'src/lib/tracks';
+import IInput from 'src/components/IInput.vue';
 
 export default defineComponent({
   name: 'ProgressTrack',
+  components: { IInput },
   props: {
     modelValue: {
       type: Object as PropType<IProgressTrack>,

@@ -6,15 +6,15 @@
       :label="data.name"
       caption="Star"
     >
-      <div class="q-mt-sm">
-        <controls v-if="controls" @move="$emit('move', $event)" />
-        <i-input class="q-mb-sm" label="Name" v-model="data.name">
-          <template v-slot:append v-if="config.data.edit">
-            <q-btn icon="delete" flat dense @click="$emit('delete')" />
-          </template>
-        </i-input>
-        <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
+      <div class="row q-mb-sm" v-if="controls">
+        <controls class="col" @move="$emit('move', $event)" />
       </div>
+
+      <div class="row q-gutter-sm q-mb-sm">
+        <i-input class="col-grow" label="Name" v-model="data.name" />
+        <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+      </div>
+      <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
     </q-expansion-item>
   </div>
 </template>

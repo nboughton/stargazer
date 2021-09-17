@@ -138,36 +138,14 @@
         </q-input>
       </div>
 
-      <div v-for="(journal, index) in campaign.data.journal" :key="index">
-        <div class="q-pa-sm q-gutter-xs" v-if="showJournal(journal)">
-          <div class="row">
-            <q-input
-              class="col-grow"
-              label="Title"
-              dense
-              standout="bg-blue-grey text-white"
-              :input-style="{ color: '#ECEFF4' }"
-              debounce="750"
-              v-model="campaign.data.journal[index].title"
-            >
-              <template v-slot:append v-if="config.data.edit">
-                <q-btn class="col-shrink q-pl-sm" flat dense icon="delete" @click="removeJournal(index)">
-                  <q-tooltip>Delete this journal entry</q-tooltip>
-                </q-btn>
-              </template>
-            </q-input>
-          </div>
-          <q-input
-            class="row"
-            label="Content"
-            dense
-            standout="bg-blue-grey text-white"
-            :input-style="{ color: '#ECEFF4' }"
-            autogrow
-            debounce="750"
-            v-model="campaign.data.journal[index].content"
-          />
+      <div class="q-px-sm q-mb-md" v-for="(journal, index) in campaign.data.journal" :key="index">
+        <div class="row q-gutter-sm q-mb-sm" v-if="showJournal(journal)">
+          <i-input class="col-grow" label="Title" v-model="campaign.data.journal[index].title" />
+          <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="removeJournal(index)">
+            <q-tooltip>Delete this journal entry</q-tooltip>
+          </q-btn>
         </div>
+        <i-input class="row" label="Content" v-model="campaign.data.journal[index].content" autogrow />
       </div>
     </q-drawer>
 
@@ -273,10 +251,11 @@ import { IJournalEntry } from 'src/components/models';
 import Oracles from 'src/components/Oracles/Oracles.vue';
 import Moves from 'src/components/Moves.vue';
 import Roller from 'src/components/Roller.vue';
+import IInput from 'src/components/IInput.vue';
 import { useAssets } from 'src/store/assets';
 
 export default defineComponent({
-  components: { Oracles, Moves, Roller },
+  components: { Oracles, Moves, Roller, IInput },
   setup() {
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);

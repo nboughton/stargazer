@@ -207,10 +207,10 @@ export default defineComponent({
     };
 
     if (config.data.map.starfield) starfield = renderStarfield();
-
     let lastRender = 0;
     let lastSector = config.data.sector;
     const passageColour = '#393B61';
+
     const renderMap = () => {
       // Prevent excessive rendering on passage mark/sector change
       const renderTimestamp = Date.now();
@@ -276,11 +276,13 @@ export default defineComponent({
               const text = SVG().text(function (add) {
                 Object.keys(cell).forEach((oType) => {
                   cell[oType].forEach((i) => {
-                    add
-                      .tspan(campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i].name)
-                      .stroke({ color: 'black', width: 1 })
-                      .fill(colours[oType])
-                      .newLine();
+                    if (campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i]) {
+                      add
+                        .tspan(campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i].name)
+                        .stroke({ color: 'black', width: 1 })
+                        .fill(colours[oType])
+                        .newLine();
+                    }
                   });
                 });
               });

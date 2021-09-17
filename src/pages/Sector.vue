@@ -118,9 +118,9 @@
           <div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div>
           <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
           <q-card class="q-mb-md" flat v-for="(cell, cID) in sector" :key="cID">
-            <q-card-section class="row my-card sf-header text-h5"
-              >Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]) }}</q-card-section
-            >
+            <q-card-section class="row my-card sf-header text-h5">
+              Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]) }}
+            </q-card-section>
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
                 <div v-if="oType === ESectorOpts.Settlements">
@@ -200,9 +200,6 @@ import { CellLabel } from 'src/lib/campaign';
 import { defineComponent, computed, ref } from 'vue';
 
 import IInput from 'src/components/IInput.vue';
-/*
-import Cell from 'src/components/Sector/Cell.vue';
-*/
 import SSettlement from 'src/components/Sector/SSettlement.vue';
 import SNPC from 'src/components/Sector/SNPC.vue';
 import SStar from 'src/components/Sector/SStar.vue';
@@ -385,12 +382,8 @@ export default defineComponent({
       CellLabel,
 
       sectorOpts,
-
       addSector,
-      // addCell,
-
       removeSector,
-      // removeCell,
 
       searchText,
       filters,

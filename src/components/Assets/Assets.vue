@@ -83,7 +83,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
 import { Assets } from 'src/lib/assets';
-import Asset from 'src/components/Assets/Asset.vue';
+import Asset from 'src/components/Assets2/Asset.vue';
 import { IAsset } from 'src/components/models';
 import AssetEditor from './AssetEditor.vue';
 import { useAssets } from 'src/store/assets';

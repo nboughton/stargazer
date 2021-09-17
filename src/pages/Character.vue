@@ -120,15 +120,7 @@
 
     <!-- Stats -->
     <stats class="q-mt-md" v-model="campaign.data.character.stats" />
-    <q-input
-      class="q-mt-md q-mb-md"
-      v-model="campaign.data.character.gear"
-      label="Gear &amp; Notes"
-      autogrow
-      standout="bg-blue-grey text-white"
-      :input-style="{ color: '#ECEFF4' }"
-      dense
-    />
+    <i-input class="q-mt-md q-mb-md" label="Gear &amp; Notes" v-model="campaign.data.character.gear" autogrow />
 
     <q-separator />
 
@@ -227,6 +219,7 @@ import { useConfig } from 'src/store/config';
 import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
 import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
 import LegacyTrack from 'src/components/Tracks/LegacyTrack.vue';
+import IInput from 'src/components/IInput.vue';
 
 export default defineComponent({
   name: 'Character',
@@ -237,6 +230,7 @@ export default defineComponent({
     ProgressTrack,
     Asset,
     Assets,
+    IInput,
   },
   setup() {
     const campaign = useCampaign();

@@ -16,3 +16,6 @@
 - Sector
   [*] Add notes field per sector
   [*] Add last-rendered to prevent double render on passage mark
+
+- UX
+  [ ] Make delete button presentation consistent
