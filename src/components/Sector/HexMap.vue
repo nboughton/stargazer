@@ -101,7 +101,18 @@ export default defineComponent({
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
 
     let map: Svg;
-    // All map magic happens here
+    let playerShip: Image;
+    let starfield: G;
+
+    onMounted(() => {
+      map = SVG()
+        .addTo(hexmap.value as unknown as HTMLElement)
+        .size('100%', '100%');
+      console.log('initial map render');
+      renderMap();
+    });
+
+    /* MAP RENDER FUNCTIONS */
     const locationFill = (c: ISectorCell): Gradient => {
       const f = map.gradient('linear', function (add) {
         let count = 0;
@@ -161,8 +172,6 @@ export default defineComponent({
       t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 2.4);
     };
 
-    let playerShip: Image; // Declare this out here so it can be manipulated in a watch func
-
     const renderStarfield = (): G => {
       console.log('rendering starfield');
       // Render a star field
@@ -197,16 +206,7 @@ export default defineComponent({
       return stars;
     };
 
-    let starfield: G;
     if (config.data.map.starfield) starfield = renderStarfield();
-
-    watch(
-      () => config.data.sector,
-      () => {
-        starfield = renderStarfield();
-        renderMap();
-      }
-    );
 
     let lastRender = 0;
     let lastSector = config.data.sector;
@@ -306,15 +306,7 @@ export default defineComponent({
       map.find('.search-label').forEach((e) => e.front());
     };
 
-    onMounted(() => {
-      map = SVG()
-        .addTo(hexmap.value as unknown as HTMLElement)
-        .size('100%', '100%');
-      console.log('initial map render');
-      renderMap();
-    });
-
-    // GET CLICKY WITH IT
+    // PRIMARY CLICK EVENT
     const click = (ev: { offsetX: number; offsetY: number }) => {
       // Get the SVG hex that was clicked on
       const hex = grid.get(Grid.pointToHex(ev.offsetX, ev.offsetY));
@@ -349,6 +341,7 @@ export default defineComponent({
       showDialog.value = true;
     };
 
+    /* RENDER TRIGGERS */
     watch(
       () => config.data.map,
       () => {
@@ -360,6 +353,7 @@ export default defineComponent({
       },
       { deep: true }
     );
+
     watch(
       () => campaign.data.character.location,
       () => {
@@ -384,6 +378,14 @@ export default defineComponent({
         renderMap();
       },
       { deep: true }
+    );
+
+    watch(
+      () => config.data.sector,
+      () => {
+        starfield = renderStarfield();
+        renderMap();
+      }
     );
 
     return {
