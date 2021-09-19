@@ -124,35 +124,59 @@
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
                 <div v-if="oType === ESectorOpts.Settlements">
-                  <s-settlement v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-settlement
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeSettlement(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.NPCs">
-                  <s-NPC v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-NPC
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeNPC(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Stars">
-                  <s-star v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-star
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeStar(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Planets">
-                  <s-planet v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-planet
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removePlanet(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Ships">
-                  <s-starship v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-starship
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeShip(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Derelicts">
-                  <s-derelict v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-derelict
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeDerelict(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Vaults">
-                  <s-vault v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-vault
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeVault(sID, cID, oID)"
+                  />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Creatures">
-                  <s-creature v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]" />
+                  <s-creature
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeCreature(sID, cID, oID)"
+                  />
                 </div>
               </div>
             </q-card-section>

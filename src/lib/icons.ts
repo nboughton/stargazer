@@ -1,3 +1,6 @@
+const baseUrl =
+  'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/src/app/img/icons/';
+
 export const icon = {
   player: (): string => {
     return 'img:icons/space/player-ship.svg';
@@ -43,8 +46,10 @@ export const icon = {
   },
 
   asset: (name: string): string => {
-    const baseUrl =
-      'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/src/app/img/icons/';
-    return `img:${baseUrl}asset-${name.toLowerCase().replace(' ', '-')}.svg`;
+    return `img:${baseUrl}asset-${name.toLowerCase().replace(/ /gi, '-')}.svg`;
+  },
+
+  truth: (name: string): string => {
+    return `img:${baseUrl}setting-truth-${name.toLowerCase().replace(/ /gi, '-')}.svg`;
   },
 };

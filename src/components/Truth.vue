@@ -1,6 +1,7 @@
 <template>
   <div class="q-mb-md">
-    <div class="row text-h4 items-center">
+    <div class="row text-h4 items-baseline">
+      <q-avatar :icon="icon.truth(label)" />
       <div class="col-shrink sf-header q-mr-sm">{{ label }}</div>
     </div>
 
@@ -33,6 +34,7 @@ import { SFTruths, RollTruth } from 'src/lib/truths';
 import { tableRoll } from 'src/lib/roll';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref, watch } from 'vue';
+import { icon } from 'src/lib/icons';
 export default defineComponent({
   name: 'Truths',
   props: {
@@ -103,6 +105,7 @@ export default defineComponent({
       RollTruth,
       rollSub,
       rollMain,
+      icon,
     };
   },
 });

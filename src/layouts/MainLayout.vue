@@ -138,14 +138,21 @@
         </q-input>
       </div>
 
-      <div class="q-px-sm q-mb-md" v-for="(journal, index) in campaign.data.journal" :key="index">
-        <div class="row q-gutter-sm q-mb-sm" v-if="showJournal(journal)">
-          <i-input class="col-grow" label="Title" v-model="campaign.data.journal[index].title" />
-          <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="removeJournal(index)">
-            <q-tooltip>Delete this journal entry</q-tooltip>
-          </q-btn>
-        </div>
-        <i-input class="row" label="Content" v-model="campaign.data.journal[index].content" autogrow />
+      <div v-for="(journal, index) in campaign.data.journal" :key="index">
+        <q-expansion-item
+          class="q-px-sm q-mb-md"
+          header-class="text-h6 q-mb-sm"
+          v-if="showJournal(journal)"
+          :label="campaign.data.journal[index].title"
+        >
+          <div class="row q-gutter-sm q-mb-sm">
+            <i-input class="col-grow" label="Title" v-model="campaign.data.journal[index].title" />
+            <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="removeJournal(index)">
+              <q-tooltip>Delete this journal entry</q-tooltip>
+            </q-btn>
+          </div>
+          <i-input class="row" label="Content" v-model="campaign.data.journal[index].content" autogrow />
+        </q-expansion-item>
       </div>
     </q-drawer>
 

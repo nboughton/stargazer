@@ -1,83 +1,95 @@
 <template>
-  <q-card class="my-card asset-card column">
-    <q-card-section class="text-bold bg-secondary">
-      <div class="row items-center">
-        <slot name="prepend" class="col-shrink" />
-        <div class="col-grow">{{ data.title }}</div>
-        <div class="col-shrink">{{ data.type }}</div>
-        <slot name="append" class="col-shrink" />
+  <q-expansion-item header-class="bg-secondary rounded-borders">
+    <template v-slot:header>
+      <q-item class="row full-width">
+        <q-item-section class="col-shrink" avatar>
+          <q-icon :name="icon.asset(data.title)" />
+        </q-item-section>
+
+        <q-item-section class="col-grow">
+          <q-item-label>{{ data.title }}</q-item-label>
+          <q-item-label caption>{{ data.type }}</q-item-label>
+        </q-item-section>
+
+        <q-item-section class="col-shrink" side v-if="config.data.edit">
+          <slot name="append" />
+        </q-item-section>
+      </q-item>
+    </template>
+    <div class="q-pa-md q-gutter-sm">
+      <div v-if="data.subtitle" v-html="data.subtitle" />
+      <i-input class="q-mb-sm" v-if="data.input" :label="data.input.label" v-model="data.input.text" />
+      <div v-for="(item, index) in data.items" :key="index">
+        <div class="row q-mb-sm no-wrap">
+          <q-checkbox class="col-1 self-center" v-model="data.items[index].marked" dense />
+          <div class="col-11 q-my-sm q-ml-sm text-justify asset-text" v-html="item.text" />
+        </div>
+        <div class="row justify-end">
+          <i-input
+            class="col-11"
+            v-if="data.items[index].input"
+            :label="data.items[index].input.label"
+            v-model="data.items[index].input.text"
+          />
+        </div>
       </div>
-    </q-card-section>
-
-    <q-card-section class="col justify-evenly">
-      <div class="q-pb-sm" v-if="data.subtitle" v-html="data.subtitle" />
-
-      <div v-if="data.input" class="q-pb-sm col">
-        <q-input :label="data.input.label" v-model="data.input.text" :disable="browse" dense debounce="750" />
+      <div class="row justify-evenly q-gutter-sm">
+        <q-checkbox v-if="data.cursed != undefined" label="Cursed" v-model="data.cursed" />
+        <q-checkbox v-if="data.battered != undefined" label="Battered" v-model="data.battered" />
       </div>
 
-      <div v-for="(item, index) in data.items" :key="index" class="row items-start q-pb-sm">
-        <q-checkbox v-model="data.items[index].marked" dense class="col-1" :disable="browse" />
-        <div class="col-11" v-html="item.text" />
-        <div class="col-1" />
-        <q-input class="col-11 self-end" v-if="item.input" :label="item.input.label" :disable="browse" dense debounce="750" v-model="data.items[index].input.text" />
-      </div>
-    </q-card-section>
-
-    <q-card-section class="row q-gutter-sm justify-evenly" v-if="/(support|command) vehicle/i.test(data.type)">
-      <q-checkbox class="col" v-model="data.battered" label="Battered" dense :disable="browse" />
-      <q-checkbox class="col" v-if="/command/i.test(data.type)" v-model="data.cursed" label="Cursed" dense :disable="browse" />
-    </q-card-section>
-
-    <q-card-section class="row full-width">
-      <resource-track class="col-grow" v-if="data.track" v-model="data.track" reverse />
-    </q-card-section>
-
-    <q-separator v-if="browse" />
-    <q-card-actions v-if="browse" class="col-grow items-end justify-center">
-      <div class="row">
-        <q-btn label="Add to character" flat dense class="col-shrink" @click="addToCharacter" />
-      </div>
-    </q-card-actions>
-  </q-card>
+      <resource-track class="col-grow" v-if="data.track" v-model="data.track" reverse variable />
+    </div>
+  </q-expansion-item>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from 'vue';
-import { IAsset } from 'src/components/models';
-import { useCampaign } from 'src/store/campaign';
-import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
-
+import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import IInput from '../IInput.vue';
+import { IAsset } from '../models';
+import { icon } from 'src/lib/icons';
+import ResourceTrack from '../Tracks/ResourceTrack.vue';
+import { useQuasar } from 'quasar';
+import { useConfig } from 'src/store/config';
 export default defineComponent({
+  components: { IInput, ResourceTrack },
   name: 'Asset',
-  components: { ResourceTrack },
   props: {
     modelValue: {
       type: Object as PropType<IAsset>,
       required: true,
     },
-    browse: {
+    expanded: {
       type: Boolean,
     },
   },
   emits: ['update:modelValue'],
-  setup(props) {
+  setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(
       () => props.modelValue,
       () => (data.value = props.modelValue),
       { deep: true }
     );
-    const campaign = useCampaign();
+    watch(
+      () => data.value,
+      () => emit('update:modelValue', data.value),
+      { deep: true }
+    );
 
-    const addToCharacter = () => {
-      const dataCopy = JSON.parse(JSON.stringify(data.value)) as IAsset;
-      campaign.data.character.assets.push(dataCopy);
-    };
+    const $q = useQuasar();
+    const width = computed((): string => {
+      return $q.screen.lt.sm ? 'min-width: 90%' : '';
+    });
 
+    const dExpanded = ref(props.expanded);
+    const config = useConfig();
     return {
       data,
-      addToCharacter,
+      dExpanded,
+      icon,
+      width,
+      config,
     };
   },
 });
