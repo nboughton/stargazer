@@ -23,8 +23,8 @@
     </div>
 
     <!-- Momentum -->
-    <div class="row justify-between items-center q-gutter-sm" v-if="$q.screen.gt.xs">
-      <span class="col-shrink text-bold">Momentum</span>
+    <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
+      <span class="col-shrink text-bold q-mx-sm">Momentum</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.momentum" />
       <q-input
         class="col-xs-2 col-sm-1 col-1"
@@ -87,16 +87,16 @@
     <q-separator />
 
     <!-- Tracks -->
-    <div class="row justify-between items-center q-gutter-sm q-pt-xs q-pb-xs" v-if="$q.screen.gt.xs">
-      <span class="col-shrink text-bold">Health</span>
+    <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
+      <span class="col-shrink text-bold q-mx-sm">Health</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.health" />
       <q-separator vertical />
 
-      <span class="col-shrink text-bold">Spirit</span>
+      <span class="col-shrink text-bold q-mx-sm">Spirit</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.spirit" />
       <q-separator vertical />
 
-      <span class="col-shrink text-bold">Supply</span>
+      <span class="col-shrink text-bold q-mx-sm">Supply</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.supply" />
     </div>
     <div v-else>

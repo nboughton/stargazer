@@ -105,7 +105,7 @@ export const Moves: { [index: string]: IMove[] } = {
       source: 'Starforged Backer Preview, 081921',
       keywords: '',
       text: '<p><strong>When you seek to resolve questions, discover details, reveal locations, determine how other characters respond, or trigger encounters or events</strong>, you may&hellip;</p>\n\n<ul>\n<li>Draw a conclusion: Decide the answer based on the most interesting and obvious result.</li>\n<li>Spark an idea: Use an oracle table or other random prompt.</li>\n<li>Ask a yes/no question: Decide the odds of a yes, and roll on the table below to check the answer.</li>\n<li>Pick two: Envision two options. Rate one as &lsquo;likely&rsquo;, and roll on the table below to see if it is true. If not, it is the other.</li>\n</ul>\n\n<table>\n<thead>\n<tr>\n<th>Odds</th>\n<th>The answer is &lsquo;yes&rsquo; if you roll&hellip;</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>Almost Certain</td>\n<td>11 or greater</td>\n</tr>\n\n<tr>\n<td>Likely</td>\n<td>26 or greater</td>\n</tr>\n\n<tr>\n<td><sup>50</sup>&frasl;<sub>50</sub></td>\n<td>51 or greater</td>\n</tr>\n\n<tr>\n<td>Unlikely</td>\n<td>76 or greater</td>\n</tr>\n\n<tr>\n<td>Small Chance</td>\n<td>91 or greater</td>\n</tr>\n</tbody>\n</table>\n',
-      oracles: ['Ask the Oracle'],
+      oracles: ['Almost Certain', 'Likely', '50/50', 'Unlikely', 'Small Chance'],
     },
   ],
   'Combat Moves': [

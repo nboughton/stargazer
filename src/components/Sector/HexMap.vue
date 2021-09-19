@@ -141,7 +141,7 @@ export default defineComponent({
       if (c.ships.length > 0) path = icon.starship();
       if (c.settlements.length > 0) path = icon.settlement();
       if (c.planets.length > 0) path = icon.planet(c.planets[0].type);
-      if (c.stars.length > 0) path = icon.star();
+      if (c.stars.length > 0) path = icon.star(c.stars[0].description);
 
       const i = SVG()
         .image(path.replace('img:', ''))

@@ -1,99 +1,203 @@
 import { ISFTable } from 'src/components/models';
 
 export const Move: { [index: string]: ISFTable } = {
+  'Almost Certain': {
+    items: [
+      {
+        match: [1, 90],
+        data: 'Yes',
+      },
+      {
+        match: [91, 100],
+        data: 'No',
+      },
+    ],
+  },
+  Likely: {
+    items: [
+      {
+        match: [1, 75],
+        data: 'Yes',
+      },
+      {
+        match: [76, 100],
+        data: 'No',
+      },
+    ],
+  },
+  '50/50': {
+    items: [
+      {
+        match: [1, 50],
+        data: 'Yes',
+      },
+      {
+        match: [51, 100],
+        data: 'No',
+      },
+    ],
+  },
+  Unlikely: {
+    items: [
+      {
+        match: [1, 25],
+        data: 'Yes',
+      },
+      {
+        match: [26, 100],
+        data: 'No',
+      },
+    ],
+  },
+  'Small Chance': {
+    items: [
+      {
+        match: [1, 10],
+        data: 'Yes',
+      },
+      {
+        match: [11, 100],
+        data: 'No',
+      },
+    ],
+  },
+  'Begin a Session': {
+    items: [
+      {
+        match: [1, 10],
+        data: 'Flashback reveals an aspect of your background or nature',
+      },
+      {
+        match: [11, 20],
+        data: 'Flashback reveals an aspect of another character, place, or faction',
+      },
+      {
+        match: [21, 30],
+        data: 'Influential character or faction is introduced or given new detail',
+      },
+      {
+        match: [31, 40],
+        data: 'Seemingly unrelated situations are shown to be connected',
+      },
+      {
+        match: [41, 50],
+        data: 'External factors create new danger, urgency, or importance for a quest',
+      },
+      {
+        match: [51, 60],
+        data: 'Important character is put in danger or suffers a misadventure',
+      },
+      {
+        match: [61, 70],
+        data: 'Key location is made unsafe or becomes mired in conflict',
+      },
+      {
+        match: [71, 80],
+        data: 'Defeated enemy or threat makes a surprising return',
+      },
+      {
+        match: [81, 90],
+        data: 'Unexpected peril lies ahead or lurks just out of view',
+      },
+      {
+        match: [91, 100],
+        data: 'Unforeseen aid is on the way or within reach',
+      },
+    ],
+  },
   'Confront Chaos': {
     items: [
       {
         match: [1, 4],
-        data: '<p>Baneful weapon of mass destruction</p>\n',
+        data: 'Baneful weapon of mass destruction',
       },
       {
         match: [5, 9],
-        data: '<p>Cataclysmic environmental effects</p>\n',
+        data: 'Cataclysmic environmental effects',
       },
       {
         match: [10, 12],
-        data: '<p>Dead given unnatural life</p>\n',
+        data: 'Dead given unnatural life',
       },
       {
         match: [13, 17],
-        data: '<p>Destructive lifeform of monstrous proportion</p>\n',
+        data: 'Destructive lifeform of monstrous proportion',
       },
       {
         match: [18, 20],
-        data: '<p>Dread hallucinations or illusions</p>\n',
+        data: 'Dread hallucinations or illusions',
       },
       {
         match: [21, 24],
-        data: '<p>Harbingers of an imminent invasion</p>\n',
+        data: 'Harbingers of an imminent invasion',
       },
       {
         match: [25, 27],
-        data: '<p>Horde of insatiable hunger or fury</p>\n',
+        data: 'Horde of insatiable hunger or fury',
       },
       {
         match: [28, 32],
-        data: '<p>Horrific lifeforms of inscrutable purpose</p>\n',
+        data: 'Horrific lifeforms of inscrutable purpose',
       },
       {
         match: [33, 36],
-        data: '<p>Impostors in human form</p>\n',
+        data: 'Impostors in human form',
       },
       {
         match: [37, 41],
-        data: '<p>Machines made enemy</p>\n',
+        data: 'Machines made enemy',
       },
       {
         match: [42, 45],
-        data: '<p>Malignant contagion or parasite</p>\n',
+        data: 'Malignant contagion or parasite',
       },
       {
         match: [46, 50],
-        data: '<p>Messenger or signal with a dire warning</p>\n',
+        data: 'Messenger or signal with a dire warning',
       },
       {
         match: [51, 53],
-        data: '<p>Passage to a grim alternate reality</p>\n',
+        data: 'Passage to a grim alternate reality',
       },
       {
         match: [54, 58],
-        data: '<p>People corrupted by chaos</p>\n',
+        data: 'People corrupted by chaos',
       },
       {
         match: [59, 63],
-        data: '<p>Powerful distortions of time or space</p>\n',
+        data: 'Powerful distortions of time or space',
       },
       {
         match: [64, 68],
-        data: '<p>Signs of an impending catastrophe</p>\n',
+        data: 'Signs of an impending catastrophe',
       },
       {
         match: [69, 72],
-        data: '<p>Site of a baffling disappearance</p>\n',
+        data: 'Site of a baffling disappearance',
       },
       {
         match: [73, 77],
-        data: '<p>Site of a horrible disaster</p>\n',
+        data: 'Site of a horrible disaster',
       },
       {
         match: [78, 82],
-        data: '<p>Site of terrible carnage</p>\n',
+        data: 'Site of terrible carnage',
       },
       {
         match: [83, 87],
-        data: '<p>Technology nullified or made unstable</p>\n',
+        data: 'Technology nullified or made unstable',
       },
       {
         match: [88, 92],
-        data: '<p>Technology warped for dark purpose</p>\n',
+        data: 'Technology warped for dark purpose',
       },
       {
         match: [93, 96],
-        data: '<p>Vault of dread technology or power</p>\n',
+        data: 'Vault of dread technology or power',
       },
       {
         match: [97, 100],
-        data: '<p>Worshipers of great and malevolent powers</p>\n',
+        data: 'Worshipers of great and malevolent powers',
       },
     ],
   },
@@ -101,23 +205,23 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 10],
-        data: '<p>You suffer mortal harm. <strong>Face Death</strong>.</p>\n',
+        data: 'You suffer mortal harm. Face Death.',
       },
       {
         match: [11, 20],
-        data: '<p>You are dying. Within an hour or two, you must <strong>Heal</strong> and raise your health above 0, or <strong>Face Death</strong>.</p>\n',
+        data: 'You are dying. Within an hour or two, you must Heal and raise your health above 0, or Face Death.',
       },
       {
         match: [21, 35],
-        data: '<p>You are unconscious and out of action. If left alone, you come back to your senses in an hour or two. If you are vulnerable to ongoing harm, <strong>Face Death</strong>.</p>\n',
+        data: 'You are unconscious and out of action. If left alone, you come back to your senses in an hour or two. If you are vulnerable to ongoing harm, Face Death.',
       },
       {
         match: [36, 50],
-        data: '<p>You are reeling and fighting to stay conscious. If you engage in any vigorous activity before taking a breather for a few minutes, roll on this table again (before resolving the other move).</p>\n',
+        data: 'You are reeling and fighting to stay conscious. If you engage in any vigorous activity before taking a breather for a few minutes, roll on this table again (before resolving the other move).',
       },
       {
         match: [51, 100],
-        data: '<p>You are still standing.</p>\n',
+        data: 'You are still standing.',
       },
     ],
   },
@@ -125,19 +229,19 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 10],
-        data: '<p>You are overwhelmed. <strong>Face Desolation</strong>.</p>\n',
+        data: 'You are overwhelmed. Face Desolation.',
       },
       {
         match: [11, 25],
-        data: '<p>You give up. <strong>Forsake Your Vow</strong>.</p>\n',
+        data: 'You give up. Forsake Your Vow.',
       },
       {
         match: [26, 50],
-        data: '<p>You give in to fear or compulsion, and act against your better instincts.</p>\n',
+        data: 'You give in to fear or compulsion, and act against your better instincts.',
       },
       {
         match: [51, 100],
-        data: '<p>You persevere.</p>\n',
+        data: 'You persevere.',
       },
     ],
   },
@@ -145,95 +249,95 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 4],
-        data: '<p>Advanced technology waiting to be harnessed or salvaged</p>\n',
+        data: 'Advanced technology waiting to be harnessed or salvaged',
       },
       {
         match: [5, 8],
-        data: '<p>Ancient archive or message</p>\n',
+        data: 'Ancient archive or message',
       },
       {
         match: [9, 10],
-        data: '<p>Artificial consciousness evolved to a higher state</p>\n',
+        data: 'Artificial consciousness evolved to a higher state',
       },
       {
         match: [11, 12],
-        data: '<p>Clues to a crucial resource or uncharted domain</p>\n',
+        data: 'Clues to a crucial resource or uncharted domain',
       },
       {
         match: [13, 14],
-        data: '<p>Envoy from another time or reality</p>\n',
+        data: 'Envoy from another time or reality',
       },
       {
         match: [15, 22],
-        data: '<p>Extraordinary natural phenomenon</p>\n',
+        data: 'Extraordinary natural phenomenon',
       },
       {
         match: [23, 24],
-        data: '<p>First contact with intelligent life</p>\n',
+        data: 'First contact with intelligent life',
       },
       {
         match: [25, 26],
-        data: '<p>Gateway to another time or alternate reality</p>\n',
+        data: 'Gateway to another time or alternate reality',
       },
       {
         match: [27, 28],
-        data: '<p>Key to unlocking a language or method of communication</p>\n',
+        data: 'Key to unlocking a language or method of communication',
       },
       {
         match: [29, 34],
-        data: '<p>Lost or hidden people</p>\n',
+        data: 'Lost or hidden people',
       },
       {
         match: [35, 42],
-        data: '<p>Majestic or unusual lifeforms</p>\n',
+        data: 'Majestic or unusual lifeforms',
       },
       {
         match: [43, 46],
-        data: '<p>Marvel of ancient engineering</p>\n',
+        data: 'Marvel of ancient engineering',
       },
       {
         match: [47, 50],
-        data: '<p>Miraculously preserved artifact or specimen</p>\n',
+        data: 'Miraculously preserved artifact or specimen',
       },
       {
         match: [51, 56],
-        data: '<p>Monumental architecture or artistry of an ancient civilization</p>\n',
+        data: 'Monumental architecture or artistry of an ancient civilization',
       },
       {
         match: [57, 62],
-        data: '<p>Mysterious device or artifact of potential value</p>\n',
+        data: 'Mysterious device or artifact of potential value',
       },
       {
         match: [63, 66],
-        data: '<p>New understanding of an enduring mystery</p>\n',
+        data: 'New understanding of an enduring mystery',
       },
       {
         match: [67, 68],
-        data: '<p>Pathway or means of travel to a distant location</p>\n',
+        data: 'Pathway or means of travel to a distant location',
       },
       {
         match: [69, 70],
-        data: '<p>Person or lifeform with phenomenal abilities</p>\n',
+        data: 'Person or lifeform with phenomenal abilities',
       },
       {
         match: [71, 78],
-        data: '<p>Place of awe-inspiring beauty</p>\n',
+        data: 'Place of awe-inspiring beauty',
       },
       {
         match: [79, 86],
-        data: '<p>Rare and valuable resource</p>\n',
+        data: 'Rare and valuable resource',
       },
       {
         match: [87, 88],
-        data: '<p>Safeguarded or idyllic location</p>\n',
+        data: 'Safeguarded or idyllic location',
       },
       {
         match: [89, 90],
-        data: '<p>Visions or prophesies of the future</p>\n',
+        data: 'Visions or prophesies of the future',
       },
       {
         match: [91, 100],
-        data: '<p>[Roll twice]</p>\n',
+        data: 'Roll twice',
       },
     ],
   },
@@ -241,83 +345,83 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 2],
-        data: '<p>A trusted individual or community acts against you</p>\n',
+        data: 'A trusted individual or community acts against you',
       },
       {
         match: [3, 4],
-        data: '<p>An individual or community you care about is exposed to danger</p>\n',
+        data: 'An individual or community you care about is exposed to danger',
       },
       {
         match: [5, 7],
-        data: '<p>You encounter signs of a looming threat</p>\n',
+        data: 'You encounter signs of a looming threat',
       },
       {
         match: [8, 10],
-        data: '<p>You create an opportunity for an enemy</p>\n',
+        data: 'You create an opportunity for an enemy',
       },
       {
         match: [11, 14],
-        data: '<p>You face a tough choice</p>\n',
+        data: 'You face a tough choice',
       },
       {
         match: [15, 18],
-        data: '<p>You face the consequences of an earlier choice</p>\n',
+        data: 'You face the consequences of an earlier choice',
       },
       {
         match: [19, 22],
-        data: '<p>A surprising development complicates your quest</p>\n',
+        data: 'A surprising development complicates your quest',
       },
       {
         match: [23, 26],
-        data: '<p>You are separated from something or someone</p>\n',
+        data: 'You are separated from something or someone',
       },
       {
         match: [27, 32],
-        data: '<p>Your action causes collateral damage or has an unintended effect</p>\n',
+        data: 'Your action causes collateral damage or has an unintended effect',
       },
       {
         match: [33, 38],
-        data: '<p>Something of value is lost or destroyed</p>\n',
+        data: 'Something of value is lost or destroyed',
       },
       {
         match: [39, 44],
-        data: '<p>The environment or terrain introduces a new hazard</p>\n',
+        data: 'The environment or terrain introduces a new hazard',
       },
       {
         match: [45, 50],
-        data: '<p>A new enemy is revealed</p>\n',
+        data: 'A new enemy is revealed',
       },
       {
         match: [51, 56],
-        data: '<p>A friend, companion, or ally is in harm’s way (or you are, if alone)</p>\n',
+        data: 'A friend, companion, or ally is in harm’s way (or you are, if alone)',
       },
       {
         match: [57, 62],
-        data: '<p>Your equipment or vehicle malfunctions</p>\n',
+        data: 'Your equipment or vehicle malfunctions',
       },
       {
         match: [63, 68],
-        data: '<p>Your vehicle suffers damage</p>\n',
+        data: 'Your vehicle suffers damage',
       },
       {
         match: [69, 74],
-        data: '<p>You waste resources</p>\n',
+        data: 'You waste resources',
       },
       {
         match: [75, 81],
-        data: '<p>You are harmed</p>\n',
+        data: 'You are harmed',
       },
       {
         match: [82, 88],
-        data: '<p>You are stressed</p>\n',
+        data: 'You are stressed',
       },
       {
         match: [89, 95],
-        data: '<p>You are delayed or put at a disadvantage</p>\n',
+        data: 'You are delayed or put at a disadvantage',
       },
       {
         match: [96, 100],
-        data: '<p>[Roll twice]</p>\n',
+        data: 'Roll twice',
       },
     ],
   },
@@ -325,27 +429,27 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 40],
-        data: '<p>It’s worse than you thought: You or an ally make a suffer move (-2)</p>\n',
+        data: 'It’s worse than you thought: You or an ally make a suffer move (-2)',
       },
       {
         match: [41, 52],
-        data: '<p>The victory is short-lived: A new peril or foe is revealed</p>\n',
+        data: 'The victory is short-lived: A new peril or foe is revealed',
       },
       {
         match: [53, 64],
-        data: '<p>You face collateral damage: Something is lost, damaged, or broken</p>\n',
+        data: 'You face collateral damage: Something is lost, damaged, or broken',
       },
       {
         match: [65, 76],
-        data: '<p>Others pay the price: Someone else suffers the cost</p>\n',
+        data: 'Others pay the price: Someone else suffers the cost',
       },
       {
         match: [77, 88],
-        data: '<p>Others won’t forget: You are marked for vengeance</p>\n',
+        data: 'Others won’t forget: You are marked for vengeance',
       },
       {
         match: [89, 100],
-        data: '<p>It gets complicated: The true nature of a foe or objective is revealed</p>\n',
+        data: 'It gets complicated: The true nature of a foe or objective is revealed',
       },
     ],
   },
@@ -353,35 +457,35 @@ export const Move: { [index: string]: ISFTable } = {
     items: [
       {
         match: [1, 10],
-        data: '<p>Immediate catastrophic destruction. All aboard must <strong>Endure Harm</strong> or <strong>Face Death</strong>, as appropriate.</p>\n',
+        data: 'Immediate catastrophic destruction. All aboard must Endure Harm or [Face Death], as appropriate.',
       },
       {
         match: [11, 25],
-        data: '<p>Destruction is imminent and unavoidable. If you do not have the means or intention to get clear, <strong>Endure Harm</strong> or <strong>Face Death</strong> as appropriate.</p>\n',
+        data: 'Destruction is imminent and unavoidable. If you do not have the means or intention to get clear, Endure Harm or Face Death as appropriate.',
       },
       {
         match: [26, 40],
-        data: '<p>Destruction is imminent, but can be averted if you <strong>Repair</strong> your vehicle and raise its integrity above 0. If you fail, see 11-25.</p>\n',
+        data: 'Destruction is imminent, but can be averted if you Repair your vehicle and raise its integrity above 0. If you fail, see 11-25.',
       },
       {
         match: [41, 55],
-        data: '<p>You cannot <strong>Repair</strong> this vehicle until you <strong>Resupply</strong> and obtain a crucial replacement part. If you roll this result again prior to that, see 11-25.</p>\n',
+        data: 'You cannot Repair this vehicle until you Resupply and obtain a crucial replacement part. If you roll this result again prior to that, see 11-25.',
       },
       {
         match: [56, 70],
-        data: '<p>The vehicle is crippled or out of your control. To get it back in action, you must <strong>Repair</strong> and raise its integrity above 0.</p>\n',
+        data: 'The vehicle is crippled or out of your control. To get it back in action, you must Repair and raise its integrity above 0.',
       },
       {
         match: [71, 85],
-        data: '<p>It’s a rough ride. All aboard suffer must make the <strong>Endure Harm</strong>, <strong>Endure Stress</strong>, or <strong>Companion Takes a Hit</strong> move, suffering a serious (-2) cost.</p>\n',
+        data: 'It’s a rough ride. All aboard suffer must make the Endure Harm], [Endure Stress], or [Companion Takes a Hit move, suffering a serious (-2) cost.',
       },
       {
         match: [86, 95],
-        data: '<p>You’ve lost fuel, energy, or cargo. <strong>Sacrifice Resources</strong> (-2).</p>\n',
+        data: 'You’ve lost fuel, energy, or cargo. Sacrifice Resources (-2).',
       },
       {
         match: [96, 100],
-        data: '<p>Against all odds, the vehicle holds together.</p>\n',
+        data: 'Against all odds, the vehicle holds together.',
       },
     ],
   },

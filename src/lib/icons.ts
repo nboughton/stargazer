@@ -5,7 +5,13 @@ export const icon = {
   player: (): string => {
     return 'img:icons/space/player-ship.svg';
   },
-  star: (): string => {
+  star: (type: string): string => {
+    const res = /(red|orange|yellow|blue|young|white|corrupted|neutron|two|black|artificial|unstable|hypergiant)/i.exec(
+      type
+    );
+    if (res) {
+      return `img:icons/stars/${res[0].toLowerCase()}.png`;
+    }
     return 'img:icons/space/star-sattelites.svg';
   },
 
@@ -14,7 +20,7 @@ export const icon = {
   },
 
   planet: (type: string): string => {
-    return `img:icons/planets/${type.toLowerCase()}.svg`;
+    return `img:icons/planets/${type.toLowerCase()}.png`;
   },
 
   settlement: (): string => {
@@ -46,7 +52,9 @@ export const icon = {
   },
 
   asset: (name: string): string => {
-    return `img:${baseUrl}asset-${name.toLowerCase().replace(/ /gi, '-')}.svg`;
+    return /custom/i.test(name)
+      ? 'mdi-crosshairs-question'
+      : `img:${baseUrl}asset-${name.toLowerCase().replace(/ /gi, '-')}.svg`;
   },
 
   truth: (name: string): string => {

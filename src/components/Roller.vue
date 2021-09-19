@@ -8,107 +8,110 @@
     class="roller"
   >
     <q-card class="column my-card">
-      <q-card-section class="row items-center">
-        <div class="col-12 text-h6 q-px-sm" v-if="d100Res > 0">
-          <div class="row items-baseline justify-between">
-            <div class="col-shrink">
-              <q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" />
-            </div>
-            <div class="col-grow text-center q-mb-sm">{{ d100Res }}</div>
-            <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
+      <q-card-section class="row items-center justify-between q-gutter-sm q-pa-sm text-h6" v-if="d100Res > 0">
+        <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
+        <div class="col-grow text-center">{{ d100Res }}</div>
+        <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
+      </q-card-section>
+
+      <q-card-section class="row items-center justify-between q-gutter-sm q-pa-sm text-h6" v-if="d6Res > 0">
+        <div class="col-shrink"><q-icon name="mdi-dice-6" /></div>
+        <div class="col-grow text-center">{{ d6Res }}</div>
+        <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d6Res = 0" :size="btnSize" />
+      </q-card-section>
+
+      <q-card-section class="q-pa-sm" v-if="data.result">
+        <div class="row text-center text-h6 items-center justify-center q-mb-sm">
+          <div :class="data.action.color">
+            {{ data.result }}
+            <span v-if="data.challenge.match">with a match</span>
+            <q-icon v-if="burnt" name="mdi-fire" />
           </div>
         </div>
 
-        <div class="col-12 text-h6 q-px-sm" v-if="d6Res > 0">
-          <div class="row items-baseline justify-between">
-            <div class="col-shrink"><q-icon name="mdi-dice-6" /></div>
-            <div class="col-grow text-center q-mb-sm">{{ d6Res }}</div>
-            <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d6Res = 0" :size="btnSize" />
-          </div>
+        <div class="row items-center justify-between text-h6 q-mx-sm">
+          <q-btn v-if="!burnt" :icon="adIcon" size="md" flat dense @click="reroll(true, false, false)">
+            <q-tooltip>Reroll Action die</q-tooltip>
+          </q-btn>
+          <span v-if="!burnt">+</span>
+          <span v-if="!burnt">{{ attribute }}</span>
+          <span v-if="!burnt">+</span>
+          <span v-if="!burnt">{{ adds }}</span>
+          <span v-if="!burnt">=</span>
+          <span v-if="burnt">Momentum</span>
+          <span v-if="burnt">=</span>
+          <span :class="data.action.color">{{ data.action.score }}</span>
+          <span>vs</span>
+          <q-btn :class="data.challenge.die1.color" outline round size="md" @click="reroll(false, true, false)">
+            {{ data.challenge.die1.roll }}
+            <q-tooltip>Reroll Challenge die</q-tooltip>
+          </q-btn>
+
+          <q-btn :class="data.challenge.die2.color" outline round size="md" @click="reroll(false, false, true)">
+            {{ data.challenge.die2.roll }}
+            <q-tooltip>Reroll Challenge die</q-tooltip>
+          </q-btn>
+          <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="data.result = ''" :size="btnSize">
+            <q-tooltip>Clear Roll Results</q-tooltip>
+          </q-btn>
         </div>
+      </q-card-section>
 
-        <div v-if="data.result" class="col-12 text-h6">
-          <div class="row text-center items-center justify-center">
-            <div :class="data.action.color">
-              {{ data.result }}
-              <span v-if="data.challenge.match">with a match</span>
-              <q-icon v-if="burnt" name="mdi-fire" />
-            </div>
-          </div>
-          <div class="row items-center justify-between q-mx-sm">
-            <q-btn v-if="!burnt" :icon="adIcon" size="md" flat dense @click="reroll(true, false, false)">
-              <q-tooltip>Reroll Action die</q-tooltip>
-            </q-btn>
-            <span v-if="!burnt">+</span>
-            <span v-if="!burnt">{{ attribute }}</span>
-            <span v-if="!burnt">+</span>
-            <span v-if="!burnt">{{ adds }}</span>
-            <span v-if="!burnt">=</span>
-            <span v-if="burnt">Momentum</span>
-            <span v-if="burnt">=</span>
-            <span :class="data.action.color">{{ data.action.score }}</span>
-            <span>vs</span>
-            <q-btn :class="data.challenge.die1.color" outline round size="md" @click="reroll(false, true, false)">
-              {{ data.challenge.die1.roll }}
-              <q-tooltip>Reroll Challenge die</q-tooltip>
-            </q-btn>
-            <span>|</span>
-            <q-btn :class="data.challenge.die2.color" outline round size="md" @click="reroll(false, false, true)">
-              {{ data.challenge.die2.roll }}
-              <q-tooltip>Reroll Challenge die</q-tooltip>
-            </q-btn>
-            <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="data.result = ''" :size="btnSize">
-              <q-tooltip>Clear Roll Results</q-tooltip>
-            </q-btn>
-          </div>
+      <q-card-section class="q-pa-sm q-mb-none">
+        <div class="row items-center justify-evenly no-wrap">
+          <q-btn-toggle
+            class="col-grow"
+            flat
+            :options="opts"
+            label="Attribute"
+            dense
+            spread
+            v-model="select"
+            :size="btnSize"
+          />
+
+          <q-input class="col-1" type="number" label="Other" dense borderless v-model="otherAttr">
+            <q-tooltip>Custom attribute value</q-tooltip>
+          </q-input>
+
+          <q-input class="col-1" type="number" label="Adds" dense borderless v-model="adds" />
         </div>
+      </q-card-section>
 
-        <div class="col-12">
-          <div class="row items-baseline justify-between">
-            <q-btn-toggle
-              class="col-grow"
-              :options="opts"
-              label="Attribute"
-              dense
-              flat
-              spread
-              v-model="select"
-              :size="btnSize"
-            />
-            <q-input class="col-1" type="number" label="Other" dense borderless hide-bottom-space v-model="otherAttr">
-              <q-tooltip>Custom attribute value</q-tooltip>
-            </q-input>
-            <q-input class="col-1" type="number" label="Adds" dense borderless hide-bottom-space v-model="adds" />
-          </div>
+      <q-card-section class="q-pa-sm">
+        <div class="row items-center justify-between">
+          <q-btn class="col-shrink" icon="expand_more" dense flat @click="close" :size="btnSize">
+            <q-tooltip>Hide roller</q-tooltip>
+          </q-btn>
 
-          <div class="row items-baseline justify-evenly">
-            <q-btn class="col-shrink" icon="expand_more" dense flat @click="close" :size="btnSize">
-              <q-tooltip>Hide roller</q-tooltip>
-            </q-btn>
-            <q-btn class="col-shrink" dense flat @click="roll" :size="btnSize">
-              <q-icon name="mdi-dice-6" />
-              <q-icon name="img:icons/dice/d10.svg" />
-              <q-icon name="img:icons/dice/d10.svg" />
-              <q-tooltip>Roll +Attribute</q-tooltip>
-            </q-btn>
-            <q-btn
-              class="col-shrink"
-              dense
-              flat
-              :label="campaign.data.character.tracks.momentum.value"
-              icon="mdi-fire"
-              @click="burn"
-              :size="btnSize"
-            >
-              <q-tooltip>Burn Momentum</q-tooltip>
-            </q-btn>
-            <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
-              <q-tooltip>Roll a D6</q-tooltip>
-            </q-btn>
-            <q-btn class="col-shrink" dense flat icon="img:icons/dice/d100.svg" @click="d100" :size="btnSize">
-              <q-tooltip>Roll a D100</q-tooltip>
-            </q-btn>
-          </div>
+          <q-btn class="col-shrink" dense flat @click="roll" :size="btnSize">
+            <q-icon name="mdi-dice-6" />
+            <q-icon name="img:icons/dice/d10.svg" />
+            <q-icon name="img:icons/dice/d10.svg" />
+            <q-tooltip>Roll +Attribute</q-tooltip>
+          </q-btn>
+
+          <q-btn
+            class="col-shrink"
+            dense
+            flat
+            :label="campaign.data.character.tracks.momentum.value"
+            icon="mdi-fire"
+            @click="burn"
+            :size="btnSize"
+          >
+            <q-tooltip>Burn Momentum</q-tooltip>
+          </q-btn>
+
+          <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
+            <q-tooltip>Roll a D6</q-tooltip>
+          </q-btn>
+
+          <q-btn class="col-shrink" dense flat @click="d100" :size="btnSize">
+            <q-icon name="img:icons/dice/d10.svg" />
+            <q-icon name="img:icons/dice/d10.svg" />
+            <q-tooltip>Roll a D100</q-tooltip>
+          </q-btn>
         </div>
       </q-card-section>
     </q-card>

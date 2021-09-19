@@ -16,22 +16,23 @@
         </q-item-section>
       </q-item>
     </template>
-    <div class="q-pa-md q-gutter-sm">
-      <div v-if="data.subtitle" v-html="data.subtitle" />
+    <div class="q-pa-sm">
+      <div class="q-mb-sm" v-if="data.subtitle" v-html="data.subtitle" />
+
       <i-input class="q-mb-sm" v-if="data.input" :label="data.input.label" v-model="data.input.text" />
+
       <div v-for="(item, index) in data.items" :key="index">
-        <div class="row q-mb-sm no-wrap">
-          <q-checkbox class="col-1 self-center" v-model="data.items[index].marked" dense />
-          <div class="col-11 q-my-sm q-ml-sm text-justify asset-text" v-html="item.text" />
+        <div class="row q-mb-sm no-wrap items-center q-pr-sm">
+          <q-checkbox class="col-shrink q-mr-sm" v-model="data.items[index].marked" dense />
+          <q-separator vertical />
+          <div class="col q-mx-sm text-justify asset-text" v-html="item.text" />
         </div>
-        <div class="row justify-end">
-          <i-input
-            class="col-11"
-            v-if="data.items[index].input"
-            :label="data.items[index].input.label"
-            v-model="data.items[index].input.text"
-          />
-        </div>
+        <i-input
+          class="q-ml-lg q-mb-sm"
+          v-if="data.items[index].input"
+          :label="data.items[index].input.label"
+          v-model="data.items[index].input.text"
+        />
       </div>
       <div class="row justify-evenly q-gutter-sm">
         <q-checkbox v-if="data.cursed != undefined" label="Cursed" v-model="data.cursed" />

@@ -18,4 +18,9 @@
   [*] Add last-rendered to prevent double render on passage mark
 
 - UX
-  [ ] Make delete button presentation consistent
+  [*] Make delete button presentation consistent
+
+- BUGS
+  [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open
+  Workaround: changing to Truths/Sector and back to character page makes the + open the asset selector again
+  [*] Add Move oracles: Begin a Session, Ask The Oracle

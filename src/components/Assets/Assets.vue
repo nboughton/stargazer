@@ -84,7 +84,7 @@
                   label="Delete"
                   @click="customAssets.delete(ca)"
                 />
-                <q-btn class="q-ma-md" outline label="Mine!" @click="addAsset(ca.id || ca.title)" />
+                <q-btn class="q-ma-md" outline label="Add" @click="addAsset(ca.id || ca.title)" />
               </div>
             </div>
             <div v-else>
@@ -101,7 +101,6 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
 import { Assets } from 'src/lib/assets';
-//import Asset from 'src/components/Assets2/Asset.vue';
 import { IAsset } from 'src/components/models';
 import AssetEditor from './AssetEditor.vue';
 import { useAssets } from 'src/store/assets';
@@ -118,6 +117,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['update:modelValue'],
   setup(props, ctx) {
     const campaign = useCampaign();
     const config = useConfig();
@@ -125,6 +125,10 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       () => (showDialog.value = props.modelValue)
+    );
+    watch(
+      () => showDialog.value,
+      () => ctx.emit('update:modelValue', showDialog.value)
     );
     const close = () => {
       showDialog.value = false;
