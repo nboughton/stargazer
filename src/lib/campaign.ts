@@ -25,6 +25,7 @@ import {
   EDerelictZone,
   IVault,
   ECellStatus,
+  ESectorOpts,
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
@@ -245,8 +246,9 @@ export function NewCell(id: string, name?: string): ISectorCell {
   };
 }
 
-export function CellLabel(c: ISectorCell): string {
+export function CellLabel(c: ISectorCell) {
   let label = c.name;
+  let type = '';
   const v: { [index: string]: number } = {
     [ESettPop.Few]: 1,
     [ESettPop.Dozens]: 2,
@@ -255,13 +257,34 @@ export function CellLabel(c: ISectorCell): string {
     [ESettPop.TensOfThou]: 5,
   };
 
-  if (c.npcs.length > 0) label = c.npcs[0].name;
-  if (c.creatures.length > 0) label = c.creatures[0].name;
-  if (c.vaults.length > 0) label = c.vaults[0].name;
-  if (c.derelicts.length > 0) label = c.derelicts[0].name;
-  if (c.ships.length > 0) label = c.ships[0].name;
-  if (c.planets.length > 0) label = c.planets[0].name;
-  if (c.stars.length > 0) label = c.stars[0].name;
+  if (c.npcs.length > 0) {
+    label = c.npcs[0].name;
+    type = ESectorOpts.NPCs;
+  }
+  if (c.creatures.length > 0) {
+    label = c.creatures[0].name;
+    type = ESectorOpts.Creatures;
+  }
+  if (c.vaults.length > 0) {
+    label = c.vaults[0].name;
+    type = ESectorOpts.Vaults;
+  }
+  if (c.derelicts.length > 0) {
+    label = c.derelicts[0].name;
+    type = ESectorOpts.Derelicts;
+  }
+  if (c.ships.length > 0) {
+    label = c.ships[0].name;
+    type = ESectorOpts.Ships;
+  }
+  if (c.planets.length > 0) {
+    label = c.planets[0].name;
+    type = ESectorOpts.Planets;
+  }
+  if (c.stars.length > 0) {
+    label = c.stars[0].name;
+    type = ESectorOpts.Stars;
+  }
   if (c.settlements.length > 0) {
     let largest = 0;
     c.settlements.forEach((s) => {
@@ -270,8 +293,9 @@ export function CellLabel(c: ISectorCell): string {
         label = s.name;
       }
     });
+    type = ESectorOpts.Settlements;
   }
-  return label;
+  return { label, type };
 }
 
 export function NewSector(): ISector {

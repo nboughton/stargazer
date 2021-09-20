@@ -119,7 +119,7 @@
           <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
           <q-card class="q-mb-md" flat v-for="(cell, cID) in sector" :key="cID">
             <q-card-section class="row my-card sf-header text-h5">
-              Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]) }}
+              Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]).label }}
             </q-card-section>
             <q-card-section class="q-pa-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">

@@ -150,8 +150,8 @@ module.exports = configure(function (ctx) {
         description: 'An app for journaling solo Ironsworn: Starforged campaigns',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
+        background_color: '#2E3440',
+        theme_color: '#2E3440',
         icons: [
           {
             src: 'icons/icon-128x128.png',

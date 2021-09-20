@@ -160,16 +160,16 @@ export default defineComponent({
     };
 
     const locationLabel = (c: ISectorCell, x: number, y: number) => {
-      let label = CellLabel(c);
+      let { label, type } = CellLabel(c);
 
       const t = SVG()
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: '#fff', family: 'Encode', size: config.data.map.hexSize * 0.9 })
+        .font({ fill: colours[type], weight: 'bold', size: config.data.map.hexSize })
         .stroke({ color: 'black', width: 1 });
 
-      t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 2.4);
+      t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 3);
     };
 
     const renderStarfield = (): G => {
@@ -270,18 +270,15 @@ export default defineComponent({
         if (props.searchResults != {} && props.searchResults[config.data.sector]) {
           if (props.searchResults[config.data.sector][id]) {
             const cell = props.searchResults[config.data.sector][id];
-            const hex = map.find(`.${id}`);
+            const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id]);
 
-            if (hex.length > 0) {
+            if (map.find(`.${id}`).length > 0) {
               const text = SVG().text(function (add) {
                 Object.keys(cell).forEach((oType) => {
                   cell[oType].forEach((i) => {
-                    if (campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i]) {
-                      add
-                        .tspan(campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i].name)
-                        .stroke({ color: 'black', width: 1 })
-                        .fill(colours[oType])
-                        .newLine();
+                    const c = campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i];
+                    if (c && c.name !== label) {
+                      add.tspan(c.name).stroke({ color: 'black', width: 1 }).fill(colours[oType]).newLine();
                     }
                   });
                 });
