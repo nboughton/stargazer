@@ -8,13 +8,13 @@
     class="roller"
   >
     <q-card class="column my-card">
-      <q-card-section class="row items-center justify-between q-gutter-sm q-pa-sm text-h6" v-if="d100Res > 0">
+      <q-card-section class="row items-center justify-between q-pa-sm text-h6" v-if="d100Res > 0">
         <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
         <div class="col-grow text-center">{{ d100Res }}</div>
         <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
       </q-card-section>
 
-      <q-card-section class="row items-center justify-between q-gutter-sm q-pa-sm text-h6" v-if="d6Res > 0">
+      <q-card-section class="row items-center justify-between q-pa-sm text-h6" v-if="d6Res > 0">
         <div class="col-shrink"><q-icon name="mdi-dice-6" /></div>
         <div class="col-grow text-center">{{ d6Res }}</div>
         <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d6Res = 0" :size="btnSize" />
@@ -29,7 +29,7 @@
           </div>
         </div>
 
-        <div class="row items-center justify-between text-h6 q-mx-sm">
+        <div class="row items-center justify-between text-h6">
           <q-btn v-if="!burnt" :icon="adIcon" size="md" flat dense @click="reroll(true, false, false)">
             <q-tooltip>Reroll Action die</q-tooltip>
           </q-btn>
