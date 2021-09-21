@@ -12,7 +12,7 @@
                 v-model="filter"
                 borderless
                 clearable
-                debounce="750"
+                debounce="200"
               >
                 <template v-slot:prepend>
                   <q-icon name="search" />

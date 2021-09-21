@@ -1,5 +1,14 @@
 <template>
-  <q-input :label="label" v-model="data" :autogrow="autogrow" :clearable="clearable" dense standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" debounce="750">
+  <q-input
+    :label="label"
+    v-model="data"
+    :autogrow="autogrow"
+    :clearable="clearable"
+    dense
+    standout="bg-blue-grey text-white"
+    :input-style="{ color: '#ECEFF4' }"
+    debounce="200"
+  >
     <template v-slot:append>
       <slot name="append" />
     </template>

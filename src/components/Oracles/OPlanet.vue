@@ -8,7 +8,7 @@
   <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
   <div class="row items-center">
-    <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense debounce="750" />
+    <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense debounce="200" />
     <q-btn icon="mdi-playlist-plus" flat dense @click="btns.DescText">
       <q-tooltip>Use default description text</q-tooltip>
     </q-btn>
@@ -60,7 +60,8 @@ export default defineComponent({
         data.value.description = Planets[data.value.type].description;
       },
       Name: () => {
-        data.value.name = Planets[data.value.type].names[Math.floor(Math.random() * Planets[data.value.type].names.length)];
+        data.value.name =
+          Planets[data.value.type].names[Math.floor(Math.random() * Planets[data.value.type].names.length)];
       },
       Atmos: () => {
         data.value.atmosphere = tableRoll(Planets[data.value.type].atmosphere);
@@ -80,10 +81,14 @@ export default defineComponent({
         data.value.life = tableRoll(Planets[data.value.type].life);
       },
       Peril: () => {
-        poppers.value.peril = /(none|extinct)/i.test(data.value.life) ? tableRoll(Peril.lifeless) : tableRoll(Peril.lifebearing);
+        poppers.value.peril = /(none|extinct)/i.test(data.value.life)
+          ? tableRoll(Peril.lifeless)
+          : tableRoll(Peril.lifebearing);
       },
       Opp: () => {
-        poppers.value.opportunity = /(none|extinct)/i.test(data.value.life) ? tableRoll(Opportunity.lifeless) : tableRoll(Opportunity.lifebearing);
+        poppers.value.opportunity = /(none|extinct)/i.test(data.value.life)
+          ? tableRoll(Opportunity.lifeless)
+          : tableRoll(Opportunity.lifebearing);
       },
     };
 

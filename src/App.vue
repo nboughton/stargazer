@@ -12,7 +12,7 @@
 import { defineComponent, watch, ref, onMounted } from 'vue';
 import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
-import { useQuasar } from 'quasar';
+import { debounce, useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
 import { sleep } from './lib/util';
 
@@ -70,9 +70,12 @@ export default defineComponent({
 
     watch(
       () => campaign.$state,
-      async () => {
+      debounce(async () => {
+        config.data.saving = true;
         await campaign.save();
-      },
+        await sleep(200);
+        config.data.saving = false;
+      }, 500),
       { deep: true }
     );
 

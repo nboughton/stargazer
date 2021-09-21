@@ -140,6 +140,7 @@ export interface IConfig {
   sector: number;
   index: IIndexItem[];
   edit: boolean;
+  saving: boolean;
   map: {
     height: number;
     width: number;

@@ -7,6 +7,7 @@ export function NewConfig(): IConfig {
     sector: 0,
     index: [],
     edit: true,
+    saving: false,
     map: {
       height: 400,
       width: 800,

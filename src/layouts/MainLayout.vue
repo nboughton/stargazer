@@ -7,12 +7,16 @@
         <q-toolbar-title>
           <q-input input-class="sf-header text-h5" v-model="campaign.data.name" borderless />
         </q-toolbar-title>
+
+        <q-btn v-if="config.data.saving" icon="save" flat dense disable />
         <q-btn icon="mdi-dice-6" flat dense @click="showRoller = !showRoller">
           <q-tooltip>Toggle Dice Roller</q-tooltip>
         </q-btn>
+
         <q-toggle icon="delete" v-model="config.data.edit">
           <q-tooltip>Toggle Delete buttons</q-tooltip>
         </q-toggle>
+
         <q-btn dense flat icon="edit_note" @click="toggleRightDrawer" />
       </q-toolbar>
 
@@ -151,7 +155,13 @@
               <q-tooltip>Delete this journal entry</q-tooltip>
             </q-btn>
           </div>
-          <i-input class="row" label="Content" v-model="campaign.data.journal[index].content" autogrow />
+          <q-editor
+            placeholder="Content"
+            v-model="campaign.data.journal[index].content"
+            @click="journalEntryID = index"
+            :definitions="editorDefs"
+            :toolbar="editorToolbar"
+          />
         </q-expansion-item>
       </div>
     </q-drawer>
@@ -174,6 +184,7 @@
             standout="bg-blue-grey text-white"
             :input-style="{ color: '#ECEFF4' }"
             label="Select File"
+            accept=".json"
           />
         </q-card-section>
 
@@ -189,7 +200,7 @@
         <q-card-section class="text-center text-bold bg-secondary"> Load Custom Assets </q-card-section>
 
         <q-card-section class="text-subtitle text-center">
-          <q-icon name="warning" size="xl" color="warning" />
+          <q-avatar icon="warning" size="xl" color="warning" />
           <div class="text-justify">
             Warning: loading user supplied asset data can be risky. Stargazer attempts to strip any potentially
             malicious code (i.e script tags in asset items) but cannot absolutely guarantee the safety of any data
@@ -204,6 +215,7 @@
             standout="bg-blue-grey text-white"
             :input-style="{ color: '#ECEFF4' }"
             label="Select File"
+            accept=".json"
           />
         </q-card-section>
 
@@ -244,6 +256,26 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="showImageLoad">
+      <q-card class="my-card">
+        <q-card-section class="text-center text-bold bg-secondary">Upload Image</q-card-section>
+
+        <q-card-section>
+          <q-file
+            v-model="imageToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select Image"
+            accept="image/*"
+          />
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn label="Save" flat color="primary" @click="loadImage" />
+          <q-btn label="Close" flat color="warning" dense @click="showImageLoad = false" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
     <roller v-model="showRoller" :btnSize="btnSize" />
   </q-layout>
 </template>
@@ -269,10 +301,35 @@ export default defineComponent({
 
     const campaign = useCampaign();
     const config = useConfig();
+    const $q = useQuasar();
 
     const addCampaign = () => campaign.new();
     const removeCampaign = (id: string) => campaign.delete(id);
 
+    const editorDefs = {
+      image: {
+        tip: 'Upload an image',
+        icon: 'add_photo_alternate',
+        handler: () => {
+          imageToLoad.value = null;
+          showImageLoad.value = true;
+        },
+      },
+    };
+    const editorToolbar = [
+      [
+        {
+          icon: $q.iconSet.editor.align,
+          fixedLabel: true,
+          list: 'only-icons',
+          options: ['left', 'center', 'right', 'justify'],
+        },
+      ],
+      ['ordered', 'unordered'],
+      ['bold', 'italic', 'strike', 'underline'],
+      ['undo', 'redo'],
+      ['image'],
+    ];
     const addJournal = () => campaign.data.journal.unshift(NewJournal());
     const removeJournal = (index: number) => campaign.data.journal.splice(index, 1);
 
@@ -296,6 +353,24 @@ export default defineComponent({
       return false;
     };
 
+    const imageToLoad = ref(null);
+    const journalEntryID = ref(0);
+    const showImageLoad = ref(false);
+    const loadImage = () => {
+      const f: File = imageToLoad.value as unknown as File;
+
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = ev.target?.result;
+        campaign.data.journal[journalEntryID.value].content += `<p><img class="journal-img" src="${
+          img as string
+        }" /></p>`;
+      };
+
+      reader.readAsDataURL(f);
+      showImageLoad.value = false;
+    };
+
     const fileToLoad = ref(null);
     const showDataLoad = ref(false);
     const loadData = async () => {
@@ -313,7 +388,6 @@ export default defineComponent({
       showAssetLoad.value = false;
     };
 
-    const $q = useQuasar();
     const width = computed((): number => {
       if ($q.screen.lt.sm) {
         return Math.floor($q.screen.width * 0.9);
@@ -353,6 +427,12 @@ export default defineComponent({
       removeJournal,
       showJournal,
       filter,
+      imageToLoad,
+      showImageLoad,
+      journalEntryID,
+      loadImage,
+      editorDefs,
+      editorToolbar,
 
       showDataLoad,
       fileToLoad,
@@ -376,4 +456,7 @@ export default defineComponent({
 
 .about-text a:visited
     color: $primary
+
+.journal-img
+  max-width: 100%
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center">
-    <q-input class="col-grow" :label="label" v-model="data" dense debounce="750">
+    <q-input class="col-grow" :label="label" v-model="data" dense debounce="200">
       <template v-slot:append v-if="reroll">
         <span class="text-subtitle2"><q-icon name="mdi-autorenew" />1-{{ maxRerolls }}</span>
       </template>
