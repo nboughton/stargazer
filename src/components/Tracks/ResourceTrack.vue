@@ -1,6 +1,6 @@
 <template>
   <div class="row q-gutter-sm">
-    <q-btn class="col-shrink" v-if="variable" icon="mdi-numeric-negative-1" @click="decrement" outline rounded dense />
+    <q-btn class="col-shrink c-btn" v-if="variable" icon="mdi-numeric-negative-1" @click="decrement" dense />
     <q-btn-toggle
       class="col-grow"
       spread
@@ -10,7 +10,7 @@
       v-model="data.value"
       @update:modelValue="updateValue"
     />
-    <q-btn class="col-shrink" v-if="variable" icon="mdi-numeric-positive-1" @click="increment" outline rounded dense />
+    <q-btn class="col-shrink c-btn" v-if="variable" icon="mdi-numeric-positive-1" @click="increment" dense />
   </div>
 </template>
 
@@ -74,3 +74,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass">
+.c-btn
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%)
+  background-color: $primary
+</style>

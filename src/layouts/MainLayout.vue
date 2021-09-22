@@ -158,9 +158,31 @@
           <q-editor
             placeholder="Content"
             v-model="campaign.data.journal[index].content"
-            @click="journalEntryID = index"
-            :definitions="editorDefs"
-            :toolbar="editorToolbar"
+            :definitions="{
+              image: {
+                tip: 'Upload an image',
+                icon: 'add_photo_alternate',
+                handler: () => {
+                  journalEntryID = index;
+                  imageToLoad = null;
+                  showImageLoad = true;
+                },
+              },
+            }"
+            :toolbar="[
+              [
+                {
+                  icon: $q.iconSet.editor.align,
+                  fixedLabel: true,
+                  list: 'only-icons',
+                  options: ['left', 'center', 'right', 'justify'],
+                },
+              ],
+              ['ordered', 'unordered'],
+              ['bold', 'italic', 'strike', 'underline'],
+              ['undo', 'redo'],
+              ['image'],
+            ]"
           />
         </q-expansion-item>
       </div>
@@ -306,30 +328,6 @@ export default defineComponent({
     const addCampaign = () => campaign.new();
     const removeCampaign = (id: string) => campaign.delete(id);
 
-    const editorDefs = {
-      image: {
-        tip: 'Upload an image',
-        icon: 'add_photo_alternate',
-        handler: () => {
-          imageToLoad.value = null;
-          showImageLoad.value = true;
-        },
-      },
-    };
-    const editorToolbar = [
-      [
-        {
-          icon: $q.iconSet.editor.align,
-          fixedLabel: true,
-          list: 'only-icons',
-          options: ['left', 'center', 'right', 'justify'],
-        },
-      ],
-      ['ordered', 'unordered'],
-      ['bold', 'italic', 'strike', 'underline'],
-      ['undo', 'redo'],
-      ['image'],
-    ];
     const addJournal = () => campaign.data.journal.unshift(NewJournal());
     const removeJournal = (index: number) => campaign.data.journal.splice(index, 1);
 
@@ -431,8 +429,6 @@ export default defineComponent({
       showImageLoad,
       journalEntryID,
       loadImage,
-      editorDefs,
-      editorToolbar,
 
       showDataLoad,
       fileToLoad,

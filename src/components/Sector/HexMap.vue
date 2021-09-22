@@ -99,6 +99,7 @@ export default defineComponent({
     });
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
+    console.log(points);
 
     let map: Svg;
     let playerShip: Image;

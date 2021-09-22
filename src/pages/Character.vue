@@ -211,7 +211,7 @@ import { defineComponent, ref } from 'vue';
 import { NewProgressTrack } from 'src/lib/campaign';
 
 import Stats from 'src/components/Stats.vue';
-import Asset from 'src/components/Assets/Asset.vue';
+import Asset from 'src/components/Assets/Asset2.vue';
 import Assets from 'src/components/Assets/Assets.vue';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';

@@ -72,7 +72,7 @@
                 :key="i"
                 style="border-bottom: 1px solid grey"
               >
-                <q-checkbox class="col-1" disable dense v-model="a.marked" />
+                <hexbox class="col-1" v-model="a.marked" :label="`asset ability ${i + 1}`" />
                 <div class="col-10 q-ml-xs asset-text" v-html="a.text" />
               </div>
 
@@ -103,6 +103,7 @@ import { defineComponent, ref, computed, watch } from 'vue';
 import { Assets } from 'src/lib/assets';
 import { IAsset } from 'src/components/models';
 import AssetEditor from './AssetEditor.vue';
+import Hexbox from '../Hexbox.vue';
 import { useAssets } from 'src/store/assets';
 import { useCampaign } from 'src/store/campaign';
 import { icon } from 'src/lib/icons';
@@ -110,7 +111,7 @@ import { useConfig } from 'src/store/config';
 
 export default defineComponent({
   name: 'Assets',
-  components: { AssetEditor },
+  components: { AssetEditor, Hexbox },
   props: {
     modelValue: {
       type: Boolean,
