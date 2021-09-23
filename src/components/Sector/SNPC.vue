@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.npc()"
-      header-class="person-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="person-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Person"
     >

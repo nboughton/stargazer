@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- Name, pronouns, callsign etc -->
-    <div class="row full-width items-center">
+    <div class="row full-width items-center" id="top">
       <q-input class="col-grow" label="Name" v-model="campaign.data.character.name" dense debounce="200" />
       <q-input class="col-4" label="Pronouns" v-model="campaign.data.character.pronouns" dense debounce="200" />
     </div>
@@ -125,7 +125,7 @@
     <q-separator />
 
     <!-- Legacy tracks -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">Legacy Tracks</div>
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">Legacy Tracks</div>
     <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
     <q-separator />
     <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
@@ -134,7 +134,7 @@
     <q-separator />
 
     <!-- Vows -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="vows">
       Vows<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
     <progress-track
@@ -152,7 +152,7 @@
     <q-separator />
 
     <!-- Progress -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="progress">
       Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
     </div>
     <progress-track
@@ -169,7 +169,7 @@
 
     <q-separator />
 
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm">
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="assets">
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
     <!-- Assets -->
@@ -187,7 +187,7 @@
 
     <div class="row">
       <!-- Impacts -->
-      <div class="col-12 text-h4 sf-header text-center q-pt-md">Impacts</div>
+      <div class="col-12 text-h4 sf-header text-center q-pt-md" id="impacts">Impacts</div>
       <div class="col-xs-6 col-sm-3 col-3" v-for="(set, setIndex) in campaign.data.character.impacts" :key="setIndex">
         <div class="text-bold">{{ setIndex }}</div>
         <q-checkbox
@@ -203,12 +203,24 @@
     </div>
 
     <assets v-model="showAssetSelect" />
+
+    <q-page-sticky position="bottom-right" :offset="[20, 20]">
+      <q-fab v-model="scrollMenu" color="primary" direction="up" label-position="right" icon="link">
+        <q-fab-action label="Impacts" color="secondary" @click="scrollTo('impacts')" />
+        <q-fab-action label="Assets" color="secondary" @click="scrollTo('assets')" />
+        <q-fab-action label="Progress" color="secondary" @click="scrollTo('progress')" />
+        <q-fab-action label="Vows" color="secondary" @click="scrollTo('vows')" />
+        <q-fab-action label="Legacies" color="secondary" @click="scrollTo('legacies')" />
+        <q-fab-action label="Top" color="secondary" @click="scrollTo('top')" />
+      </q-fab>
+    </q-page-sticky>
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { NewProgressTrack } from 'src/lib/campaign';
+import { scroll } from 'quasar';
 
 import Stats from 'src/components/Stats.vue';
 import Asset from 'src/components/Assets/Asset2.vue';
@@ -272,6 +284,18 @@ export default defineComponent({
 
     const config = useConfig();
 
+    const { getScrollTarget, setVerticalScrollPosition } = scroll;
+    const scrollMenu = ref(false);
+    const scrollTo = (id: string) => {
+      const el = document.getElementById(id);
+      if (el !== null) {
+        const target = getScrollTarget(el);
+        const offset = el.offsetTop;
+        const duration = 200;
+        setVerticalScrollPosition(target, offset, duration);
+      }
+    };
+
     return {
       campaign,
 
@@ -288,6 +312,8 @@ export default defineComponent({
 
       burnMomentum,
       config,
+      scrollMenu,
+      scrollTo,
     };
   },
 });

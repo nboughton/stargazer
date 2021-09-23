@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.derelict()"
-      header-class="derelict-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="derelict-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Derelict"
     >

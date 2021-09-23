@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.settlement()"
-      header-class="settlement-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="settlement-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Settlement"
     >

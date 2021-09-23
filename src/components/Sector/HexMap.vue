@@ -166,7 +166,7 @@ export default defineComponent({
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: colours[type], weight: 'bold', size: config.data.map.hexSize * 0.8 })
+        .font({ fill: colours[type] || 'white', weight: 'bold', size: config.data.map.hexSize * 0.8 })
         .stroke({ color: 'black', width: 1 });
 
       t.move(x - config.data.map.hexSize * 0.5, y - config.data.map.hexSize * 1);
@@ -177,7 +177,7 @@ export default defineComponent({
       const stars = SVG().group();
       // Get a pseudorandom generator to produce consistent results)
       const random = seedrandom(
-        campaign.data.sectors[config.data.sector].name + ':' + campaign.data.sectors[config.data.sector].region
+        `${campaign.data.sectors[config.data.sector].name}:${campaign.data.sectors[config.data.sector].region}`
       );
 
       const star = SVG().circle('10');
@@ -193,12 +193,10 @@ export default defineComponent({
         const n = star.clone();
         n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(stars).dx(x).dy(y);
 
-        if (config.data.map.animations) {
-          if (i % 10 == 0) {
-            n.animate(2000 + Math.floor(Math.random() * 5000))
-              .attr({ fill: '#2e3440' })
-              .loop();
-          }
+        if (config.data.map.animations && i % 10 == 0) {
+          n.animate(2000 + Math.floor(Math.random() * 5000))
+            .attr({ fill: '#2e3440' })
+            .loop();
         }
       }
 

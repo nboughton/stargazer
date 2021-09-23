@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.starship()"
-      header-class="starship-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="starship-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Starship"
     >

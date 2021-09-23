@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.planet(data.type)"
-      header-class="planet-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="planet-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Planet"
     >

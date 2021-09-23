@@ -2,7 +2,7 @@
   <div>
     <q-expansion-item
       :icon="icon.star(data.description)"
-      header-class="star-header text-h5 sf-header rounded-borders q-mb-sm"
+      header-class="star-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Star"
     >

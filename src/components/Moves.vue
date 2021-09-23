@@ -16,7 +16,7 @@
     </q-input>
     <div v-for="(category, index) in Moves" :key="index">
       <div v-for="(move, mIndex) in category" :key="mIndex">
-        <div v-if="show(move)" class="q-mb-sm">
+        <div v-if="show(index, move)" class="q-mb-sm">
           <move :move="move" :moveType="index" />
         </div>
       </div>
@@ -36,8 +36,12 @@ export default defineComponent({
   components: { Move },
   setup() {
     const filter = ref('');
-    const show = (move: IMove): boolean => {
+    const show = (category: string, move: IMove): boolean => {
       if (filter.value === '' || filter.value === null) {
+        return true;
+      }
+
+      if (RegExp(filter.value, 'i').test(category)) {
         return true;
       }
 
