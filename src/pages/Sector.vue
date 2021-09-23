@@ -114,15 +114,26 @@
     <div class="column q-mt-md">
       <!--Raw: {{ results }}-->
       <div v-if="results != {}">
-        <div class="q-mb-lg" v-for="(sector, sID) in results" :key="sID">
-          <div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div>
+        <q-expansion-item class="q-mb-lg" v-for="(sector, sID) in results" :key="sID" default-opened>
+          <template v-slot:header>
+            <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data.sectors[+sID].name }}</div>
+          </template>
+          <!--div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div-->
 
           <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
 
-          <q-card class="q-mb-md card-bg" flat v-for="(cell, cID) in sector" :key="cID">
-            <q-card-section class="row card-bg sf-header text-h5 q-pa-sm">
-              Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]).label }}
-            </q-card-section>
+          <q-expansion-item
+            class="q-mb-md card-bg rounded-borders"
+            flat
+            v-for="(cell, cID) in sector"
+            :key="cID"
+            default-opened
+          >
+            <template v-slot:header>
+              <div class="card-bg sf-header text-h5 q-pa-none col-grow">
+                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]).label }}
+              </div>
+            </template>
 
             <q-card-section class="q-px-xs q-py-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
@@ -183,8 +194,8 @@
                 </div>
               </div>
             </q-card-section>
-          </q-card>
-        </div>
+          </q-expansion-item>
+        </q-expansion-item>
       </div>
     </div>
 

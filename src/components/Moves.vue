@@ -1,6 +1,15 @@
 <template>
   <div>
-    <q-input class="q-my-sm" label="Search name or key word" v-model="filter" debounce="500" standout="bg-blue-grey text-white" :input-style="{ color: '#ECEFF4' }" dense clearable>
+    <q-input
+      class="q-my-sm"
+      label="Search name or key word"
+      v-model="filter"
+      debounce="500"
+      standout="bg-blue-grey text-white"
+      :input-style="{ color: '#ECEFF4' }"
+      dense
+      clearable
+    >
       <template v-slot:prepend>
         <q-icon name="search" />
       </template>
@@ -40,6 +49,18 @@ export default defineComponent({
 
       if (move.keywords !== undefined) {
         if (RegExp(filter.value, 'i').test(move.keywords)) {
+          return true;
+        }
+      }
+
+      if (move.text !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.text)) {
+          return true;
+        }
+      }
+
+      if (move.source !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.source)) {
           return true;
         }
       }
