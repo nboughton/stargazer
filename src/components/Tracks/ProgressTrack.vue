@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-sm my-card rounded-borders">
+  <div class="q-pa-sm card-bg rounded-borders">
     <div class="row q-gutter-sm" v-if="showName">
       <i-input class="col-grow" v-model="data.name" @update:modelValue="updateValue" />
       <slot name="action" class="col-shrink" />

@@ -7,7 +7,7 @@
     seamless
     class="roller"
   >
-    <q-card class="column my-card">
+    <q-card class="column card-bg">
       <q-card-section class="row items-center justify-between q-pa-sm text-h6" v-if="d100Res > 0">
         <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
         <div class="col-grow text-center">{{ d100Res }}</div>

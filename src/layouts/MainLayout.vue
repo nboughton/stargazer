@@ -183,6 +183,7 @@
               ['undo', 'redo'],
               ['image'],
             ]"
+            dense
           />
         </q-expansion-item>
       </div>
@@ -249,7 +250,7 @@
     </q-dialog>
 
     <q-dialog v-model="showAbout">
-      <q-card class="my-card">
+      <q-card class="card-bg">
         <q-card-section class="row bg-secondary text-h5 justify-between">
           <div class="col-grow sf-header">About</div>
           <q-btn class="col-shrink" flat dense icon="close" @click="showAbout = false" />
@@ -279,7 +280,7 @@
     </q-dialog>
 
     <q-dialog v-model="showImageLoad">
-      <q-card class="my-card">
+      <q-card class="card-bg">
         <q-card-section class="text-center text-bold bg-secondary">Upload Image</q-card-section>
 
         <q-card-section>

@@ -17,7 +17,7 @@
   </q-layout>
 
   <q-dialog v-model="showDialog" transition-show="fade" transition-hide="fade">
-    <q-card class="my-card" style="min-width: 40%">
+    <q-card class="card-bg" style="min-width: 40%">
       <q-card-section class="row justify-between items-center bg-secondary text-h5">
         <q-input
           class="col"
@@ -99,7 +99,6 @@ export default defineComponent({
     });
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
-    console.log(points);
 
     let map: Svg;
     let playerShip: Image;
@@ -117,18 +116,18 @@ export default defineComponent({
     const locationFill = (c: ISectorCell): Gradient => {
       const f = map.gradient('linear', function (add) {
         let count = 0;
-        const addFn = (n: number, colour: string) => {
+        const addFn = (colour: string) => {
           add.stop(count, colour);
-          count += n + 1;
+          count++;
         };
-        if (c.stars.length > 0) addFn(c.stars.length, colours[ESectorOpts.Stars]);
-        if (c.planets.length > 0) addFn(c.planets.length, colours[ESectorOpts.Planets]);
-        if (c.settlements.length > 0) addFn(c.settlements.length, colours[ESectorOpts.Settlements]);
-        if (c.ships.length > 0) addFn(c.ships.length, colours[ESectorOpts.Ships]);
-        if (c.derelicts.length > 0) addFn(c.derelicts.length, colours[ESectorOpts.Derelicts]);
-        if (c.vaults.length > 0) addFn(c.vaults.length, colours[ESectorOpts.Vaults]);
-        if (c.creatures.length > 0) addFn(c.creatures.length, colours[ESectorOpts.Creatures]);
-        if (c.npcs.length > 0) add.stop(c.npcs.length, colours[ESectorOpts.NPCs]);
+        if (c.stars.length > 0) addFn(colours[ESectorOpts.Stars]);
+        if (c.planets.length > 0) addFn(colours[ESectorOpts.Planets]);
+        if (c.settlements.length > 0) addFn(colours[ESectorOpts.Settlements]);
+        if (c.ships.length > 0) addFn(colours[ESectorOpts.Ships]);
+        if (c.derelicts.length > 0) addFn(colours[ESectorOpts.Derelicts]);
+        if (c.vaults.length > 0) addFn(colours[ESectorOpts.Vaults]);
+        if (c.creatures.length > 0) addFn(colours[ESectorOpts.Creatures]);
+        if (c.npcs.length > 0) add.stop(colours[ESectorOpts.NPCs]);
       });
       return f;
     };
@@ -167,14 +166,13 @@ export default defineComponent({
         .text(label)
         .addClass('label')
         .addTo(map)
-        .font({ fill: colours[type], weight: 'bold', size: config.data.map.hexSize })
+        .font({ fill: colours[type], weight: 'bold', size: config.data.map.hexSize * 0.8 })
         .stroke({ color: 'black', width: 1 });
 
-      t.move(x + config.data.map.hexSize * 2, y + config.data.map.hexSize / 3);
+      t.move(x - config.data.map.hexSize * 0.5, y - config.data.map.hexSize * 1);
     };
 
     const renderStarfield = (): G => {
-      console.log('rendering starfield');
       // Render a star field
       const stars = SVG().group();
       // Get a pseudorandom generator to produce consistent results)
@@ -372,7 +370,7 @@ export default defineComponent({
     );
 
     watch(
-      () => campaign.data.sectors[config.data.sector].cells,
+      () => campaign.$state.data.sectors[config.data.sector].cells,
       () => {
         console.log('Data change triggered map render');
         renderMap();

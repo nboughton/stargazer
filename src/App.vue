@@ -75,7 +75,7 @@ export default defineComponent({
         await campaign.save();
         await sleep(200);
         config.data.saving = false;
-      }, 500),
+      }, 750),
       { deep: true }
     );
 
@@ -88,7 +88,7 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
-.my-card
+.card-bg
   background: $bg-card
 
 .asset-bg

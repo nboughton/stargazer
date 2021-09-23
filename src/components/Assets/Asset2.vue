@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card rounded-borders">
+  <q-card class="card-bg rounded-borders">
     <q-card-section class="row bg-secondary q-pa-xs items-center justify-between">
       <div class="col-3">
         <div class="row">
@@ -56,11 +56,11 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
 // import IInput from '../IInput.vue';
-import Hexbox from '../Hexbox.vue';
 import { IAsset } from '../models';
 import { icon } from 'src/lib/icons';
-import ResourceTrack from '../Tracks/ResourceTrack.vue';
 import { useConfig } from 'src/store/config';
+import ResourceTrack from '../Tracks/ResourceTrack.vue';
+import Hexbox from '../Hexbox.vue';
 export default defineComponent({
   components: { ResourceTrack, Hexbox },
   name: 'Asset',

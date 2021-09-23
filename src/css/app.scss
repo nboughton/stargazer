@@ -9,8 +9,12 @@
   src: url(../fonts/Encode_Sans_Semi_Expanded_Regular.8.ttf);
 }
 
+@font-face {
+  font-family: Convergence;
+  src: url(../fonts/Convergence_Regular.10.ttf);
+}
 * {
-  font-family: Encode;
+  font-family: Convergence;
 }
 // declare a class which applies it
 .sf-header {

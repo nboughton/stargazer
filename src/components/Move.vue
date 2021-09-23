@@ -1,9 +1,21 @@
 <template>
-  <q-expansion-item class="shadow-1 overflow-hidden" :label="move.name" :caption="caption" :header-class="cardStyle" style="border-radius: 4px">
-    <q-card class="my-card">
+  <q-expansion-item
+    class="shadow-1 overflow-hidden"
+    :label="move.name"
+    :caption="caption"
+    :header-class="cardStyle"
+    style="border-radius: 4px"
+  >
+    <q-card class="card-bg">
       <q-card-section v-html="move.text" />
       <q-card-section v-if="move.oracles" class="q-gutter-md">
-        <q-btn v-for="(table, index) in move.oracles" :key="index" :label="'Roll ' + table" @click="click(table)" outline />
+        <q-btn
+          v-for="(table, index) in move.oracles"
+          :key="index"
+          :label="'Roll ' + table"
+          @click="click(table)"
+          outline
+        />
         <q-btn label="Clear results" outline @click="results = []" />
         <div>
           <span v-for="(res, index) in results" :key="index" class="q-pr-md" v-html="res"></span>
