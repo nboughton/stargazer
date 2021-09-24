@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" :class="{ crt: crt }">
     <q-header elevated class="bg-secondary text-white" height-hint="98">
       <q-toolbar>
         <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
@@ -402,6 +402,9 @@ export default defineComponent({
 
     const showRoller = ref(false);
     const showAbout = ref(false);
+    const crt = computed((): boolean => {
+      return /crt/i.test(campaign.data.sectors[config.data.sector].name);
+    });
 
     return {
       leftDrawerOpen,
@@ -442,6 +445,7 @@ export default defineComponent({
       showRoller,
       showAbout,
       btnSize,
+      crt,
     };
   },
 });
