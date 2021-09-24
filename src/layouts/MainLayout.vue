@@ -403,7 +403,7 @@ export default defineComponent({
     const showRoller = ref(false);
     const showAbout = ref(false);
     const crt = computed((): boolean => {
-      return /crt/i.test(campaign.data.sectors[config.data.sector].name);
+      return /bebop/i.test(campaign.data.sectors[config.data.sector].name);
     });
 
     return {

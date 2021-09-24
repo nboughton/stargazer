@@ -76,7 +76,7 @@ import { NewAsset } from 'src/lib/assets';
 import { db } from 'src/lib/db';
 import { useAssets } from 'src/store/assets';
 import { defineComponent, ref, watch } from 'vue';
-import Asset from './Asset.vue';
+import Asset from './Asset2.vue';
 import { IAsset } from 'src/components/models';
 import { validTags } from 'src/lib/util';
 
