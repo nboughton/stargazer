@@ -6,14 +6,7 @@
           <q-toolbar class="bg-secondary">
             <q-btn flat dense icon="menu" @click="showList = !showList" />
             <q-toolbar-title>
-              <q-input
-                v-if="showEditor === false"
-                label="Filter by name or type"
-                v-model="filter"
-                borderless
-                clearable
-                debounce="200"
-              >
+              <q-input v-if="showEditor === false" label="Filter by name or type" v-model="filter" borderless clearable>
                 <template v-slot:prepend>
                   <q-icon name="search" />
                 </template>

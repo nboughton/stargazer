@@ -25,7 +25,6 @@
           v-model="campaign.data.sectors[config.data.sector].cells[selectedID].name"
           dense
           borderless
-          debounce="200"
         />
         <q-btn class="col-shrink" icon="close" flat dense @click="showDialog = false" />
       </q-card-section>

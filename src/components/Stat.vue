@@ -9,7 +9,6 @@
     @update:modelValue="updateValue"
     standout="bg-blue-grey text-white"
     :input-style="{ color: '#ECEFF4', fontSize: '2em' }"
-    debounce="200"
   />
 </template>
 

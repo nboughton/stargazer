@@ -75,7 +75,7 @@ export default defineComponent({
         await campaign.save();
         await sleep(200);
         config.data.saving = false;
-      }, 750),
+      }, 1000),
       { deep: true }
     );
 

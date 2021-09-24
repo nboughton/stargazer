@@ -2,24 +2,12 @@
   <q-page padding>
     <!-- Name, pronouns, callsign etc -->
     <div class="row full-width items-center" id="top">
-      <q-input class="col-grow" label="Name" v-model="campaign.data.character.name" dense debounce="200" />
-      <q-input class="col-4" label="Pronouns" v-model="campaign.data.character.pronouns" dense debounce="200" />
+      <q-input class="col-grow" label="Name" v-model="campaign.data.character.name" dense />
+      <q-input class="col-4" label="Pronouns" v-model="campaign.data.character.pronouns" dense />
     </div>
     <div class="row full-width items-center">
-      <q-input
-        class="col-xs-4 col-sm-3 col-2"
-        label="Callsign"
-        v-model="campaign.data.character.callsign"
-        dense
-        debounce="200"
-      />
-      <q-input
-        class="col-grow"
-        label="Characteristics"
-        v-model="campaign.data.character.characteristics"
-        dense
-        debounce="200"
-      />
+      <q-input class="col-xs-4 col-sm-3 col-2" label="Callsign" v-model="campaign.data.character.callsign" dense />
+      <q-input class="col-grow" label="Characteristics" v-model="campaign.data.character.characteristics" dense />
     </div>
 
     <!-- Momentum -->
@@ -35,7 +23,6 @@
         v-model="campaign.data.character.tracks.momentum.max"
         dense
         borderless
-        debounce="200"
       />
       <q-input
         class="col-xs-2 col-sm-1 col-1"
@@ -46,7 +33,6 @@
         v-model="campaign.data.character.tracks.momentum.reset"
         dense
         borderless
-        debounce="200"
       />
       <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
         <q-tooltip>Burn momentum</q-tooltip>
@@ -64,7 +50,6 @@
           v-model="campaign.data.character.tracks.momentum.max"
           dense
           borderless
-          debounce="200"
         />
         <q-input
           class="col-xs-2 col-sm-1 col-1"
@@ -75,7 +60,6 @@
           v-model="campaign.data.character.tracks.momentum.reset"
           dense
           borderless
-          debounce="200"
         />
         <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
           <q-tooltip>Burn momentum</q-tooltip>

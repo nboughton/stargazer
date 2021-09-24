@@ -7,7 +7,6 @@
     dense
     standout="bg-blue-grey text-white"
     :input-style="{ color: '#ECEFF4' }"
-    debounce="200"
   >
     <template v-slot:append>
       <slot name="append" />

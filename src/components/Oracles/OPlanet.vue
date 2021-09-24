@@ -8,7 +8,7 @@
   <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
   <div class="row items-center">
-    <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense debounce="200" />
+    <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense />
     <q-btn icon="mdi-playlist-plus" flat dense @click="btns.DescText">
       <q-tooltip>Use default description text</q-tooltip>
     </q-btn>
