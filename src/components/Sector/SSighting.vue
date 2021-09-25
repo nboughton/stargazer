@@ -13,7 +13,7 @@
       <i-input class="col-grow" label="Name" v-model="data.name" />
       <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
     </div>
-    <i-input class="q-mb-sm" label="Description" v-model="data.notes" autogrow />
+    <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
   </q-expansion-item>
 </template>
 

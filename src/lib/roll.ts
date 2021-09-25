@@ -107,7 +107,7 @@ export const tableRoll = (oracle: ISFTable): string => {
     }
   }
   if (/roll three/i.test(out)) {
-    while (/roll twice/i.test(out)) {
+    while (/roll three/i.test(out)) {
       out = `${tableRoll(oracle)}, ${tableRoll(oracle)}, ${tableRoll(oracle)}`;
     }
   }
