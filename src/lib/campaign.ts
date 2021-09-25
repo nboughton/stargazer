@@ -26,6 +26,7 @@ import {
   IVault,
   ECellStatus,
   ESectorOpts,
+  ISighting,
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
@@ -144,7 +145,6 @@ export function NewCharacter(): ICharacter {
       ],
     },
     vows: [NewProgressTrack()],
-    bonds: NewProgressTrack(),
     gear: '',
     assets: [],
   };
@@ -243,6 +243,7 @@ export function NewCell(id: string, name?: string): ISectorCell {
     npcs: [],
     creatures: [],
     vaults: [],
+    sightings: [],
   };
 }
 
@@ -257,6 +258,10 @@ export function CellLabel(c: ISectorCell) {
     [ESettPop.TensOfThou]: 5,
   };
 
+  if (c.sightings.length > 0) {
+    label = c.sightings[0].name;
+    type = ESectorOpts.Sightings;
+  }
   if (c.npcs.length > 0) {
     label = c.npcs[0].name;
     type = ESectorOpts.NPCs;
@@ -311,6 +316,13 @@ export function NewStar(): IStar {
   return {
     name: 'New Star',
     description: '',
+  };
+}
+
+export function NewSighting(): ISighting {
+  return {
+    name: 'Sighting',
+    notes: '',
   };
 }
 

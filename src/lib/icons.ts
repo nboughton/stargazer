@@ -5,6 +5,13 @@ export const icon = {
   player: (): string => {
     return 'img:icons/space/player-ship.svg';
   },
+  sighting: (name: string): string => {
+    const res = /(asteroid|debris|comet|meteor|nebula|wave|storm)/i.exec(name);
+    if (res) {
+      return `img:icons/space/${res[0].toLowerCase()}.svg`;
+    }
+    return 'img:icons/space/star.svg';
+  },
   star: (type: string): string => {
     const res = /(red|orange|yellow|blue|young|white|corrupted|neutron|two|black|artificial|unstable|hypergiant)/i.exec(
       type

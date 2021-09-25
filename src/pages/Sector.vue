@@ -140,56 +140,63 @@
                 <div v-if="oType === ESectorOpts.Settlements">
                   <s-settlement
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeSettlement(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Settlements, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.NPCs">
                   <s-NPC
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeNPC(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.NPCs, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Stars">
                   <s-star
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeStar(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Stars, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Planets">
                   <s-planet
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removePlanet(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Planets, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Ships">
                   <s-starship
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeShip(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Ships, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Derelicts">
                   <s-derelict
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeDerelict(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Derelicts, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Vaults">
                   <s-vault
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeVault(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Vaults, sID, cID, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Creatures">
                   <s-creature
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeCreature(sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Creatures, sID, cID, oID)"
+                  />
+                </div>
+
+                <div v-if="oType === ESectorOpts.Sightings">
+                  <s-sighting
+                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    @delete="campaign.removeObject(ESectorOpts.Sightings, sID, cID, oID)"
                   />
                 </div>
               </div>
@@ -230,6 +237,7 @@ import {
   IStarship,
   IVault,
   ISearchResults,
+  ISighting,
 } from 'src/components/models';
 import { NewSector } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
@@ -246,10 +254,11 @@ import SStarship from 'src/components/Sector/SStarship.vue';
 import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
 import SCreature from 'src/components/Sector/SCreature.vue';
+import SSighting from 'src/components/Sector/SSighting.vue';
 
 import HexMap from 'src/components/Sector/HexMap.vue';
 export default defineComponent({
-  components: { IInput, HexMap, SSettlement, SNPC, SStar, SPlanet, SStarship, SDerelict, SCreature, SVault },
+  components: { IInput, HexMap, SSettlement, SNPC, SStar, SPlanet, SStarship, SDerelict, SCreature, SVault, SSighting },
   name: 'Sector',
   setup() {
     const campaign = useCampaign();
@@ -364,6 +373,13 @@ export default defineComponent({
                     }
                     break;
 
+                  case ESectorOpts.Sightings:
+                    if (show.sighting(sector.cells[cellI][oType][i])) {
+                      ensureData(sectorI, cellI, oType);
+                      res[sectorI][cellI][oType].push(i);
+                    }
+                    break;
+
                   default:
                     break;
                 }
@@ -407,6 +423,10 @@ export default defineComponent({
       },
       vault: (o: IVault): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Vaults)) return false;
+        return t(o.name) || t(o.notes);
+      },
+      sighting: (o: ISighting): boolean => {
+        if (applyFilters.value && !filters.value.includes(ESectorOpts.Sightings)) return false;
         return t(o.name) || t(o.notes);
       },
     };

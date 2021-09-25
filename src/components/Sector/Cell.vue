@@ -2,7 +2,7 @@
   <!-- content -->
   <div>
     <div class="row full-width">
-      <q-toggle class="col" icon="mdi-cog" v-model="showControls" />
+      <q-toggle class="col" icon="mdi-cog" v-model="showControls" label="Move Controls" />
       <q-select
         class="col-shrink self-end"
         label="Add"
@@ -13,99 +13,111 @@
       />
       <q-btn class="col-shrink" icon="add" flat dense @click="add" />
     </div>
-    <div v-if="show.stars()">
+    <div v-if="show(ESectorOpts.Stars)">
       <s-star
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].stars"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].stars[i]"
-        @delete="campaign.removeStar(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Stars, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveStar(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.planets()">
+    <div v-if="show(ESectorOpts.Planets)">
       <s-planet
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].planets"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].planets[i]"
-        @delete="campaign.removePlanet(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Planets, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.movePlanet(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.sett()">
+    <div v-if="show(ESectorOpts.Settlements)">
       <s-settlement
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].settlements"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].settlements[i]"
-        @delete="campaign.removeSettlement(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Settlements, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveSettlement(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.ships()">
+    <div v-if="show(ESectorOpts.Ships)">
       <s-starship
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].ships"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].ships[i]"
-        @delete="campaign.removeShip(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Ships, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveStarship(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.npcs()">
+    <div v-if="show(ESectorOpts.NPCs)">
       <s-NPC
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].npcs"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].npcs[i]"
-        @delete="campaign.removeNPC(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.NPCs, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveNPC(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.creatures()">
+    <div v-if="show(ESectorOpts.Creatures)">
       <s-creature
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].creatures"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].creatures[i]"
-        @delete="campaign.removeCreature(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Creatures, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveCreature(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.derelicts()">
+    <div v-if="show(ESectorOpts.Derelicts)">
       <s-derelict
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].derelicts"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].derelicts[i]"
-        @delete="campaign.removeDerelict(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Derelicts, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveDerelict(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
 
-    <div v-if="show.vaults()">
+    <div v-if="show(ESectorOpts.Vaults)">
       <s-vault
         class="q-mt-sm"
         v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].vaults"
         :key="i"
         v-model="campaign.data.sectors[sectorID].cells[cellID].vaults[i]"
-        @delete="campaign.removeVault(sectorID, cellID, i)"
+        @delete="campaign.removeObject(ESectorOpts.Vaults, sectorID, cellID, i)"
         :controls="showControls"
         @move="campaign.moveVault(i, { sector: sectorID, cell: cellID }, $event)"
+      />
+    </div>
+
+    <div v-if="show(ESectorOpts.Sightings)">
+      <s-sighting
+        class="q-mt-sm"
+        v-for="(item, i) in campaign.data.sectors[sectorID].cells[cellID].sightings"
+        :key="i"
+        v-model="campaign.data.sectors[sectorID].cells[cellID].sightings[i]"
+        @delete="campaign.removeObject(ESectorOpts.Sightings, sectorID, cellID, i)"
+        :controls="showControls"
+        @move="campaign.moveSighting(i, { sector: sectorID, cell: cellID }, $event)"
       />
     </div>
   </div>
@@ -121,10 +133,11 @@ import {
   NewCreature,
   NewDerelict,
   NewVault,
+  NewSighting,
 } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref } from 'vue';
-import { ESectorItem } from '../models';
+import { ESectorItem, ESectorOpts } from '../models';
 import SPlanet from './SPlanet.vue';
 import SSettlement from './SSettlement.vue';
 import SStar from './SStar.vue';
@@ -133,9 +146,10 @@ import SNPC from './SNPC.vue';
 import SCreature from './SCreature.vue';
 import SDerelict from './SDerelict.vue';
 import SVault from './SVault.vue';
+import SSighting from './SSighting.vue';
 import { useConfig } from 'src/store/config';
 export default defineComponent({
-  components: { SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault },
+  components: { SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, SSighting },
   name: 'Cell',
   props: {
     sectorID: {
@@ -184,60 +198,18 @@ export default defineComponent({
           campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.unshift(NewVault());
           break;
 
+        case ESectorItem.Sighting:
+          campaign.data.sectors[props.sectorID].cells[props.cellID].sightings.unshift(NewSighting());
         default:
           break;
       }
     };
 
-    const show = {
-      stars: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].stars &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].stars.length > 0
-        );
-      },
-      planets: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].planets &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].planets.length > 0
-        );
-      },
-      sett: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].settlements &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].settlements.length > 0
-        );
-      },
-      ships: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].ships &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].ships.length > 0
-        );
-      },
-      npcs: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].npcs &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].npcs.length > 0
-        );
-      },
-      creatures: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].creatures &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].creatures.length > 0
-        );
-      },
-      derelicts: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].derelicts.length > 0
-        );
-      },
-      vaults: (): boolean => {
-        return (
-          campaign.data.sectors[props.sectorID].cells[props.cellID].vaults &&
-          campaign.data.sectors[props.sectorID].cells[props.cellID].vaults.length > 0
-        );
-      },
+    const show = (type: ESectorOpts): boolean => {
+      return (
+        campaign.data.sectors[props.sectorID].cells[props.cellID][type] &&
+        campaign.data.sectors[props.sectorID].cells[props.cellID][type].length > 0
+      );
     };
 
     const config = useConfig();
@@ -247,6 +219,7 @@ export default defineComponent({
       campaign,
 
       ESectorItem,
+      ESectorOpts,
       addSelect,
       add,
       show,

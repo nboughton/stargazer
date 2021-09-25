@@ -112,6 +112,19 @@ export default defineComponent({
     });
 
     /* MAP RENDER FUNCTIONS */
+    const getXY = (id: string): { x: number; y: number } => {
+      const s = id.split(/-/g);
+      if (s.length === 3) {
+        // h, x, y
+        const hex = grid.get({ x: +s[1], y: +s[2] });
+        if (hex) {
+          const { x, y } = hex.toPoint();
+          return { x: x, y: y };
+        }
+      }
+      return { x: 0, y: 0 };
+    };
+
     const locationFill = (c: ISectorCell): Gradient => {
       const f = map.gradient('linear', function (add) {
         let count = 0;
@@ -126,13 +139,15 @@ export default defineComponent({
         if (c.derelicts.length > 0) addFn(colours[ESectorOpts.Derelicts]);
         if (c.vaults.length > 0) addFn(colours[ESectorOpts.Vaults]);
         if (c.creatures.length > 0) addFn(colours[ESectorOpts.Creatures]);
-        if (c.npcs.length > 0) add.stop(colours[ESectorOpts.NPCs]);
+        if (c.npcs.length > 0) addFn(colours[ESectorOpts.NPCs]);
+        if (c.sightings.length > 0) addFn(colours[ESectorOpts.Sightings]);
       });
       return f;
     };
 
     const locationIcon = (c: ISectorCell, x: number, y: number) => {
       let path = '';
+      if (c.sightings.length > 0) path = icon.sighting(c.sightings[0].name);
       if (c.npcs.length > 0) path = icon.npc();
       if (c.creatures.length > 0) path = icon.creature(c.creatures[0].form);
       if (c.vaults.length > 0) path = icon.vault();

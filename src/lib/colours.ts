@@ -9,4 +9,5 @@ export const colours: { [index: string]: string } = {
   [ESectorOpts.Vaults]: '#427074ff',
   [ESectorOpts.Creatures]: '#3c8ab5ff',
   [ESectorOpts.NPCs]: '#9e708fff',
+  [ESectorOpts.Sightings]: '#25827Eff',
 };

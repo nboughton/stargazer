@@ -110,6 +110,7 @@ export enum ESectorItem {
   Creature = 'Creature',
   Derelict = 'Derelict',
   Vault = 'Vault',
+  Sighting = 'Sighting',
 }
 
 export enum ESectorOpts { // values need to match the keys in ISectorCell
@@ -121,6 +122,7 @@ export enum ESectorOpts { // values need to match the keys in ISectorCell
   Creatures = 'creatures',
   Derelicts = 'derelicts',
   Vaults = 'vaults',
+  Sightings = 'sightings',
 }
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
@@ -159,10 +161,7 @@ export interface IStats {
   wits: number;
 }
 
-export interface IMomentum {
-  value: number;
-  max: number;
-  min: number;
+export interface IMomentum extends ITrack {
   reset: number;
 }
 
@@ -258,7 +257,6 @@ export interface ICharacter {
     discoveries: ILegacyTrack;
   };
   vows: IProgressTrack[];
-  bonds: IProgressTrack;
   gear: string;
   assets: IAsset[];
 }
@@ -266,7 +264,6 @@ export interface ICharacter {
 export interface IJournalEntry {
   title: string;
   content: string;
-  image?: boolean;
 }
 
 // Truths
@@ -277,6 +274,11 @@ export interface ITruths {
 export interface IStar {
   name: string;
   description: string;
+}
+
+export interface ISighting {
+  name: string;
+  notes: string;
 }
 
 export enum ECellStatus {
@@ -307,6 +309,7 @@ export interface ISectorCell {
   npcs: INPC[];
   creatures: ICreature[];
   vaults: IVault[];
+  sightings: ISighting[];
 }
 
 export interface ISector {
@@ -335,11 +338,6 @@ export interface IMove {
 }
 
 // Oracles
-export interface ITableItem {
-  match: number[];
-  text: string;
-}
-
 // Starforged Oracles
 export type TPlanetOracles = { [index: string]: IPlanetOracle };
 

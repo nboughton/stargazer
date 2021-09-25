@@ -261,23 +261,27 @@
             Ironsworn: Starforged is &copy;
             <a href="https://www.ironswornrpg.com">Shawn Tomkin</a>
           </div>
+
           <div class="q-my-sm">
             Iron Journal: Stargazer is &copy;
             <a href="https://twitter.com/tiberianpun">Nick Boughton</a>
           </div>
-          <div class="q-my-sm">
-            If you like this app and want to say thanks you can
-            <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a>
-          </div>
+
           <div class="q-my-sm">
             With many thanks to
             <a href="https://twitter.com/r_sek">rsek</a> for the amazing
             <a href="https://github.com/rsek/dataforged">Dataforged repository</a> and all their contributions to
             Stargazer's development. This app could not have been made without them.
           </div>
+
           <div class="q-my-sm">
             Made with icons from <a href="https://game-icons.net/">game-icons.net</a> by
             <a href="https://lorcblog.blogspot.com/">Lorc</a> and <a href="https://delapouite.com/">Delapouite</a>
+          </div>
+
+          <div class="q-my-sm">
+            If you like this app and want to say thanks you can
+            <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a>
           </div>
         </q-card-section>
       </q-card>

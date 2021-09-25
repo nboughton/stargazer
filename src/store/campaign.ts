@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
 import {
+  ESectorOpts,
   ICampaign,
   ICreature,
   IDerelict,
   INPC,
   IPlanet,
   ISettlement,
+  ISighting,
   IStar,
   IStarship,
   IVault,
@@ -24,6 +26,11 @@ export const useCampaign = defineStore({
   },
 
   actions: {
+    moveSighting(index: number, from: { sector: number; cell: string }, to: { sector: number; cell: string }) {
+      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].stars[index])) as ISighting;
+      this.data.sectors[to.sector].cells[to.cell].sightings.unshift(o);
+      this.data.sectors[from.sector].cells[from.cell].sightings.splice(index, 1);
+    },
     moveStar(index: number, from: { sector: number; cell: string }, to: { sector: number; cell: string }) {
       const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].stars[index])) as IStar;
       this.data.sectors[to.sector].cells[to.cell].stars.unshift(o);
@@ -71,29 +78,8 @@ export const useCampaign = defineStore({
       this.data.sectors[from.sector].cells[from.cell].vaults.splice(index, 1);
     },
 
-    removeStar(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].stars.splice(index, 1);
-    },
-    removePlanet(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].planets.splice(index, 1);
-    },
-    removeSettlement(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].settlements.splice(index, 1);
-    },
-    removeShip(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].ships.splice(index, 1);
-    },
-    removeNPC(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].npcs.splice(index, 1);
-    },
-    removeCreature(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].creatures.splice(index, 1);
-    },
-    removeDerelict(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].derelicts.splice(index, 1);
-    },
-    removeVault(sector: number, cell: string, index: number) {
-      this.data.sectors[sector].cells[cell].vaults.splice(index, 1);
+    removeObject(type: ESectorOpts, sector: number, cell: string, index: number) {
+      this.data.sectors[sector].cells[cell][type].splice(index, 1);
     },
 
     async populateStore() {
