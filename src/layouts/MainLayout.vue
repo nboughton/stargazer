@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh lpR fFf" :class="{ crt: crt }">
     <q-header elevated class="bg-secondary text-white" height-hint="98">
-      <q-toolbar>
+      <q-toolbar :class="{ crt: crt }">
         <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
@@ -20,7 +20,7 @@
         <q-btn dense flat icon="edit_note" @click="toggleRightDrawer" />
       </q-toolbar>
 
-      <q-tabs align="center" dense>
+      <q-tabs align="center" dense :class="{ crt: crt }">
         <q-route-tab to="/truths" label="Truths" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
         <q-route-tab to="/sector" label="Sector" />
@@ -99,7 +99,7 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" :width="width" bordered>
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" :width="width" bordered :class="{ crt: crt }">
       <!-- right drawer content -->
       <div class="row">
         <q-expansion-item class="col-12">

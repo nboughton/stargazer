@@ -1,10 +1,10 @@
 <template>
   <!-- content -->
   <div>
-    <div class="row full-width">
+    <div class="row full-width q-gutter-sm justify-between items-center">
       <q-toggle class="col" icon="mdi-cog" v-model="showControls" label="Move Controls" />
       <q-select
-        class="col-shrink self-end"
+        class="col-shrink"
         label="Add"
         v-model="addSelect"
         :options="Object.values(ESectorItem)"

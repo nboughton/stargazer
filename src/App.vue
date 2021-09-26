@@ -1,7 +1,7 @@
 <template>
   <router-view v-if="loaded" />
   <div v-else>
-    <div class="column q-pa-xl text-h5 self-center text-positive" style="height: 100% width: 100%">
+    <div class="column q-pa-xl text-h5 self-center text-positive crt" style="height: 100% width: 100%">
       <div class="sf-header" v-for="(line, i) in msg" :key="i">
         {{ line }}
       </div>
