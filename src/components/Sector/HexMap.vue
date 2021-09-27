@@ -283,7 +283,7 @@ export default defineComponent({
         }
       });
 
-      labels.addTo(map);
+      labels.addTo(map).front();
     };
 
     const renderSearch = () => {
@@ -324,7 +324,7 @@ export default defineComponent({
         }
       });
 
-      labels.addTo(map);
+      labels.addTo(map).front();
     };
 
     const renderPlayer = () => {
@@ -376,10 +376,7 @@ export default defineComponent({
         campaign.data.sectors[config.data.sector].cells[id].stat == ECellStatus.Empty
       ) {
         // Set hex fill here (rather than trigger a map re-render) for better mobile performance
-        const mapCells = map.find(`.${id}`); // Should only return 1 item but err on the side of caution
-        if (mapCells.length > 0) {
-          mapCells[0].fill(colours.Passage);
-        }
+        map.find(`.${id}`).forEach((c) => c.fill(colours.Passage));
 
         const c = NewCell(id);
         c.stat = ECellStatus.Passage;

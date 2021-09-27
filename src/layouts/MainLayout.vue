@@ -148,6 +148,7 @@
           header-class="text-h6 q-mb-sm"
           v-if="showJournal(journal)"
           :label="campaign.data.journal[index].title"
+          :default-opened="index === 0"
         >
           <div class="row q-gutter-sm q-mb-sm">
             <i-input class="col-grow" label="Title" v-model="campaign.data.journal[index].title" />
@@ -396,16 +397,12 @@ export default defineComponent({
     };
 
     const width = computed((): number => {
-      if ($q.screen.lt.sm) {
-        return Math.floor($q.screen.width * 0.9);
-      }
-      return Math.floor($q.screen.width * 0.4);
+      return $q.screen.lt.sm || $q.platform.is.mobile
+        ? Math.floor($q.screen.width * 0.9)
+        : Math.floor($q.screen.width * 0.4);
     });
     const btnSize = computed((): string => {
-      if ($q.screen.lt.sm) {
-        return 'sm';
-      }
-      return 'md';
+      return $q.screen.lt.sm ? 'sm' : 'md';
     });
 
     const showRoller = ref(false);

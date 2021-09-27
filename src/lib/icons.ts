@@ -1,5 +1,5 @@
 const baseUrl =
-  'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/src/app/img/icons/';
+  'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/assets/icons/';
 
 export const icon = {
   player: (): string => {
