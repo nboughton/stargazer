@@ -137,12 +137,11 @@ export default defineComponent({
       console.log('Rendering fills');
       const cells = campaign.data.sectors[config.data.sector].cells;
       Object.keys(cells).forEach((id) => {
-        const cell = map.find(`.${id}`);
-        if (cell.length > 0) {
+        map.find(`.${id}`).forEach((cell) => {
           const c = cells[id];
           switch (c.stat) {
             case ECellStatus.Location:
-              cell[0].fill(
+              cell.fill(
                 map.gradient('linear', function (add) {
                   let count = 0;
                   const addFn = (colour: string) => {
@@ -163,14 +162,14 @@ export default defineComponent({
               break;
 
             case ECellStatus.Passage:
-              cell[0].fill(colours.Passage);
+              cell.fill(colours.Passage);
               break;
 
             default:
-              cell[0].fill('none');
+              cell.fill('none');
               break;
           }
-        }
+        });
       });
     };
 
@@ -218,6 +217,9 @@ export default defineComponent({
 
       // Slap it on the map
       icons.addTo(map);
+
+      // Move the ship icon to the front just in case
+      map.find('.ship').forEach((s) => s.front());
     };
 
     const renderStarfield = () => {
@@ -289,21 +291,20 @@ export default defineComponent({
     const renderSearch = () => {
       console.log('Rendering search results');
       //clear existing search labels
-      map.find('.search-labels').forEach((i) => i.remove());
+      map.find('.search-label').forEach((i) => i.remove());
 
       if (!(props.searchResults != {} && props.searchResults[config.data.sector])) return;
 
-      const labels = SVG().group().addClass('search-labels');
-
       // Add search results
       Object.keys(props.searchResults[config.data.sector]).forEach((id) => {
-        if (props.searchResults[config.data.sector][id]) {
-          const { x, y } = getXY(id);
-          const cell = props.searchResults[config.data.sector][id];
-          const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id]);
+        // if (props.searchResults[config.data.sector][id]) {
+        const { x, y } = getXY(id);
+        const cell = props.searchResults[config.data.sector][id];
+        const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id]);
 
-          if (map.find(`.${id}`).length > 0) {
-            const text = SVG().text(function (add) {
+        if (map.find(`.${id}`).length > 0) {
+          SVG()
+            .text(function (add) {
               Object.keys(cell).forEach((oType) => {
                 cell[oType].forEach((i) => {
                   const c = campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i];
@@ -312,19 +313,14 @@ export default defineComponent({
                   }
                 });
               });
-            });
-
-            text
-              .addClass('search-label')
-              .addTo(labels)
-              .font({ fill: 'lightgreen', family: 'Encode', size: config.data.map.hexSize * 0.7, weight: 'bold' });
-
-            text.move(x, y + config.data.map.hexSize * 2);
-          }
+            })
+            .addClass('search-label')
+            .addTo(map)
+            .move(x, y + config.data.map.hexSize * 2)
+            .font({ size: config.data.map.hexSize * 0.7, weight: 'bold' });
         }
+        // }
       });
-
-      labels.addTo(map).front();
     };
 
     const renderPlayer = () => {
