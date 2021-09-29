@@ -200,7 +200,7 @@ export default defineComponent({
         if (c.stars.length > 0) path = icon.star(c.stars[0].description);
 
         const i = SVG()
-          .image(path.replace('img:', ''))
+          .image(path)
           .addClass('icon')
           .size(config.data.map.hexSize, config.data.map.hexSize)
           .addTo(icons)

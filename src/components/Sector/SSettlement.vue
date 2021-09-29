@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.settlement()"
+      :icon="`img:${icon.settlement()}`"
       header-class="settlement-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Settlement"

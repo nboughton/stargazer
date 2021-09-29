@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.derelict()"
+      :icon="`img:${icon.derelict()}`"
       header-class="derelict-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Derelict"

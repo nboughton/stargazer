@@ -1,64 +1,70 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+//const basePath = '../assets'
+
 const baseUrl =
   'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/assets/icons/';
 
 export const icon = {
   player: (): string => {
-    return 'img:icons/space/player-ship.svg';
+    return require('../assets/space/player-ship.svg') as string
   },
+
   sighting: (name: string): string => {
     const res = /(asteroid|debris|comet|meteor|nebula|wave|storm)/i.exec(name);
     if (res) {
-      return `img:icons/space/${res[0].toLowerCase()}.svg`;
+      return require(`../assets/space/${res[0].toLowerCase()}.svg`) as string
     }
-    return 'img:icons/space/star.svg';
+    return require('../assets/space/star.svg') as string
   },
+  
   star: (type: string): string => {
-    const res = /(red|orange|yellow|blue|young|white|corrupted|neutron|two|black|artificial|unstable|hypergiant)/i.exec(
+    const res = /(red|orange|yellow|blue|young|white|corrupted|neutron|two|binary|black|artificial|unstable|hypergiant)/i.exec(
       type
     );
     if (res) {
-      return `img:icons/stars/${res[0].toLowerCase()}.png`;
+     return require(`../assets/stars/${res[0].toLowerCase()}.png`) as string
     }
-    return 'img:icons/space/star-sattelites.svg';
+    return require('../assets/space/star-sattelites.svg') as string
   },
 
   stars: (): string => {
-    return 'img:icons/space/stars.svg';
+    return require('../assets/space/stars.svg') as string
   },
 
   planet: (type: string): string => {
-    return `img:icons/planets/${type.toLowerCase()}.png`;
+    return require(`../assets/planets/${type.toLowerCase()}.png`) as string
   },
 
   settlement: (): string => {
-    return 'img:icons/space/settlement.svg';
+    return require('../assets/space/settlement.svg') as string
   },
 
   starship: (): string => {
-    return 'img:icons/space/spaceship.svg';
+    return require('../assets/space/spaceship.svg') as string
   },
 
   derelict: (): string => {
-    return 'img:icons/space/derelict.svg';
+    return require('../assets/space/derelict.svg') as string
   },
 
   vault: (): string => {
-    return 'img:icons/space/vault.svg';
+    return require('../assets/space/vault.svg') as string
   },
 
   creature: (form: string): string => {
     return /(amoeba|amorphous|avian|beast|crustacean|fish|humanoid|insectoid|jellyfish|lizard|octopoid|plant|ray|snake|spider|starfish|worm)/i.test(
       form
     )
-      ? `img:icons/life/${form.split(' ')[0].toLowerCase()}.svg`
-      : 'img:icons/life/floating-tentacles.svg';
+      ? require(`../assets/life/${form.split(' ')[0].toLowerCase()}.svg`) as string
+      : require('../assets/life/floating-tentacles.svg') as string
   },
 
   npc: (): string => {
-    return 'img:icons/life/character.svg';
+    return require('../assets/life/character.svg') as string
+    
   },
 
-  asset: (name: string): string => {
+ asset: (name: string): string => {
     return /custom/i.test(name)
       ? 'mdi-crosshairs-question'
       : `img:${baseUrl}asset-${name.toLowerCase().replace(/ /gi, '-')}.svg`;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.starship()"
+      :icon="`img:${icon.starship()}`"
       header-class="starship-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Starship"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.planet(data.type)"
+      :icon="`img:${icon.planet(data.type)}`"
       header-class="planet-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Planet"

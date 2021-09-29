@@ -1,6 +1,6 @@
 <template>
   <q-expansion-item
-    :icon="icon.sighting(data.name)"
+    :icon="`img:${icon.sighting(data.name)}`"
     header-class="sighting-header rounded-borders q-mb-sm"
     :label="data.name"
     caption="Sighting"

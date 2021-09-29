@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.vault()"
+      :icon="`img:${icon.vault()}`"
       header-class="vault-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Vault"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.npc()"
+      :icon="`img:${icon.npc()}`"
       header-class="person-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Person"

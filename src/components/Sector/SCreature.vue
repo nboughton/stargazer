@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-expansion-item
-      :icon="icon.creature(data.form)"
+      :icon="`img:${icon.creature(data.form)}`"
       header-class="creature-header rounded-borders q-mb-sm"
       :label="data.name"
       caption="Creature"
