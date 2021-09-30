@@ -153,6 +153,21 @@
 
     <q-separator />
 
+    <!-- Clocks -->
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="clocks">
+      Clocks<q-btn icon="add_circle" flat dense @click="addClock" />
+    </div>
+    <div class="row q-gutter-md justify-evenly q-mb-md">
+      <clock
+        v-for="(clock, index) in campaign.data.character.clocks"
+        :key="index"
+        v-model="campaign.data.character.clocks[index]"
+        @delete="removeClock(index)"
+      />
+    </div>
+
+    <q-separator />
+
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="assets">
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
@@ -192,6 +207,7 @@
       <q-fab v-model="scrollMenu" color="primary" direction="up" label-position="right" icon="link">
         <q-fab-action label="Impacts" color="secondary" @click="scrollTo('impacts')" />
         <q-fab-action label="Assets" color="secondary" @click="scrollTo('assets')" />
+        <q-fab-action label="Clocks" color="secondary" @click="scrollTo('clocks')" />
         <q-fab-action label="Progress" color="secondary" @click="scrollTo('progress')" />
         <q-fab-action label="Vows" color="secondary" @click="scrollTo('vows')" />
         <q-fab-action label="Legacies" color="secondary" @click="scrollTo('legacies')" />
@@ -203,7 +219,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NewProgressTrack } from 'src/lib/campaign';
+import { NewClock, NewProgressTrack } from 'src/lib/campaign';
 import { scroll } from 'quasar';
 
 import Stats from 'src/components/Stats.vue';
@@ -215,6 +231,7 @@ import { useConfig } from 'src/store/config';
 import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
 import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
 import LegacyTrack from 'src/components/Tracks/LegacyTrack.vue';
+import Clock from 'src/components/Tracks/Clock.vue';
 import IInput from 'src/components/IInput.vue';
 
 export default defineComponent({
@@ -222,6 +239,7 @@ export default defineComponent({
   components: {
     LegacyTrack,
     ResourceTrack,
+    Clock,
     Stats,
     ProgressTrack,
     Asset,
@@ -236,6 +254,12 @@ export default defineComponent({
 
     const addTrack = () => campaign.data.progressTracks.push(NewProgressTrack());
     const removeTrack = (index: number) => campaign.data.progressTracks.splice(index, 1);
+
+    const addClock = () => {
+      if (!campaign.data.character.clocks) campaign.data.character.clocks = [];
+      campaign.data.character.clocks.push(NewClock());
+    };
+    const removeClock = (index: number) => campaign.data.character.clocks.splice(index, 1);
 
     const removeAsset = (index: number) => campaign.data.character.assets.splice(index, 1);
     const showAssetSelect = ref(false);
@@ -288,6 +312,9 @@ export default defineComponent({
 
       addTrack,
       removeTrack,
+
+      addClock,
+      removeClock,
 
       removeAsset,
       showAssetSelect,

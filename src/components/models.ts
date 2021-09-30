@@ -178,6 +178,12 @@ export interface ITracks {
   momentum: IMomentum;
 }
 
+export interface IClock {
+  name: string;
+  segments: number;
+  filled: number;
+}
+
 // Conditions and debilities
 export interface IImpact {
   name: string;
@@ -257,6 +263,7 @@ export interface ICharacter {
     discoveries: ILegacyTrack;
   };
   vows: IProgressTrack[];
+  clocks: IClock[];
   gear: string;
   assets: IAsset[];
 }

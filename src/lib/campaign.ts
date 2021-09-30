@@ -27,6 +27,7 @@ import {
   ECellStatus,
   ESectorOpts,
   ISighting,
+  IClock,
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
@@ -69,6 +70,14 @@ export function NewLegacyTrack(): ILegacyTrack {
   return track;
 }
 
+export function NewClock(): IClock {
+  return {
+    name: '',
+    segments: 4,
+    filled: 0
+  }
+}
+
 export function NewCharacter(): ICharacter {
   return {
     name: 'New Character',
@@ -94,6 +103,7 @@ export function NewCharacter(): ICharacter {
       bonds: NewLegacyTrack(),
       discoveries: NewLegacyTrack(),
     },
+    clocks: [],
     impacts: {
       Misfortunes: [
         {
