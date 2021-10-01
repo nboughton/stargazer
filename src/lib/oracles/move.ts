@@ -1,63 +1,63 @@
-import { ISFTable } from 'src/components/models';
+import { EAtO, ISFTable } from 'src/components/models';
 
 export const Move: { [index: string]: ISFTable } = {
-  'Almost Certain': {
-    items: [
-      {
-        match: [1, 90],
-        data: 'Yes',
-      },
-      {
-        match: [91, 100],
-        data: 'No',
-      },
-    ],
-  },
-  Likely: {
-    items: [
-      {
-        match: [1, 75],
-        data: 'Yes',
-      },
-      {
-        match: [76, 100],
-        data: 'No',
-      },
-    ],
-  },
-  '50/50': {
-    items: [
-      {
-        match: [1, 50],
-        data: 'Yes',
-      },
-      {
-        match: [51, 100],
-        data: 'No',
-      },
-    ],
-  },
-  Unlikely: {
-    items: [
-      {
-        match: [1, 25],
-        data: 'Yes',
-      },
-      {
-        match: [26, 100],
-        data: 'No',
-      },
-    ],
-  },
-  'Small Chance': {
+  [EAtO.AlmostCertain]: {
     items: [
       {
         match: [1, 10],
-        data: 'Yes',
+        data: 'No',
       },
       {
         match: [11, 100],
+        data: 'Yes',
+      },
+    ],
+  },
+  [EAtO.Likely]: {
+    items: [
+      {
+        match: [1, 25],
         data: 'No',
+      },
+      {
+        match: [26, 100],
+        data: 'Yes',
+      },
+    ],
+  },
+  [EAtO.FiftyFifty]: {
+    items: [
+      {
+        match: [1, 50],
+        data: 'No',
+      },
+      {
+        match: [51, 100],
+        data: 'Yes',
+      },
+    ],
+  },
+  [EAtO.Unlikely]: {
+    items: [
+      {
+        match: [1, 75],
+        data: 'No',
+      },
+      {
+        match: [76, 100],
+        data: 'Yes',
+      },
+    ],
+  },
+  [EAtO.SmallChance]: {
+    items: [
+      {
+        match: [1, 90],
+        data: 'No',
+      },
+      {
+        match: [91, 100],
+        data: 'Yes',
       },
     ],
   },

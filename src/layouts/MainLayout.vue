@@ -23,6 +23,7 @@
       <q-tabs align="center" dense :class="{ crt: crt }">
         <q-route-tab to="/truths" label="Truths" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
+        <q-route-tab to="/challenges" label="Challenges" />
         <q-route-tab to="/sector" label="Sector" />
       </q-tabs>
     </q-header>

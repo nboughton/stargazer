@@ -1,6 +1,6 @@
 {
   "name": "stargazer",
-  "version": "0.7.0",
+  "version": "0.7.3",
   "description": "An app for journaling solo Ironsworn: Starforged campaigns",
   "productName": "Stargazer",
   "author": "Nick Boughton <nicholasboughton@gmail.com>",
@@ -10,7 +10,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.11.0",
+    "@quasar/extras": "^1.11.1",
     "@svgdotjs/svg.js": "^3.1.1",
     "core-js": "^3.6.5",
     "dexie": "^3.0.3",

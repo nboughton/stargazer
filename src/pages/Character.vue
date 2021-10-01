@@ -108,70 +108,11 @@
 
     <q-separator />
 
-    <!-- Legacy tracks -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">Legacy Tracks</div>
-    <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
-    <q-separator />
-    <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
-    <q-separator />
-    <legacy-track name="Discoveries" v-model="campaign.data.character.legacies.discoveries" />
-    <q-separator />
-
-    <!-- Vows -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="vows">
-      Vows<q-btn icon="add_circle" flat dense @click="addVow" />
-    </div>
-    <progress-track
-      class="q-mb-md"
-      v-for="(vow, vIndex) in campaign.data.character.vows"
-      :key="vIndex"
-      v-model="campaign.data.character.vows[vIndex]"
-      :showMenaceBtn="false"
-    >
-      <template v-slot:action v-if="config.data.edit">
-        <q-btn class="col-shrink" icon="delete" flat dense @click="removeVow(vIndex)" />
-      </template>
-    </progress-track>
-
-    <q-separator />
-
-    <!-- Progress -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="progress">
-      Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
-    </div>
-    <progress-track
-      class="q-mb-md"
-      v-for="(track, pIndex) in campaign.data.progressTracks"
-      :key="pIndex"
-      v-model="campaign.data.progressTracks[pIndex]"
-      :showMenaceBtn="false"
-    >
-      <template v-slot:action v-if="config.data.edit">
-        <q-btn class="col-shrink" icon="delete" flat dense @click="removeTrack(pIndex)" />
-      </template>
-    </progress-track>
-
-    <q-separator />
-
-    <!-- Clocks -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="clocks">
-      Clocks<q-btn icon="add_circle" flat dense @click="addClock" />
-    </div>
-    <div class="row q-gutter-md justify-evenly q-mb-md">
-      <clock
-        v-for="(clock, index) in campaign.data.character.clocks"
-        :key="index"
-        v-model="campaign.data.character.clocks[index]"
-        @delete="removeClock(index)"
-      />
-    </div>
-
-    <q-separator />
-
+    <!-- Assets -->
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="assets">
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
-    <!-- Assets -->
+
     <div class="row q-mb-sm" v-for="(a, i) in campaign.data.character.assets" :key="i">
       <asset class="col-12" v-model="campaign.data.character.assets[i]">
         <template v-slot:append>
@@ -181,6 +122,16 @@
         </template>
       </asset>
     </div>
+
+    <q-separator />
+
+    <!-- Legacy tracks -->
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">Legacy Tracks</div>
+    <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
+    <q-separator />
+    <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
+    <q-separator />
+    <legacy-track name="Discoveries" v-model="campaign.data.character.legacies.discoveries" />
 
     <q-separator />
 
@@ -203,7 +154,7 @@
 
     <assets v-model="showAssetSelect" />
 
-    <q-page-sticky position="bottom-right" :offset="[20, 20]">
+    <!--q-page-sticky position="bottom-right" :offset="[20, 20]">
       <q-fab v-model="scrollMenu" color="primary" direction="up" label-position="right" icon="link">
         <q-fab-action label="Impacts" color="secondary" @click="scrollTo('impacts')" />
         <q-fab-action label="Assets" color="secondary" @click="scrollTo('assets')" />
@@ -213,13 +164,12 @@
         <q-fab-action label="Legacies" color="secondary" @click="scrollTo('legacies')" />
         <q-fab-action label="Top" color="secondary" @click="scrollTo('top')" />
       </q-fab>
-    </q-page-sticky>
+    </q-page-sticky-->
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { NewClock, NewProgressTrack } from 'src/lib/campaign';
 import { scroll } from 'quasar';
 
 import Stats from 'src/components/Stats.vue';
@@ -229,9 +179,7 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 
 import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
-import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
 import LegacyTrack from 'src/components/Tracks/LegacyTrack.vue';
-import Clock from 'src/components/Tracks/Clock.vue';
 import IInput from 'src/components/IInput.vue';
 
 export default defineComponent({
@@ -239,27 +187,13 @@ export default defineComponent({
   components: {
     LegacyTrack,
     ResourceTrack,
-    Clock,
     Stats,
-    ProgressTrack,
     Asset,
     Assets,
     IInput,
   },
   setup() {
     const campaign = useCampaign();
-
-    const addVow = () => campaign.data.character.vows.push(NewProgressTrack());
-    const removeVow = (index: number) => campaign.data.character.vows.splice(index, 1);
-
-    const addTrack = () => campaign.data.progressTracks.push(NewProgressTrack());
-    const removeTrack = (index: number) => campaign.data.progressTracks.splice(index, 1);
-
-    const addClock = () => {
-      if (!campaign.data.character.clocks) campaign.data.character.clocks = [];
-      campaign.data.character.clocks.push(NewClock());
-    };
-    const removeClock = (index: number) => campaign.data.character.clocks.splice(index, 1);
 
     const removeAsset = (index: number) => campaign.data.character.assets.splice(index, 1);
     const showAssetSelect = ref(false);
@@ -306,15 +240,6 @@ export default defineComponent({
 
     return {
       campaign,
-
-      addVow,
-      removeVow,
-
-      addTrack,
-      removeTrack,
-
-      addClock,
-      removeClock,
 
       removeAsset,
       showAssetSelect,

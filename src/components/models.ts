@@ -178,10 +178,21 @@ export interface ITracks {
   momentum: IMomentum;
 }
 
+export enum EAtO {
+  AlmostCertain = 'Almost Certainly',
+  Likely = 'Likely',
+  FiftyFifty = '50/50',
+  Unlikely = 'Unlikely',
+  SmallChance = 'Small Chance',
+}
+
 export interface IClock {
+  id: string;
   name: string;
   segments: number;
   filled: number;
+  advance: EAtO;
+  roll: number
 }
 
 // Conditions and debilities
@@ -201,17 +212,11 @@ export interface IDiff {
   harm: number;
 }
 
-export interface IMenace {
-  name: string;
-  boxes: boolean[];
-}
-
 export interface IProgressTrack {
   name: string;
   difficulty: number;
   boxes: number[];
-  showMenace: boolean;
-  menace?: IMenace;
+  clocks: string[]
 }
 
 export interface ILegacyBox {
@@ -325,6 +330,11 @@ export interface ISector {
   control: string;
   cells: { [index: string]: ISectorCell };
 }
+
+export interface IFaction {
+  name: string
+  colour: string
+}
 export interface ICampaign {
   id: string;
   name: string;
@@ -333,6 +343,7 @@ export interface ICampaign {
   journal: IJournalEntry[];
   truths: ITruths;
   sectors: ISector[];
+  factions: IFaction[];
 }
 
 // Moves

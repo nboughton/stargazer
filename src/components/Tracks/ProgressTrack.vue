@@ -46,29 +46,13 @@
         :options="diffOpts"
         @update:modelValue="updateValue"
       />
-      <q-btn v-if="showMenaceBtn" :icon="menaceIcon" flat dense :size="btnSize" @click="menaceToggle">
-        <q-tooltip>Toggle Menace Track</q-tooltip>
-      </q-btn>
+      <q-btn :icon="clockIcon" flat dense :size="btnSize" @click="showClocks = !showClocks">{{
+        clockIndices.length
+      }}</q-btn>
     </div>
 
-    <div class="row justify-evenly" v-if="data.showMenace && data.menace !== undefined">
-      <q-input
-        class="col-12 q-pb-sm"
-        label="Menace"
-        dense
-        autogrow
-        standout="bg-blue-grey text-white"
-        :input-style="{ color: '#ECEFF4' }"
-        v-model="data.menace.name"
-      />
-      <q-checkbox
-        v-for="(box, index) in data.menace.boxes"
-        :key="index"
-        dense
-        :size="btnSize"
-        v-model="data.menace.boxes[index]"
-        color="negative"
-      />
+    <div v-if="showClocks">
+      <clocks v-model="data.clocks" />
     </div>
   </div>
 </template>
@@ -76,16 +60,18 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import { IProgressTrack } from 'src/components/models';
-import { Difficulty, NewMenace } from 'src/lib/campaign';
+import { Difficulty } from 'src/lib/campaign';
 import { sleep } from 'src/lib/util';
 import { useQuasar } from 'quasar';
 import { moveRoll, NewRollData } from 'src/lib/roll';
 import { boxIcon } from 'src/lib/tracks';
 import IInput from 'src/components/IInput.vue';
+import Clocks from 'src/components/Tracks/Clocks.vue';
+import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({
   name: 'ProgressTrack',
-  components: { IInput },
+  components: { IInput, Clocks },
   props: {
     modelValue: {
       type: Object as PropType<IProgressTrack>,
@@ -96,10 +82,6 @@ export default defineComponent({
       default: true,
     },
     showDifficulty: {
-      type: Boolean,
-      default: true,
-    },
-    showMenaceBtn: {
       type: Boolean,
       default: true,
     },
@@ -165,20 +147,6 @@ export default defineComponent({
       return 'md';
     });
 
-    const menaceIcon = computed(() => {
-      if (data.value.showMenace) {
-        return 'mdi-alpha-m-box';
-      }
-      return 'mdi-alpha-m';
-    });
-    const menaceToggle = () => {
-      if (data.value.menace === undefined) {
-        data.value.menace = NewMenace();
-      }
-      data.value.showMenace = !data.value.showMenace;
-      updateValue();
-    };
-
     const actionScore = computed((): number => {
       let n = 0;
       data.value.boxes.forEach((b) => {
@@ -193,6 +161,24 @@ export default defineComponent({
       rollData.value = moveRoll(0, 0, 0, actionScore.value);
     };
 
+    const campaign = useCampaign();
+    const showClocks = ref(false);
+    const clockIcon = computed(() => {
+      return showClocks.value ? 'mdi-clock-time-two' : 'mdi-clock-time-two-outline';
+    });
+    const clockIndices = computed(() => {
+      const out: number[] = [];
+      if (!data.value.clocks) return out;
+      data.value.clocks.forEach((id) => {
+        campaign.data.character.clocks.forEach((c, i) => {
+          if (c.id === id) {
+            out.push(i);
+          }
+        });
+      });
+      return out;
+    });
+
     return {
       data,
       boxIncrement,
@@ -202,11 +188,13 @@ export default defineComponent({
       updateValue,
       btnSize,
 
-      menaceToggle,
-      menaceIcon,
-
       conclude,
       rollData,
+
+      showClocks,
+      clockIcon,
+      clockIndices,
+      campaign,
     };
   },
 });

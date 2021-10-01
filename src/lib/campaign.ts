@@ -10,7 +10,6 @@ import {
   IJournalEntry,
   ILegacyBox,
   ILegacyTrack,
-  IMenace,
   IPlanet,
   IProgressTrack,
   ISector,
@@ -28,11 +27,13 @@ import {
   ESectorOpts,
   ISighting,
   IClock,
+  IFaction,
+  EAtO,
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
 import { Space } from './oracles/space';
-import { tableRoll } from './roll';
+import { clockRoll, tableRoll } from './roll';
 
 export const Difficulty: { [index: number]: IDiff } = {
   1: <IDiff>{ label: 'Troublesome', mark: 3, harm: 1 },
@@ -42,23 +43,16 @@ export const Difficulty: { [index: number]: IDiff } = {
   5: <IDiff>{ label: 'Epic', mark: 0.25, harm: 5 },
 };
 
-export function NewMenace(): IMenace {
-  return {
-    name: '',
-    boxes: Array(10).fill(false) as boolean[],
-  };
-}
-
-export function NewProgressTrack(): IProgressTrack {
+export const NewProgressTrack = (): IProgressTrack => {
   return {
     name: '',
     difficulty: 1,
     boxes: Array(10).fill(0) as number[],
-    showMenace: false,
+    clocks: []
   };
 }
 
-export function NewLegacyTrack(): ILegacyTrack {
+export const NewLegacyTrack = (): ILegacyTrack => {
   const track: ILegacyTrack = {
     plus10: false,
     boxes: Array(10).fill({
@@ -70,15 +64,26 @@ export function NewLegacyTrack(): ILegacyTrack {
   return track;
 }
 
-export function NewClock(): IClock {
+export const NewClock = (): IClock => {
   return {
+    id: uuid(),
     name: '',
     segments: 4,
-    filled: 0
+    filled: 0,
+    advance: EAtO.Likely,
+    roll: 0
   }
 }
 
-export function NewCharacter(): ICharacter {
+export const RollClock = (clock: IClock): IClock => {
+  const { val, yn, match } = clockRoll(clock.advance);
+  clock.roll = val
+  if (yn && clock.filled < clock.segments) clock.filled++;
+  if (yn && match && clock.filled < clock.segments) clock.filled++;
+  return clock
+}
+
+export const NewCharacter = (): ICharacter => {
   return {
     name: 'New Character',
     pronouns: '',
@@ -160,14 +165,14 @@ export function NewCharacter(): ICharacter {
   };
 }
 
-export function NewJournal(): IJournalEntry {
+export const NewJournal = (): IJournalEntry => {
   return {
     title: 'New journal entry',
     content: '',
   };
 }
 
-export function NewNPC(): INPC {
+export const NewNPC = (): INPC => {
   return {
     name: '',
     callsign: '',
@@ -182,7 +187,7 @@ export function NewNPC(): INPC {
   };
 }
 
-export function NewDerelict(loc?: ESLocation, type?: EDerelictType): IDerelict {
+export const NewDerelict = (loc?: ESLocation, type?: EDerelictType): IDerelict => {
   return {
     name: '',
     location: loc ? loc : ESLocation.Space,
@@ -201,7 +206,7 @@ export function NewDerelict(loc?: ESLocation, type?: EDerelictType): IDerelict {
   };
 }
 
-export function NewCreature(env?: EEnv): ICreature {
+export const NewCreature = (env?: EEnv): ICreature => {
   return {
     name: 'New Creature',
     environment: env ? env : EEnv.Land,
@@ -214,7 +219,7 @@ export function NewCreature(env?: EEnv): ICreature {
   };
 }
 
-export function NewVault(loc?: ESLocation): IVault {
+export const NewVault = (loc?: ESLocation): IVault => {
   return {
     name: 'Mysterious Vault',
     location: loc ? loc : ESLocation.Orbital,
@@ -239,7 +244,7 @@ export function NewVault(loc?: ESLocation): IVault {
   };
 }
 
-export function NewCell(id: string, name?: string): ISectorCell {
+export const NewCell = (id: string, name?: string): ISectorCell => {
   return {
     id: id,
     stat: ECellStatus.Empty,
@@ -257,7 +262,7 @@ export function NewCell(id: string, name?: string): ISectorCell {
   };
 }
 
-export function CellLabel(c: ISectorCell) {
+export const CellLabel = (c: ISectorCell) => {
   let label = c.name;
   let type = '';
   const v: { [index: string]: number } = {
@@ -313,7 +318,7 @@ export function CellLabel(c: ISectorCell) {
   return { label, type };
 }
 
-export function NewSector(): ISector {
+export const NewSector = (): ISector => {
   return {
     name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
     region: ERegion.Terminus,
@@ -322,21 +327,21 @@ export function NewSector(): ISector {
   };
 }
 
-export function NewStar(): IStar {
+export const NewStar = (): IStar => {
   return {
     name: 'New Star',
-    description: '',
+    description: tableRoll(Space.stellarObject),
   };
 }
 
-export function NewSighting(): ISighting {
+export const NewSighting = (): ISighting => {
   return {
     name: 'Sighting',
     notes: '',
   };
 }
 
-export function NewPlanet(type?: EPClass): IPlanet {
+export const NewPlanet = (type?: EPClass): IPlanet => {
   return {
     type: type ? type : EPClass.Desert,
     name: '',
@@ -350,7 +355,7 @@ export function NewPlanet(type?: EPClass): IPlanet {
   };
 }
 
-export function NewSettlement(loc?: ESLocation): ISettlement {
+export const NewSettlement = (loc?: ESLocation): ISettlement => {
   return {
     name: '',
     location: loc ? loc : ESLocation.Orbital,
@@ -364,7 +369,7 @@ export function NewSettlement(loc?: ESLocation): ISettlement {
   };
 }
 
-export function NewShip(): IStarship {
+export const NewShip = (): IStarship => {
   return {
     name: '',
     class: '',
@@ -376,26 +381,22 @@ export function NewShip(): IStarship {
   };
 }
 
-export function NewCampaign(): ICampaign {
+export const NewFaction = (): IFaction => {
+  return {
+    name: '',
+    colour: 'red'
+  }
+}
+
+export const NewCampaign = (): ICampaign => {
   return {
     id: uuid(),
     name: 'New Campaign',
     character: NewCharacter(),
-    truths: {
-      theOldWorld: '',
-      iron: '',
-      legacies: '',
-      communities: '',
-      leaders: '',
-      defense: '',
-      mysticism: '',
-      religion: '',
-      firstBorn: '',
-      beasts: '',
-      horrors: '',
-    },
+    truths: {},
     progressTracks: [NewProgressTrack()],
     journal: [NewJournal()],
     sectors: [NewSector()],
+    factions: [NewFaction()]
   };
 }
