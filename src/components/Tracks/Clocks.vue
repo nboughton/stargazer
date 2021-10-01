@@ -34,7 +34,7 @@
 import { NewClock, RollClock } from 'src/lib/campaign';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, PropType, ref, computed } from 'vue';
-import { ISelectOpt } from '../models';
+import { EAtO, ISelectOpt } from '../models';
 
 import Clock from 'src/components/Tracks/Clock.vue';
 export default defineComponent({
@@ -108,7 +108,9 @@ export default defineComponent({
 
     const rollAllClocks = () => {
       campaign.data.character.clocks.forEach((clock, index) => {
-        campaign.data.character.clocks[index] = RollClock(clock);
+        if (clock.advance !== EAtO.NoRoll) {
+          campaign.data.character.clocks[index] = RollClock(clock);
+        }
       });
     };
 

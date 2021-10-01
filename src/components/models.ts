@@ -184,6 +184,7 @@ export enum EAtO {
   FiftyFifty = '50/50',
   Unlikely = 'Unlikely',
   SmallChance = 'Small Chance',
+  NoRoll ='No Roll'
 }
 
 export interface IClock {

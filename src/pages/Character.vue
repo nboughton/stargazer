@@ -113,14 +113,41 @@
       Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
 
-    <div class="row q-mb-sm" v-for="(a, i) in campaign.data.character.assets" :key="i">
-      <asset class="col-12" v-model="campaign.data.character.assets[i]">
-        <template v-slot:append>
-          <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
-            <q-tooltip>Remove asset</q-tooltip>
-          </q-btn>
-        </template>
-      </asset>
+    <div class="row assets-container" v-if="$q.screen.gt.sm">
+      <div class="col left-assets q-mr-xs">
+        <div v-for="(a, i) in campaign.data.character.assets" :key="i">
+          <asset class="q-mb-sm" v-if="i % 2 != 0" v-model="campaign.data.character.assets[i]">
+            <template v-slot:append>
+              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
+                <q-tooltip>Remove asset</q-tooltip>
+              </q-btn>
+            </template>
+          </asset>
+        </div>
+      </div>
+
+      <div class="col right-assets q-ml-xs">
+        <div v-for="(a, i) in campaign.data.character.assets" :key="i">
+          <asset class="q-mb-sm" v-if="i % 2 == 0" v-model="campaign.data.character.assets[i]">
+            <template v-slot:append>
+              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
+                <q-tooltip>Remove asset</q-tooltip>
+              </q-btn>
+            </template>
+          </asset>
+        </div>
+      </div>
+    </div>
+    <div class="column assets-container" v-else>
+      <div v-for="(a, i) in campaign.data.character.assets" :key="i">
+        <asset class="q-mb-sm" v-model="campaign.data.character.assets[i]">
+          <template v-slot:append>
+            <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
+              <q-tooltip>Remove asset</q-tooltip>
+            </q-btn>
+          </template>
+        </asset>
+      </div>
     </div>
 
     <q-separator />

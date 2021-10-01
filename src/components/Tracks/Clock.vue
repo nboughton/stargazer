@@ -68,7 +68,9 @@ export default defineComponent({
     });
 
     const roll = () => {
-      data.value = RollClock(data.value);
+      if (data.value.advance !== EAtO.NoRoll) {
+        data.value = RollClock(data.value);
+      }
     };
     return {
       config,

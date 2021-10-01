@@ -5,6 +5,10 @@ const baseUrl =
   'https://raw.githubusercontent.com/aureyia/roll20-character-sheets/starforged-ui-components/Ironsworn-Starforged/assets/icons/';
 
 export const icon = {
+  d10: (): string => {
+    return require('../assets/dice/d10.svg') as string
+  },
+
   player: (): string => {
     return require('../assets/space/player-ship.svg') as string
   },

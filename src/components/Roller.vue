@@ -9,7 +9,7 @@
   >
     <q-card class="column card-bg">
       <q-card-section class="row items-center justify-between q-pa-sm text-h6" v-if="d100Res > 0">
-        <div class="col-shrink"><q-icon name="img:icons/dice/d10.svg" /><q-icon name="img:icons/dice/d10.svg" /></div>
+        <div class="col-shrink"><q-icon :name="`img:${icon.d10()}`" /><q-icon :name="`img:${icon.d10()}`" /></div>
         <div class="col-grow text-center">{{ d100Res }}</div>
         <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="d100Res = 0" :size="btnSize" />
       </q-card-section>
@@ -86,8 +86,8 @@
 
           <q-btn class="col-shrink" dense flat @click="roll" :size="btnSize">
             <q-icon name="mdi-dice-6" />
-            <q-icon name="img:icons/dice/d10.svg" />
-            <q-icon name="img:icons/dice/d10.svg" />
+            <q-icon :name="`img:${icon.d10()}`" />
+            <q-icon :name="`img:${icon.d10()}`" />
             <q-tooltip>Roll +Attribute</q-tooltip>
           </q-btn>
 
@@ -108,9 +108,13 @@
           </q-btn>
 
           <q-btn class="col-shrink" dense flat @click="d100" :size="btnSize">
-            <q-icon name="img:icons/dice/d10.svg" />
-            <q-icon name="img:icons/dice/d10.svg" />
+            <q-icon :name="`img:${icon.d10()}`" />
+            <q-icon :name="`img:${icon.d10()}`" />
             <q-tooltip>Roll a D100</q-tooltip>
+          </q-btn>
+
+          <q-btn class="col-shrink" dense flat icon="save" @click="saveResult" :size="btnSize">
+            <q-tooltip>Save result to most recent journal</q-tooltip>
           </q-btn>
         </div>
       </q-card-section>
@@ -123,6 +127,7 @@ import { useCampaign } from 'src/store/campaign';
 import { defineComponent, computed, ref, watch } from 'vue';
 import { ISelectOpt } from './models';
 import { d, moveRoll, NewRollData, updateResults } from 'src/lib/roll';
+import { icon } from 'src/lib/icons';
 
 export default defineComponent({
   name: 'Roller',
@@ -223,15 +228,9 @@ export default defineComponent({
     const d6 = () => (d6Res.value = d(6));
 
     const reroll = (action: boolean, cd1: boolean, cd2: boolean) => {
-      if (action) {
-        data.value.action.die = d(6);
-      }
-      if (cd1) {
-        data.value.challenge.die1.roll = d(10);
-      }
-      if (cd2) {
-        data.value.challenge.die2.roll = d(10);
-      }
+      if (action) data.value.action.die = d(6);
+      if (cd1) data.value.challenge.die1.roll = d(10);
+      if (cd2) data.value.challenge.die2.roll = d(10);
 
       data.value.action.score = +data.value.action.die + +adds.value + +attribute.value;
       // Account for negative momentum
@@ -251,10 +250,21 @@ export default defineComponent({
       data.value = updateResults(data.value);
     };
 
+    const saveResult = () => {
+      if (!data.value.result) return;
+
+      const text = `
+      <div><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = 
+      ${data.value.action.score}
+      vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b></div>`;
+      campaign.data.journal[0].content += text;
+    };
+
     return {
       show,
       close,
       campaign,
+      icon,
 
       attribute,
       otherAttr,
@@ -276,6 +286,7 @@ export default defineComponent({
       d6,
       d6Res,
 
+      saveResult,
       clear,
     };
   },
