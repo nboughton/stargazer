@@ -39,7 +39,7 @@ import { Opportunity, Peril, Planets, RollPlanetType } from 'src/lib/oracles/pla
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
-import { NewPlanet } from 'src/lib/campaign';
+import { NewPlanet } from 'src/lib/sector';
 
 export default defineComponent({
   components: { OInput, OBtns },

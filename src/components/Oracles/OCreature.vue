@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { NewCreature } from 'src/lib/campaign';
+import { NewCreature } from 'src/lib/sector';
 import { Creature } from 'src/lib/oracles/creature';
 import { tableRoll } from 'src/lib/roll';
 import { useCampaign } from 'src/store/campaign';

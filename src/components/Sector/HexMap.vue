@@ -58,7 +58,7 @@
 <script lang="ts">
 import { Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
-import { CellLabel, NewCell } from 'src/lib/campaign';
+import { CellLabel, NewCell } from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, onMounted, ref, watch, PropType } from 'vue';

@@ -239,10 +239,9 @@ import {
   ISearchResults,
   ISighting,
 } from 'src/components/models';
-import { NewSector } from 'src/lib/campaign';
+import { NewSector, CellLabel } from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { CellLabel } from 'src/lib/campaign';
 import { defineComponent, computed, ref } from 'vue';
 
 import IInput from 'src/components/IInput.vue';

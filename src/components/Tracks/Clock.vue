@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { RollClock } from 'src/lib/campaign';
+import { RollClock } from 'src/lib/tracks';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, watch, computed, ref, PropType } from 'vue';

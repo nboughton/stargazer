@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { CellLabel } from 'src/lib/campaign';
+import { CellLabel } from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, computed, ref } from 'vue';

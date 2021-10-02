@@ -134,7 +134,7 @@ import {
   NewDerelict,
   NewVault,
   NewSighting,
-} from 'src/lib/campaign';
+} from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, ref } from 'vue';
 import { ESectorItem, ESectorOpts } from '../models';

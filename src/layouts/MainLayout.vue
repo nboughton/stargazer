@@ -100,7 +100,15 @@
       </q-list>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" :width="width" bordered :class="{ crt: crt }">
+    <q-drawer
+      id="rightDrawer"
+      show-if-above
+      v-model="rightDrawerOpen"
+      side="right"
+      :width="width"
+      bordered
+      :class="{ crt: crt }"
+    >
       <!-- right drawer content -->
       <div class="row">
         <q-expansion-item class="col-12">
@@ -189,6 +197,15 @@
           />
         </q-expansion-item>
       </div>
+
+      <q-btn
+        class="journal-to-top"
+        fab
+        color="primary"
+        @click="scrollTo('rightDrawer')"
+        icon="mdi-arrow-up"
+        size="sm"
+      />
     </q-drawer>
 
     <q-page-container>
@@ -317,7 +334,7 @@
 import { ref, defineComponent, computed } from 'vue';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { useQuasar } from 'quasar';
+import { useQuasar, scroll } from 'quasar';
 import { NewJournal } from 'src/lib/campaign';
 import { IJournalEntry } from 'src/components/models';
 import Oracles from 'src/components/Oracles/Oracles.vue';
@@ -412,6 +429,17 @@ export default defineComponent({
       return /bebop/i.test(campaign.data.sectors[config.data.sector].name);
     });
 
+    const { getScrollTarget, setVerticalScrollPosition } = scroll;
+    const scrollTo = (id: string) => {
+      const el = document.getElementById(id);
+      if (el !== null) {
+        const target = getScrollTarget(el);
+        const offset = el.offsetTop;
+        const duration = 200;
+        setVerticalScrollPosition(target, offset, duration);
+      }
+    };
+
     return {
       leftDrawerOpen,
       toggleLeftDrawer() {
@@ -452,6 +480,7 @@ export default defineComponent({
       showAbout,
       btnSize,
       crt,
+      scrollTo,
     };
   },
 });
@@ -467,4 +496,9 @@ export default defineComponent({
 .journal-img
   max-width: 100%
   max-height: 300px
+
+.journal-to-top
+  position: fixed
+  bottom: 10px
+  right: 30px
 </style>

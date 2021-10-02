@@ -33,7 +33,7 @@ import { Settlement } from 'src/lib/oracles/settlement';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
-import { NewSettlement } from 'src/lib/campaign';
+import { NewSettlement } from 'src/lib/sector';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OSettlement',

@@ -180,24 +180,11 @@
     </div>
 
     <assets v-model="showAssetSelect" />
-
-    <!--q-page-sticky position="bottom-right" :offset="[20, 20]">
-      <q-fab v-model="scrollMenu" color="primary" direction="up" label-position="right" icon="link">
-        <q-fab-action label="Impacts" color="secondary" @click="scrollTo('impacts')" />
-        <q-fab-action label="Assets" color="secondary" @click="scrollTo('assets')" />
-        <q-fab-action label="Clocks" color="secondary" @click="scrollTo('clocks')" />
-        <q-fab-action label="Progress" color="secondary" @click="scrollTo('progress')" />
-        <q-fab-action label="Vows" color="secondary" @click="scrollTo('vows')" />
-        <q-fab-action label="Legacies" color="secondary" @click="scrollTo('legacies')" />
-        <q-fab-action label="Top" color="secondary" @click="scrollTo('top')" />
-      </q-fab>
-    </q-page-sticky-->
   </q-page>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { scroll } from 'quasar';
 
 import Stats from 'src/components/Stats.vue';
 import Asset from 'src/components/Assets/Asset2.vue';
@@ -253,18 +240,6 @@ export default defineComponent({
 
     const config = useConfig();
 
-    const { getScrollTarget, setVerticalScrollPosition } = scroll;
-    const scrollMenu = ref(false);
-    const scrollTo = (id: string) => {
-      const el = document.getElementById(id);
-      if (el !== null) {
-        const target = getScrollTarget(el);
-        const offset = el.offsetTop;
-        const duration = 200;
-        setVerticalScrollPosition(target, offset, duration);
-      }
-    };
-
     return {
       campaign,
 
@@ -275,8 +250,6 @@ export default defineComponent({
 
       burnMomentum,
       config,
-      scrollMenu,
-      scrollTo,
     };
   },
 });

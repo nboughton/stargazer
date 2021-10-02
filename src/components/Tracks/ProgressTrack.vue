@@ -60,7 +60,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import { IProgressTrack } from 'src/components/models';
-import { Difficulty } from 'src/lib/campaign';
+import { Difficulty } from 'src/lib/tracks';
 import { sleep } from 'src/lib/util';
 import { useQuasar } from 'quasar';
 import { moveRoll, NewRollData } from 'src/lib/roll';

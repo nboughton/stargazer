@@ -101,29 +101,6 @@ export enum ECoreCombo {
   DescFoc = 'Descriptor + Focus',
 }
 
-export enum ESectorItem {
-  Star = 'Star',
-  Planet = 'Planet',
-  Settlement = 'Settlement',
-  Ship = 'Ship',
-  Person = 'Person',
-  Creature = 'Creature',
-  Derelict = 'Derelict',
-  Vault = 'Vault',
-  Sighting = 'Sighting',
-}
-
-export enum ESectorOpts { // values need to match the keys in ISectorCell
-  Stars = 'stars',
-  Planets = 'planets',
-  Settlements = 'settlements',
-  Ships = 'ships',
-  NPCs = 'npcs',
-  Creatures = 'creatures',
-  Derelicts = 'derelicts',
-  Vaults = 'vaults',
-  Sightings = 'sightings',
-}
 /* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;
@@ -184,7 +161,7 @@ export enum EAtO {
   FiftyFifty = '50/50',
   Unlikely = 'Unlikely',
   SmallChance = 'Small Chance',
-  NoRoll ='No Roll'
+  NoRoll = 'No Roll',
 }
 
 export interface IClock {
@@ -194,7 +171,7 @@ export interface IClock {
   filled: number;
   advance: EAtO;
   roll: number;
-  complete?: boolean
+  complete?: boolean;
 }
 
 // Conditions and debilities
@@ -218,7 +195,7 @@ export interface IProgressTrack {
   name: string;
   difficulty: number;
   boxes: number[];
-  clocks: string[]
+  clocks: string[];
 }
 
 export interface ILegacyBox {
@@ -310,6 +287,31 @@ export interface ISearchResults {
     };
   };
 }
+
+export enum ESectorItem {
+  Star = 'Star',
+  Planet = 'Planet',
+  Settlement = 'Settlement',
+  Ship = 'Ship',
+  Person = 'Person',
+  Creature = 'Creature',
+  Derelict = 'Derelict',
+  Vault = 'Vault',
+  Sighting = 'Sighting',
+}
+
+export enum ESectorOpts { // values need to match the keys in ISectorCell
+  Stars = 'stars',
+  Planets = 'planets',
+  Settlements = 'settlements',
+  Ships = 'ships',
+  NPCs = 'npcs',
+  Creatures = 'creatures',
+  Derelicts = 'derelicts',
+  Vaults = 'vaults',
+  Sightings = 'sightings',
+}
+
 export interface ISectorCell {
   id: string;
   stat: ECellStatus;
@@ -334,9 +336,10 @@ export interface ISector {
 }
 
 export interface IFaction {
-  name: string
-  colour: string
+  name: string;
+  colour: string;
 }
+
 export interface ICampaign {
   id: string;
   name: string;
@@ -359,7 +362,6 @@ export interface IMove {
 
 // Oracles
 // Starforged Oracles
-export type TPlanetOracles = { [index: string]: IPlanetOracle };
 
 export interface ISFTableItem {
   match: number[];
@@ -448,6 +450,8 @@ export interface IPlanetOracle {
   feature: ISFTable;
   life: ISFTable;
 }
+
+export type TPlanetOracles = { [index: string]: IPlanetOracle };
 
 export interface ISettlement {
   name: string;

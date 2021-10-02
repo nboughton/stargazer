@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { NewDerelict } from 'src/lib/campaign';
+import { NewDerelict } from 'src/lib/sector';
 import { Derelict } from 'src/lib/oracles/derelict';
 import { Settlement } from 'src/lib/oracles/settlement';
 import { Starship } from 'src/lib/oracles/starship';
@@ -54,7 +54,8 @@ export default defineComponent({
         data.value.type = tableRoll(Derelict.type[data.value.location]) as EDerelictType;
       },
       Name: () => {
-        data.value.name = data.value.type === EDerelictType.Starship ? tableRoll(Starship.name) : tableRoll(Settlement.name);
+        data.value.name =
+          data.value.type === EDerelictType.Starship ? tableRoll(Starship.name) : tableRoll(Settlement.name);
       },
       Cond: () => {
         data.value.condition = tableRoll(Derelict.condition);

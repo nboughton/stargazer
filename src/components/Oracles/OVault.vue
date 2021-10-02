@@ -36,7 +36,7 @@ import { ESLocation, IVault } from '../models';
 
 import OInput from 'src/components/Oracles/OInput.vue';
 import OBtns from './OBtns.vue';
-import { NewVault } from 'src/lib/campaign';
+import { NewVault } from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({

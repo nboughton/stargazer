@@ -48,7 +48,7 @@ import { defineComponent } from 'vue';
 
 import ProgressTrack from 'src/components/Tracks/ProgressTrack.vue';
 import Clocks from 'src/components/Tracks/Clocks.vue';
-import { NewClock, NewProgressTrack } from 'src/lib/campaign';
+import { NewClock, NewProgressTrack } from 'src/lib/tracks';
 import { useConfig } from 'src/store/config';
 
 export default defineComponent({

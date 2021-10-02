@@ -26,7 +26,7 @@ import { Starship } from 'src/lib/oracles/starship';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import { useCampaign } from 'src/store/campaign';
-import { NewShip } from 'src/lib/campaign';
+import { NewShip } from 'src/lib/sector';
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OStarship',
@@ -40,9 +40,8 @@ export default defineComponent({
       },
       Class: () => {
         let c = tableRoll(Starship.class);
-        c = /roll twice/i.test(c) ? `${tableRoll(Starship.class)}, ${tableRoll(Starship.class)}` : c;
-        c = /▶️Fleet/i.test(c) ? `Fleet: ${tableRoll(Starship.fleet)}` : c;
-        c = /▶️Starship Mission/i.test(c) ? `Starship Mission: ${tableRoll(Starship.mission[regionSelect.value])}` : c;
+        c = /Fleet/i.test(c) ? `Fleet: ${tableRoll(Starship.fleet)}` : c;
+        c = /Starship Mission/i.test(c) ? `Starship Mission: ${tableRoll(Starship.mission[regionSelect.value])}` : c;
         data.value.class = c;
       },
       Fleet: () => {

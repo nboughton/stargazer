@@ -16,7 +16,7 @@ import { INPC } from '../models';
 import { Character } from 'src/lib/oracles/character';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { NewNPC } from 'src/lib/campaign';
+import { NewNPC } from 'src/lib/sector';
 import { useCampaign } from 'src/store/campaign';
 export default defineComponent({
   name: 'OCharacter',

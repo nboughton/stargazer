@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { NewClock, RollClock } from 'src/lib/campaign';
+import { NewClock, RollClock } from 'src/lib/tracks';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, PropType, ref, computed } from 'vue';
 import { EAtO, ISelectOpt } from '../models';
