@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- Vows -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="vows">
+    <div class="text-h4 sf-header text-center q-mb-sm" id="vows">
       Vows<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
     <progress-track
@@ -58,15 +58,15 @@ export default defineComponent({
     const campaign = useCampaign();
     const config = useConfig();
 
-    const addVow = () => campaign.data.character.vows.push(NewProgressTrack());
+    const addVow = () => campaign.data.character.vows.unshift(NewProgressTrack());
     const removeVow = (index: number) => campaign.data.character.vows.splice(index, 1);
 
-    const addTrack = () => campaign.data.progressTracks.push(NewProgressTrack());
+    const addTrack = () => campaign.data.progressTracks.unshift(NewProgressTrack());
     const removeTrack = (index: number) => campaign.data.progressTracks.splice(index, 1);
 
     const addClock = () => {
       if (!campaign.data.character.clocks) campaign.data.character.clocks = [];
-      campaign.data.character.clocks.push(NewClock());
+      campaign.data.character.clocks.unshift(NewClock());
     };
     const removeClock = (index: number) => campaign.data.character.clocks.splice(index, 1);
 

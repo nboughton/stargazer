@@ -32,6 +32,7 @@ import {
 } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
+import { Character } from './oracles/character';
 import { Space } from './oracles/space';
 import { clockRoll, tableRoll } from './roll';
 
@@ -43,9 +44,9 @@ export const Difficulty: { [index: number]: IDiff } = {
   5: <IDiff>{ label: 'Epic', mark: 0.25, harm: 5 },
 };
 
-export const NewProgressTrack = (): IProgressTrack => {
+export const NewProgressTrack = (name?: string): IProgressTrack => {
   return {
-    name: '',
+    name: name ? name : '',
     difficulty: 1,
     boxes: Array(10).fill(0) as number[],
     clocks: []
@@ -85,7 +86,7 @@ export const RollClock = (clock: IClock): IClock => {
 
 export const NewCharacter = (): ICharacter => {
   return {
-    name: 'New Character',
+    name: `${tableRoll(Character.givenName)} ${tableRoll(Character.familyName)}`,
     pronouns: '',
     callsign: '',
     characteristics: '',

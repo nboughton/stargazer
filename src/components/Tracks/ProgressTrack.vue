@@ -136,6 +136,7 @@ export default defineComponent({
           }
         }
         updateValue();
+        campaign.data.journal[0].content += `<div><b>[Mark Progress: ${data.value.name} :${actionScore.value} boxes]</b></div>`;
       })();
     };
 
@@ -159,6 +160,9 @@ export default defineComponent({
     const rollData = ref(NewRollData());
     const conclude = () => {
       rollData.value = moveRoll(0, 0, 0, actionScore.value);
+
+      campaign.data.journal[0].content += `<div><b>[Progress Roll: ${data.value.name} :${rollData.value.result} = ${rollData.value.action.score}
+      vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}]</b></div>`;
     };
 
     const campaign = useCampaign();

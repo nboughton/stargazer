@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { RollClock } from 'src/lib/campaign';
+import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { defineComponent, watch, computed, ref, PropType } from 'vue';
 import IInput from '../IInput.vue';
@@ -48,6 +49,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const data = ref(props.modelValue);
     const config = useConfig();
+    const campaign = useCampaign();
 
     watch(
       () => props.modelValue,
@@ -57,7 +59,14 @@ export default defineComponent({
     watch(
       () => data.value,
       () => {
-        if (data.value.filled > data.value.segments) data.value.filled = 0;
+        if (data.value.filled === data.value.segments && !data.value.complete) {
+          data.value.complete = true;
+          campaign.data.journal[0].content += `<div><b>[Clock completed: ${data.value.name}]</b></div>`;
+        }
+        if (data.value.filled > data.value.segments) {
+          data.value.filled = 0;
+          data.value.complete = false;
+        }
         emit('update:modelValue', data.value);
       },
       { deep: true }

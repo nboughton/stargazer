@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div class="row q-gutter-sm q-mb-sm items-center justify-center" v-if="all">
+    <div
+      class="row q-gutter-sm q-mb-sm items-center justify-center"
+      v-if="all && campaign.data.character.clocks.length > 0"
+    >
       <q-btn label="Begin a Session" flat dense @click="rollAllClocks" />
     </div>
 
@@ -91,11 +94,11 @@ export default defineComponent({
     const addClock = (id: string) => {
       if (id === 'new') {
         const c = NewClock();
-        campaign.data.character.clocks.push(c);
-        idList.value.push(c.id);
+        campaign.data.character.clocks.unshift(c);
+        idList.value.unshift(c.id);
         return;
       }
-      idList.value.push(id);
+      idList.value.unshift(id);
     };
     const unlinkClock = (id: string) => {
       idList.value.forEach((c, i) => {

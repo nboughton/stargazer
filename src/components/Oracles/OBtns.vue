@@ -1,7 +1,13 @@
 <template>
   <div class="row items-center justify-evenly q-mt-md">
-    <q-btn v-if="initial" icon="mdi-dice-multiple" flat @click="$emit('initial')" />
-    <q-btn v-if="clear" icon="clear" flat @click="$emit('clear')" />
+    <q-btn v-if="initial" icon="mdi-dice-multiple" flat @click="$emit('initial')">
+      <q-tooltip>Roll first look</q-tooltip>
+    </q-btn>
+
+    <q-btn v-if="clear" icon="clear" flat @click="$emit('clear')">
+      <q-tooltip>Clear results</q-tooltip>
+    </q-btn>
+
     <q-separator vertical v-if="save" />
     <div class="col q-ml-md" v-if="save">
       <location-select @selected="$emit('save', $event)" />

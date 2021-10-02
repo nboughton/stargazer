@@ -193,7 +193,8 @@ export interface IClock {
   segments: number;
   filled: number;
   advance: EAtO;
-  roll: number
+  roll: number;
+  complete?: boolean
 }
 
 // Conditions and debilities

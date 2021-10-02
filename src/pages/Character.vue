@@ -116,7 +116,7 @@
     <div class="row assets-container" v-if="$q.screen.gt.sm">
       <div class="col left-assets q-mr-xs">
         <div v-for="(a, i) in campaign.data.character.assets" :key="i">
-          <asset class="q-mb-sm" v-if="i % 2 != 0" v-model="campaign.data.character.assets[i]">
+          <asset class="q-mb-sm" v-if="i % 2 == 0" v-model="campaign.data.character.assets[i]">
             <template v-slot:append>
               <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
                 <q-tooltip>Remove asset</q-tooltip>
@@ -128,7 +128,7 @@
 
       <div class="col right-assets q-ml-xs">
         <div v-for="(a, i) in campaign.data.character.assets" :key="i">
-          <asset class="q-mb-sm" v-if="i % 2 == 0" v-model="campaign.data.character.assets[i]">
+          <asset class="q-mb-sm" v-if="i % 2 != 0" v-model="campaign.data.character.assets[i]">
             <template v-slot:append>
               <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
                 <q-tooltip>Remove asset</q-tooltip>
