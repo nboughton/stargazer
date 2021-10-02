@@ -332,16 +332,20 @@
 
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue';
+
+import { IJournalEntry } from 'src/components/models';
+
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
+import { useAssets } from 'src/store/assets';
 import { useQuasar, scroll } from 'quasar';
+
 import { NewJournal } from 'src/lib/campaign';
-import { IJournalEntry } from 'src/components/models';
+
 import Oracles from 'src/components/Oracles/Oracles.vue';
 import Moves from 'src/components/Moves.vue';
 import Roller from 'src/components/Roller.vue';
 import IInput from 'src/components/IInput.vue';
-import { useAssets } from 'src/store/assets';
 
 export default defineComponent({
   components: { Oracles, Moves, Roller, IInput },

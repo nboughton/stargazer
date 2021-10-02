@@ -72,13 +72,17 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { NewAsset } from 'src/lib/assets';
-import { db } from 'src/lib/db';
-import { useAssets } from 'src/store/assets';
 import { defineComponent, ref, watch } from 'vue';
-import Asset from './Asset2.vue';
+
 import { IAsset } from 'src/components/models';
+
+import { useAssets } from 'src/store/assets';
+
+import { NewAsset } from 'src/lib/assets';
 import { validTags } from 'src/lib/util';
+import { db } from 'src/lib/db';
+
+import Asset from './Asset.vue';
 
 export default defineComponent({
   components: { Asset },

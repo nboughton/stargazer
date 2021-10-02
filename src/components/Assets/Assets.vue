@@ -93,14 +93,18 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
-import { Assets } from 'src/lib/assets';
+
 import { IAsset } from 'src/components/models';
-import AssetEditor from './AssetEditor.vue';
-import Hexbox from '../Hexbox.vue';
+
+import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
 import { useCampaign } from 'src/store/campaign';
+
+import { Assets } from 'src/lib/assets';
 import { icon } from 'src/lib/icons';
-import { useConfig } from 'src/store/config';
+
+import AssetEditor from './AssetEditor.vue';
+import Hexbox from '../Hexbox.vue';
 
 export default defineComponent({
   name: 'Assets',

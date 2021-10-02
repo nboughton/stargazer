@@ -1,6 +1,22 @@
 import { ITruthsSection } from 'src/components/models';
 import { d } from './roll';
 
+export const RollTruth = (truth: string): string => {
+  if (!SFTruths[truth]) return 'No truth with key: ' + truth;
+
+  const n = d(100);
+  let out = '';
+  SFTruths[truth].forEach((t) => {
+    if (n >= t.match[0] && n <= t.match[1]) {
+      out = t.text;
+      return;
+      // if (t.table) out += ' ' + tableRoll(t.table);
+    }
+  });
+
+  return out;
+};
+
 export const SFTruths: { [index: string]: ITruthsSection[] } = {
   ai: [
     {
@@ -379,20 +395,4 @@ export const SFTruths: { [index: string]: ITruthsSection[] } = {
       text: 'Those in power have access to weapons of horrific destructive potential. Skirmishes and wars flare across the settled domains, and most are pawns or casualties in these destructive campaigns.',
     },
   ],
-};
-
-export const RollTruth = (truth: string): string => {
-  if (!SFTruths[truth]) return 'No truth with key: ' + truth;
-
-  const n = d(100);
-  let out = '';
-  SFTruths[truth].forEach((t) => {
-    if (n >= t.match[0] && n <= t.match[1]) {
-      out = t.text;
-      return;
-      // if (t.table) out += ' ' + tableRoll(t.table);
-    }
-  });
-
-  return out;
 };

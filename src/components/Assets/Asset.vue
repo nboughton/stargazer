@@ -1,59 +1,72 @@
 <template>
-  <q-expansion-item header-class="bg-secondary rounded-borders">
-    <template v-slot:header>
-      <q-item class="row full-width">
-        <q-item-section class="col-shrink" avatar>
-          <q-icon :name="icon.asset(data.title)" />
-        </q-item-section>
+  <q-card class="card-bg rounded-borders">
+    <q-card-section class="row bg-secondary q-pa-xs items-center justify-between">
+      <div class="col-3">
+        <div class="row">
+          <!--q-icon :name="icon.asset(data.title)" /-->
+          <hexbox
+            :label="`asset ability ${index + 1}`"
+            v-for="(box, index) in data.items"
+            :key="index"
+            v-model="data.items[index].marked"
+          />
+        </div>
+      </div>
 
-        <q-item-section class="col-grow">
-          <q-item-label>{{ data.title }}</q-item-label>
-          <q-item-label caption>{{ data.type }}</q-item-label>
-        </q-item-section>
+      <div class="col-4 sf-header text-h5 q-mx-xs text-center">
+        {{ data.title }}
+        <slot name="append" v-if="config.data.edit" />
+      </div>
 
-        <q-item-section class="col-shrink" side v-if="config.data.edit">
-          <slot name="append" />
-        </q-item-section>
-      </q-item>
-    </template>
-    <div class="q-pa-sm">
+      <div class="col-3 text-h6 sf-header q-mr-sm text-right">
+        {{ data.type }}
+      </div>
+    </q-card-section>
+
+    <q-card-section class="q-pa-sm">
       <div class="q-mb-sm" v-if="data.subtitle" v-html="data.subtitle" />
 
-      <i-input class="q-mb-sm" v-if="data.input" :label="data.input.label" v-model="data.input.text" />
+      <q-input dense class="q-mb-sm" v-if="data.input" :label="data.input.label" v-model="data.input.text" />
 
       <div v-for="(item, index) in data.items" :key="index">
-        <div class="row q-mb-sm no-wrap items-center q-pr-sm">
-          <q-checkbox class="col-shrink q-mr-sm" v-model="data.items[index].marked" dense />
-          <q-separator vertical />
-          <div class="col q-mx-sm text-justify asset-text" v-html="item.text" />
+        <div v-if="item.marked">
+          <div class="row q-mb-sm no-wrap items-center q-pr-sm">
+            <q-separator vertical />
+            <div class="col q-mx-sm text-justify asset-text" v-html="item.text" />
+          </div>
+          <q-input
+            class="q-mb-sm"
+            dense
+            v-if="data.items[index].input"
+            :label="data.items[index].input.label"
+            v-model="data.items[index].input.text"
+          />
         </div>
-        <i-input
-          class="q-ml-lg q-mb-sm"
-          v-if="data.items[index].input"
-          :label="data.items[index].input.label"
-          v-model="data.items[index].input.text"
-        />
       </div>
       <div class="row justify-evenly q-gutter-sm">
         <q-checkbox v-if="data.cursed != undefined" label="Cursed" v-model="data.cursed" />
         <q-checkbox v-if="data.battered != undefined" label="Battered" v-model="data.battered" />
       </div>
 
-      <resource-track class="col-grow" v-if="data.track" v-model="data.track" reverse variable />
-    </div>
-  </q-expansion-item>
+      <resource-track class="col-grow q-mt-xs" v-if="data.track" v-model="data.track" reverse variable />
+    </q-card-section>
+  </q-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
-import IInput from '../IInput.vue';
+
 import { IAsset } from '../models';
-import { icon } from 'src/lib/icons';
-import ResourceTrack from '../Tracks/ResourceTrack.vue';
-import { useQuasar } from 'quasar';
+
 import { useConfig } from 'src/store/config';
+
+import { icon } from 'src/lib/icons';
+
+import ResourceTrack from '../Tracks/ResourceTrack.vue';
+import Hexbox from '../Hexbox.vue';
+
 export default defineComponent({
-  components: { IInput, ResourceTrack },
+  components: { ResourceTrack, Hexbox },
   name: 'Asset',
   props: {
     modelValue: {
@@ -78,9 +91,12 @@ export default defineComponent({
       { deep: true }
     );
 
-    const $q = useQuasar();
-    const width = computed((): string => {
-      return $q.screen.lt.sm ? 'min-width: 90%' : '';
+    const dots = computed((): boolean[] => {
+      const out: boolean[] = [];
+      data.value.items.forEach((i) => {
+        out.push(i.marked);
+      });
+      return out;
     });
 
     const dExpanded = ref(props.expanded);
@@ -89,8 +105,8 @@ export default defineComponent({
       data,
       dExpanded,
       icon,
-      width,
       config,
+      dots,
     };
   },
 });

@@ -7,11 +7,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue';
+
 import { tableRoll } from 'src/lib/roll';
 import { Core } from 'src/lib/oracles/core';
-import { defineComponent, ref } from 'vue';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OCore',

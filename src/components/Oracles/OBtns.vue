@@ -17,7 +17,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 import LocationSelect from '../LocationSelect.vue';
+
 export default defineComponent({
   components: { LocationSelect },
   name: 'OBtns',
