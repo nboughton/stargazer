@@ -82,6 +82,10 @@ export const useCampaign = defineStore({
       this.data.sectors[sector].cells[cell][type].splice(index, 1);
     },
 
+    appendToJournal(index: number, text: string) {
+      this.data.journal[index].content += text;
+    },
+
     async populateStore() {
       const config = useConfig();
       await config.populateStore();

@@ -123,9 +123,12 @@
 </template>
 
 <script lang="ts">
-import { useCampaign } from 'src/store/campaign';
 import { defineComponent, computed, ref, watch } from 'vue';
+
 import { ISelectOpt } from './models';
+
+import { useCampaign } from 'src/store/campaign';
+
 import { d, moveRoll, NewRollData, updateResults } from 'src/lib/roll';
 import { icon } from 'src/lib/icons';
 
@@ -253,11 +256,10 @@ export default defineComponent({
     const saveResult = () => {
       if (!data.value.result) return;
 
-      const text = `
-      <div><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = 
-      ${data.value.action.score}
-      vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b></div>`;
-      campaign.data.journal[0].content += text;
+      campaign.appendToJournal(
+        0,
+        `<div><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = ${data.value.action.score} vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b></div>`
+      );
     };
 
     return {

@@ -320,6 +320,16 @@
           />
         </q-card-section>
 
+        <q-card-section>
+          <q-select
+            label="Float"
+            v-model="imageFloatSelect"
+            :options="Object.values(imageFloat)"
+            dense
+            hint="Select image float (allows text to wrap around the image)"
+          />
+        </q-card-section>
+
         <q-card-actions align="center">
           <q-btn label="Save" flat color="primary" @click="loadImage" />
           <q-btn label="Close" flat color="warning" dense @click="showImageLoad = false" />
@@ -383,6 +393,12 @@ export default defineComponent({
       return false;
     };
 
+    enum imageFloat {
+      Left = 'left',
+      Right = 'right',
+      None = 'none',
+    }
+    const imageFloatSelect = ref(null);
     const imageToLoad = ref(null);
     const journalEntryID = ref(0);
     const showImageLoad = ref(false);
@@ -392,9 +408,10 @@ export default defineComponent({
       const reader = new FileReader();
       reader.onload = (ev) => {
         const img = ev.target?.result;
-        campaign.data.journal[journalEntryID.value].content += `<p><img class="journal-img" src="${
-          img as string
-        }" /></p>`;
+        let imgClass = 'journal-img';
+        if (imageFloatSelect.value === imageFloat.Left) imgClass += ' float-left';
+        if (imageFloatSelect.value === imageFloat.Right) imgClass += ' float-right';
+        campaign.appendToJournal(journalEntryID.value, `<img class="${imgClass}" src="${img as string}" />`);
       };
 
       reader.readAsDataURL(f);
@@ -471,6 +488,8 @@ export default defineComponent({
       showImageLoad,
       journalEntryID,
       loadImage,
+      imageFloat,
+      imageFloatSelect,
 
       showDataLoad,
       fileToLoad,
@@ -500,9 +519,18 @@ export default defineComponent({
 .journal-img
   max-width: 100%
   max-height: 300px
+  margin: 5px
+
+.float-left
+  float: left
+  clear: right
+
+.float-right
+  float: right
+  clear: left
 
 .journal-to-top
   position: fixed
   bottom: 10px
-  right: 30px
+  right: 10px
 </style>
