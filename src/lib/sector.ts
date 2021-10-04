@@ -103,6 +103,7 @@ export const NewCell = (id: string, name?: string): ISectorCell => {
     id: id,
     stat: ECellStatus.Empty,
     name: name ? name : id,
+    faction: '',
     notes: '',
     stars: [],
     planets: [],

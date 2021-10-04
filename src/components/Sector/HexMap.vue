@@ -83,7 +83,7 @@ export default defineComponent({
     const showDialog = ref(false);
     const selectedID = ref('');
 
-    // Instantiate a null ref and set dimenions/id func
+    // Instantiate a null ref
     const hexmap = ref(null);
     const h = (x: number, y: number): string => {
       return `h-${x}-${y}`;
@@ -416,6 +416,11 @@ export default defineComponent({
 
     watch(
       () => config.data.sector,
+      () => fullRender()
+    );
+
+    watch(
+      () => campaign.data.id,
       () => fullRender()
     );
 

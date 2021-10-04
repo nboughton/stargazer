@@ -5,34 +5,6 @@ export enum ERegion {
   Expanse = 'Expanse',
 }
 
-export enum ESLocation {
-  Planetside = 'Planetside',
-  Orbital = 'Orbital',
-  Space = 'Deep Space',
-}
-
-export enum ESettPop {
-  Few = 'Few',
-  Dozens = 'Dozens',
-  Hundreds = 'Hundreds',
-  Thousands = 'Thousands',
-  TensOfThou = 'Tens of thousands',
-}
-
-export enum EPClass {
-  Desert = 'Desert',
-  Furnace = 'Furnace',
-  Grave = 'Grave',
-  Ice = 'Ice',
-  Jovian = 'Jovian',
-  Jungle = 'Jungle',
-  Ocean = 'Ocean',
-  Rocky = 'Rocky',
-  Shattered = 'Shattered',
-  Tainted = 'Tainted',
-  Vital = 'Vital',
-}
-
 export enum ESighting {
   StellarObject = 'Stellar Object',
   Planet = 'Planet',
@@ -55,35 +27,6 @@ export enum ESighting {
   Cloud = 'Dense nebula cloud',
   R2 = 'Roll twice',
   R3 = 'Roll three times',
-}
-
-export enum EDerelictZone {
-  Access = 'Access',
-  Community = 'Community',
-  Engineering = 'Engineering',
-  Living = 'Living',
-  Medical = 'Medical',
-  Operations = 'Operations',
-  Production = 'Production',
-  Research = 'Research',
-}
-
-export enum EDerelictType {
-  Starship = 'Starship',
-  Settlement = 'Settlement',
-}
-
-export enum EEnv {
-  Space = 'Space',
-  Interior = 'Interior',
-  Land = 'Land',
-  Liquid = 'Liquid',
-  Air = 'Air',
-}
-
-export enum EVault {
-  Planet = 'Precursor Vault (planetside)',
-  Orbital = 'Precursor Vault (orbital)',
 }
 
 export enum ELocTheme {
@@ -255,6 +198,7 @@ export interface ICharacter {
 export interface IJournalEntry {
   title: string;
   content: string;
+  pinned?: boolean;
 }
 
 // Truths
@@ -316,6 +260,7 @@ export interface ISectorCell {
   id: string;
   stat: ECellStatus;
   name: string;
+  faction: string;
   notes: string;
   stars: IStar[];
   planets: IPlanet[];
@@ -336,6 +281,7 @@ export interface ISector {
 }
 
 export interface IFaction {
+  id: string;
   name: string;
   colour: string;
 }
@@ -428,6 +374,20 @@ export interface ILocThemeOracle {
   [ELocTheme.Sacred]: { [index: string]: ISFTable };
 }
 
+export enum EPClass {
+  Desert = 'Desert',
+  Furnace = 'Furnace',
+  Grave = 'Grave',
+  Ice = 'Ice',
+  Jovian = 'Jovian',
+  Jungle = 'Jungle',
+  Ocean = 'Ocean',
+  Rocky = 'Rocky',
+  Shattered = 'Shattered',
+  Tainted = 'Tainted',
+  Vital = 'Vital',
+}
+
 export interface IPlanet {
   type: EPClass;
   name: string;
@@ -452,6 +412,20 @@ export interface IPlanetOracle {
 }
 
 export type TPlanetOracles = { [index: string]: IPlanetOracle };
+
+export enum ESLocation {
+  Planetside = 'Planetside',
+  Orbital = 'Orbital',
+  Space = 'Deep Space',
+}
+
+export enum ESettPop {
+  Few = 'Few',
+  Dozens = 'Dozens',
+  Hundreds = 'Hundreds',
+  Thousands = 'Thousands',
+  TensOfThou = 'Tens of thousands',
+}
 
 export interface ISettlement {
   name: string;
@@ -495,6 +469,22 @@ export interface IStarshipOracle {
   mission: { [index: string]: ISFTable };
 }
 
+export enum EDerelictZone {
+  Access = 'Access',
+  Community = 'Community',
+  Engineering = 'Engineering',
+  Living = 'Living',
+  Medical = 'Medical',
+  Operations = 'Operations',
+  Production = 'Production',
+  Research = 'Research',
+}
+
+export enum EDerelictType {
+  Starship = 'Starship',
+  Settlement = 'Settlement',
+}
+
 export interface IDerelict {
   name: string;
   location: ESLocation;
@@ -529,6 +519,14 @@ export interface IDerelictOracle {
   };
 }
 
+export enum EEnv {
+  Space = 'Space',
+  Interior = 'Interior',
+  Land = 'Land',
+  Liquid = 'Liquid',
+  Air = 'Air',
+}
+
 export interface ICreature {
   name: string;
   environment: EEnv;
@@ -548,6 +546,11 @@ export interface ICreatureOracle {
   firstLook: ISFTable;
   behaviour: ISFTable;
   aspect: ISFTable;
+}
+
+export enum EVault {
+  Planet = 'Precursor Vault (planetside)',
+  Orbital = 'Precursor Vault (orbital)',
 }
 
 export interface IVaultArea {

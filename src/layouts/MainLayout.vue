@@ -128,75 +128,7 @@
         </q-expansion-item>
       </div>
 
-      <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
-        <span class="col-shrink text-h4 sf-header q-pr-sm">JOURNAL</span>
-        <q-input
-          v-model="filter"
-          class="col-grow q-mb-sm"
-          dense
-          standout="bg-blue-grey text-white"
-          :input-style="{ color: '#ECEFF4' }"
-          debounce="500"
-          clearable
-          label="Search by title or content"
-        >
-          <template v-slot:before>
-            <q-btn class="col-shrink" icon="add_circle" flat dense @click="addJournal">
-              <q-tooltip>Add a journal entry</q-tooltip>
-            </q-btn>
-          </template>
-          <template v-slot:prepend>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </div>
-
-      <div v-for="(journal, index) in campaign.data.journal" :key="index">
-        <q-expansion-item
-          class="q-px-sm q-mb-md"
-          header-class="text-h6 q-mb-sm"
-          v-if="showJournal(journal)"
-          :label="campaign.data.journal[index].title"
-          :default-opened="index === 0"
-        >
-          <div class="row q-gutter-sm q-mb-sm">
-            <i-input class="col-grow" label="Title" v-model="campaign.data.journal[index].title" />
-            <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="removeJournal(index)">
-              <q-tooltip>Delete this journal entry</q-tooltip>
-            </q-btn>
-          </div>
-          <q-editor
-            placeholder="Content"
-            v-model="campaign.data.journal[index].content"
-            :definitions="{
-              image: {
-                tip: 'Upload an image',
-                icon: 'add_photo_alternate',
-                handler: () => {
-                  journalEntryID = index;
-                  imageToLoad = null;
-                  showImageLoad = true;
-                },
-              },
-            }"
-            :toolbar="[
-              [
-                {
-                  icon: $q.iconSet.editor.align,
-                  fixedLabel: true,
-                  list: 'only-icons',
-                  options: ['left', 'center', 'right', 'justify'],
-                },
-              ],
-              ['ordered', 'unordered'],
-              ['bold', 'italic', 'strike', 'underline'],
-              ['undo', 'redo'],
-              ['image'],
-            ]"
-            dense
-          />
-        </q-expansion-item>
-      </div>
+      <journal />
 
       <q-btn
         class="journal-to-top"
@@ -306,36 +238,6 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="showImageLoad">
-      <q-card class="card-bg">
-        <q-card-section class="text-center text-bold bg-secondary">Upload Image</q-card-section>
-
-        <q-card-section>
-          <q-file
-            v-model="imageToLoad"
-            standout="bg-blue-grey text-white"
-            :input-style="{ color: '#ECEFF4' }"
-            label="Select Image"
-            accept="image/*"
-          />
-        </q-card-section>
-
-        <q-card-section>
-          <q-select
-            label="Float"
-            v-model="imageFloatSelect"
-            :options="Object.values(imageFloat)"
-            dense
-            hint="Select image float (allows text to wrap around the image)"
-          />
-        </q-card-section>
-
-        <q-card-actions align="center">
-          <q-btn label="Save" flat color="primary" @click="loadImage" />
-          <q-btn label="Close" flat color="warning" dense @click="showImageLoad = false" />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
     <roller v-model="showRoller" :btnSize="btnSize" />
   </q-layout>
 </template>
@@ -343,22 +245,18 @@
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue';
 
-import { IJournalEntry } from 'src/components/models';
-
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
 import { useQuasar, scroll } from 'quasar';
 
-import { NewJournal } from 'src/lib/campaign';
-
 import Oracles from 'src/components/Oracles/Oracles.vue';
 import Moves from 'src/components/Moves.vue';
 import Roller from 'src/components/Roller.vue';
-import IInput from 'src/components/IInput.vue';
+import Journal from 'src/components/Journal/Journal.vue';
 
 export default defineComponent({
-  components: { Oracles, Moves, Roller, IInput },
+  components: { Oracles, Moves, Roller, Journal },
   setup() {
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
@@ -369,54 +267,6 @@ export default defineComponent({
 
     const addCampaign = () => campaign.new();
     const removeCampaign = (id: string) => campaign.delete(id);
-
-    const addJournal = () => campaign.data.journal.unshift(NewJournal());
-    const removeJournal = (index: number) => campaign.data.journal.splice(index, 1);
-
-    const filter = ref('');
-    const showJournal = (journal: IJournalEntry): boolean => {
-      if (filter.value === '' || filter.value === null) {
-        return true;
-      }
-
-      if (journal.title !== undefined) {
-        if (RegExp(filter.value, 'i').test(journal.title)) {
-          return true;
-        }
-      }
-
-      if (journal.content !== undefined) {
-        if (RegExp(filter.value, 'i').test(journal.content)) {
-          return true;
-        }
-      }
-      return false;
-    };
-
-    enum imageFloat {
-      Left = 'left',
-      Right = 'right',
-      None = 'none',
-    }
-    const imageFloatSelect = ref(null);
-    const imageToLoad = ref(null);
-    const journalEntryID = ref(0);
-    const showImageLoad = ref(false);
-    const loadImage = () => {
-      const f: File = imageToLoad.value as unknown as File;
-
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        const img = ev.target?.result;
-        let imgClass = 'journal-img';
-        if (imageFloatSelect.value === imageFloat.Left) imgClass += ' float-left';
-        if (imageFloatSelect.value === imageFloat.Right) imgClass += ' float-right';
-        campaign.appendToJournal(journalEntryID.value, `<img class="${imgClass}" src="${img as string}" />`);
-      };
-
-      reader.readAsDataURL(f);
-      showImageLoad.value = false;
-    };
 
     const fileToLoad = ref(null);
     const showDataLoad = ref(false);
@@ -479,17 +329,6 @@ export default defineComponent({
 
       addCampaign,
       removeCampaign,
-
-      addJournal,
-      removeJournal,
-      showJournal,
-      filter,
-      imageToLoad,
-      showImageLoad,
-      journalEntryID,
-      loadImage,
-      imageFloat,
-      imageFloatSelect,
 
       showDataLoad,
       fileToLoad,

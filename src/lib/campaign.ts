@@ -97,6 +97,7 @@ export const NewJournal = (): IJournalEntry => {
 
 export const NewFaction = (): IFaction => {
   return {
+    id: uuid(),
     name: '',
     colour: 'red',
   };

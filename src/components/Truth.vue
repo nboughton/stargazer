@@ -29,12 +29,16 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref, watch } from 'vue';
+
 import { ISelectOpt } from 'src/components/models';
+
+import { useCampaign } from 'src/store/campaign';
+
 import { SFTruths, RollTruth } from 'src/lib/truths';
 import { tableRoll } from 'src/lib/roll';
-import { useCampaign } from 'src/store/campaign';
-import { defineComponent, ref, watch } from 'vue';
 import { icon } from 'src/lib/icons';
+
 export default defineComponent({
   name: 'Truths',
   props: {
