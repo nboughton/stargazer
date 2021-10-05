@@ -92,6 +92,7 @@ export const NewJournal = (): IJournalEntry => {
   return {
     title: 'New journal entry',
     content: '',
+    pinned: false,
   };
 };
 

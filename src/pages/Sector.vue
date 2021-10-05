@@ -135,6 +135,7 @@
               </div>
             </template>
 
+            <div class="q-pt-xs" />
             <q-card-section class="q-px-xs q-py-none" v-for="(itemIDs, oType) in cell" :key="oType">
               <div v-for="oID in itemIDs" :key="oID">
                 <div v-if="oType === ESectorOpts.Settlements">
@@ -201,6 +202,7 @@
                 </div>
               </div>
             </q-card-section>
+            <q-separator style="opacity: 0; padding: 0; margin: 0" size="1px" />
           </q-expansion-item>
         </q-expansion-item>
       </div>
@@ -223,6 +225,8 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, computed, ref } from 'vue';
+
 import {
   ERegion,
   ECellStatus,
@@ -239,10 +243,11 @@ import {
   ISearchResults,
   ISighting,
 } from 'src/components/models';
-import { NewSector, CellLabel } from 'src/lib/sector';
+
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { defineComponent, computed, ref } from 'vue';
+
+import { NewSector, CellLabel } from 'src/lib/sector';
 
 import IInput from 'src/components/IInput.vue';
 import SSettlement from 'src/components/Sector/SSettlement.vue';
@@ -254,8 +259,8 @@ import SDerelict from 'src/components/Sector/SDerelict.vue';
 import SVault from 'src/components/Sector/SVault.vue';
 import SCreature from 'src/components/Sector/SCreature.vue';
 import SSighting from 'src/components/Sector/SSighting.vue';
-
 import HexMap from 'src/components/Sector/HexMap.vue';
+
 export default defineComponent({
   components: { IInput, HexMap, SSettlement, SNPC, SStar, SPlanet, SStarship, SDerelict, SCreature, SVault, SSighting },
   name: 'Sector',
@@ -286,7 +291,6 @@ export default defineComponent({
     };
 
     // Search stuff
-
     const searchText = ref('');
     const filters = ref([] as ESectorOpts[]);
     const applyFilters = computed((): boolean => {
@@ -305,9 +309,6 @@ export default defineComponent({
         if (!res[sector][cell]) res[sector][cell] = {};
         if (!res[sector][cell][oType]) res[sector][cell][oType] = [];
       };
-
-      // Do nothing if filters and search text are empty
-      // if (!searchText.value && (!filters.value || filters.value.length === 0)) return res;
 
       // Construct results
       campaign.data.sectors.forEach((sector, sectorI) => {

@@ -1,6 +1,6 @@
 <template>
   <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
-    <span class="col-shrink text-h5 q-pr-sm">JOURNAL</span>
+    <span class="col-shrink text-h4 q-pr-sm sf-header">JOURNAL</span>
     <q-input
       v-model="filter"
       class="col-grow q-mb-sm"

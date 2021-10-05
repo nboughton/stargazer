@@ -124,6 +124,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+import { ESectorItem, ESectorOpts } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+import { useConfig } from 'src/store/config';
+
 import {
   NewStar,
   NewPlanet,
@@ -135,9 +142,7 @@ import {
   NewVault,
   NewSighting,
 } from 'src/lib/sector';
-import { useCampaign } from 'src/store/campaign';
-import { defineComponent, ref } from 'vue';
-import { ESectorItem, ESectorOpts } from '../models';
+
 import SPlanet from './SPlanet.vue';
 import SSettlement from './SSettlement.vue';
 import SStar from './SStar.vue';
@@ -147,7 +152,7 @@ import SCreature from './SCreature.vue';
 import SDerelict from './SDerelict.vue';
 import SVault from './SVault.vue';
 import SSighting from './SSighting.vue';
-import { useConfig } from 'src/store/config';
+
 export default defineComponent({
   components: { SStar, SPlanet, SSettlement, SStarship, SNPC, SCreature, SDerelict, SVault, SSighting },
   name: 'Cell',
