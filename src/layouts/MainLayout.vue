@@ -95,7 +95,7 @@
           </q-item-section>
           <q-item-section>
             Export Journal
-            <q-tooltip>Export Journal as and HTML file</q-tooltip>
+            <q-tooltip>Export Journal as HTML</q-tooltip>
           </q-item-section>
         </q-item>
 
