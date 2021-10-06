@@ -20,7 +20,7 @@
         :thickness="1"
         color="negative"
         track-color="white"
-        class="clock"
+        class="clock-outline"
         show-value
         @click="data.filled++"
       >
@@ -94,7 +94,7 @@ export default defineComponent({
       () => {
         if (data.value.filled === data.value.segments && !data.value.complete) {
           data.value.complete = true;
-          campaign.appendToJournal(0, `<div><b>[Clock completed: ${data.value.name}]</b></div>`);
+          campaign.appendToJournal(0, `<div class="note clock"><b>[Clock completed: ${data.value.name}]</b></div>`);
         }
         if (data.value.filled > data.value.segments) {
           data.value.filled = 0;
@@ -126,7 +126,7 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
-.clock
+.clock-outline
   cursor: pointer
   background: $secondary
   padding: 8px

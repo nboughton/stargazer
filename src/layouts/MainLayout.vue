@@ -88,6 +88,19 @@
         </q-item>
 
         <q-separator size="lg" />
+
+        <q-item clickable v-ripple @click="campaign.exportJournal">
+          <q-item-section avatar>
+            <q-icon name="download" />
+          </q-item-section>
+          <q-item-section>
+            Export Journal
+            <q-tooltip>Export Journal as and HTML file</q-tooltip>
+          </q-item-section>
+        </q-item>
+
+        <q-separator size="lg" />
+
         <q-item clickable v-ripple @click="showAbout = true">
           <q-item-section avatar>
             <q-icon name="info" />
@@ -354,19 +367,6 @@ export default defineComponent({
 
 .about-text a:visited
     color: $primary
-
-.journal-img
-  max-width: 100%
-  max-height: 300px
-  margin: 5px
-
-.float-left
-  float: left
-  clear: right
-
-.float-right
-  float: right
-  clear: left
 
 .journal-to-top
   position: fixed

@@ -260,7 +260,7 @@ export interface ISectorCell {
   id: string;
   stat: ECellStatus;
   name: string;
-  faction: string;
+  factions: string[];
   notes: string;
   stars: IStar[];
   planets: IPlanet[];

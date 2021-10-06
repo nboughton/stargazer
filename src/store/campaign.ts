@@ -86,6 +86,34 @@ export const useCampaign = defineStore({
       this.data.journal[index].content += text;
     },
 
+    exportJournal() {
+      const doc = document.implementation.createHTMLDocument('Journal')
+
+      this.data.journal.forEach(j => {
+        const div = doc.createElement('div')
+        div.classList.add('entry')
+        div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`
+        
+        doc.body.prepend(div)
+      })
+
+      const text = new XMLSerializer().serializeToString(doc)
+      const blob = new Blob([text], { type: 'text/html' });
+      const event = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: false,
+      });
+      const anchor = document.createElement('a');
+
+      const date = new Date();
+      anchor.download = `Starforged-journal-${date.getTime() / 1000}.html`;
+      anchor.href = window.URL.createObjectURL(blob);
+      anchor.dataset.downloadurl = ['text/html', anchor.download, anchor.href].join(':');
+
+      anchor.dispatchEvent(event);
+    },
+
     async populateStore() {
       const config = useConfig();
       await config.populateStore();

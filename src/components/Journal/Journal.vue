@@ -29,7 +29,7 @@
       :index="index"
       open
       @imgUpload="
-        journalEntryID = 0;
+        journalEntryID = index;
         imageToLoad = null;
         showImageLoad = true;
       "
@@ -44,7 +44,7 @@
       :index="index"
       :open="index === 0"
       @imgUpload="
-        journalEntryID = 0;
+        journalEntryID = index;
         imageToLoad = null;
         showImageLoad = true;
       "
@@ -173,3 +173,18 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass">
+.journal-img
+  max-width: 100%
+  max-height: 300px
+  margin: 5px
+
+.float-left
+  float: left
+  clear: right
+
+.float-right
+  float: right
+  clear: left
+</style>
