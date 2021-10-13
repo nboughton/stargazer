@@ -283,6 +283,15 @@ export interface ISector {
 export interface IFaction {
   id: string;
   name: string;
+  type: string;
+  influence: string;
+  leadership?: string;
+  sphere: string;
+  projects: string;
+  relationships: string;
+  quirks: string;
+  rumors: string;
+  notes: string;
   colour: string;
 }
 

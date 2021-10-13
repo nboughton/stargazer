@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, computed } from 'vue';
 export default defineComponent({
   name: 'OInput',
   props: {
@@ -20,6 +20,7 @@ export default defineComponent({
     },
     modelValue: {
       type: String,
+      default: '',
     },
     reroll: {
       type: Boolean,
@@ -31,15 +32,14 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'roll'],
   setup(props, { emit }) {
-    const data = ref(props.modelValue || '');
-    watch(
-      () => props.modelValue,
-      () => (data.value = props.modelValue as string)
-    );
-    watch(
-      () => data.value,
-      () => emit('update:modelValue', data.value)
-    );
+    const data = computed({
+      get() {
+        return props.modelValue;
+      },
+      set(value: string) {
+        emit('update:modelValue', value);
+      },
+    });
 
     return {
       data,

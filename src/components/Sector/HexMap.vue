@@ -56,17 +56,22 @@
 </template>
 
 <script lang="ts">
-import { Svg, SVG } from '@svgdotjs/svg.js';
-import { extendHex, defineGrid } from 'honeycomb-grid';
-import { CellLabel, NewCell } from 'src/lib/sector';
+import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
+
+import { ECellStatus, ESectorOpts, ISearchResults } from '../models';
+
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
+
+import { CellLabel, NewCell } from 'src/lib/sector';
+import { Svg, SVG } from '@svgdotjs/svg.js';
+import { extendHex, defineGrid } from 'honeycomb-grid';
 import { icon } from 'src/lib/icons';
 import { colours } from 'src/lib/colours';
 import seedrandom from 'seedrandom';
-import { ECellStatus, ESectorOpts, ISearchResults } from '../models';
+
 import Cell from './Cell.vue';
+
 export default defineComponent({
   components: { Cell },
   name: 'HexMap',

@@ -100,6 +100,14 @@ export const NewFaction = (): IFaction => {
   return {
     id: uuid(),
     name: '',
+    type: '',
+    influence: '',
+    sphere: '',
+    projects: '',
+    relationships: '',
+    quirks: '',
+    rumors: '',
+    notes: '',
     colour: 'red',
   };
 };

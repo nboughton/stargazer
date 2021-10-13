@@ -14,14 +14,19 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue';
+
+import { EEnv, ICreature } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+
 import { NewCreature } from 'src/lib/sector';
 import { Creature } from 'src/lib/oracles/creature';
 import { tableRoll } from 'src/lib/roll';
-import { useCampaign } from 'src/store/campaign';
-import { defineComponent, ref } from 'vue';
-import { EEnv, ICreature } from '../models';
+
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OCreature',

@@ -36,6 +36,10 @@
       <o-vault />
     </q-expansion-item>
 
+    <q-expansion-item header-class="text-h6" label="Faction">
+      <o-faction />
+    </q-expansion-item>
+
     <q-expansion-item header-class="text-h6" label="Location Theme">
       <o-location-theme />
     </q-expansion-item>
@@ -58,6 +62,7 @@ import OCreature from './OCreature.vue';
 import OCore from './OCore.vue';
 import OVault from './OVault.vue';
 import ONPC from './ONPC.vue';
+import OFaction from './OFaction.vue';
 import OLocationTheme from './OLocationTheme.vue';
 import OMisc from './OMisc.vue';
 
@@ -73,6 +78,7 @@ export default defineComponent({
     ODerelict,
     OVault,
     ONPC,
+    OFaction,
     OLocationTheme,
     OMisc,
   },

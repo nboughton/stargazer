@@ -10,14 +10,19 @@
 </template>
 
 <script lang="ts">
-import { tableRoll } from 'src/lib/roll';
 import { defineComponent, ref } from 'vue';
+
 import { INPC } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+
+import { tableRoll } from 'src/lib/roll';
 import { Character } from 'src/lib/oracles/character';
+import { NewNPC } from 'src/lib/sector';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { NewNPC } from 'src/lib/sector';
-import { useCampaign } from 'src/store/campaign';
+
 export default defineComponent({
   name: 'OCharacter',
   components: { OInput, OBtns },
