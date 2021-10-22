@@ -34,26 +34,6 @@ export const Moves: { [index: string]: IMove[] } = {
       text: '<p><strong>When you end a significant session or chapter of play,</strong> reflect on the events of the game and identify any missed opportunities to mark progress.</p>\n\n<ul>\n<li>If you strengthened your ties to a connection, <i>Develop Your Relationship</i>.</li>\n<li>If you moved forward on a quest, <i>Reach a Milestone</i>. If there is a quest, connection, or other situation you would like to give focus in your next session, make note of it and take +1 momentum.</li>\n</ul>\n',
     },
   ],
-  'Legacy Moves': [
-    {
-      name: 'Earn Experience',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you fill a box (four ticks) on any legacy track,</strong> take 2 experience. This experience may be spent when you <i>Advance</i>.</p>\n\n<p>Once you completely fill the tenth box on any legacy track, clear that track. You may start again marking progress on the cleared track, but earn experience at a reduced rate of 1 experience (instead of 2) for each filled progress box. If you make a progress roll against this track, resolve the outcome as if at 10 progress.</p>\n',
-    },
-    {
-      name: 'Advance',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you develop your abilities, improve your resources, gain a reward, or boost your influence,</strong> you may may spend 3 experience to add a new asset, or 2 experience to upgrade an asset. Choose from the following categories as appropriate to your focus and opportunities.</p>\n\n<ul>\n<li>Module: Upgrade your command vehicle</li>\n<li>Support Vehicle: Aquire or improve a secondary vehicle</li>\n<li>Path: Bolster your personal capabilities or follow a new calling</li>\n<li>Companion: Gain or improve a trusted helper</li>\n<li>Deed: Learn from your experiences or build a legacy</li>\n</ul>\n',
-    },
-    {
-      name: 'Continue a Legacy',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you retire from your life as Ironsworn, or succumb to death or desolation</strong>, you may create a new character in your established setting. If you do, roll the challenge dice and compare to each of the former character&rsquo;s legacy tracks: Quests, bonds, and discoveries (one roll per track).</p>\n\n<p>For each <strong>strong hit</strong>, choose one from below, or one from the weak hit or miss options.</p>\n\n<ul>\n<li>Follow their path: Take one path or companion asset from the former character (at no cost), including any marked abilities.</li>\n<li>Share a connection: Take one connection from the former character, including any accrued progress or bond benefits.</li>\n<li>Accept an inheritance: Take the former character&rsquo;s command vehicle and one module or support vehicle (at no cost), including any marked abilities.</li>\n</ul>\n\n<p>For each <strong>weak hit</strong>, choose one from below, or one from the miss options.</p>\n\n<ul>\n<li>See it through: Choose one of the former character&rsquo;s unfinished quests, and <i>Swear an Iron Vow</i> (with an automatic strong hit) to see it done. You may immediately mark up to half their earned progress (round down) on this quest.</li>\n<li>Rebuild a connection: Name one of the former character&rsquo;s connections, and envision how time or circumstances have changed them in a dramatic way. When you <i>Make a Connection</i> with them, take an automatic strong hit and mark two ticks on your bonds legacy track.</li>\n<li>Explore familiar ground: Name a location which was meaningful to the former character. When you first visit that place, envision how it has changed or is endangered. Then, mark two ticks on your discoveries legacy track.</li>\n</ul>\n\n<p>For each <strong>miss</strong>, choose one.</p>\n\n<ul>\n<li>Deal with the aftermath: Envision how one of your former character&rsquo;s foes has gained power or influence.</li>\n<li>Switch loyalties: Envision how you begin in opposition to your former character&rsquo;s beliefs, goals, or allegiances.</li>\n<li>Open Pandora&rsquo;s Box: Envision how an advancement or discovery has unleashed unexpectedly dire consequences.</li>\n</ul>\n',
-    },
-  ],
   'Adventure Moves': [
     {
       name: 'Face Danger',
@@ -92,20 +72,96 @@ export const Moves: { [index: string]: IMove[] } = {
       text: '<p><strong>When you check to see if you have a specific helpful item or resource</strong>, roll +supply.</p>\n\n<p>On a <strong>strong hit</strong>, you have it, and are ready to act. Take +1 momentum.</p>\n\n<p>On a <strong>weak hit</strong>, you have it, but must choose one.</p>\n\n<ul>\n<li>Your supply is diminished: <i>Sacrifice Resources</i> (-1)</li>\n<li>It&rsquo;s not quite right, and causes a complication or delay: <i>Lose Momentum</i> (-2)</li>\n</ul>\n\n<p>On a <strong>miss</strong>, you don&rsquo;t have it and the situation grows more perilous. <i>Pay the Price</i>.</p>\n',
     },
   ],
-  'Fate Moves': [
+  'Quest Moves': [
     {
-      name: 'Pay the Price',
+      name: 'Swear an Iron Vow',
       source: 'Starforged Backer Preview, 081921',
       keywords: '',
-      text: '<p><strong>When you suffer the outcome of an action</strong>, choose one.</p>\n\n<ul>\n<li>Make the most obvious negative outcome happen.</li>\n<li><i>Ask the Oracle</i> for inspiration. Interpret the answer as a hardship or complication appropriate to the current situation.</li>\n<li>Roll on the table below. If you have difficulty interpreting the result to fit the current situation, roll again.</li>\n</ul>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-2</td>\n<td>A trusted individual or community acts against you</td>\n</tr>\n\n<tr>\n<td>3-4</td>\n<td>An individual or community you care about is exposed to danger</td>\n</tr>\n\n<tr>\n<td>5-7</td>\n<td>You encounter signs of a looming threat</td>\n</tr>\n\n<tr>\n<td>8-10</td>\n<td>You create an opportunity for an enemy</td>\n</tr>\n\n<tr>\n<td>11-14</td>\n<td>You face a tough choice</td>\n</tr>\n\n<tr>\n<td>15-18</td>\n<td>You face the consequences of an earlier choice</td>\n</tr>\n\n<tr>\n<td>19-22</td>\n<td>A surprising development complicates your quest</td>\n</tr>\n\n<tr>\n<td>23-26</td>\n<td>You are separated from something or someone</td>\n</tr>\n\n<tr>\n<td>27-32</td>\n<td>Your action causes collateral damage or has an unintended effect</td>\n</tr>\n\n<tr>\n<td>33-38</td>\n<td>Something of value is lost or destroyed</td>\n</tr>\n\n<tr>\n<td>39-44</td>\n<td>The environment or terrain introduces a new hazard</td>\n</tr>\n\n<tr>\n<td>45-50</td>\n<td>A new enemy is revealed</td>\n</tr>\n\n<tr>\n<td>51-56</td>\n<td>A friend, companion, or ally is in harm&rsquo;s way (or you are, if alone)</td>\n</tr>\n\n<tr>\n<td>57-62</td>\n<td>Your equipment or vehicle malfunctions</td>\n</tr>\n\n<tr>\n<td>63-68</td>\n<td>Your vehicle suffers damage</td>\n</tr>\n\n<tr>\n<td>69-74</td>\n<td>You waste resources</td>\n</tr>\n\n<tr>\n<td>75-81</td>\n<td>You are harmed</td>\n</tr>\n\n<tr>\n<td>82-88</td>\n<td>You are stressed</td>\n</tr>\n\n<tr>\n<td>89-95</td>\n<td>You are delayed or put at a disadvantage</td>\n</tr>\n\n<tr>\n<td>96-100</td>\n<td>Roll twice</td>\n</tr>\n</tbody>\n</table>\n',
-      oracles: ['Pay the Price'],
+      text: '<p><strong>When you swear upon iron to complete a quest</strong>, write your vow and give it a rank. Then, roll +heart. If you swear this vow to a connection, add +1; if you share a bond, add +2.</p>\n\n<p>On a <strong>strong hit</strong>, you are emboldened and it is clear what you must do next. Take +2 momentum.</p>\n\n<p>On a <strong>weak hit</strong>, you are determined but begin your quest with more questions than answers. Take +1 momentum, and envision what you do to find a path forward.</p>\n\n<p>On a <strong>miss</strong>, you face a significant obstacle before you can make progress on your quest. Envision what stands in your way, and do what you must to overcome this obstacle.</p>\n',
     },
     {
-      name: 'Ask the Oracle',
+      name: 'Reach a Milestone',
       source: 'Starforged Backer Preview, 081921',
       keywords: '',
-      text: '<p><strong>When you seek to resolve questions, discover details, reveal locations, determine how other characters respond, or trigger encounters or events</strong>, you may&hellip;</p>\n\n<ul>\n<li>Draw a conclusion: Decide the answer based on the most interesting and obvious result.</li>\n<li>Spark an idea: Use an oracle table or other random prompt.</li>\n<li>Ask a yes/no question: Decide the odds of a yes, and roll on the table below to check the answer.</li>\n<li>Pick two: Envision two options. Rate one as &lsquo;likely&rsquo;, and roll on the table below to see if it is true. If not, it is the other.</li>\n</ul>\n\n<table>\n<thead>\n<tr>\n<th>Odds</th>\n<th>The answer is &lsquo;yes&rsquo; if you roll&hellip;</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>Almost Certain</td>\n<td>11 or greater</td>\n</tr>\n\n<tr>\n<td>Likely</td>\n<td>26 or greater</td>\n</tr>\n\n<tr>\n<td><sup>50</sup>&frasl;<sub>50</sub></td>\n<td>51 or greater</td>\n</tr>\n\n<tr>\n<td>Unlikely</td>\n<td>76 or greater</td>\n</tr>\n\n<tr>\n<td>Small Chance</td>\n<td>91 or greater</td>\n</tr>\n</tbody>\n</table>\n',
-      oracles: ['Almost Certain', 'Likely', '50/50', 'Unlikely', 'Small Chance'],
+      text: '<p><strong>When you make headway in your quest</strong> by doing any of the following&hellip;</p>\n\n<ul>\n<li>overcoming a critical obstacle</li>\n<li>gaining meaningful insight</li>\n<li>completing a perilous expedition</li>\n<li>acquiring a crucial item or resource</li>\n<li>earning vital support</li>\n<li>defeating a notable foe</li>\n</ul>\n\n<p>&hellip;you may mark progress per the rank of the vow.</p>\n',
+    },
+    {
+      name: 'Forsake Your Vow',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you renounce your quest, betray your promise, or the goal is lost to you</strong>, clear the vow.</p>\n\n<p>Then, envision the impact of this failure and choose one or more as appropriate to the nature of the vow. Any allies who shared this vow may also envision a cost.</p>\n\n<ul>\n<li>You are demoralized or dispirited: <i>Endure Stress</i>.</li>\n<li>A connection loses faith: <i>Test Your Relationship</i> when you next interact.</li>\n<li>You must abandon a path or resource: Discard an asset.</li>\n<li>Someone else pays a price: Envision how a person, being, or community bears the cost of the failure.</li>\n<li>Someone else takes advantage: Envision how an enemy gains power.</li>\n<li>Your reputation suffers: Envision how this failure marks you.</li>\n</ul>\n',
+    },
+    {
+      name: 'Fulfill Your Vow',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you reach the end of your quest</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, your vow is fulfilled. Mark a reward on your quests legacy track per the vow&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this vow also mark the reward.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but there is more to be done or you realize the truth of your quest. If you <i>Swear an Iron Vow</i> to set things right, take your full legacy reward. Otherwise, make the reward one rank lower.</p>\n\n<p>On a <strong>miss</strong>, your vow is undone through an unexpected complication or realization. Envision what happens and choose one.</p>\n\n<ul>\n<li>Give up on the quest: <i>Forsake Your Vow</i>.</li>\n<li>Recommit to the quest: Roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the vow&rsquo;s rank by one (if not already epic).</li>\n</ul>\n',
+    },
+  ],
+  'Connection Moves': [
+    {
+      name: 'Make a Connection',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you search out a new relationship or give focus to an existing relationship (not an ally or companion)</strong>, roll +heart.</p>\n\n<p>On a <strong>strong hit</strong>, you create a connection. Give them a role and rank. Whenever your connection aids you on a move closely associated with their role, add +1 and take +1 momentum on a hit.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but this connection comes with a complication or cost. Envision what they reveal or demand.</p>\n\n<p>On a <strong>miss</strong>, you don&rsquo;t make a connection and the situation worsens. <i>Pay the Price</i>.</p>\n',
+    },
+    {
+      name: 'Develop Your Relationship',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you reinforce your relationship with a connection</strong> by doing any of the following&hellip;</p>\n\n<ul>\n<li>swearing a vow to undertake a perilous quest in their service</li>\n<li>completing a quest to their benefit</li>\n<li>leveraging their help in desperate circumstances</li>\n<li>giving them something of worth</li>\n<li>sharing a profound moment</li>\n<li>standing with them against hardship</li>\n<li>overcoming a test of your relationship</li>\n</ul>\n\n<p>&hellip;you may mark progress per the rank of the connection.</p>\n\n<p>If you already share a bond with the connection, do not mark progress. Instead, roll +their rank to learn the impact on your legacy (troublesome=+1; dangerous=+2; formidable=+3; extreme=+4; epic=+5). On a <strong>strong hit</strong>, mark 2 ticks on your bonds legacy track. On a <strong>strong hit with a match</strong>, you may also envision how recent events bolstered your connection&rsquo;s standing and raise their rank by one (if not already epic). On a <strong>weak hit</strong>, take +2 momentum. On a <strong>miss</strong>, take no lasting benefit.</p>\n',
+    },
+    {
+      name: 'Forge a Bond',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When your relationship with a connection is ready to evolve</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, you now share a bond. Mark a reward on your bonds legacy track per the connection&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who share this connection also mark the reward. Then, choose one.</p>\n\n<ul>\n<li>Bolster their influence: When they aid you on a move closely associated with their role, add +2 instead of +1.</li>\n<li>Expand their influence: Give them a second role. When they aid you on a move closely associated with either role, add +1 and take +1 momentum on a hit.</li>\n</ul>\n\n<p>On a <strong>weak hit</strong>, as above, but they ask something more of you first. To gain the bond and the legacy reward, envision the nature of the request, and do it (or <i>Swear an Iron Vow</i> to see it done).</p>\n\n<p>On a <strong>miss</strong>, they reveal a motivation or background which puts you at odds. If you recommit to this relationship, roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the connection&rsquo;s rank by one (if not already epic).</p>\n',
+    },
+    {
+      name: 'Test Your Relationship',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When your relationship with a connection is tested through conflict, betrayal, or circumstance</strong>, roll +heart. If you share a bond, add +1.</p>\n\n<p>On a <strong>strong hit</strong>, <i>Develop Your Relationship</i>.</p>\n\n<p>On a <strong>weak hit</strong>, <i>Develop Your Relationship</i>, but also envision a demand or complication as a fallout of this test.</p>\n\n<p>On a <strong>miss</strong>, or if you have no interest in maintaining this relationship, choose one.</p>\n\n<ul>\n<li>Lose the connection: Envision how this impacts you and <i>Pay the Price</i>.</li>\n<li>Prove your loyalty: Envision what you offer or what they demand, and <i>Swear an Iron Vow</i> (formidable or greater) to see it done. Until you complete the quest, take no benefit for the connection. If you refuse or fail the quest, the connection is permanently undone.</li>\n</ul>\n',
+    },
+  ],
+  'Exploration Moves': [
+    {
+      name: 'Undertake an Expedition',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you trailblaze a route through perilous space, journey over hazardous terrain, or survey a mysterious site</strong>, give the expedition a name and rank.</p>\n\n<p>Then, for each segment of the expedition, envision your approach. If you&hellip;</p>\n\n<ul>\n<li>Move at speed: Roll +edge</li>\n<li>Keep under the radar: Roll +shadow</li>\n<li>Stay vigilant: Roll +wits</li>\n</ul>\n\n<p>On a <strong>strong hit</strong>, you reach a waypoint. Envision the location and mark progress per the rank of your expedition.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but this progress costs you. Choose one.</p>\n\n<ul>\n<li>Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).</li>\n<li>Face a peril at the waypoint: Envision what you encounter.</li>\n</ul>\n\n<p>On a <strong>miss</strong>, you are waylaid by a crisis, or arrive at a waypoint to confront an immediate hardship or threat. Do not mark progress, and <i>Pay the Price</i>.</p>\n',
+    },
+    {
+      name: 'Explore a Waypoint',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you divert from an expedition to examine a notable location</strong>, roll +wits.</p>\n\n<p>On a <strong>strong hit</strong>, choose one. On a <strong>strong hit with a match</strong>, you may instead <i>Make a Discovery</i>.</p>\n\n<ul>\n<li>Find an opportunity: Envision a favorable insight, situation, resource, or encounter. Then, take +2 momentum.</li>\n<li>Gain progress: Mark progress on your expedition, per its rank.</li>\n</ul>\n\n<p>On a <strong>weak hit</strong>, you uncover something interesting, but it is bound up in a peril or reveals an ominous aspect of this place. Envision what you encounter. Then, take +1 momentum.</p>\n\n<p>On a <strong>miss</strong> you encounter an immediate hardship or threat, and must <i>Pay the Price</i>. On a <strong>miss with a match</strong>, you may instead <i>Confront Chaos</i>.</p>\n',
+    },
+    {
+      name: 'Finish an Expedition',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When your expedition comes to an end</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, you reach your destination or complete your survey. Mark a reward on your discoveries legacy track per expedition&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this expedition also mark the reward.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but you face an unforeseen complication at the end of your expedition. Make the legacy reward one rank lower, and envision what you encounter.</p>\n\n<p>On a <strong>miss</strong>, your destination is lost to you, or you come to understand the true nature or cost of the expedition. Envision what happens and choose one.</p>\n\n<ul>\n<li>Abandon the expedition: Envision the cost of this setback and <i>Pay the Price</i>.</li>\n<li>Return to the expedition: Roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the expedition&rsquo;s rank by one (if not already epic).</li>\n</ul>\n',
+    },
+    {
+      name: 'Set a Course',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you follow a known route through perilous space, across hazardous terrain, or within a mysterious site</strong>, roll +supply.</p>\n\n<p>On a <strong>strong hit</strong>, you reach your destination and the situation there favors you. Take +1 momentum.</p>\n\n<p>On a <strong>weak hit</strong>, you arrive, but face a cost or complication. Choose one.</p>\n\n<ul>\n<li>Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).</li>\n<li>Face a complication at the destination: Envision what you encounter.</li>\n</ul>\n\n<p>On a <strong>miss</strong>, you are waylaid by a significant threat, and must <i>Pay the Price</i>. If you overcome this obstacle, you may push on safely to your destination.</p>\n',
+    },
+    {
+      name: 'Make a Discovery',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When your exploration of a waypoint uncovers something wondrous</strong>, roll on the table below or choose one. Then, envision the nature of the discovery and how it is revealed. When you first experience or engage with the discovery, you and your allies may mark two ticks on your discoveries legacy track.</p>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-4</td>\n<td>Advanced technology waiting to be harnessed or salvaged</td>\n</tr>\n\n<tr>\n<td>5-8</td>\n<td>Ancient archive or message</td>\n</tr>\n\n<tr>\n<td>9-10</td>\n<td>Artificial consciousness evolved to a higher state</td>\n</tr>\n\n<tr>\n<td>11-12</td>\n<td>Clues to a crucial resource or uncharted domain</td>\n</tr>\n\n<tr>\n<td>13-14</td>\n<td>Envoy from another time or reality</td>\n</tr>\n\n<tr>\n<td>15-22</td>\n<td>Extraordinary natural phenomenon</td>\n</tr>\n\n<tr>\n<td>23-24</td>\n<td>First contact with intelligent life</td>\n</tr>\n\n<tr>\n<td>25-26</td>\n<td>Gateway to another time or alternate reality</td>\n</tr>\n\n<tr>\n<td>27-28</td>\n<td>Key to unlocking a language or method of communication</td>\n</tr>\n\n<tr>\n<td>29-34</td>\n<td>Lost or hidden people</td>\n</tr>\n\n<tr>\n<td>35-42</td>\n<td>Majestic or unusual lifeforms</td>\n</tr>\n\n<tr>\n<td>43-46</td>\n<td>Marvel of ancient engineering</td>\n</tr>\n\n<tr>\n<td>47-50</td>\n<td>Miraculously preserved artifact or specimen</td>\n</tr>\n\n<tr>\n<td>51-56</td>\n<td>Monumental architecture or artistry of an ancient civilization</td>\n</tr>\n\n<tr>\n<td>57-62</td>\n<td>Mysterious device or artifact of potential value</td>\n</tr>\n\n<tr>\n<td>63-66</td>\n<td>New understanding of an enduring mystery</td>\n</tr>\n\n<tr>\n<td>67-68</td>\n<td>Pathway or means of travel to a distant location</td>\n</tr>\n\n<tr>\n<td>69-70</td>\n<td>Person or lifeform with phenomenal abilities</td>\n</tr>\n\n<tr>\n<td>71-78</td>\n<td>Place of awe-inspiring beauty</td>\n</tr>\n\n<tr>\n<td>79-86</td>\n<td>Rare and valuable resource</td>\n</tr>\n\n<tr>\n<td>87-88</td>\n<td>Safeguarded or idyllic location</td>\n</tr>\n\n<tr>\n<td>89-90</td>\n<td>Visions or prophesies of the future</td>\n</tr>\n\n<tr>\n<td>91-100</td>\n<td>Roll Twice</td>\n</tr>\n</tbody>\n</table>\n',
+      oracles: ['Make a Discovery'],
+    },
+    {
+      name: 'Confront Chaos',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When your exploration of a waypoint uncovers something dreadful</strong>, decide the number of aspects: one, two, or three. Roll that number of times or choose that number of aspects on the table below. Then, envision how the encounter begins.</p>\n\n<p>For each result, when you first confront that aspect within the scope of the encounter, you and your allies may mark one tick on your discoveries legacy track.</p>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-4</td>\n<td>Baneful weapon of mass destruction</td>\n</tr>\n\n<tr>\n<td>5-9</td>\n<td>Cataclysmic environmental effects</td>\n</tr>\n\n<tr>\n<td>10-12</td>\n<td>Dead given unnatural life</td>\n</tr>\n\n<tr>\n<td>13-17</td>\n<td>Destructive lifeform of monstrous proportion</td>\n</tr>\n\n<tr>\n<td>18-20</td>\n<td>Dread hallucinations or illusions</td>\n</tr>\n\n<tr>\n<td>21-24</td>\n<td>Harbingers of an imminent invasion</td>\n</tr>\n\n<tr>\n<td>25-27</td>\n<td>Horde of insatiable hunger or fury</td>\n</tr>\n\n<tr>\n<td>28-32</td>\n<td>Horrific lifeforms of inscrutable purpose</td>\n</tr>\n\n<tr>\n<td>33-36</td>\n<td>Impostors in human form</td>\n</tr>\n\n<tr>\n<td>37-41</td>\n<td>Machines made enemy</td>\n</tr>\n\n<tr>\n<td>42-45</td>\n<td>Malignant contagion or parasite</td>\n</tr>\n\n<tr>\n<td>46-50</td>\n<td>Messenger or signal with a dire warning</td>\n</tr>\n\n<tr>\n<td>51-53</td>\n<td>Passage to a grim alternate reality</td>\n</tr>\n\n<tr>\n<td>54-58</td>\n<td>People corrupted by chaos</td>\n</tr>\n\n<tr>\n<td>59-63</td>\n<td>Powerful distortions of time or space</td>\n</tr>\n\n<tr>\n<td>64-68</td>\n<td>Signs of an impending catastrophe</td>\n</tr>\n\n<tr>\n<td>69-72</td>\n<td>Site of a baffling disappearance</td>\n</tr>\n\n<tr>\n<td>73-77</td>\n<td>Site of a horrible disaster</td>\n</tr>\n\n<tr>\n<td>78-82</td>\n<td>Site of terrible carnage</td>\n</tr>\n\n<tr>\n<td>83-87</td>\n<td>Technology nullified or made unstable</td>\n</tr>\n\n<tr>\n<td>88-92</td>\n<td>Technology warped for dark purpose</td>\n</tr>\n\n<tr>\n<td>93-96</td>\n<td>Vault of dread technology or power</td>\n</tr>\n\n<tr>\n<td>97-100</td>\n<td>Worshipers of great and malevolent powers</td>\n</tr>\n</tbody>\n</table>\n',
+      oracles: ['Confront Chaos'],
     },
   ],
   'Combat Moves': [
@@ -200,72 +256,6 @@ export const Moves: { [index: string]: IMove[] } = {
       text: '<p><strong>When you lose or consume resources</strong>, suffer -1 supply for a minor loss, -2 for a serious loss, or -3 for a major loss.</p>\n\n<p>If your supply is exhausted (reduced to 0), mark <strong>unprepared</strong>. When you suffer a loss of resources while unprepared, envision how this causes you hardship and apply the cost to a different suffer move.</p>\n',
     },
   ],
-  'Exploration Moves': [
-    {
-      name: 'Undertake an Expedition',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you trailblaze a route through perilous space, journey over hazardous terrain, or survey a mysterious site</strong>, give the expedition a name and rank.</p>\n\n<p>Then, for each segment of the expedition, envision your approach. If you&hellip;</p>\n\n<ul>\n<li>Move at speed: Roll +edge</li>\n<li>Keep under the radar: Roll +shadow</li>\n<li>Stay vigilant: Roll +wits</li>\n</ul>\n\n<p>On a <strong>strong hit</strong>, you reach a waypoint. Envision the location and mark progress per the rank of your expedition.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but this progress costs you. Choose one.</p>\n\n<ul>\n<li>Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).</li>\n<li>Face a peril at the waypoint: Envision what you encounter.</li>\n</ul>\n\n<p>On a <strong>miss</strong>, you are waylaid by a crisis, or arrive at a waypoint to confront an immediate hardship or threat. Do not mark progress, and <i>Pay the Price</i>.</p>\n',
-    },
-    {
-      name: 'Explore a Waypoint',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you divert from an expedition to examine a notable location</strong>, roll +wits.</p>\n\n<p>On a <strong>strong hit</strong>, choose one. On a <strong>strong hit with a match</strong>, you may instead <i>Make a Discovery</i>.</p>\n\n<ul>\n<li>Find an opportunity: Envision a favorable insight, situation, resource, or encounter. Then, take +2 momentum.</li>\n<li>Gain progress: Mark progress on your expedition, per its rank.</li>\n</ul>\n\n<p>On a <strong>weak hit</strong>, you uncover something interesting, but it is bound up in a peril or reveals an ominous aspect of this place. Envision what you encounter. Then, take +1 momentum.</p>\n\n<p>On a <strong>miss</strong> you encounter an immediate hardship or threat, and must <i>Pay the Price</i>. On a <strong>miss with a match</strong>, you may instead <i>Confront Chaos</i>.</p>\n',
-    },
-    {
-      name: 'Finish an Expedition',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When your expedition comes to an end</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, you reach your destination or complete your survey. Mark a reward on your discoveries legacy track per expedition&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this expedition also mark the reward.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but you face an unforeseen complication at the end of your expedition. Make the legacy reward one rank lower, and envision what you encounter.</p>\n\n<p>On a <strong>miss</strong>, your destination is lost to you, or you come to understand the true nature or cost of the expedition. Envision what happens and choose one.</p>\n\n<ul>\n<li>Abandon the expedition: Envision the cost of this setback and <i>Pay the Price</i>.</li>\n<li>Return to the expedition: Roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the expedition&rsquo;s rank by one (if not already epic).</li>\n</ul>\n',
-    },
-    {
-      name: 'Set a Course',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you follow a known route through perilous space, across hazardous terrain, or within a mysterious site</strong>, roll +supply.</p>\n\n<p>On a <strong>strong hit</strong>, you reach your destination and the situation there favors you. Take +1 momentum.</p>\n\n<p>On a <strong>weak hit</strong>, you arrive, but face a cost or complication. Choose one.</p>\n\n<ul>\n<li>Suffer costs en route: Make a suffer move (-2), or two suffer moves (-1).</li>\n<li>Face a complication at the destination: Envision what you encounter.</li>\n</ul>\n\n<p>On a <strong>miss</strong>, you are waylaid by a significant threat, and must <i>Pay the Price</i>. If you overcome this obstacle, you may push on safely to your destination.</p>\n',
-    },
-    {
-      name: 'Make a Discovery',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When your exploration of a waypoint uncovers something wondrous</strong>, roll on the table below or choose one. Then, envision the nature of the discovery and how it is revealed. When you first experience or engage with the discovery, you and your allies may mark two ticks on your discoveries legacy track.</p>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-4</td>\n<td>Advanced technology waiting to be harnessed or salvaged</td>\n</tr>\n\n<tr>\n<td>5-8</td>\n<td>Ancient archive or message</td>\n</tr>\n\n<tr>\n<td>9-10</td>\n<td>Artificial consciousness evolved to a higher state</td>\n</tr>\n\n<tr>\n<td>11-12</td>\n<td>Clues to a crucial resource or uncharted domain</td>\n</tr>\n\n<tr>\n<td>13-14</td>\n<td>Envoy from another time or reality</td>\n</tr>\n\n<tr>\n<td>15-22</td>\n<td>Extraordinary natural phenomenon</td>\n</tr>\n\n<tr>\n<td>23-24</td>\n<td>First contact with intelligent life</td>\n</tr>\n\n<tr>\n<td>25-26</td>\n<td>Gateway to another time or alternate reality</td>\n</tr>\n\n<tr>\n<td>27-28</td>\n<td>Key to unlocking a language or method of communication</td>\n</tr>\n\n<tr>\n<td>29-34</td>\n<td>Lost or hidden people</td>\n</tr>\n\n<tr>\n<td>35-42</td>\n<td>Majestic or unusual lifeforms</td>\n</tr>\n\n<tr>\n<td>43-46</td>\n<td>Marvel of ancient engineering</td>\n</tr>\n\n<tr>\n<td>47-50</td>\n<td>Miraculously preserved artifact or specimen</td>\n</tr>\n\n<tr>\n<td>51-56</td>\n<td>Monumental architecture or artistry of an ancient civilization</td>\n</tr>\n\n<tr>\n<td>57-62</td>\n<td>Mysterious device or artifact of potential value</td>\n</tr>\n\n<tr>\n<td>63-66</td>\n<td>New understanding of an enduring mystery</td>\n</tr>\n\n<tr>\n<td>67-68</td>\n<td>Pathway or means of travel to a distant location</td>\n</tr>\n\n<tr>\n<td>69-70</td>\n<td>Person or lifeform with phenomenal abilities</td>\n</tr>\n\n<tr>\n<td>71-78</td>\n<td>Place of awe-inspiring beauty</td>\n</tr>\n\n<tr>\n<td>79-86</td>\n<td>Rare and valuable resource</td>\n</tr>\n\n<tr>\n<td>87-88</td>\n<td>Safeguarded or idyllic location</td>\n</tr>\n\n<tr>\n<td>89-90</td>\n<td>Visions or prophesies of the future</td>\n</tr>\n\n<tr>\n<td>91-100</td>\n<td>Roll Twice</td>\n</tr>\n</tbody>\n</table>\n',
-      oracles: ['Make a Discovery'],
-    },
-    {
-      name: 'Confront Chaos',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When your exploration of a waypoint uncovers something dreadful</strong>, decide the number of aspects: one, two, or three. Roll that number of times or choose that number of aspects on the table below. Then, envision how the encounter begins.</p>\n\n<p>For each result, when you first confront that aspect within the scope of the encounter, you and your allies may mark one tick on your discoveries legacy track.</p>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-4</td>\n<td>Baneful weapon of mass destruction</td>\n</tr>\n\n<tr>\n<td>5-9</td>\n<td>Cataclysmic environmental effects</td>\n</tr>\n\n<tr>\n<td>10-12</td>\n<td>Dead given unnatural life</td>\n</tr>\n\n<tr>\n<td>13-17</td>\n<td>Destructive lifeform of monstrous proportion</td>\n</tr>\n\n<tr>\n<td>18-20</td>\n<td>Dread hallucinations or illusions</td>\n</tr>\n\n<tr>\n<td>21-24</td>\n<td>Harbingers of an imminent invasion</td>\n</tr>\n\n<tr>\n<td>25-27</td>\n<td>Horde of insatiable hunger or fury</td>\n</tr>\n\n<tr>\n<td>28-32</td>\n<td>Horrific lifeforms of inscrutable purpose</td>\n</tr>\n\n<tr>\n<td>33-36</td>\n<td>Impostors in human form</td>\n</tr>\n\n<tr>\n<td>37-41</td>\n<td>Machines made enemy</td>\n</tr>\n\n<tr>\n<td>42-45</td>\n<td>Malignant contagion or parasite</td>\n</tr>\n\n<tr>\n<td>46-50</td>\n<td>Messenger or signal with a dire warning</td>\n</tr>\n\n<tr>\n<td>51-53</td>\n<td>Passage to a grim alternate reality</td>\n</tr>\n\n<tr>\n<td>54-58</td>\n<td>People corrupted by chaos</td>\n</tr>\n\n<tr>\n<td>59-63</td>\n<td>Powerful distortions of time or space</td>\n</tr>\n\n<tr>\n<td>64-68</td>\n<td>Signs of an impending catastrophe</td>\n</tr>\n\n<tr>\n<td>69-72</td>\n<td>Site of a baffling disappearance</td>\n</tr>\n\n<tr>\n<td>73-77</td>\n<td>Site of a horrible disaster</td>\n</tr>\n\n<tr>\n<td>78-82</td>\n<td>Site of terrible carnage</td>\n</tr>\n\n<tr>\n<td>83-87</td>\n<td>Technology nullified or made unstable</td>\n</tr>\n\n<tr>\n<td>88-92</td>\n<td>Technology warped for dark purpose</td>\n</tr>\n\n<tr>\n<td>93-96</td>\n<td>Vault of dread technology or power</td>\n</tr>\n\n<tr>\n<td>97-100</td>\n<td>Worshipers of great and malevolent powers</td>\n</tr>\n</tbody>\n</table>\n',
-      oracles: ['Confront Chaos'],
-    },
-  ],
-  'Connection Moves': [
-    {
-      name: 'Make a Connection',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you search out a new relationship or give focus to an existing relationship (not an ally or companion)</strong>, roll +heart.</p>\n\n<p>On a <strong>strong hit</strong>, you create a connection. Give them a role and rank. Whenever your connection aids you on a move closely associated with their role, add +1 and take +1 momentum on a hit.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but this connection comes with a complication or cost. Envision what they reveal or demand.</p>\n\n<p>On a <strong>miss</strong>, you don&rsquo;t make a connection and the situation worsens. <i>Pay the Price</i>.</p>\n',
-    },
-    {
-      name: 'Develop Your Relationship',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you reinforce your relationship with a connection</strong> by doing any of the following&hellip;</p>\n\n<ul>\n<li>swearing a vow to undertake a perilous quest in their service</li>\n<li>completing a quest to their benefit</li>\n<li>leveraging their help in desperate circumstances</li>\n<li>giving them something of worth</li>\n<li>sharing a profound moment</li>\n<li>standing with them against hardship</li>\n<li>overcoming a test of your relationship</li>\n</ul>\n\n<p>&hellip;you may mark progress per the rank of the connection.</p>\n\n<p>If you already share a bond with the connection, do not mark progress. Instead, roll +their rank to learn the impact on your legacy (troublesome=+1; dangerous=+2; formidable=+3; extreme=+4; epic=+5). On a <strong>strong hit</strong>, mark 2 ticks on your bonds legacy track. On a <strong>strong hit with a match</strong>, you may also envision how recent events bolstered your connection&rsquo;s standing and raise their rank by one (if not already epic). On a <strong>weak hit</strong>, take +2 momentum. On a <strong>miss</strong>, take no lasting benefit.</p>\n',
-    },
-    {
-      name: 'Forge a Bond',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When your relationship with a connection is ready to evolve</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, you now share a bond. Mark a reward on your bonds legacy track per the connection&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who share this connection also mark the reward. Then, choose one.</p>\n\n<ul>\n<li>Bolster their influence: When they aid you on a move closely associated with their role, add +2 instead of +1.</li>\n<li>Expand their influence: Give them a second role. When they aid you on a move closely associated with either role, add +1 and take +1 momentum on a hit.</li>\n</ul>\n\n<p>On a <strong>weak hit</strong>, as above, but they ask something more of you first. To gain the bond and the legacy reward, envision the nature of the request, and do it (or <i>Swear an Iron Vow</i> to see it done).</p>\n\n<p>On a <strong>miss</strong>, they reveal a motivation or background which puts you at odds. If you recommit to this relationship, roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the connection&rsquo;s rank by one (if not already epic).</p>\n',
-    },
-    {
-      name: 'Test Your Relationship',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When your relationship with a connection is tested through conflict, betrayal, or circumstance</strong>, roll +heart. If you share a bond, add +1.</p>\n\n<p>On a <strong>strong hit</strong>, <i>Develop Your Relationship</i>.</p>\n\n<p>On a <strong>weak hit</strong>, <i>Develop Your Relationship</i>, but also envision a demand or complication as a fallout of this test.</p>\n\n<p>On a <strong>miss</strong>, or if you have no interest in maintaining this relationship, choose one.</p>\n\n<ul>\n<li>Lose the connection: Envision how this impacts you and <i>Pay the Price</i>.</li>\n<li>Prove your loyalty: Envision what you offer or what they demand, and <i>Swear an Iron Vow</i> (formidable or greater) to see it done. Until you complete the quest, take no benefit for the connection. If you refuse or fail the quest, the connection is permanently undone.</li>\n</ul>\n',
-    },
-  ],
   'Threshold Moves': [
     {
       name: 'Face Death',
@@ -284,32 +274,6 @@ export const Moves: { [index: string]: IMove[] } = {
       source: 'Starforged Backer Preview, 081921',
       keywords: '',
       text: '<p><strong>When your command vehicle is destroyed or irrevocably lost</strong>, you must discard the asset, along with any modules and docked support vehicles.</p>\n\n<p>If you survive, you may use your connections to replace some of what was lost. To learn the cost, roll the challenge dice and compare to the progress on your bonds legacy track.</p>\n\n<p>On a <strong>strong hit</strong>, you may call in a favor. This comes without conditions.</p>\n\n<p>On a <strong>weak hit</strong>, you owe someone. You must mark <strong>indebted</strong> and <i>Swear an Iron Vow</i> to complete an extreme quest in their service. When you complete the duty-bound quest, clear the impact.</p>\n\n<p>On a <strong>miss</strong>, as with the weak hit result, but this quest is against your nature, forces you to <i>Forsake Your Vow</i> on another quest, or is in the service of an enemy.</p>\n\n<p>If you accept the cost, take 1 experience for every marked ability on the discarded assets (minimum 3 experience). Spend this experience only on a new command vehicle, modules, and support vehicles.</p>\n',
-    },
-  ],
-  'Quest Moves': [
-    {
-      name: 'Swear an Iron Vow',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you swear upon iron to complete a quest</strong>, write your vow and give it a rank. Then, roll +heart. If you swear this vow to a connection, add +1; if you share a bond, add +2.</p>\n\n<p>On a <strong>strong hit</strong>, you are emboldened and it is clear what you must do next. Take +2 momentum.</p>\n\n<p>On a <strong>weak hit</strong>, you are determined but begin your quest with more questions than answers. Take +1 momentum, and envision what you do to find a path forward.</p>\n\n<p>On a <strong>miss</strong>, you face a significant obstacle before you can make progress on your quest. Envision what stands in your way, and do what you must to overcome this obstacle.</p>\n',
-    },
-    {
-      name: 'Reach a Milestone',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you make headway in your quest</strong> by doing any of the following&hellip;</p>\n\n<ul>\n<li>overcoming a critical obstacle</li>\n<li>gaining meaningful insight</li>\n<li>completing a perilous expedition</li>\n<li>acquiring a crucial item or resource</li>\n<li>earning vital support</li>\n<li>defeating a notable foe</li>\n</ul>\n\n<p>&hellip;you may mark progress per the rank of the vow.</p>\n',
-    },
-    {
-      name: 'Forsake Your Vow',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you renounce your quest, betray your promise, or the goal is lost to you</strong>, clear the vow.</p>\n\n<p>Then, envision the impact of this failure and choose one or more as appropriate to the nature of the vow. Any allies who shared this vow may also envision a cost.</p>\n\n<ul>\n<li>You are demoralized or dispirited: <i>Endure Stress</i>.</li>\n<li>A connection loses faith: <i>Test Your Relationship</i> when you next interact.</li>\n<li>You must abandon a path or resource: Discard an asset.</li>\n<li>Someone else pays a price: Envision how a person, being, or community bears the cost of the failure.</li>\n<li>Someone else takes advantage: Envision how an enemy gains power.</li>\n<li>Your reputation suffers: Envision how this failure marks you.</li>\n</ul>\n',
-    },
-    {
-      name: 'Fulfill Your Vow',
-      source: 'Starforged Backer Preview, 081921',
-      keywords: '',
-      text: '<p><strong>When you reach the end of your quest</strong>, roll the challenge dice and compare to your progress.</p>\n\n<p>On a <strong>strong hit</strong>, your vow is fulfilled. Mark a reward on your quests legacy track per the vow&rsquo;s rank: troublesome=1 tick; dangerous=2 ticks; formidable=1 box; extreme=2 boxes; epic=3 boxes. Any allies who shared this vow also mark the reward.</p>\n\n<p>On a <strong>weak hit</strong>, as above, but there is more to be done or you realize the truth of your quest. If you <i>Swear an Iron Vow</i> to set things right, take your full legacy reward. Otherwise, make the reward one rank lower.</p>\n\n<p>On a <strong>miss</strong>, your vow is undone through an unexpected complication or realization. Envision what happens and choose one.</p>\n\n<ul>\n<li>Give up on the quest: <i>Forsake Your Vow</i>.</li>\n<li>Recommit to the quest: Roll both challenge dice, take the lowest value, and clear that number of progress boxes. Then, raise the vow&rsquo;s rank by one (if not already epic).</li>\n</ul>\n',
     },
   ],
   'Recover Moves': [
@@ -342,6 +306,42 @@ export const Moves: { [index: string]: IMove[] } = {
       source: 'Starforged Backer Preview, 081921',
       keywords: '',
       text: '<p><strong>When you attempt to bolster your readiness</strong>, envision the opportunity and your approach. If you&hellip;</p>\n\n<ul>\n<li>Barter or make an appeal: Roll +heart</li>\n<li>Threaten or seize: Roll +iron</li>\n<li>Steal or swindle: Roll +shadow</li>\n<li>Scavenge or craft: Roll +wits</li>\n</ul>\n\n<p>On a <strong>strong hit</strong>, choose one.</p>\n\n<ul>\n<li>If you are unprepared, clear the impact and take +1 supply. Otherwise, take +2 supply.</li>\n<li>If you are in need of a specific item or resource which can reasonably be obtained, you acquire it. Take +1 momentum.</li>\n</ul>\n\n<p>On a <strong>weak hit</strong>, as above, but you must first deal with a cost, complication, or demand. Envision the nature of this obstacle.</p>\n\n<p>On a <strong>miss</strong>, you encounter an unexpected peril. <i>Pay the Price</i>.</p>\n',
+    },
+  ],
+  'Legacy Moves': [
+    {
+      name: 'Earn Experience',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you fill a box (four ticks) on any legacy track,</strong> take 2 experience. This experience may be spent when you <i>Advance</i>.</p>\n\n<p>Once you completely fill the tenth box on any legacy track, clear that track. You may start again marking progress on the cleared track, but earn experience at a reduced rate of 1 experience (instead of 2) for each filled progress box. If you make a progress roll against this track, resolve the outcome as if at 10 progress.</p>\n',
+    },
+    {
+      name: 'Advance',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you develop your abilities, improve your resources, gain a reward, or boost your influence,</strong> you may may spend 3 experience to add a new asset, or 2 experience to upgrade an asset. Choose from the following categories as appropriate to your focus and opportunities.</p>\n\n<ul>\n<li>Module: Upgrade your command vehicle</li>\n<li>Support Vehicle: Aquire or improve a secondary vehicle</li>\n<li>Path: Bolster your personal capabilities or follow a new calling</li>\n<li>Companion: Gain or improve a trusted helper</li>\n<li>Deed: Learn from your experiences or build a legacy</li>\n</ul>\n',
+    },
+    {
+      name: 'Continue a Legacy',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you retire from your life as Ironsworn, or succumb to death or desolation</strong>, you may create a new character in your established setting. If you do, roll the challenge dice and compare to each of the former character&rsquo;s legacy tracks: Quests, bonds, and discoveries (one roll per track).</p>\n\n<p>For each <strong>strong hit</strong>, choose one from below, or one from the weak hit or miss options.</p>\n\n<ul>\n<li>Follow their path: Take one path or companion asset from the former character (at no cost), including any marked abilities.</li>\n<li>Share a connection: Take one connection from the former character, including any accrued progress or bond benefits.</li>\n<li>Accept an inheritance: Take the former character&rsquo;s command vehicle and one module or support vehicle (at no cost), including any marked abilities.</li>\n</ul>\n\n<p>For each <strong>weak hit</strong>, choose one from below, or one from the miss options.</p>\n\n<ul>\n<li>See it through: Choose one of the former character&rsquo;s unfinished quests, and <i>Swear an Iron Vow</i> (with an automatic strong hit) to see it done. You may immediately mark up to half their earned progress (round down) on this quest.</li>\n<li>Rebuild a connection: Name one of the former character&rsquo;s connections, and envision how time or circumstances have changed them in a dramatic way. When you <i>Make a Connection</i> with them, take an automatic strong hit and mark two ticks on your bonds legacy track.</li>\n<li>Explore familiar ground: Name a location which was meaningful to the former character. When you first visit that place, envision how it has changed or is endangered. Then, mark two ticks on your discoveries legacy track.</li>\n</ul>\n\n<p>For each <strong>miss</strong>, choose one.</p>\n\n<ul>\n<li>Deal with the aftermath: Envision how one of your former character&rsquo;s foes has gained power or influence.</li>\n<li>Switch loyalties: Envision how you begin in opposition to your former character&rsquo;s beliefs, goals, or allegiances.</li>\n<li>Open Pandora&rsquo;s Box: Envision how an advancement or discovery has unleashed unexpectedly dire consequences.</li>\n</ul>\n',
+    },
+  ],
+  'Fate Moves': [
+    {
+      name: 'Pay the Price',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you suffer the outcome of an action</strong>, choose one.</p>\n\n<ul>\n<li>Make the most obvious negative outcome happen.</li>\n<li><i>Ask the Oracle</i> for inspiration. Interpret the answer as a hardship or complication appropriate to the current situation.</li>\n<li>Roll on the table below. If you have difficulty interpreting the result to fit the current situation, roll again.</li>\n</ul>\n\n<table>\n<thead>\n<tr>\n<th>Roll</th>\n<th>Result</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>1-2</td>\n<td>A trusted individual or community acts against you</td>\n</tr>\n\n<tr>\n<td>3-4</td>\n<td>An individual or community you care about is exposed to danger</td>\n</tr>\n\n<tr>\n<td>5-7</td>\n<td>You encounter signs of a looming threat</td>\n</tr>\n\n<tr>\n<td>8-10</td>\n<td>You create an opportunity for an enemy</td>\n</tr>\n\n<tr>\n<td>11-14</td>\n<td>You face a tough choice</td>\n</tr>\n\n<tr>\n<td>15-18</td>\n<td>You face the consequences of an earlier choice</td>\n</tr>\n\n<tr>\n<td>19-22</td>\n<td>A surprising development complicates your quest</td>\n</tr>\n\n<tr>\n<td>23-26</td>\n<td>You are separated from something or someone</td>\n</tr>\n\n<tr>\n<td>27-32</td>\n<td>Your action causes collateral damage or has an unintended effect</td>\n</tr>\n\n<tr>\n<td>33-38</td>\n<td>Something of value is lost or destroyed</td>\n</tr>\n\n<tr>\n<td>39-44</td>\n<td>The environment or terrain introduces a new hazard</td>\n</tr>\n\n<tr>\n<td>45-50</td>\n<td>A new enemy is revealed</td>\n</tr>\n\n<tr>\n<td>51-56</td>\n<td>A friend, companion, or ally is in harm&rsquo;s way (or you are, if alone)</td>\n</tr>\n\n<tr>\n<td>57-62</td>\n<td>Your equipment or vehicle malfunctions</td>\n</tr>\n\n<tr>\n<td>63-68</td>\n<td>Your vehicle suffers damage</td>\n</tr>\n\n<tr>\n<td>69-74</td>\n<td>You waste resources</td>\n</tr>\n\n<tr>\n<td>75-81</td>\n<td>You are harmed</td>\n</tr>\n\n<tr>\n<td>82-88</td>\n<td>You are stressed</td>\n</tr>\n\n<tr>\n<td>89-95</td>\n<td>You are delayed or put at a disadvantage</td>\n</tr>\n\n<tr>\n<td>96-100</td>\n<td>Roll twice</td>\n</tr>\n</tbody>\n</table>\n',
+      oracles: ['Pay the Price'],
+    },
+    {
+      name: 'Ask the Oracle',
+      source: 'Starforged Backer Preview, 081921',
+      keywords: '',
+      text: '<p><strong>When you seek to resolve questions, discover details, reveal locations, determine how other characters respond, or trigger encounters or events</strong>, you may&hellip;</p>\n\n<ul>\n<li>Draw a conclusion: Decide the answer based on the most interesting and obvious result.</li>\n<li>Spark an idea: Use an oracle table or other random prompt.</li>\n<li>Ask a yes/no question: Decide the odds of a yes, and roll on the table below to check the answer.</li>\n<li>Pick two: Envision two options. Rate one as &lsquo;likely&rsquo;, and roll on the table below to see if it is true. If not, it is the other.</li>\n</ul>\n\n<table>\n<thead>\n<tr>\n<th>Odds</th>\n<th>The answer is &lsquo;yes&rsquo; if you roll&hellip;</th>\n</tr>\n</thead>\n\n<tbody>\n<tr>\n<td>Almost Certain</td>\n<td>11 or greater</td>\n</tr>\n\n<tr>\n<td>Likely</td>\n<td>26 or greater</td>\n</tr>\n\n<tr>\n<td><sup>50</sup>&frasl;<sub>50</sub></td>\n<td>51 or greater</td>\n</tr>\n\n<tr>\n<td>Unlikely</td>\n<td>76 or greater</td>\n</tr>\n\n<tr>\n<td>Small Chance</td>\n<td>91 or greater</td>\n</tr>\n</tbody>\n</table>\n',
+      oracles: ['Almost Certain', 'Likely', '50/50', 'Unlikely', 'Small Chance'],
     },
   ],
 };

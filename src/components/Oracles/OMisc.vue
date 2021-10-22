@@ -1,8 +1,10 @@
 <template>
-  <o-input label="Anomaly Effect" v-model="data.anomalyEffect" @roll="roll.anomalyEffect" />
-  <o-input label="Combat Action" v-model="data.combatAction" @roll="roll.combatAction" />
-  <o-input label="Story Complication" v-model="data.storyComplication" @roll="roll.storyComplication" />
-  <o-btns clear @clear="btns.Clear" />
+  <div class="card-bg q-pa-xs">
+    <o-input label="Anomaly Effect" v-model="data.anomalyEffect" @roll="roll.anomalyEffect" />
+    <o-input label="Combat Action" v-model="data.combatAction" @roll="roll.combatAction" />
+    <o-input label="Story Complication" v-model="data.storyComplication" @roll="roll.storyComplication" />
+    <o-btns clear @clear="btns.Clear" />
+  </div>
 </template>
 
 <script lang="ts">

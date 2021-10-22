@@ -1,21 +1,23 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
+    </div>
+
+    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+
+    <o-input label="Class" v-model="data.class" @roll="roll.Class" />
+
+    <o-input label="Fleet" v-model="data.fleet" @roll="roll.Fleet" />
+
+    <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
+
+    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
+
+    <o-input label="Mission" v-model="data.mission" @roll="roll.Mission" />
+
+    <o-btns save @save="btns.Save" initial @initial="btns.Initial" clear @clear="btns.Clear" />
   </div>
-
-  <o-input label="Name" v-model="data.name" @roll="roll.Name" />
-
-  <o-input label="Class" v-model="data.class" @roll="roll.Class" />
-
-  <o-input label="Fleet" v-model="data.fleet" @roll="roll.Fleet" />
-
-  <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
-
-  <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
-
-  <o-input label="Mission" v-model="data.mission" @roll="roll.Mission" />
-
-  <o-btns save @save="btns.Save" initial @initial="btns.Initial" clear @clear="btns.Clear" />
 </template>
 
 <script lang="ts">

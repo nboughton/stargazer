@@ -1,50 +1,110 @@
 <template>
   <div class="content-start items-start">
-    <q-expansion-item header-class="text-h6" label="Core">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Core"
+    >
       <o-core />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Space">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Space"
+    >
       <o-space />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Planet">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Planet"
+    >
       <o-planet />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Settlement">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Settlement"
+    >
       <o-settlement />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Starship">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Starship"
+    >
       <o-starship />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Character">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Character"
+    >
       <o-NPC />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Creature">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Creature"
+    >
       <o-creature />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Derelict">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Derelict"
+    >
       <o-derelict />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Vault">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Vault"
+    >
       <o-vault />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Faction">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Faction"
+    >
       <o-faction />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Location Theme">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Location Theme"
+    >
       <o-location-theme />
     </q-expansion-item>
 
-    <q-expansion-item header-class="text-h6" label="Misc">
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Misc"
+    >
       <o-misc />
     </q-expansion-item>
   </div>
@@ -84,3 +144,8 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass">
+.oracles
+  background: #604d6966
+</style>

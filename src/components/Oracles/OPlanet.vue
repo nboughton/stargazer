@@ -1,34 +1,36 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Region" v-model="regionSelect" dense :options="Object.values(ERegion)" />
-    <q-select class="col-grow" label="Type" v-model="data.type" dense :options="Object.values(EPClass)" />
-    <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Region" v-model="regionSelect" dense :options="Object.values(ERegion)" />
+      <q-select class="col-grow" label="Type" v-model="data.type" dense :options="Object.values(EPClass)" />
+      <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+    </div>
+
+    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+
+    <div class="row items-center">
+      <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense />
+      <q-btn icon="mdi-playlist-plus" flat dense @click="btns.DescText">
+        <q-tooltip>Use default description text</q-tooltip>
+      </q-btn>
+    </div>
+
+    <o-input label="Atmosphere" v-model="data.atmosphere" @roll="roll.Atmos" />
+
+    <o-input label="Settlements" v-model="data.settlements" @roll="roll.Sett" />
+
+    <o-input label="Observed From Space" v-model="data.observed" @roll="roll.Obs" reroll />
+
+    <o-input label="Planetside Feature" v-model="data.feature" @roll="roll.Feat" reroll />
+
+    <o-input label="Life" v-model="data.life" @roll="roll.Life" />
+
+    <o-input label="Planetside Peril" v-model="poppers.peril" @roll="roll.Peril" />
+
+    <o-input label="Planetsiide Opportunity" v-model="poppers.opportunity" @roll="roll.Opp" />
+
+    <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
   </div>
-
-  <o-input label="Name" v-model="data.name" @roll="roll.Name" />
-
-  <div class="row items-center">
-    <q-input class="col-grow" label="Description" v-model="data.description" autogrow dense />
-    <q-btn icon="mdi-playlist-plus" flat dense @click="btns.DescText">
-      <q-tooltip>Use default description text</q-tooltip>
-    </q-btn>
-  </div>
-
-  <o-input label="Atmosphere" v-model="data.atmosphere" @roll="roll.Atmos" />
-
-  <o-input label="Settlements" v-model="data.settlements" @roll="roll.Sett" />
-
-  <o-input label="Observed From Space" v-model="data.observed" @roll="roll.Obs" reroll />
-
-  <o-input label="Planetside Feature" v-model="data.feature" @roll="roll.Feat" reroll />
-
-  <o-input label="Life" v-model="data.life" @roll="roll.Life" />
-
-  <o-input label="Planetside Peril" v-model="poppers.peril" @roll="roll.Peril" />
-
-  <o-input label="Planetsiide Opportunity" v-model="poppers.opportunity" @roll="roll.Opp" />
-
-  <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
 </template>
 
 <script lang="ts">

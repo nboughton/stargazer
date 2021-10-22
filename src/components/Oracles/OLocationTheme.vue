@@ -1,16 +1,18 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(ELocTheme)" dense />
-    <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(ELocTheme)" dense />
+      <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+    </div>
+
+    <o-input label="Feature" v-model="data.feature" @roll="roll.Feat" />
+
+    <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
+
+    <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
+
+    <o-btns clear @click="btns.Clear" />
   </div>
-
-  <o-input label="Feature" v-model="data.feature" @roll="roll.Feat" />
-
-  <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
-
-  <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
-
-  <o-btns clear @click="btns.Clear" />
 </template>
 
 <script lang="ts">

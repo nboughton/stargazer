@@ -1,32 +1,34 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
-    <q-btn icon="mdi-dice-6" flat dense @click="roll.Loc" />
-    <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(EDerelictType)" dense />
-    <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
+      <q-btn icon="mdi-dice-6" flat dense @click="roll.Loc" />
+      <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(EDerelictType)" dense />
+      <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
+    </div>
+
+    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+
+    <o-input label="Condition" v-model="data.condition" @roll="roll.Cond" />
+
+    <o-input label="Outer First Look" v-model="data.outerFirstLook" @roll="roll.OuterFirst" />
+
+    <o-input label="Inner First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" />
+
+    <q-expansion-item label="Explore">
+      <o-input label="Current Zone" v-model="data.currentZone" @roll="roll.Zone" />
+
+      <o-input label="Area" v-model="data.explore.area" @roll="roll.Explore.Area" />
+
+      <o-input label="Feature" v-model="data.explore.feature" @roll="roll.Explore.Feat" />
+
+      <o-input label="Peril" v-model="data.explore.peril" @roll="roll.Explore.Peril" />
+
+      <o-input label="Opportunity" v-model="data.explore.opportunity" @roll="roll.Explore.Opp" />
+    </q-expansion-item>
+
+    <o-btns clear @clear="btns.Clear" initial @initial="btns.Initial" save @save="btns.Save" />
   </div>
-
-  <o-input label="Name" v-model="data.name" @roll="roll.Name" />
-
-  <o-input label="Condition" v-model="data.condition" @roll="roll.Cond" />
-
-  <o-input label="Outer First Look" v-model="data.outerFirstLook" @roll="roll.OuterFirst" />
-
-  <o-input label="Inner First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" />
-
-  <q-expansion-item label="Explore">
-    <o-input label="Current Zone" v-model="data.currentZone" @roll="roll.Zone" />
-
-    <o-input label="Area" v-model="data.explore.area" @roll="roll.Explore.Area" />
-
-    <o-input label="Feature" v-model="data.explore.feature" @roll="roll.Explore.Feat" />
-
-    <o-input label="Peril" v-model="data.explore.peril" @roll="roll.Explore.Peril" />
-
-    <o-input label="Opportunity" v-model="data.explore.opportunity" @roll="roll.Explore.Opp" />
-  </q-expansion-item>
-
-  <o-btns clear @clear="btns.Clear" initial @initial="btns.Initial" save @save="btns.Save" />
 </template>
 
 <script lang="ts">

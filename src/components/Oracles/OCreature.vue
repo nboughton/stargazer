@@ -1,16 +1,18 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Environment" v-model="data.environment" :options="Object.values(EEnv)" dense />
-    <q-btn icon="mdi-dice-6" flat dense @click="roll.Env" />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Environment" v-model="data.environment" :options="Object.values(EEnv)" dense />
+      <q-btn icon="mdi-dice-6" flat dense @click="roll.Env" />
+    </div>
+
+    <o-input label="Scale" v-model="data.scale" @roll="roll.Scale" />
+    <o-input label="Basic Form" v-model="data.form" @roll="roll.Form" />
+    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
+    <o-input label="Encountered Behaviour" v-model="data.behaviour" @roll="roll.Behave" />
+    <o-input label="Revealed Aspect" v-model="data.aspect" @roll="roll.Aspect" reroll />
+
+    <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
   </div>
-
-  <o-input label="Scale" v-model="data.scale" @roll="roll.Scale" />
-  <o-input label="Basic Form" v-model="data.form" @roll="roll.Form" />
-  <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
-  <o-input label="Encountered Behaviour" v-model="data.behaviour" @roll="roll.Behave" />
-  <o-input label="Revealed Aspect" v-model="data.aspect" @roll="roll.Aspect" reroll />
-
-  <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
 </template>
 
 <script lang="ts">

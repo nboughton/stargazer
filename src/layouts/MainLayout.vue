@@ -3,9 +3,13 @@
     <q-header elevated class="bg-secondary text-white" height-hint="98">
       <q-toolbar :class="{ crt: crt }">
         <q-btn dense flat icon="menu" @click="toggleLeftDrawer" />
+        <!--q-avatar rounded>
+          <img src="~/../../public/logo.png" />
+        </q-avatar-->
 
-        <q-toolbar-title>
-          <q-input input-class="sf-header text-h5" v-model="campaign.data.name" borderless />
+        <q-toolbar-title class="sf-header text-h6">
+          <!--q-input input-class="sf-header text-h5" v-model="campaign.data.name" borderless /-->
+          IRON JOURNAL <span class="title-pipe">|</span> STARFORGED
         </q-toolbar-title>
 
         <q-btn v-if="config.data.saving" icon="save" flat dense disable />
@@ -21,7 +25,7 @@
       </q-toolbar>
 
       <q-tabs align="center" dense :class="{ crt: crt }">
-        <q-route-tab to="/truths" label="Truths" />
+        <q-route-tab to="/campaign" label="Campaign" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
         <q-route-tab to="/challenges" label="Challenges" />
         <q-route-tab to="/sector" label="Sector" />
@@ -37,7 +41,15 @@
             {{ item.name }}
           </q-item-section>
           <q-item-section class="col-shrink" v-if="config.data.index.length > 1 && config.data.edit">
-            <q-btn icon="delete" flat dense @click="removeCampaign(item.id)" />
+            <q-btn
+              icon="delete"
+              flat
+              dense
+              @click="
+                campaignToDelete = item.id;
+                showCampaignDelete = true;
+              "
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -251,6 +263,22 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="showCampaignDelete">
+      <q-card>
+        <q-card-section class="row card-bg text-h6">
+          <div class="col-grow">Delete Campaign?</div>
+          <q-btn class="col-shrink" flat dense icon="close" @click="showCampaignDelete = false" />
+        </q-card-section>
+
+        <q-card-section class="text-h6 text-center"> Are you sure? </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn color="warning" label="DELETE" @click="removeCampaign(campaignToDelete)" />
+          <q-btn color="primary" label="NOPE" @click="showCampaignDelete = false" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <roller v-model="showRoller" :btnSize="btnSize" />
   </q-layout>
 </template>
@@ -280,6 +308,8 @@ export default defineComponent({
 
     const addCampaign = () => campaign.new();
     const removeCampaign = (id: string) => campaign.delete(id);
+    const campaignToDelete = ref('');
+    const showCampaignDelete = ref(false);
 
     const fileToLoad = ref(null);
     const showDataLoad = ref(false);
@@ -342,6 +372,8 @@ export default defineComponent({
 
       addCampaign,
       removeCampaign,
+      showCampaignDelete,
+      campaignToDelete,
 
       showDataLoad,
       fileToLoad,
@@ -372,4 +404,12 @@ export default defineComponent({
   position: fixed
   bottom: 10px
   right: 10px
+
+.title-pipe
+  margin: 0
+  padding: 0
+  margin-left: 10px
+  margin-right: 10px
+  text-shadow: 1px 1px 1px $dark
+  color: darkgrey
 </style>

@@ -1,9 +1,11 @@
 <template>
-  <o-input label="Action" v-model="data.action" @roll="roll.Action" />
-  <o-input label="Theme" v-model="data.theme" @roll="roll.Theme" />
-  <o-input label="Descriptor" v-model="data.desc" @roll="roll.Desc" />
-  <o-input label="Focus" v-model="data.focus" @roll="roll.Focus" />
-  <o-btns clear @clear="btns.Clear" />
+  <div class="card-bg q-pa-xs">
+    <o-input label="Action" v-model="data.action" @roll="roll.Action" />
+    <o-input label="Theme" v-model="data.theme" @roll="roll.Theme" />
+    <o-input label="Descriptor" v-model="data.desc" @roll="roll.Desc" />
+    <o-input label="Focus" v-model="data.focus" @roll="roll.Focus" />
+    <o-btns clear @clear="btns.Clear" />
+  </div>
 </template>
 
 <script lang="ts">

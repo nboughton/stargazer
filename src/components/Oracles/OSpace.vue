@@ -1,17 +1,19 @@
 <template>
-  <q-select label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
+  <div class="card-bg q-pa-xs">
+    <q-select label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
 
-  <o-input label="Sighting" v-model="data.sighting" @roll="roll.Sight" />
+    <o-input label="Sighting" v-model="data.sighting" @roll="roll.Sight" />
 
-  <o-input label="Sector Name" v-model="data.sectorName" @roll="roll.Name" />
+    <o-input label="Sector Name" v-model="data.sectorName" @roll="roll.Name" />
 
-  <o-input label="Stellar Object" v-model="data.obj" @roll="roll.Obj" />
+    <o-input label="Stellar Object" v-model="data.obj" @roll="roll.Obj" />
 
-  <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
+    <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
 
-  <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
+    <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
 
-  <o-btns clear @clear="btns.Clear" />
+    <o-btns clear @clear="btns.Clear" />
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div class="hexbox" @click="$emit('update:modelValue', !data)" :title="label">
+  <div class="hexbox row items-center" @click="$emit('update:modelValue', !data)" :title="label">
     <svg class="box" viewBox="0 0 26 26" width="28" height="28">
       <polygon :class="{ hex: true, checked: data }" points="15,5 25,10 25,20 15,25 5,20 5,10" />
     </svg>

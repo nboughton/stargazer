@@ -1,28 +1,36 @@
 <template>
-  <div class="row items-center">
-    <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
-    <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
-    <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll.Loc" />
+  <div class="card-bg q-pa-xs">
+    <div class="row items-center">
+      <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
+      <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll.Loc" />
+    </div>
+
+    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+
+    <div class="row items-center">
+      <q-select
+        class="col-grow"
+        label="Population"
+        v-model="data.population"
+        :options="Object.values(ESettPop)"
+        dense
+      />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll.Pop" />
+    </div>
+
+    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
+
+    <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
+
+    <o-input label="Authority" v-model="data.authority" @roll="roll.Auth" />
+
+    <o-input label="Projects" v-model="data.projects" @roll="roll.Proj" reroll />
+
+    <o-input label="Trouble" v-model="data.trouble" @roll="roll.Trouble" />
+
+    <o-btns clear @clear="btns.Clear" initial @initial="btns.Initial" save @save="btns.Save" />
   </div>
-
-  <o-input label="Name" v-model="data.name" @roll="roll.Name" />
-
-  <div class="row items-center">
-    <q-select class="col-grow" label="Population" v-model="data.population" :options="Object.values(ESettPop)" dense />
-    <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll.Pop" />
-  </div>
-
-  <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
-
-  <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
-
-  <o-input label="Authority" v-model="data.authority" @roll="roll.Auth" />
-
-  <o-input label="Projects" v-model="data.projects" @roll="roll.Proj" reroll />
-
-  <o-input label="Trouble" v-model="data.trouble" @roll="roll.Trouble" />
-
-  <o-btns clear @clear="btns.Clear" initial @initial="btns.Initial" save @save="btns.Save" />
 </template>
 
 <script lang="ts">
