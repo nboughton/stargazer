@@ -107,7 +107,10 @@ p
 .asset-text > ul
   padding: 5px
   margin: 0
-  list-style-type: none
+  list-style-type: '-'
+
+.asset-text > ul > li
+  margin-top: 3px
 
 .crt::before
   content: " "
