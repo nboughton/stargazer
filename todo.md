@@ -21,8 +21,8 @@
   [*] Make delete button presentation consistent
   [*] Modal confirm for campaign delete
   [*] Logo avatar in top left of main bar
-  [?] editable campaign name in left drawer
-  [ ] Rework Truths tab as Campaign tab with Factions and Campaign name
+  [*] Rework Truths tab as Campaign tab with Factions and Campaign name
+  [ ] "Add" button for Factions on Campaign tab
 
 - BUGS
   [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open

@@ -3,7 +3,7 @@
     <!-- content -->
     <i-input class="q-mb-md" label="Campaign Name" v-model="campaign.data.name" />
 
-    <div class="sf-header text-h4">Factions</div>
+    <div class="sf-header text-h4">Factions<q-btn icon="add_circle" flat dense @click="addFaction" /></div>
     <faction
       v-for="(f, i) in campaign.data.factions"
       :key="i"
@@ -37,6 +37,7 @@ import { useCampaign } from 'src/store/campaign';
 import Truth from 'src/components/Truth.vue';
 import IInput from 'src/components/IInput.vue';
 import Faction from 'src/components/Faction.vue';
+import { NewFaction } from 'src/lib/campaign';
 
 export default defineComponent({
   name: 'Truths',
@@ -44,12 +45,16 @@ export default defineComponent({
   setup() {
     const campaign = useCampaign();
 
+    const addFaction = () => {
+      campaign.data.factions.unshift(NewFaction());
+    };
     const removeFaction = (index: number) => {
       campaign.data.factions.splice(index, 1);
     };
 
     return {
       campaign,
+      addFaction,
       removeFaction,
     };
   },

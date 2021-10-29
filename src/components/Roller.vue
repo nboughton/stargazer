@@ -91,17 +91,27 @@
             <q-tooltip>Roll +Attribute</q-tooltip>
           </q-btn>
 
-          <q-btn
-            class="col-shrink"
-            dense
-            flat
-            :label="campaign.data.character.tracks.momentum.value"
-            icon="mdi-fire"
-            @click="burn"
-            :size="btnSize"
-          >
-            <q-tooltip>Burn Momentum</q-tooltip>
-          </q-btn>
+          <div class="col-shrink">
+            <div class="row items-center">
+              <q-btn class="col-shrink" dense flat icon="remove" @click="mDec" :size="btnSize">
+                <q-tooltip>Decrement Momentum</q-tooltip>
+              </q-btn>
+              <q-btn
+                class="col-shrink"
+                dense
+                flat
+                :label="campaign.data.character.tracks.momentum.value"
+                icon="mdi-fire"
+                @click="burn"
+                :size="btnSize"
+              >
+                <q-tooltip>Burn Momentum</q-tooltip>
+              </q-btn>
+              <q-btn class="col-shrink" dense flat icon="add" @click="mInc" :size="btnSize">
+                <q-tooltip>Increment Momentum</q-tooltip>
+              </q-btn>
+            </div>
+          </div>
 
           <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
             <q-tooltip>Roll a D6</q-tooltip>
@@ -262,6 +272,16 @@ export default defineComponent({
       );
     };
 
+    const mInc = () => {
+      if (campaign.data.character.tracks.momentum.value < campaign.data.character.tracks.momentum.max)
+        campaign.data.character.tracks.momentum.value++;
+    };
+
+    const mDec = () => {
+      if (campaign.data.character.tracks.momentum.value > campaign.data.character.tracks.momentum.min)
+        campaign.data.character.tracks.momentum.value--;
+    };
+
     return {
       show,
       close,
@@ -279,6 +299,8 @@ export default defineComponent({
       burn,
       burnt,
       data,
+      mInc,
+      mDec,
 
       adIcon,
 

@@ -17,6 +17,7 @@
           outline
         />
         <q-btn label="Clear results" outline @click="results = []" />
+        <q-btn icon="save" outline @click="save" />
         <div>
           <span v-for="(res, index) in results" :key="index" class="q-pr-md" v-html="res"></span>
         </div>
@@ -30,6 +31,7 @@ import { defineComponent, PropType, ref, computed } from 'vue';
 import { IMove } from 'src/components/models';
 import { Move } from 'src/lib/oracles/move';
 import { tableRoll } from 'src/lib/roll';
+import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({
   name: 'Move',
@@ -60,9 +62,16 @@ export default defineComponent({
     const caption = computed((): string => {
       return `${props.moveType}: ${props.move.source}`;
     });
+    const save = () => {
+      const campaign = useCampaign();
+      results.value.forEach((v) => {
+        campaign.appendToJournal(0, `<b>[${props.move.name}: ${v}]</b>`);
+      });
+    };
     return {
       click,
       results,
+      save,
       cardStyle,
       caption,
     };
