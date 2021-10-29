@@ -16,13 +16,14 @@
 - Sector
   [*] Add notes field per sector
   [*] Add last-rendered to prevent double render on passage mark
+  [ ] Preferred icon for cell
 
 - UX
   [*] Make delete button presentation consistent
   [*] Modal confirm for campaign delete
   [*] Logo avatar in top left of main bar
   [*] Rework Truths tab as Campaign tab with Factions and Campaign name
-  [ ] "Add" button for Factions on Campaign tab
+  [*] "Add" button for Factions on Campaign tab
 
 - BUGS
   [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open

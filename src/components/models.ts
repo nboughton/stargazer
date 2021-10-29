@@ -99,7 +99,7 @@ export interface ITracks {
 }
 
 export enum EAtO {
-  AlmostCertain = 'Almost Certainly',
+  AlmostCertain = 'Almost Certain',
   Likely = 'Likely',
   FiftyFifty = '50/50',
   Unlikely = 'Unlikely',
