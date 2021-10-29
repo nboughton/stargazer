@@ -277,7 +277,7 @@ export default defineComponent({
         const c = cells[id];
 
         if (c.stat === ECellStatus.Location) {
-          const { label, type } = CellLabel(c);
+          const { label, type } = CellLabel(c, id);
           const { x, y } = getXY(id);
 
           SVG()
@@ -305,7 +305,7 @@ export default defineComponent({
         // if (props.searchResults[config.data.sector][id]) {
         const { x, y } = getXY(id);
         const cell = props.searchResults[config.data.sector][id];
-        const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id]);
+        const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id], id);
 
         if (map.find(`.${id}`).length > 0) {
           SVG()

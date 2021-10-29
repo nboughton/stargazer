@@ -342,6 +342,7 @@ export interface ISFOracle {
 
 export interface INPC {
   name: string;
+  pronouns?: string;
   callsign: string;
   firstLook: string;
   disposition: string;

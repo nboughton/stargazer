@@ -62,12 +62,12 @@ export default defineComponent({
     const cellSelect = ref(null);
     const cOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      Object.keys(campaign.data.sectors[sectorSelect.value].cells).forEach((c) => {
-        if (campaign.data.sectors[sectorSelect.value].cells[c].stat === ECellStatus.Location) {
-          const { label } = CellLabel(campaign.data.sectors[sectorSelect.value].cells[c]);
+      Object.keys(campaign.data.sectors[sectorSelect.value].cells).forEach((id) => {
+        if (campaign.data.sectors[sectorSelect.value].cells[id].stat === ECellStatus.Location) {
+          const { label } = CellLabel(campaign.data.sectors[sectorSelect.value].cells[id], id);
           opts.push({
             label: label,
-            value: c,
+            value: id,
           });
         }
       });

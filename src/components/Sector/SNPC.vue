@@ -3,13 +3,13 @@
     <q-expansion-item
       :icon="`img:${icon.npc()}`"
       header-class="person-header sf-header rounded-borders q-mb-sm"
-      :label="data.name"
+      :label="`${data.name} (${data.pronouns})`"
       caption="Person"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Name" v-model="data.name" />
-        <i-input class="col" label="Callsign" v-model="data.callsign" />
+        <i-input class="col" label="Pronouns" v-model="data.pronouns" />
         <i-input class="col" label="Role" v-model="data.role" />
         <q-checkbox class="col-shrink" dense label="Bond" v-model="data.bond" />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
@@ -22,12 +22,13 @@
         </div>
 
         <div class="row q-gutter-sm q-mb-sm">
-          <i-input class="col" label="Callsign" v-model="data.callsign" />
+          <i-input class="col" label="Pronouns" v-model="data.pronouns" />
           <i-input class="col" label="Role" v-model="data.role" />
         </div>
       </div>
 
       <div class="row q-gutter-sm q-mb-sm">
+        <i-input class="col" label="Callsign" v-model="data.callsign" />
         <i-input class="col" label="Disposition" v-model="data.disposition" />
         <i-input class="col" label="Goal" v-model="data.goal" />
       </div>

@@ -29,6 +29,7 @@ import { NewProgressTrack } from './tracks';
 export const NewNPC = (): INPC => {
   return {
     name: '',
+    pronouns: '',
     callsign: '',
     firstLook: '',
     disposition: '',
@@ -117,7 +118,7 @@ export const NewCell = (id: string, name?: string): ISectorCell => {
   };
 };
 
-export const CellLabel = (c: ISectorCell) => {
+export const CellLabel = (c: ISectorCell, id: string) => {
   let label = c.name;
   let type = '';
   const v: { [index: string]: number } = {
@@ -170,6 +171,7 @@ export const CellLabel = (c: ISectorCell) => {
     });
     type = ESectorOpts.Settlements;
   }
+  if (c.name !== id) label = c.name;
   return { label, type };
 };
 
