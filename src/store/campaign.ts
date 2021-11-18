@@ -87,17 +87,17 @@ export const useCampaign = defineStore({
     },
 
     exportJournal() {
-      const doc = document.implementation.createHTMLDocument('Journal')
+      const doc = document.implementation.createHTMLDocument('Journal');
 
-      this.data.journal.forEach(j => {
-        const div = doc.createElement('div')
-        div.classList.add('entry')
-        div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`
-        
-        doc.body.prepend(div)
-      })
+      this.data.journal.forEach((j) => {
+        const div = doc.createElement('div');
+        div.classList.add('entry');
+        div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`;
 
-      const text = new XMLSerializer().serializeToString(doc)
+        doc.body.prepend(div);
+      });
+
+      const text = new XMLSerializer().serializeToString(doc);
       const blob = new Blob([text], { type: 'text/html' });
       const event = new MouseEvent('click', {
         view: window,
@@ -185,6 +185,10 @@ export const useCampaign = defineStore({
       } catch (err) {
         console.log(err);
       }
+    },
+
+    async linkGoogleDrive() {
+      await Promise.resolve();
     },
 
     async exportData() {

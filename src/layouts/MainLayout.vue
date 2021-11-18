@@ -57,6 +57,18 @@
       <q-separator size="lg" />
 
       <q-list class="text-primary">
+        <q-item clickable v-ripple @click="campaign.linkGoogleDrive">
+          <q-item-section avatar>
+            <q-icon name="link" />
+          </q-item-section>
+          <q-item-section>
+            Link Google Drive
+            <q-tooltip>Replicate this campaign to Google Drive for cross-device play</q-tooltip>
+          </q-item-section>
+        </q-item>
+
+        <q-separator size="lg" />
+
         <q-item clickable v-ripple @click="campaign.exportData">
           <q-item-section avatar>
             <q-icon name="download" />
