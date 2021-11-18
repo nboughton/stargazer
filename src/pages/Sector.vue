@@ -131,7 +131,7 @@
           >
             <template v-slot:header>
               <div class="card-bg sf-header text-h5 q-pa-none col-grow">
-                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID]).label }}
+                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID], cID).label }}
               </div>
             </template>
 

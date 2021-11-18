@@ -17,6 +17,7 @@
   [*] Add notes field per sector
   [*] Add last-rendered to prevent double render on passage mark
   [ ] Preferred icon for cell
+  [ ] Biome and Diversity oracles for Vital planets
 
 - UX
   [*] Make delete button presentation consistent
@@ -24,6 +25,8 @@
   [*] Logo avatar in top left of main bar
   [*] Rework Truths tab as Campaign tab with Factions and Campaign name
   [*] "Add" button for Factions on Campaign tab
+  [ ] Shrink scroll to top buttn
+  [ ] Add 'random' option to location selector
 
 - BUGS
   [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open

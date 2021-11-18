@@ -33,7 +33,7 @@
 
       <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Observed Behaviour" v-model="data.behaviour" />
-        <i-input class="col" label="Revealed Aspet" v-model="data.aspect" />
+        <i-input class="col" label="Revealed Aspect" v-model="data.aspect" />
       </div>
       <div v-else>
         <i-input class="q-mb-sm" label="Observed Behaviour" v-model="data.behaviour" />

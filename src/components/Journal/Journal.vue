@@ -105,7 +105,9 @@ export default defineComponent({
     const config = useConfig();
 
     const addJournal = () => campaign.data.journal.unshift(NewJournal());
-    const removeJournal = (index: number) => campaign.data.journal.splice(index, 1);
+    const removeJournal = (index: number) => {
+      if (window.confirm('Are you sure you want to delete this entry?')) campaign.data.journal.splice(index, 1);
+    };
 
     const filter = ref('');
     const showJournal = (journal: IJournalEntry): boolean => {
