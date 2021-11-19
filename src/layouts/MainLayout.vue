@@ -33,6 +33,28 @@
     </q-header>
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
+      <q-item clickable v-ripple v-if="!campaign.googleDriveLinked()" @click="campaign.linkGoogleDrive">
+        <q-item-section avatar>
+          <q-icon name="link" />
+        </q-item-section>
+        <q-item-section>
+          Link Google Drive
+          <q-tooltip>Link your Google Drive account for cross-device play</q-tooltip>
+        </q-item-section>
+      </q-item>
+
+      <q-item clickable v-ripple v-if="campaign.googleDriveLinked()" @click="campaign.unlinkGoogleDrive">
+        <q-item-section avatar>
+          <q-icon name="link_off" />
+        </q-item-section>
+        <q-item-section>
+          Unlink Google Drive
+          <q-tooltip>Unlink your Google Drive account, disabling cross-device play</q-tooltip>
+        </q-item-section>
+      </q-item>
+
+      <q-separator size="lg" />
+
       <!-- left drawer content -->
       <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
       <q-list>
@@ -57,18 +79,6 @@
       <q-separator size="lg" />
 
       <q-list class="text-primary">
-        <q-item clickable v-ripple @click="campaign.linkGoogleDrive">
-          <q-item-section avatar>
-            <q-icon name="link" />
-          </q-item-section>
-          <q-item-section>
-            Link Google Drive
-            <q-tooltip>Replicate this campaign to Google Drive for cross-device play</q-tooltip>
-          </q-item-section>
-        </q-item>
-
-        <q-separator size="lg" />
-
         <q-item clickable v-ripple @click="campaign.exportData">
           <q-item-section avatar>
             <q-icon name="download" />
