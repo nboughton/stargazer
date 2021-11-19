@@ -15,6 +15,7 @@ import {
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
+import { gapi } from 'gapi-script';
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -188,7 +189,33 @@ export const useCampaign = defineStore({
     },
 
     async linkGoogleDrive() {
-      await Promise.resolve();
+      const CLIENT_ID = '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com';
+      const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
+      const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+
+      try {
+        await new Promise<void>((resolve) => {
+          gapi.load('client:auth2', () => resolve());
+        });
+
+        await gapi.client.init({
+          clientId: CLIENT_ID,
+          discoveryDocs: DISCOVERY_DOCS,
+          scope: SCOPES,
+        });
+
+        const auth = gapi.auth2.getAuthInstance();
+
+        const user = auth.isSignedIn.get() ? auth.currentUser : await auth.signIn();
+
+        console.warn(user);
+        const updateSignInStatus = (val: boolean) => console.log(val);
+
+        auth.isSignedIn.listen(updateSignInStatus);
+        updateSignInStatus(auth.isSignedIn.get());
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     async exportData() {
