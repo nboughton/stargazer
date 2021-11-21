@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia';
 import { gapi } from 'gapi-script';
+import { useConfig } from './config';
 
 const MIME_FOLDER = 'application/vnd.google-apps.folder';
 const STARGAZER_FOLDER = 'Stargazer';
 
 const createStargazerFolderIfNotExists = async () => {
-  const files = await gapi.client.drive.files.list({
+  const query = await gapi.client.drive.files.list({
     q: `mimeType='${MIME_FOLDER}' and trashed=false and name='${STARGAZER_FOLDER}'`,
   });
 
-  if (files.result.files?.length) {
-    // already exists
-    return;
+  if (query.result.files?.length) {
+    return query.result.files[0].id;
   }
 
   const createResult = await gapi.client.drive.files.create({
@@ -20,9 +20,37 @@ const createStargazerFolderIfNotExists = async () => {
       mimeType: MIME_FOLDER,
     },
   });
-  if (createResult.status !== 200) {
-    console.warn(`failed to create google folder: ${createResult.body}`);
+
+  if (createResult.status === 200) {
+    return createResult.result.id;
   }
+
+  console.log(`failed to create google folder: ${createResult.body}`);
+};
+
+const getGoogleFileHeaders = async (folderId: string) => {
+  const query = await gapi.client.drive.files.list({
+    q: `trashed=false and '${folderId}' in parents`,
+    fields: 'files/trashed,files/name,files/version',
+  });
+  const fileHeaders =
+    query.result.files?.map((file) => ({
+      id: file.name?.slice(0, -5), // trim off '.json' to get our ID
+      version: file.version,
+    })) ?? [];
+  return new Map(fileHeaders.map((file) => [file.id, file]));
+};
+
+const createGoogleFileHeader = async (folderId: string, createHeader: boolean, contentId: string, content: unknown) => {
+  if (createHeader) {
+    const result = await gapi.client.drive.files.create({
+      resource: { name: `${contentId}.json`, parents: [folderId] },
+      fields: 'id,version',
+    });
+    return result;
+  }
+
+  console.log(content);
 };
 
 export const useGoogle = defineStore({
@@ -38,9 +66,24 @@ export const useGoogle = defineStore({
 
   actions: {
     async syncFiles() {
-      if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-        await createStargazerFolderIfNotExists();
+      if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        return;
       }
+
+      const folderId = await createStargazerFolderIfNotExists();
+      if (!folderId) {
+        console.log("couldn't reach google drive");
+        return;
+      }
+
+      const googleFileHeaders = await getGoogleFileHeaders(folderId);
+
+      const config = useConfig();
+      const localFileHeaders = config.data.index;
+      const uploadPromises = localFileHeaders.map((header) =>
+        createGoogleFileHeader(folderId, !googleFileHeaders.has(header.id), header.id, '')
+      );
+      await Promise.all(uploadPromises);
     },
 
     async linkGoogleDrive() {
