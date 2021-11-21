@@ -34,10 +34,8 @@ export default defineComponent({
     const $q = useQuasar();
     $q.dark.set(true);
 
-    const google = useGoogle();
     const campaign = useCampaign();
     onMounted(async () => {
-      await google.populateStore().catch((err) => console.log(err));
       await writeLine('::booting system...');
       await sleep(500);
       await writeLine('::assessing damage...');
@@ -50,6 +48,9 @@ export default defineComponent({
       await sleep(500);
 
       await writeLine('::welcome ' + campaign.data.character.name);
+      const google = useGoogle();
+      await google.populateStore().catch((err) => console.log(err));
+
       await sleep(500);
       loaded.value = true;
     });
