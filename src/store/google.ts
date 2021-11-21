@@ -41,7 +41,7 @@ const getGoogleFileHeaders = async (folderId: string) => {
   return new Map(fileHeaders.map((file) => [file.id, file]));
 };
 
-const createGoogleFileHeader = async (folderId: string, createHeader: boolean, contentId: string, content: unknown) => {
+const uploadFile = async (folderId: string, createHeader: boolean, contentId: string, content: unknown) => {
   if (createHeader) {
     const result = await gapi.client.drive.files.create({
       resource: { name: `${contentId}.json`, parents: [folderId] },
@@ -81,7 +81,7 @@ export const useGoogle = defineStore({
       const config = useConfig();
       const localFileHeaders = config.data.index;
       const uploadPromises = localFileHeaders.map((header) =>
-        createGoogleFileHeader(folderId, !googleFileHeaders.has(header.id), header.id, '')
+        uploadFile(folderId, !googleFileHeaders.has(header.id), header.id, '')
       );
       await Promise.all(uploadPromises);
     },
