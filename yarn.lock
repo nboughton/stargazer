@@ -1004,6 +1004,13 @@
   dependencies:
     cross-spawn "^7.0.1"
 
+"@maxim_mazurok/gapi.client.drive@latest":
+  version "3.0.20211118"
+  resolved "https://registry.yarnpkg.com/@maxim_mazurok/gapi.client.drive/-/gapi.client.drive-3.0.20211118.tgz#f5681d19cd84396af0e78476c9c4271032ab4395"
+  integrity sha512-ljROU3C39dg8znt8VSWFs4xpMJSak702pJdt36FkVjf3FKQR3DD1Rlxu4wlnBIlmgPbxSJxAG9cqXM1lCH/Jqw==
+  dependencies:
+    "@types/gapi.client" "*"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1315,6 +1322,18 @@
   integrity sha512-chmROsbo28jI5or0aRP8X3aBuWkq8jJHj75al/C0BhI/qum8v7XSxxQ9aLpA2ULPWgWSyh6orn9ZCaUSA4iQCA==
   dependencies:
     "@types/gapi" "*"
+
+"@types/gapi.client.drive@^3.0.13":
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client.drive/-/gapi.client.drive-3.0.13.tgz#5cdb97952890be17785dff7514b4c6b89df05313"
+  integrity sha512-JFkHqQj9RA8MpvfvwdX8VU0Sbu7FMGqBR9dAmkocekWdD/y5Z/a/A6Y37EEqKW/dT8t7F3RpgUDUPlhp3snAlw==
+  dependencies:
+    "@maxim_mazurok/gapi.client.drive" latest
+
+"@types/gapi.client@*":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client/-/gapi.client-1.0.5.tgz#a6eb97e664fe51656c5b52258bd0afef28c76308"
+  integrity sha512-OTpbBMuzfC4lkvaomxqskI/iWRGW3zOZbDXZLNSyiuswTiSSGgILRLkg0POuZ4EgzEdaYaTlXpnXiCp07ri/Yw==
 
 "@types/gapi@*":
   version "0.0.41"
