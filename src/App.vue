@@ -15,6 +15,7 @@ import { useCampaign } from './store/campaign';
 import { debounce, useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
 import { sleep } from './lib/util';
+import { useGoogle } from './store/google';
 
 export default defineComponent({
   name: 'App',
@@ -33,8 +34,10 @@ export default defineComponent({
     const $q = useQuasar();
     $q.dark.set(true);
 
+    const google = useGoogle();
     const campaign = useCampaign();
     onMounted(async () => {
+      await google.populateStore().catch((err) => console.log(err));
       await writeLine('::booting system...');
       await sleep(500);
       await writeLine('::assessing damage...');

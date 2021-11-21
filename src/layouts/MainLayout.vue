@@ -33,7 +33,7 @@
     </q-header>
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
-      <q-item clickable v-ripple v-if="!campaign.googleDriveLinked()" @click="campaign.linkGoogleDrive">
+      <q-item clickable v-ripple v-if="!google.data.googleDriveLinked" @click="google.linkGoogleDrive">
         <q-item-section avatar>
           <q-icon name="link" />
         </q-item-section>
@@ -43,7 +43,7 @@
         </q-item-section>
       </q-item>
 
-      <q-item clickable v-ripple v-if="campaign.googleDriveLinked()" @click="campaign.unlinkGoogleDrive">
+      <q-item clickable v-ripple v-if="google.data.googleDriveLinked" @click="google.unlinkGoogleDrive">
         <q-item-section avatar>
           <q-icon name="link_off" />
         </q-item-section>
@@ -308,6 +308,7 @@
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue';
 
+import { useGoogle } from 'src/store/google';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
@@ -324,6 +325,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
+    const google = useGoogle();
     const campaign = useCampaign();
     const config = useConfig();
     const $q = useQuasar();
@@ -387,6 +389,8 @@ export default defineComponent({
         rightDrawerOpen.value = !rightDrawerOpen.value;
       },
       width,
+
+      google,
 
       campaign,
       config,

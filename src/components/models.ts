@@ -56,6 +56,10 @@ export interface IIndexItem {
   id: string;
 }
 
+export interface IGoogleDrive {
+  googleDriveLinked: boolean;
+}
+
 export interface IConfig {
   id: number;
   current: string;

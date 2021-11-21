@@ -15,26 +15,6 @@ import {
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
-import { gapi } from 'gapi-script';
-
-let googleAuth: gapi.auth2.GoogleAuth | null = null;
-const initGoogleApi = async () => {
-  const CLIENT_ID = '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com';
-  const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
-  const SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
-  await new Promise<void>((resolve) => {
-    gapi.load('client:auth2', () => resolve());
-  });
-
-  await gapi.client.init({
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES,
-  });
-
-  googleAuth = gapi.auth2.getAuthInstance();
-};
-void initGoogleApi();
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -204,22 +184,6 @@ export const useCampaign = defineStore({
         }
       } catch (err) {
         console.log(err);
-      }
-    },
-
-    googleDriveLinked() {
-      return googleAuth ? googleAuth.isSignedIn.get() : false;
-    },
-
-    async linkGoogleDrive() {
-      if (googleAuth && !this.googleDriveLinked()) {
-        await googleAuth.signIn();
-      }
-    },
-
-    async unlinkGoogleDrive() {
-      if (googleAuth && this.googleDriveLinked()) {
-        await googleAuth.signOut();
       }
     },
 
