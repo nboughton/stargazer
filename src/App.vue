@@ -37,17 +37,20 @@ export default defineComponent({
     const campaign = useCampaign();
     onMounted(async () => {
       await writeLine('::booting system...');
-      await sleep(400);
+      await sleep(500);
       await writeLine('::assessing damage...');
-      await Promise.all([campaign.populateStore().catch((err) => console.log(err)), sleep(400)]);
+      await Promise.all([campaign.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::loading protocols...');
       const assets = useAssets();
-      await Promise.all([assets.populateStore().catch((err) => console.log(err)), sleep(400)]);
+      await Promise.all([assets.populateStore().catch((err) => console.log(err)), sleep(500)]);
+
+      await writeLine('::synchronising...');
+      const google = useGoogle();
+      await Promise.all([google.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::welcome ' + campaign.data.character.name);
-      const google = useGoogle();
-      await Promise.all([google.populateStore().catch((err) => console.log(err)), sleep(400)]);
+      await sleep(500);
 
       loaded.value = true;
     });
