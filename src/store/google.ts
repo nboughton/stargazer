@@ -4,10 +4,17 @@ import { useConfig } from './config';
 import { db } from 'src/lib/db';
 import { ICampaign } from 'src/components/models';
 
+const GOOGLE_FILE_HEADER_FIELDS = 'files/id,files/trashed,files/name,files/version';
 const MIME_FOLDER = 'application/vnd.google-apps.folder';
 const STARGAZER_FOLDER = 'Stargazer';
 
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
+
+const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
+  id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
+  googleId: file.id ?? '',
+  version: file.version ?? '1',
+});
 
 const createStargazerFolderIfNotExists = async () => {
   const query = await gapi.client.drive.files.list({
@@ -35,28 +42,18 @@ const createStargazerFolderIfNotExists = async () => {
 const getGoogleFileHeaders = async (folderId: string) => {
   const query = await gapi.client.drive.files.list({
     q: `trashed=false and '${folderId}' in parents`,
-    fields: 'files/id,files/trashed,files/name,files/version',
+    fields: GOOGLE_FILE_HEADER_FIELDS,
   });
-  const fileHeaders =
-    query.result.files?.map((file) => ({
-      id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
-      googleId: file.id ?? '',
-      version: file.version ?? '1',
-    })) ?? [];
+  const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
   return fileHeaders;
 };
 
 const getGoogleFileHeader = async (folderId: string, contentId: string) => {
   const query = await gapi.client.drive.files.list({
     q: `trashed=false and '${folderId}' in parents and name='${contentId}.json'`,
-    fields: 'files/id,files/trashed,files/name,files/version',
+    fields: GOOGLE_FILE_HEADER_FIELDS,
   });
-  const fileHeaders =
-    query.result.files?.map((file) => ({
-      id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
-      googleId: file.id ?? '',
-      version: file.version ?? '1',
-    })) ?? [];
+  const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
   return fileHeaders[0];
 };
 
@@ -65,7 +62,6 @@ const downloadFile = async (googleFileId: string) => {
     fileId: googleFileId,
     alt: 'media',
   });
-
   const campaign = JSON.parse(content.body) as ICampaign;
   await db.campaign.put(campaign);
 };
