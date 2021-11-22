@@ -64,7 +64,6 @@ export const useGoogle = defineStore({
   },
 
   actions: {
-    // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
     async syncFiles() {
       if (!isSignedIn()) return;
 
@@ -86,6 +85,7 @@ export const useGoogle = defineStore({
       // ! TODO: The below refers to bi-directional version checking to avoid as much as possible overwriting newer content with older content
       // ! TODO: track and diff last-seen Google version as well as just not existing
       // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
+      // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
 
       // Upload campaigns that are in local and never seen in Google. Delete campaigns that are deleted from Google without having been replaced
       const uploadOrDeletePromises = localHeaders.map((h) =>
