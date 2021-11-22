@@ -104,7 +104,6 @@ export const useGoogle = defineStore({
 
   actions: {
     // ! TODO: on sync - query google for unseen local IDs, filtering by deleted. if deleted, delete locally, otherwise continue to create in google
-    // ! TODO: upload single on local campaign new/save
     // ! TODO: delete single on local delete
     // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
     async syncFiles() {
@@ -145,7 +144,7 @@ export const useGoogle = defineStore({
         return;
       }
       const fileHeader = await getGoogleFileHeader(folderId, campaign.id);
-      await uploadFile(folderId, fileHeader.googleId, campaign.id);
+      await uploadFile(folderId, fileHeader?.googleId, campaign.id);
     },
 
     async linkGoogleDrive() {
