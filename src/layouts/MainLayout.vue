@@ -391,7 +391,6 @@ export default defineComponent({
       width,
 
       google,
-
       campaign,
       config,
       customAssets,

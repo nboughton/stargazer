@@ -79,14 +79,14 @@ export const useGoogle = defineStore({
         .map((h) => getGoogleFileHeaders(true, h.id));
 
       const deletedFromGoogle = await Promise.all(checkForDeletedPromises);
-      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, null]));
+      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, h]));
 
       // ! TODO: The below refers to bi-directional version checking to avoid as much as possible overwriting newer content with older content
       // ! TODO: track and diff last-seen Google version as well as just not existing
       // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
       // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
 
-      // Upload local campaigns that are never seen in Google. Delete local campaigns that are deleted from Google without being restored in Google
+      // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
       const uploadOrDeletePromises = localHeaders.map((h) =>
         deletedFromGoogleMap.has(h.id)
           ? db.campaign.delete(h.id)

@@ -51,7 +51,6 @@ export default defineComponent({
 
       await writeLine('::welcome ' + campaign.data.character.name);
       await sleep(500);
-
       loaded.value = true;
     });
 
