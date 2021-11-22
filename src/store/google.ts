@@ -3,13 +3,14 @@ import { gapi } from 'gapi-script';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
 import { ICampaign } from 'src/components/models';
+import { useCampaign } from './campaign';
 
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
 const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
   id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
   googleId: file.id ?? '',
-  version: file.version ?? '1',
+  version: Number(file.version ?? '1'),
 });
 
 const getGoogleFileHeaders = async (trashed: boolean, contentId?: string) => {
@@ -22,12 +23,13 @@ const getGoogleFileHeaders = async (trashed: boolean, contentId?: string) => {
   return fileHeaders;
 };
 
-const downloadFile = async (googleFileId: string) => {
+const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number) => {
   const content = await gapi.client.drive.files.get({
     fileId: googleFileId,
     alt: 'media',
   });
   const campaign = JSON.parse(content.body) as ICampaign;
+  campaign.lastSeenGoogleVersion = lastSeenGoogleVersion;
   await db.campaign.put(campaign);
 };
 
@@ -49,6 +51,9 @@ const uploadFile = async (googleFileId: string | undefined, contentId: string) =
       body: JSON.stringify(content),
     }
   );
+  const header = await gapi.client.drive.files.get({ fileId: googleFileId, fields: 'version' });
+  const campaignPatch = { lastSeenGoogleVersion: Number(header.result.version ?? 0) };
+  await db.campaign.update(contentId, campaignPatch);
 };
 
 export const useGoogle = defineStore({
@@ -81,24 +86,24 @@ export const useGoogle = defineStore({
       const deletedFromGoogle = await Promise.all(checkForDeletedPromises);
       const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, h]));
 
-      // ! TODO: The below refers to bi-directional version checking to avoid as much as possible overwriting newer content with older content
-      // ! TODO: track and diff last-seen Google version as well as just not existing
-      // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
-      // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
-
       // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
-      const uploadOrDeletePromises = localHeaders.map((h) =>
-        deletedFromGoogleMap.has(h.id)
-          ? db.campaign.delete(h.id)
-          : uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id)
-      );
+      const uploadOrDeletePromises = localHeaders
+        .filter((h) => h.lastSeenGoogleVersion >= (googleHeaderMap.get(h.id)?.version ?? -1))
+        .map((h) =>
+          deletedFromGoogleMap.has(h.id)
+            ? db.campaign.delete(h.id)
+            : uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id)
+        );
 
       // Download campaigns that are in google but not in local
       const downloadPromises = googleHeaders
-        .filter((h) => !localHeaderMap.has(h.id))
-        .map((h) => downloadFile(h.googleId));
+        .filter((h) => h.version > (localHeaderMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
+        .map((h) => downloadFile(h.googleId, h.version));
 
       await Promise.all([...uploadOrDeletePromises, ...downloadPromises]);
+
+      const campaign = useCampaign();
+      await campaign.populateStore(); // Refresh with updated data
       await config.updateIndex();
     },
 

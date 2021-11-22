@@ -54,6 +54,7 @@ export interface ISelectOpt {
 export interface IIndexItem {
   name: string;
   id: string;
+  lastSeenGoogleVersion: number;
 }
 
 export interface IGoogleDrive {
@@ -302,6 +303,7 @@ export interface IFaction {
 export interface ICampaign {
   id: string;
   name: string;
+  lastSeenGoogleVersion?: number;
   character: ICharacter;
   progressTracks: IProgressTrack[];
   journal: IJournalEntry[];

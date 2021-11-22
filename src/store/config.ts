@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IConfig, IIndexItem } from 'components/models';
+import { IConfig } from 'components/models';
 import { NewConfig } from 'src/lib/config';
 import { db } from 'src/lib/db';
 
@@ -43,9 +43,12 @@ export const useConfig = defineStore({
     },
 
     async updateIndex() {
-      const index = <IIndexItem[]>[];
-      (await db.campaign.toArray()).forEach((c) => index.push({ name: c.name, id: c.id }));
-      this.data.index = index;
+      const campaigns = await db.campaign.toArray();
+      this.data.index = campaigns.map((c) => ({
+        name: c.name,
+        id: c.id,
+        lastSeenGoogleVersion: c.lastSeenGoogleVersion ?? 0,
+      }));
     },
   },
 });

@@ -139,7 +139,7 @@ export const useCampaign = defineStore({
       this.data = newCam;
 
       config.data.current = this.data.id;
-      config.data.index.push({ name: this.data?.name, id: this.data.id });
+      config.data.index.push({ name: this.data?.name, id: this.data.id, lastSeenGoogleVersion: -1 });
 
       const storeCopy = JSON.parse(JSON.stringify(this.data)) as ICampaign;
       await db.campaign.put(storeCopy).catch((err) => console.log(err));
