@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { gapi } from 'gapi-script';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
-import { NewCampaign } from 'src/lib/campaign';
+import { ICampaign } from 'src/components/models';
 
 const MIME_FOLDER = 'application/vnd.google-apps.folder';
 const STARGAZER_FOLDER = 'Stargazer';
@@ -33,33 +33,46 @@ const createStargazerFolderIfNotExists = async () => {
 const getGoogleFileHeaders = async (folderId: string) => {
   const query = await gapi.client.drive.files.list({
     q: `trashed=false and '${folderId}' in parents`,
-    fields: 'files/trashed,files/name,files/version',
+    fields: 'files/id,files/trashed,files/name,files/version',
   });
   const fileHeaders =
     query.result.files?.map((file) => ({
       id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
+      googleId: file.id ?? '',
       version: file.version ?? '1',
     })) ?? [];
   return fileHeaders;
 };
 
-const downloadFile = async (folderId: string, contentId: string) => {
-  console.warn(folderId); // ! TODO: download content
-  const tempContent = NewCampaign();
-  tempContent.id = contentId; // Placeholder until content upload/download
-  await db.campaign.put(tempContent);
+const downloadFile = async (googleFileId: string) => {
+  const content = await gapi.client.drive.files.get({
+    fileId: googleFileId,
+    alt: 'media',
+  });
+
+  const campaign = JSON.parse(content.body) as ICampaign;
+  await db.campaign.put(campaign);
 };
 
-const uploadFile = async (folderId: string, createHeader: boolean, contentId: string, content: unknown) => {
-  if (createHeader) {
-    await gapi.client.drive.files.create({
+const uploadFile = async (folderId: string, googleFileId: string | undefined, contentId: string) => {
+  if (!googleFileId) {
+    const createResult = await gapi.client.drive.files.create({
       resource: { name: `${contentId}.json`, parents: [folderId] },
       fields: 'id,version',
     });
-    // ! TODO: upload content
+    googleFileId = createResult.result.id ?? '';
   }
 
-  console.log(content);
+  const content = await db.campaign.get(contentId);
+
+  await fetch(
+    `https://www.googleapis.com/upload/drive/v3/files/${googleFileId}?uploadType=media&supportsAllDrives=true`,
+    {
+      method: 'PATCH',
+      headers: new Headers({ Authorization: 'Bearer ' + gapi.auth.getToken().access_token }),
+      body: JSON.stringify(content),
+    }
+  );
 };
 
 export const useGoogle = defineStore({
@@ -99,10 +112,10 @@ export const useGoogle = defineStore({
 
       const downloadPromises = googleHeaders
         .filter((h) => !localHeaderMap.has(h.id)) // ! TODO: track and diff last-seen Google version as well as just not existing
-        .map((h) => downloadFile(folderId, h.id));
+        .map((h) => downloadFile(h.googleId));
 
       // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
-      const uploadPromises = localHeaders.map((h) => uploadFile(folderId, !googleHeaderMap.has(h.id), h.id, ''));
+      const uploadPromises = localHeaders.map((h) => uploadFile(folderId, googleHeaderMap.get(h.id)?.googleId, h.id));
 
       await Promise.all([...uploadPromises, ...downloadPromises]);
       await config.updateIndex();
