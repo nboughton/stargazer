@@ -48,15 +48,6 @@ const getGoogleFileHeaders = async (folderId: string, trashed: boolean, contentI
   return fileHeaders;
 };
 
-async function getAllDeletedFromGoogleHeaders(folderId: string) {
-  const deletedFromGoogleMap = new Map<string, unknown>();
-  const deletedFromGoogle = await getGoogleFileHeaders(folderId, true);
-  for (const header of deletedFromGoogle) {
-    deletedFromGoogleMap.set(header.id, null);
-  }
-  return deletedFromGoogleMap;
-}
-
 const downloadFile = async (googleFileId: string) => {
   const content = await gapi.client.drive.files.get({
     fileId: googleFileId,
@@ -114,14 +105,16 @@ export const useGoogle = defineStore({
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
       const localHeaderMap = new Map(localHeaders.map((h) => [h.id, h]));
 
+      const checkForDeletedPromises = localHeaders
+        .filter((h) => !googleHeaderMap.has(h.id))
+        .map((h) => getGoogleFileHeaders(folderId, true, h.id));
+
+      const deletedFromGoogle = await Promise.all(checkForDeletedPromises);
+      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, null]));
+
       // ! TODO: The below refers to bi-directional version checking to avoid as much as possible overwriting newer content with older content
       // ! TODO: track and diff last-seen Google version as well as just not existing
       // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
-      const localHeadersWithoutGoogleHeaders = localHeaders.filter((h) => !googleHeaderMap.has(h.id));
-      const deletedFromGoogleMap =
-        localHeadersWithoutGoogleHeaders.length > 0
-          ? await getAllDeletedFromGoogleHeaders(folderId)
-          : new Map<string, unknown>();
 
       // Upload campaigns that are in local and never seen in Google. Delete campaigns that are deleted from Google without having been replaced
       const uploadOrDeletePromises = localHeaders.map((h) =>
