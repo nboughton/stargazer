@@ -104,17 +104,12 @@ export const useGoogle = defineStore({
 
   actions: {
     // ! TODO: on sync - query google for unseen local IDs, filtering by deleted. if deleted, delete locally, otherwise continue to create in google
-    // ! TODO: delete single on local delete
     // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
     async syncFiles() {
-      if (!isSignedIn()) {
-        return;
-      }
+      if (!isSignedIn()) return;
 
       const folderId = await createStargazerFolderIfNotExists();
-      if (!folderId) {
-        return;
-      }
+      if (!folderId) return;
 
       const config = useConfig();
       await config.updateIndex(); // ensure index is up to date
@@ -136,15 +131,25 @@ export const useGoogle = defineStore({
     },
 
     async saveCampaign(campaign: ICampaign) {
-      if (!isSignedIn()) {
-        return;
-      }
+      if (!isSignedIn()) return;
+
       const folderId = await createStargazerFolderIfNotExists();
-      if (!folderId) {
-        return;
-      }
+      if (!folderId) return;
+
       const fileHeader = await getGoogleFileHeader(folderId, campaign.id);
       await uploadFile(folderId, fileHeader?.googleId, campaign.id);
+    },
+
+    async deleteCampaign(campaignId: string) {
+      if (!isSignedIn()) return;
+
+      const folderId = await createStargazerFolderIfNotExists();
+      if (!folderId) return;
+
+      const fileHeader = await getGoogleFileHeader(folderId, campaignId);
+      if (!fileHeader) return;
+
+      await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
     },
 
     async linkGoogleDrive() {

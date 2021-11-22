@@ -170,6 +170,9 @@ export const useCampaign = defineStore({
         // Remove from database
         await db.campaign.delete(id);
 
+        const google = useGoogle();
+        await google.deleteCampaign(id);
+
         // Load first campaign or create a new one
         if ((await db.campaign.count()) > 0) {
           await db.campaign
