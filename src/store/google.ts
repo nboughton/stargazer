@@ -39,23 +39,23 @@ const createStargazerFolderIfNotExists = async () => {
   console.log(`failed to create google folder: ${createResult.body}`);
 };
 
-const getGoogleFileHeaders = async (folderId: string) => {
+const getGoogleFileHeaders = async (folderId: string, trashed: boolean, contentId?: string) => {
   const query = await gapi.client.drive.files.list({
-    q: `trashed=false and '${folderId}' in parents`,
+    q: `trashed=${String(trashed)} and '${folderId}' in parents` + (contentId ? ` and name='${contentId}.json'` : ''),
     fields: GOOGLE_FILE_HEADER_FIELDS,
   });
   const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
   return fileHeaders;
 };
 
-const getGoogleFileHeader = async (folderId: string, contentId: string) => {
-  const query = await gapi.client.drive.files.list({
-    q: `trashed=false and '${folderId}' in parents and name='${contentId}.json'`,
-    fields: GOOGLE_FILE_HEADER_FIELDS,
-  });
-  const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
-  return fileHeaders[0];
-};
+async function getAllDeletedFromGoogleHeaders(folderId: string) {
+  const deletedFromGoogleMap = new Map<string, unknown>();
+  const deletedFromGoogle = await getGoogleFileHeaders(folderId, true);
+  for (const header of deletedFromGoogle) {
+    deletedFromGoogleMap.set(header.id, null);
+  }
+  return deletedFromGoogleMap;
+}
 
 const downloadFile = async (googleFileId: string) => {
   const content = await gapi.client.drive.files.get({
@@ -99,7 +99,6 @@ export const useGoogle = defineStore({
   },
 
   actions: {
-    // ! TODO: on sync - query google for unseen local IDs, filtering by deleted. if deleted, delete locally, otherwise continue to create in google
     // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
     async syncFiles() {
       if (!isSignedIn()) return;
@@ -110,19 +109,33 @@ export const useGoogle = defineStore({
       const config = useConfig();
       await config.updateIndex(); // ensure index is up to date
 
-      const googleHeaders = await getGoogleFileHeaders(folderId);
+      const googleHeaders = await getGoogleFileHeaders(folderId, false);
       const localHeaders = config.data.index;
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
       const localHeaderMap = new Map(localHeaders.map((h) => [h.id, h]));
 
+      // ! TODO: The below refers to bi-directional version checking to avoid as much as possible overwriting newer content with older content
+      // ! TODO: track and diff last-seen Google version as well as just not existing
+      // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
+      const localHeadersWithoutGoogleHeaders = localHeaders.filter((h) => !googleHeaderMap.has(h.id));
+      const deletedFromGoogleMap =
+        localHeadersWithoutGoogleHeaders.length > 0
+          ? await getAllDeletedFromGoogleHeaders(folderId)
+          : new Map<string, unknown>();
+
+      // Upload campaigns that are in local and never seen in Google. Delete campaigns that are deleted from Google without having been replaced
+      const uploadOrDeletePromises = localHeaders.map((h) =>
+        deletedFromGoogleMap.has(h.id)
+          ? db.campaign.delete(h.id)
+          : uploadFile(folderId, googleHeaderMap.get(h.id)?.googleId, h.id)
+      );
+
+      // Download campaigns that are in google but not in local
       const downloadPromises = googleHeaders
-        .filter((h) => !localHeaderMap.has(h.id)) // ! TODO: track and diff last-seen Google version as well as just not existing
+        .filter((h) => !localHeaderMap.has(h.id))
         .map((h) => downloadFile(h.googleId));
 
-      // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
-      const uploadPromises = localHeaders.map((h) => uploadFile(folderId, googleHeaderMap.get(h.id)?.googleId, h.id));
-
-      await Promise.all([...uploadPromises, ...downloadPromises]);
+      await Promise.all([...uploadOrDeletePromises, ...downloadPromises]);
       await config.updateIndex();
     },
 
@@ -132,7 +145,7 @@ export const useGoogle = defineStore({
       const folderId = await createStargazerFolderIfNotExists();
       if (!folderId) return;
 
-      const fileHeader = await getGoogleFileHeader(folderId, campaign.id);
+      const fileHeader = (await getGoogleFileHeaders(folderId, false, campaign.id))[0];
       await uploadFile(folderId, fileHeader?.googleId, campaign.id);
     },
 
@@ -142,7 +155,7 @@ export const useGoogle = defineStore({
       const folderId = await createStargazerFolderIfNotExists();
       if (!folderId) return;
 
-      const fileHeader = await getGoogleFileHeader(folderId, campaignId);
+      const fileHeader = (await getGoogleFileHeaders(folderId, false, campaignId))[0];
       if (!fileHeader) return;
 
       await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
