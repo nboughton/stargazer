@@ -7,6 +7,8 @@ import { ICampaign } from 'src/components/models';
 const MIME_FOLDER = 'application/vnd.google-apps.folder';
 const STARGAZER_FOLDER = 'Stargazer';
 
+const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
+
 const createStargazerFolderIfNotExists = async () => {
   const query = await gapi.client.drive.files.list({
     q: `mimeType='${MIME_FOLDER}' and trashed=false and name='${STARGAZER_FOLDER}'`,
@@ -42,6 +44,20 @@ const getGoogleFileHeaders = async (folderId: string) => {
       version: file.version ?? '1',
     })) ?? [];
   return fileHeaders;
+};
+
+const getGoogleFileHeader = async (folderId: string, contentId: string) => {
+  const query = await gapi.client.drive.files.list({
+    q: `trashed=false and '${folderId}' in parents and name='${contentId}.json'`,
+    fields: 'files/id,files/trashed,files/name,files/version',
+  });
+  const fileHeaders =
+    query.result.files?.map((file) => ({
+      id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
+      googleId: file.id ?? '',
+      version: file.version ?? '1',
+    })) ?? [];
+  return fileHeaders[0];
 };
 
 const downloadFile = async (googleFileId: string) => {
@@ -92,13 +108,12 @@ export const useGoogle = defineStore({
     // ! TODO: delete single on local delete
     // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
     async syncFiles() {
-      if (!gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      if (!isSignedIn()) {
         return;
       }
 
       const folderId = await createStargazerFolderIfNotExists();
       if (!folderId) {
-        console.log("couldn't reach google drive");
         return;
       }
 
@@ -119,6 +134,18 @@ export const useGoogle = defineStore({
 
       await Promise.all([...uploadPromises, ...downloadPromises]);
       await config.updateIndex();
+    },
+
+    async saveCampaign(campaign: ICampaign) {
+      if (!isSignedIn()) {
+        return;
+      }
+      const folderId = await createStargazerFolderIfNotExists();
+      if (!folderId) {
+        return;
+      }
+      const fileHeader = await getGoogleFileHeader(folderId, campaign.id);
+      await uploadFile(folderId, fileHeader.googleId, campaign.id);
     },
 
     async linkGoogleDrive() {

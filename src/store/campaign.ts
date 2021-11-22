@@ -15,6 +15,7 @@ import {
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
+import { useGoogle } from './google';
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -150,6 +151,9 @@ export const useCampaign = defineStore({
 
       const config = useConfig();
       await config.updateIndex();
+
+      const google = useGoogle();
+      await google.saveCampaign(this.data);
     },
 
     async load(id: string) {
