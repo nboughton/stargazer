@@ -4,10 +4,6 @@ import { useConfig } from './config';
 import { db } from 'src/lib/db';
 import { ICampaign } from 'src/components/models';
 
-const GOOGLE_FILE_HEADER_FIELDS = 'files/id,files/trashed,files/name,files/version';
-const MIME_FOLDER = 'application/vnd.google-apps.folder';
-const STARGAZER_FOLDER = 'Stargazer';
-
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
 const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
@@ -16,33 +12,11 @@ const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
   version: file.version ?? '1',
 });
 
-const createStargazerFolderIfNotExists = async () => {
+const getGoogleFileHeaders = async (trashed: boolean, contentId?: string) => {
   const query = await gapi.client.drive.files.list({
-    q: `mimeType='${MIME_FOLDER}' and trashed=false and name='${STARGAZER_FOLDER}'`,
-  });
-
-  if (query.result.files?.length) {
-    return query.result.files[0].id;
-  }
-
-  const createResult = await gapi.client.drive.files.create({
-    resource: {
-      name: STARGAZER_FOLDER,
-      mimeType: MIME_FOLDER,
-    },
-  });
-
-  if (createResult.status === 200) {
-    return createResult.result.id;
-  }
-
-  console.log(`failed to create google folder: ${createResult.body}`);
-};
-
-const getGoogleFileHeaders = async (folderId: string, trashed: boolean, contentId?: string) => {
-  const query = await gapi.client.drive.files.list({
-    q: `trashed=${String(trashed)} and '${folderId}' in parents` + (contentId ? ` and name='${contentId}.json'` : ''),
-    fields: GOOGLE_FILE_HEADER_FIELDS,
+    spaces: 'appDataFolder',
+    q: `trashed=${String(trashed)}` + (contentId ? ` and name='${contentId}.json'` : ''),
+    fields: 'files/id,files/trashed,files/name,files/version',
   });
   const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
   return fileHeaders;
@@ -57,10 +31,10 @@ const downloadFile = async (googleFileId: string) => {
   await db.campaign.put(campaign);
 };
 
-const uploadFile = async (folderId: string, googleFileId: string | undefined, contentId: string) => {
+const uploadFile = async (googleFileId: string | undefined, contentId: string) => {
   if (!googleFileId) {
     const createResult = await gapi.client.drive.files.create({
-      resource: { name: `${contentId}.json`, parents: [folderId] },
+      resource: { name: `${contentId}.json`, parents: ['appDataFolder'] },
       fields: 'id,version',
     });
     googleFileId = createResult.result.id ?? '';
@@ -94,20 +68,17 @@ export const useGoogle = defineStore({
     async syncFiles() {
       if (!isSignedIn()) return;
 
-      const folderId = await createStargazerFolderIfNotExists();
-      if (!folderId) return;
-
       const config = useConfig();
       await config.updateIndex(); // ensure index is up to date
 
-      const googleHeaders = await getGoogleFileHeaders(folderId, false);
+      const googleHeaders = await getGoogleFileHeaders(false);
       const localHeaders = config.data.index;
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
       const localHeaderMap = new Map(localHeaders.map((h) => [h.id, h]));
 
       const checkForDeletedPromises = localHeaders
         .filter((h) => !googleHeaderMap.has(h.id))
-        .map((h) => getGoogleFileHeaders(folderId, true, h.id));
+        .map((h) => getGoogleFileHeaders(true, h.id));
 
       const deletedFromGoogle = await Promise.all(checkForDeletedPromises);
       const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, null]));
@@ -120,7 +91,7 @@ export const useGoogle = defineStore({
       const uploadOrDeletePromises = localHeaders.map((h) =>
         deletedFromGoogleMap.has(h.id)
           ? db.campaign.delete(h.id)
-          : uploadFile(folderId, googleHeaderMap.get(h.id)?.googleId, h.id)
+          : uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id)
       );
 
       // Download campaigns that are in google but not in local
@@ -135,20 +106,14 @@ export const useGoogle = defineStore({
     async saveCampaign(campaign: ICampaign) {
       if (!isSignedIn()) return;
 
-      const folderId = await createStargazerFolderIfNotExists();
-      if (!folderId) return;
-
-      const fileHeader = (await getGoogleFileHeaders(folderId, false, campaign.id))[0];
-      await uploadFile(folderId, fileHeader?.googleId, campaign.id);
+      const fileHeader = (await getGoogleFileHeaders(false, campaign.id))[0];
+      await uploadFile(fileHeader?.googleId, campaign.id);
     },
 
     async deleteCampaign(campaignId: string) {
       if (!isSignedIn()) return;
 
-      const folderId = await createStargazerFolderIfNotExists();
-      if (!folderId) return;
-
-      const fileHeader = (await getGoogleFileHeaders(folderId, false, campaignId))[0];
+      const fileHeader = (await getGoogleFileHeaders(false, campaignId))[0];
       if (!fileHeader) return;
 
       await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
@@ -166,7 +131,7 @@ export const useGoogle = defineStore({
     async populateStore() {
       const CLIENT_ID = '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com';
       const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
-      const SCOPES = 'https://www.googleapis.com/auth/drive';
+      const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
 
       await new Promise<void>((resolve) => gapi.load('client:auth2', () => resolve()));
       await gapi.client.load('drive', 'v3');
