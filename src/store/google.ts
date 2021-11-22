@@ -41,7 +41,6 @@ const uploadFile = async (googleFileId: string | undefined, contentId: string) =
   }
 
   const content = await db.campaign.get(contentId);
-
   await fetch(
     `https://www.googleapis.com/upload/drive/v3/files/${googleFileId}?uploadType=media&supportsAllDrives=true`,
     {
@@ -87,7 +86,7 @@ export const useGoogle = defineStore({
       // ! TODO: filter uploads to only those changes since last Google upload (can't track that with version, needs thought)
       // ! TODO: create conflict resolution strategy for when local and cloud both changed since last seen
 
-      // Upload campaigns that are in local and never seen in Google. Delete campaigns that are deleted from Google without having been replaced
+      // Upload local campaigns that are never seen in Google. Delete local campaigns that are deleted from Google without being restored in Google
       const uploadOrDeletePromises = localHeaders.map((h) =>
         deletedFromGoogleMap.has(h.id)
           ? db.campaign.delete(h.id)
@@ -114,9 +113,9 @@ export const useGoogle = defineStore({
       if (!isSignedIn()) return;
 
       const fileHeader = (await getGoogleFileHeaders(false, campaignId))[0];
-      if (!fileHeader) return;
-
-      await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
+      if (fileHeader) {
+        await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
+      }
     },
 
     async linkGoogleDrive() {
@@ -129,17 +128,11 @@ export const useGoogle = defineStore({
     },
 
     async populateStore() {
-      const CLIENT_ID = '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com';
-      const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
-      const SCOPES = 'https://www.googleapis.com/auth/drive.appdata';
-
       await new Promise<void>((resolve) => gapi.load('client:auth2', () => resolve()));
       await gapi.client.load('drive', 'v3');
-
       await gapi.client.init({
-        clientId: CLIENT_ID,
-        discoveryDocs: DISCOVERY_DOCS,
-        scope: SCOPES,
+        clientId: '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com',
+        scope: 'https://www.googleapis.com/auth/drive.appdata',
       });
 
       const googleAuth = gapi.auth2.getAuthInstance();
