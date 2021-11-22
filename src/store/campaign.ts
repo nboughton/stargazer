@@ -218,6 +218,8 @@ export const useCampaign = defineStore({
         const campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
         try {
           await db.campaign.bulkPut(campaigns);
+          const google = useGoogle();
+          await google.syncFiles();
         } catch (err) {
           console.log(err);
         }
