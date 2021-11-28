@@ -15,6 +15,7 @@ import {
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
+import { useGoogle } from './google';
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -87,17 +88,17 @@ export const useCampaign = defineStore({
     },
 
     exportJournal() {
-      const doc = document.implementation.createHTMLDocument('Journal')
+      const doc = document.implementation.createHTMLDocument('Journal');
 
-      this.data.journal.forEach(j => {
-        const div = doc.createElement('div')
-        div.classList.add('entry')
-        div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`
-        
-        doc.body.prepend(div)
-      })
+      this.data.journal.forEach((j) => {
+        const div = doc.createElement('div');
+        div.classList.add('entry');
+        div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`;
 
-      const text = new XMLSerializer().serializeToString(doc)
+        doc.body.prepend(div);
+      });
+
+      const text = new XMLSerializer().serializeToString(doc);
       const blob = new Blob([text], { type: 'text/html' });
       const event = new MouseEvent('click', {
         view: window,
@@ -138,7 +139,7 @@ export const useCampaign = defineStore({
       this.data = newCam;
 
       config.data.current = this.data.id;
-      config.data.index.push({ name: this.data?.name, id: this.data.id });
+      config.data.index.push({ name: this.data?.name, id: this.data.id, lastSeenGoogleVersion: -1 });
 
       const storeCopy = JSON.parse(JSON.stringify(this.data)) as ICampaign;
       await db.campaign.put(storeCopy).catch((err) => console.log(err));
@@ -150,6 +151,9 @@ export const useCampaign = defineStore({
 
       const config = useConfig();
       await config.updateIndex();
+
+      const google = useGoogle();
+      await google.saveCampaign(this.data);
     },
 
     async load(id: string) {
@@ -165,6 +169,9 @@ export const useCampaign = defineStore({
       try {
         // Remove from database
         await db.campaign.delete(id);
+
+        const google = useGoogle();
+        await google.deleteCampaign(id);
 
         // Load first campaign or create a new one
         if ((await db.campaign.count()) > 0) {
@@ -211,6 +218,8 @@ export const useCampaign = defineStore({
         const campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
         try {
           await db.campaign.bulkPut(campaigns);
+          const google = useGoogle();
+          await google.syncFiles();
         } catch (err) {
           console.log(err);
         }

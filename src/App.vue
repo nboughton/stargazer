@@ -15,6 +15,7 @@ import { useCampaign } from './store/campaign';
 import { debounce, useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
 import { sleep } from './lib/util';
+import { useGoogle } from './store/google';
 
 export default defineComponent({
   name: 'App',
@@ -38,13 +39,15 @@ export default defineComponent({
       await writeLine('::booting system...');
       await sleep(500);
       await writeLine('::assessing damage...');
-      await campaign.populateStore().catch((err) => console.log(err));
-      await sleep(500);
+      await Promise.all([campaign.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::loading protocols...');
       const assets = useAssets();
-      await assets.populateStore().catch((err) => console.log(err));
-      await sleep(500);
+      await Promise.all([assets.populateStore().catch((err) => console.log(err)), sleep(500)]);
+
+      await writeLine('::synchronising...');
+      const google = useGoogle();
+      await Promise.all([google.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::welcome ' + campaign.data.character.name);
       await sleep(500);
