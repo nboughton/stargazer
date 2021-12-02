@@ -136,7 +136,7 @@ export const useGoogle = defineStore({
       await new Promise<void>((resolve) => gapi.load('client:auth2', () => resolve()));
       await gapi.client.load('drive', 'v3');
       await gapi.client.init({
-        clientId: '7921519518-hm1dn3gcoooatro47479dmq5h0feeb38.apps.googleusercontent.com',
+        clientId: '7921519518-l6mcj94tjdnfbrje2dn7ttiu9dpbaoso.apps.googleusercontent.com',
         scope: 'https://www.googleapis.com/auth/drive.appdata',
       });
 
