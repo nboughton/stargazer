@@ -295,7 +295,7 @@
         <q-card-section class="text-h6 text-center"> Are you sure? </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn color="warning" label="DELETE" @click="removeCampaign(campaignToDelete)" />
+          <q-btn color="warning" label="DELETE" @click="removeCampaign(campaignToDelete).then(() => { showCampaignDelete = false })" />
           <q-btn color="primary" label="NOPE" @click="showCampaignDelete = false" />
         </q-card-actions>
       </q-card>
