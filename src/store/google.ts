@@ -69,6 +69,7 @@ export const useGoogle = defineStore({
     return {
       data: {
         googleDriveLinked: false,
+        deletedFromGoogle: [''],
       },
     };
   },
@@ -90,23 +91,22 @@ export const useGoogle = defineStore({
       const deletedFromGoogle = await getGoogleFileHeaders(true, potentiallyDeletedIds);
       const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h.id, h]));
 
+      this.data.deletedFromGoogle = deletedFromGoogle.map((h) => h.id); // Queue deletions for Vue timing
+
       const campaign = useCampaign();
 
       // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
-      const uploadOrDeletePromises = localHeaders
+      const uploadPromises = localHeaders
         .filter((h) => h.lastSeenGoogleVersion > (googleHeaderMap.get(h.id)?.version ?? -1))
-        .map((h) =>
-          deletedFromGoogleMap.has(h.id)
-            ? campaign.delete(h.id, true)
-            : uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id)
-        );
+        .filter((h) => !deletedFromGoogleMap.has(h.id))
+        .map((h) => uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id));
 
       // Download campaigns that are in google but not in local
       const downloadPromises = googleHeaders
         .filter((h) => h.version > (localHeaderMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
         .map((h) => downloadFile(h.googleId, h.version));
 
-      await Promise.allSettled([...uploadOrDeletePromises, ...downloadPromises]);
+      await Promise.allSettled([...uploadPromises, ...downloadPromises]);
 
       await campaign.populateStore(); // Refresh with updated data
       await config.updateIndex();

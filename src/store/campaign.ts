@@ -167,16 +167,8 @@ export const useCampaign = defineStore({
 
     async delete(id: string, triggeredByGoogle = false) {
       try {
-        // Remove from database
-        await db.campaign.delete(id);
-
-        if (!triggeredByGoogle) {
-          const google = useGoogle();
-          await google.deleteCampaign(id);
-        }
-
         const config = useConfig();
-        // If the active campaign was deleted, switch campaign
+        // If the deletion is for the active campaign, switch campaign
         if (config.data.current === id) {
           const nextCampaign = await db.campaign.where('id').notEqual(id).sortBy('name');
           const nextCampaignId = nextCampaign[0]?.id;
@@ -187,6 +179,15 @@ export const useCampaign = defineStore({
             await this.new();
           }
         }
+
+        // Remove from database
+        await db.campaign.delete(id);
+
+        if (!triggeredByGoogle) {
+          const google = useGoogle();
+          await google.deleteCampaign(id);
+        }
+
         await config.updateIndex();
       } catch (err) {
         console.log(err);
