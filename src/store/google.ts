@@ -7,18 +7,17 @@ import { useCampaign } from './campaign';
 
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
-const isFulfilled = <T>(res: PromiseSettledResult<T>): res is PromiseFulfilledResult<T> => res.status === 'fulfilled';
-
 const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
   id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
   googleId: file.id ?? '',
   version: Number(file.version ?? '1'),
 });
 
-const getGoogleFileHeaders = async (trashed: boolean, contentId?: string) => {
+const getGoogleFileHeaders = async (trashed: boolean, contentIds?: string[]) => {
+  const fileNames = contentIds?.map((id) => `name='${id}.json'`).join(' or ');
   const query = await gapi.client.drive.files.list({
     spaces: 'appDataFolder',
-    q: `trashed=${String(trashed)}` + (contentId ? ` and name='${contentId}.json'` : ''),
+    q: `trashed=${String(trashed)}` + (fileNames ? `and (${fileNames})` : ''),
     fields: 'files/id,files/trashed,files/name,files/version',
   });
   const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
@@ -31,9 +30,6 @@ const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number)
     alt: 'media',
   });
 
-  if (!content.body) {
-    return;
-  }
   try {
     const campaign = JSON.parse(content.body) as ICampaign;
     campaign.lastSeenGoogleVersion = lastSeenGoogleVersion;
@@ -89,19 +85,19 @@ export const useGoogle = defineStore({
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
       const localHeaderMap = new Map(localHeaders.map((h) => [h.id, h]));
 
-      const checkForDeletedPromises = localHeaders
-        .filter((h) => !googleHeaderMap.has(h.id))
-        .map((h) => getGoogleFileHeaders(true, h.id));
+      const potentiallyDeletedIds = localHeaders.filter((h) => !googleHeaderMap.has(h.id)).map((h) => h.id);
 
-      const deletedFromGoogle = await Promise.allSettled(checkForDeletedPromises);
-      const deletedFromGoogleMap = new Map(deletedFromGoogle.filter(isFulfilled).map((h) => [h.value[0]?.id, h.value]));
+      const deletedFromGoogle = await getGoogleFileHeaders(true, potentiallyDeletedIds);
+      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h.id, h]));
+
+      const campaign = useCampaign();
 
       // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
       const uploadOrDeletePromises = localHeaders
-        .filter((h) => h.lastSeenGoogleVersion >= (googleHeaderMap.get(h.id)?.version ?? -1))
+        .filter((h) => h.lastSeenGoogleVersion > (googleHeaderMap.get(h.id)?.version ?? -1))
         .map((h) =>
           deletedFromGoogleMap.has(h.id)
-            ? db.campaign.delete(h.id)
+            ? campaign.delete(h.id, true)
             : uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id)
         );
 
@@ -112,7 +108,6 @@ export const useGoogle = defineStore({
 
       await Promise.allSettled([...uploadOrDeletePromises, ...downloadPromises]);
 
-      const campaign = useCampaign();
       await campaign.populateStore(); // Refresh with updated data
       await config.updateIndex();
     },
@@ -126,14 +121,14 @@ export const useGoogle = defineStore({
     async saveCampaign(campaign: ICampaign) {
       if (!isSignedIn()) return;
 
-      const fileHeader = (await getGoogleFileHeaders(false, campaign.id))[0];
+      const fileHeader = (await getGoogleFileHeaders(false, [campaign.id]))[0];
       await uploadFile(fileHeader?.googleId, campaign.id);
     },
 
     async deleteCampaign(campaignId: string) {
       if (!isSignedIn()) return;
 
-      const fileHeader = (await getGoogleFileHeaders(false, campaignId))[0];
+      const fileHeader = (await getGoogleFileHeaders(false, [campaignId]))[0];
       if (fileHeader) {
         await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
       }

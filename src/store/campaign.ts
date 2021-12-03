@@ -165,27 +165,23 @@ export const useCampaign = defineStore({
       }
     },
 
-    async delete(id: string) {
+    async delete(id: string, triggeredByGoogle = false) {
       try {
         // Remove from database
         await db.campaign.delete(id);
 
-        const google = useGoogle();
-        await google.deleteCampaign(id);
+        if (!triggeredByGoogle) {
+          const google = useGoogle();
+          await google.deleteCampaign(id);
+        }
 
-        // Load first campaign or create a new one
-        if ((await db.campaign.count()) > 0) {
-          await db.campaign
-            .toCollection()
-            .first()
-            .then(async (char) => {
-              await this.load(char?.id as string);
+        const firstChar = await db.campaign.toCollection().first();
 
-              // Adjust index
-              const config = useConfig();
-              config.data.current = char?.id as string;
-              await config.updateIndex();
-            });
+        if (firstChar) {
+          await this.load(firstChar.id);
+          const config = useConfig();
+          config.data.current = firstChar.id;
+          await config.updateIndex();
         } else {
           await this.new();
         }
