@@ -7,6 +7,8 @@ import { useCampaign } from './campaign';
 
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
+const isFulfilled = <T>(res: PromiseSettledResult<T>): res is PromiseFulfilledResult<T> => res.status === 'fulfilled';
+
 const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
   id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
   googleId: file.id ?? '',
@@ -28,9 +30,17 @@ const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number)
     fileId: googleFileId,
     alt: 'media',
   });
-  const campaign = JSON.parse(content.body) as ICampaign;
-  campaign.lastSeenGoogleVersion = lastSeenGoogleVersion;
-  await db.campaign.put(campaign);
+
+  if (!content.body) {
+    return;
+  }
+  try {
+    const campaign = JSON.parse(content.body) as ICampaign;
+    campaign.lastSeenGoogleVersion = lastSeenGoogleVersion;
+    await db.campaign.put(campaign);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 const uploadFile = async (googleFileId: string | undefined, contentId: string) => {
@@ -83,8 +93,8 @@ export const useGoogle = defineStore({
         .filter((h) => !googleHeaderMap.has(h.id))
         .map((h) => getGoogleFileHeaders(true, h.id));
 
-      const deletedFromGoogle = await Promise.all(checkForDeletedPromises);
-      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h[0]?.id, h]));
+      const deletedFromGoogle = await Promise.allSettled(checkForDeletedPromises);
+      const deletedFromGoogleMap = new Map(deletedFromGoogle.filter(isFulfilled).map((h) => [h.value[0]?.id, h.value]));
 
       // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
       const uploadOrDeletePromises = localHeaders
@@ -100,11 +110,17 @@ export const useGoogle = defineStore({
         .filter((h) => h.version > (localHeaderMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
         .map((h) => downloadFile(h.googleId, h.version));
 
-      await Promise.all([...uploadOrDeletePromises, ...downloadPromises]);
+      await Promise.allSettled([...uploadOrDeletePromises, ...downloadPromises]);
 
       const campaign = useCampaign();
       await campaign.populateStore(); // Refresh with updated data
       await config.updateIndex();
+    },
+
+    async autoSyncFiles() {
+      await new Promise<void>((resolve) => setTimeout(resolve, 1000 * 60));
+      await this.syncFiles();
+      await this.autoSyncFiles();
     },
 
     async saveCampaign(campaign: ICampaign) {
@@ -145,6 +161,7 @@ export const useGoogle = defineStore({
       googleAuth.isSignedIn.listen((signedIn) => (this.data.googleDriveLinked = signedIn));
 
       await this.syncFiles();
+      void this.autoSyncFiles(); // void, because we don't want to block the caller on the infinite poll
     },
   },
 });
