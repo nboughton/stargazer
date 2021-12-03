@@ -156,10 +156,31 @@ export const useCampaign = defineStore({
       await google.saveCampaign(this.data);
     },
 
+    async loadFirst() {
+      const config = useConfig();
+
+      const allCampaigns = await db.campaign.toCollection().sortBy('name');
+      const nextCampaign = allCampaigns[0];
+      const nextCampaignId = nextCampaign?.id;
+      if (nextCampaignId) {
+        await this.load(nextCampaignId);
+        config.data.current = nextCampaignId;
+      } else {
+        await this.new();
+      }
+
+      await config.updateIndex();
+    },
+
     async load(id: string) {
       try {
         const campaign = await db.campaign.get(id);
-        this.data = campaign as ICampaign;
+        if (campaign) {
+          this.data = campaign;
+        } else {
+          // we've entered bad state, rectify
+          await this.loadFirst();
+        }
       } catch (err) {
         console.log(err);
       }
@@ -168,17 +189,6 @@ export const useCampaign = defineStore({
     async delete(id: string, triggeredByGoogle = false) {
       try {
         const config = useConfig();
-        // If the deletion is for the active campaign, switch campaign
-        if (config.data.current === id) {
-          const nextCampaign = await db.campaign.where('id').notEqual(id).sortBy('name');
-          const nextCampaignId = nextCampaign[0]?.id;
-          if (nextCampaignId) {
-            await this.load(nextCampaignId);
-            config.data.current = nextCampaignId;
-          } else {
-            await this.new();
-          }
-        }
 
         // Remove from database
         await db.campaign.delete(id);
@@ -186,6 +196,11 @@ export const useCampaign = defineStore({
         if (!triggeredByGoogle) {
           const google = useGoogle();
           await google.deleteCampaign(id);
+        }
+
+        // If the deletion is for the active campaign, switch campaign
+        if (config.data.current === id) {
+          await this.loadFirst();
         }
 
         await config.updateIndex();
