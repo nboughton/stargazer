@@ -35,7 +35,6 @@ export default defineComponent({
     $q.dark.set(true);
 
     const campaign = useCampaign();
-    const google = useGoogle();
     onMounted(async () => {
       await writeLine('::booting system...');
       await sleep(500);
@@ -47,6 +46,7 @@ export default defineComponent({
       await Promise.all([assets.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::synchronising...');
+      const google = useGoogle();
       await Promise.all([google.populateStore().catch((err) => console.log(err)), sleep(500)]);
 
       await writeLine('::welcome ' + campaign.data.character.name);
@@ -80,17 +80,6 @@ export default defineComponent({
         config.data.saving = false;
       }, 1000),
       { deep: true }
-    );
-
-    watch(
-      () => google.$state.data.deletedFromGoogle,
-      async () => {
-        if (google.data.deletedFromGoogle.length > 0) {
-          const promises = google.$state.data.deletedFromGoogle.map((id) => campaign.delete(id, true));
-          await Promise.allSettled(promises);
-          google.data.deletedFromGoogle = [];
-        }
-      }
     );
 
     return {
