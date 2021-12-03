@@ -113,10 +113,12 @@ export const NewFaction = (): IFaction => {
 };
 
 export const NewCampaign = (): ICampaign => {
+  const character = NewCharacter();
+
   return {
     id: uuid(),
-    name: 'New Campaign',
-    character: NewCharacter(),
+    name: `New Campaign - ${character.name}`,
+    character: character,
     truths: {},
     progressTracks: [NewProgressTrack()],
     journal: [NewJournal()],

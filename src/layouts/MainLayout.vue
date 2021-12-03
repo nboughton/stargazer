@@ -58,9 +58,16 @@
       <!-- left drawer content -->
       <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
       <q-list>
-        <q-item class="items-center" v-for="(item, index) in config.data.index" :key="index" clickable v-ripple>
+        <q-item
+          class="items-center"
+          v-for="(item, index) in config.data.index.sort((a, b) => (a.name || '').localeCompare(b.name))"
+          :key="index"
+          :active="item.id == campaign.data?.id"
+          clickable
+          v-ripple
+        >
           <q-item-section @click="config.data.current = item.id" class="row full-width no-wrap">
-            {{ item.name }}
+            {{ item.name || 'unnamed campaign' }}
           </q-item-section>
           <q-item-section class="col-shrink" v-if="config.data.index.length > 1 && config.data.edit">
             <q-btn
@@ -295,7 +302,15 @@
         <q-card-section class="text-h6 text-center"> Are you sure? </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn color="warning" label="DELETE" @click="removeCampaign(campaignToDelete)" />
+          <q-btn
+            color="warning"
+            label="DELETE"
+            @click="
+              removeCampaign(campaignToDelete).then(() => {
+                showCampaignDelete = false;
+              })
+            "
+          />
           <q-btn color="primary" label="NOPE" @click="showCampaignDelete = false" />
         </q-card-actions>
       </q-card>
