@@ -118,7 +118,7 @@ export const NewCampaign = (): ICampaign => {
   return {
     id: uuid(),
     name: `New Campaign - ${character.name}`,
-    character,
+    character: character,
     truths: {},
     progressTracks: [NewProgressTrack()],
     journal: [NewJournal()],
