@@ -175,16 +175,19 @@ export const useCampaign = defineStore({
           await google.deleteCampaign(id);
         }
 
-        const firstChar = await db.campaign.toCollection().first();
-
-        if (firstChar) {
-          await this.load(firstChar.id);
-          const config = useConfig();
-          config.data.current = firstChar.id;
-          await config.updateIndex();
-        } else {
-          await this.new();
+        const config = useConfig();
+        // If the active campaign was deleted, switch campaign
+        if (config.data.current === id) {
+          const nextCampaign = await db.campaign.where('id').notEqual(id).sortBy('name');
+          const nextCampaignId = nextCampaign[0]?.id;
+          if (nextCampaignId) {
+            await this.load(nextCampaignId);
+            config.data.current = nextCampaignId;
+          } else {
+            await this.new();
+          }
         }
+        await config.updateIndex();
       } catch (err) {
         console.log(err);
       }
