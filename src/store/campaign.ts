@@ -156,39 +156,54 @@ export const useCampaign = defineStore({
       await google.saveCampaign(this.data);
     },
 
+    async loadFirst() {
+      const config = useConfig();
+
+      const allCampaigns = await db.campaign.toCollection().sortBy('name');
+      const nextCampaign = allCampaigns[0];
+      const nextCampaignId = nextCampaign?.id;
+      if (nextCampaignId) {
+        await this.load(nextCampaignId);
+        config.data.current = nextCampaignId;
+      } else {
+        await this.new();
+      }
+
+      await config.updateIndex();
+    },
+
     async load(id: string) {
       try {
         const campaign = await db.campaign.get(id);
-        this.data = campaign as ICampaign;
+        if (campaign) {
+          this.data = campaign;
+        } else {
+          // we've entered bad state, rectify
+          await this.loadFirst();
+        }
       } catch (err) {
         console.log(err);
       }
     },
 
-    async delete(id: string) {
+    async delete(id: string, triggeredByGoogle = false) {
       try {
+        const config = useConfig();
+
         // Remove from database
         await db.campaign.delete(id);
 
-        const google = useGoogle();
-        await google.deleteCampaign(id);
-
-        // Load first campaign or create a new one
-        if ((await db.campaign.count()) > 0) {
-          await db.campaign
-            .toCollection()
-            .first()
-            .then(async (char) => {
-              await this.load(char?.id as string);
-
-              // Adjust index
-              const config = useConfig();
-              config.data.current = char?.id as string;
-              await config.updateIndex();
-            });
-        } else {
-          await this.new();
+        if (!triggeredByGoogle) {
+          const google = useGoogle();
+          await google.deleteCampaign(id);
         }
+
+        // If the deletion is for the active campaign, switch campaign
+        if (config.data.current === id) {
+          await this.loadFirst();
+        }
+
+        await config.updateIndex();
       } catch (err) {
         console.log(err);
       }
