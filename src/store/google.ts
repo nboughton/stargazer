@@ -6,18 +6,22 @@ import { ICampaign } from 'src/components/models';
 import { useCampaign } from './campaign';
 import { sleep } from '../lib/util';
 
+const minDate = new Date(-8640000000000000);
+
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
 interface IFileHeader {
   id: string;
   googleId: string;
   version: number;
+  modifiedTime: Date;
 }
 
 const mapGoogleFileHeader = (file: gapi.client.drive.File): IFileHeader => ({
   id: file.name?.slice(0, -5) ?? '', // trim off '.json' to get our ID
   googleId: file.id ?? '',
   version: Number(file.version ?? '1'),
+  modifiedTime: file.modifiedTime ? new Date(file.modifiedTime) : minDate,
 });
 
 const getGoogleFileHeaders = async (contentIds?: string[]) => {
@@ -25,11 +29,11 @@ const getGoogleFileHeaders = async (contentIds?: string[]) => {
   const query = await gapi.client.drive.files.list({
     spaces: 'appDataFolder',
     q: 'trashed=false' + (fileNames ? ` and (${fileNames})` : ''),
-    fields: 'files/id,files/trashed,files/name,files/version',
+    fields: 'files/id,files/trashed,files/name,files/version,files/modifiedTime',
   });
 
   const fileHeaders = (query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? []).reduce((map, item) => {
-    if (item.version > (map.get(item.id)?.version ?? -1)) {
+    if (item.modifiedTime > (map.get(item.id)?.modifiedTime ?? minDate)) {
       map.set(item.id, item);
     }
     return map;
