@@ -33,9 +33,12 @@ const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number)
 
   try {
     const campaign = JSON.parse(content.body) as ICampaign;
-    campaign.lastSeenGoogleVersion = lastSeenGoogleVersion;
-    campaign.uploadedToGoogle = true;
     await db.campaign.put(campaign);
+    await db.googleSyncState.put({
+      id: campaign.id,
+      lastSeenGoogleVersion: lastSeenGoogleVersion,
+      uploadedToGoogle: true,
+    });
   } catch (e) {
     console.log(e);
   }
@@ -60,8 +63,11 @@ const uploadFile = async (googleFileId: string | undefined, contentId: string) =
     }
   );
   const header = await gapi.client.drive.files.get({ fileId: googleFileId, fields: 'version' });
-  const campaignPatch = { lastSeenGoogleVersion: Number(header.result.version ?? 0), uploadedToGoogle: true };
-  await db.campaign.update(contentId, campaignPatch);
+  await db.googleSyncState.put({
+    id: contentId,
+    lastSeenGoogleVersion: Number(header.result.version ?? 0),
+    uploadedToGoogle: true,
+  });
 };
 
 export const useGoogle = defineStore({
@@ -85,7 +91,6 @@ export const useGoogle = defineStore({
       const googleHeaders = await getGoogleFileHeaders(false);
       const localHeaders = config.data.index;
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
-      const localHeaderMap = new Map(localHeaders.map((h) => [h.id, h]));
 
       const potentiallyDeletedIds = localHeaders.filter((h) => !googleHeaderMap.has(h.id)).map((h) => h.id);
 
@@ -94,43 +99,51 @@ export const useGoogle = defineStore({
 
       const campaign = useCampaign();
 
-      // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
+      const googleSyncStates = await db.googleSyncState.toArray();
+      const googleSyncStatesMap = new Map(googleSyncStates.map((h) => [h.id, h]));
 
+      // Upload local campaigns that are never seen in Google. Delete local campaigns that are seen in Google as deleted.
       const uploadPromises = localHeaders
-        .filter((h) => !h.uploadedToGoogle)
+        .filter((h) => !googleSyncStatesMap.get(h.id)?.uploadedToGoogle)
         .map((h) => {
-          const conflict = h.lastSeenGoogleVersion < (googleHeaderMap.get(h.id)?.version ?? -1);
+          const lastSeenGoogleVersion = googleSyncStatesMap.get(h.id)?.lastSeenGoogleVersion ?? -1;
+          const conflict = lastSeenGoogleVersion < (googleHeaderMap.get(h.id)?.version ?? -1);
           if (conflict) {
             // TODO: Queue conflict handler
-            console.warn('upload conflict', h, googleHeaderMap.get(h.id), campaign);
+            console.warn('upload conflict', googleSyncStatesMap.get(h.id), h, googleHeaderMap.get(h.id));
             return Promise.resolve();
           }
+          console.warn('upload', googleSyncStatesMap.get(h.id), h, googleHeaderMap.get(h.id));
           return uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id);
         });
 
       const deletePromises = localHeaders
         .filter((h) => deletedFromGoogleMap.has(h.id))
         .map((h) => {
-          const conflict = !h.uploadedToGoogle;
+          const googleSyncState = googleSyncStatesMap.get(h.id);
+          const uploadedToGoogle = googleSyncState ? googleSyncState.uploadedToGoogle : false;
+          const conflict = !uploadedToGoogle;
           if (conflict) {
             // TODO: Queue conflict handler
-            console.warn('delete conflict', h, googleHeaderMap.get(h.id), campaign);
+            console.warn('delete conflict', h, googleHeaderMap.get(h.id));
             return Promise.resolve();
           }
+          console.warn('delete', h, googleHeaderMap.get(h.id));
           return campaign.delete(h.id, true);
         });
 
       // Download campaigns that are in google but not in local
       const downloadPromises = googleHeaders
-        .filter((h) => h.version > (localHeaderMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
+        .filter((h) => h.version > (googleSyncStatesMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
         .map((h) => {
-          const localHeader = localHeaderMap.get(h.id);
-          const conflict = localHeader && !localHeader.uploadedToGoogle;
+          const googleSyncState = googleSyncStatesMap.get(h.id);
+          const conflict = googleSyncState && !googleSyncState.uploadedToGoogle;
           if (conflict) {
             // TODO: Queue conflict handler
-            console.warn('download conflict', localHeader, h, campaign);
+            console.warn('download conflict', googleSyncStatesMap, googleSyncState, h);
             return Promise.resolve();
           }
+          console.warn('download', googleSyncStatesMap, googleSyncState, h);
           return downloadFile(h.googleId, h.version);
         });
 
@@ -150,20 +163,23 @@ export const useGoogle = defineStore({
       if (!isSignedIn()) return;
 
       const fileHeader = (await getGoogleFileHeaders(false, [campaign.id]))[0];
-      if (fileHeader?.version > (campaign.lastSeenGoogleVersion ?? -1)) {
-        console.warn('save conflict', fileHeader, campaign);
+      const googleSyncState = await db.googleSyncState.get(campaign.id);
+      if (fileHeader?.version > (googleSyncState?.lastSeenGoogleVersion ?? -1)) {
+        console.warn('save conflict', fileHeader, campaign, googleSyncState);
         return;
       }
+      console.warn('saving');
       await uploadFile(fileHeader?.googleId, campaign.id);
     },
 
-    async deleteCampaign(campaignId: string, lastSeenGoogleVersion: number) {
+    async deleteCampaign(campaignId: string) {
       if (!isSignedIn()) return;
 
       const fileHeader = (await getGoogleFileHeaders(false, [campaignId]))[0];
       if (fileHeader) {
-        if (fileHeader.version > lastSeenGoogleVersion) {
-          console.warn('delete conflict', fileHeader, lastSeenGoogleVersion);
+        const googleSyncState = await db.googleSyncState.get(campaignId);
+        if (fileHeader.version > (googleSyncState?.lastSeenGoogleVersion ?? -1)) {
+          console.warn('delete conflict', fileHeader, googleSyncState);
           return;
         }
 
