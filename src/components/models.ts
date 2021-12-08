@@ -56,10 +56,6 @@ export interface IIndexItem {
   id: string;
 }
 
-export interface IGoogleDrive {
-  googleDriveLinked: boolean;
-}
-
 export interface IConfig {
   id: number;
   current: string;
@@ -297,12 +293,6 @@ export interface IFaction {
   rumors: string;
   notes: string;
   colour: string;
-}
-
-export interface IGoogleSyncState {
-  id: string;
-  lastSeenGoogleVersion: number;
-  uploadedToGoogle: boolean;
 }
 
 export interface ICampaign {

@@ -15,7 +15,6 @@ import {
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
 import { db } from 'src/lib/db';
-import { useGoogle } from './google';
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -154,9 +153,6 @@ export const useCampaign = defineStore({
 
       const config = useConfig();
       await config.updateIndex();
-
-      const google = useGoogle();
-      await google.saveCampaign(this.data);
     },
 
     async loadFirst() {
@@ -189,19 +185,11 @@ export const useCampaign = defineStore({
       }
     },
 
-    async delete(id: string, triggeredByGoogle = false) {
+    async delete(id: string) {
       try {
         const config = useConfig();
 
-        let deleteSuccess = true;
-        if (!triggeredByGoogle) {
-          const google = useGoogle();
-          deleteSuccess = await google.deleteCampaign(id);
-        }
-        if (deleteSuccess) {
-          // Remove from database
-          await db.campaign.delete(id);
-        }
+        await db.campaign.delete(id);
 
         // If the deletion is for the active campaign, switch campaign
         if (config.data.current === id) {
@@ -238,8 +226,6 @@ export const useCampaign = defineStore({
         const campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
         try {
           await db.campaign.bulkPut(campaigns);
-          const google = useGoogle();
-          await google.syncFiles();
         } catch (err) {
           console.log(err);
         }

@@ -139,7 +139,6 @@ export default defineComponent({
     };
 
     const renderFills = () => {
-      console.log('Rendering fills');
       const cells = campaign.data.sectors[config.data.sector].cells;
       Object.keys(cells).forEach((id) => {
         map.find(`.${id}`).forEach((cell) => {
@@ -179,7 +178,6 @@ export default defineComponent({
     };
 
     const renderIcons = () => {
-      console.log('Rendering icons');
       // Clear any existing icon groups
       map.find('.icons').forEach((i) => i.remove());
 
@@ -228,7 +226,6 @@ export default defineComponent({
     };
 
     const renderStarfield = () => {
-      console.log('Rendering starfield');
       // Clear an existing starfield if it exists
       map.find('.starfield').forEach((i) => i.remove());
 
@@ -265,7 +262,6 @@ export default defineComponent({
     };
 
     const renderLabels = () => {
-      console.log('Rendering labels');
       map.find('.labels').forEach((i) => i.remove());
 
       // Create a new group
@@ -294,7 +290,6 @@ export default defineComponent({
     };
 
     const renderSearch = () => {
-      console.log('Rendering search results');
       //clear existing search labels
       map.find('.search-label').forEach((i) => i.remove());
 
@@ -329,7 +324,6 @@ export default defineComponent({
     };
 
     const renderPlayer = () => {
-      console.log('Rendering player');
       if (campaign.data.character.location != '') {
         // Clear existing player ship
         map.find('.ship').forEach((i) => i.remove());
@@ -347,7 +341,6 @@ export default defineComponent({
     };
 
     const renderMap = () => {
-      console.log('Rendering map');
       map.clear();
 
       // Place hexes and content
