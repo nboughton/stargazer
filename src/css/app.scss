@@ -16,11 +16,39 @@
 
 @font-face {
   font-family: OpenSans;
+  font-style: normal;
+  font-weight: normal;
   src: url(../fonts/OpenSans-Regular.ttf);
 }
+
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: normal;
+  src: url(../fonts/OpenSans-Italic.ttf);
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-style: normal;
+  font-weight: bold;
+  src: url(../fonts/OpenSans-Bold.ttf);
+}
+
+@font-face {
+  font-family: OpenSans;
+  font-style: italic;
+  font-weight: bold;
+  src: url(../fonts/OpenSans-BoldItalic.ttf);
+}
+
 * {
   font-family: OpenSans;
 }
+.q-tab__label {
+  font-family: Convergence;
+}
+
 // declare a class which applies it
 .sf-header {
   font-family: 'Teko';
