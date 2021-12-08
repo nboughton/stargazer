@@ -434,6 +434,9 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
+#rightDrawer
+  padding-bottom: 80px
+
 .about-text a
   color: $primary
 
