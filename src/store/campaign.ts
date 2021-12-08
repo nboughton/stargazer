@@ -139,7 +139,12 @@ export const useCampaign = defineStore({
       this.data = newCam;
 
       config.data.current = this.data.id;
-      config.data.index.push({ name: this.data?.name, id: this.data.id, lastSeenGoogleVersion: -1 });
+      config.data.index.push({
+        name: this.data?.name,
+        id: this.data.id,
+        lastSeenGoogleVersion: this.data.lastSeenGoogleVersion ?? -1,
+        uploadedToGoogle: this.data.uploadedToGoogle,
+      });
 
       const storeCopy = JSON.parse(JSON.stringify(this.data)) as ICampaign;
       await db.campaign.put(storeCopy).catch((err) => console.log(err));
@@ -190,12 +195,14 @@ export const useCampaign = defineStore({
       try {
         const config = useConfig();
 
+        const campaign = await db.campaign.get(id);
+
         // Remove from database
         await db.campaign.delete(id);
 
         if (!triggeredByGoogle) {
           const google = useGoogle();
-          await google.deleteCampaign(id);
+          await google.deleteCampaign(id, campaign?.lastSeenGoogleVersion ?? -1);
         }
 
         // If the deletion is for the active campaign, switch campaign

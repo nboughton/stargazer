@@ -48,6 +48,7 @@ export const useConfig = defineStore({
         name: c.name,
         id: c.id,
         lastSeenGoogleVersion: c.lastSeenGoogleVersion ?? 0,
+        uploadedToGoogle: c.uploadedToGoogle,
       }));
     },
   },

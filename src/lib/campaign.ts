@@ -124,5 +124,6 @@ export const NewCampaign = (): ICampaign => {
     journal: [NewJournal()],
     sectors: [NewSector()],
     factions: [NewFaction()],
+    uploadedToGoogle: false,
   };
 };
