@@ -193,12 +193,14 @@ export const useCampaign = defineStore({
       try {
         const config = useConfig();
 
-        // Remove from database
-        await db.campaign.delete(id);
-
+        let deleteSuccess = true;
         if (!triggeredByGoogle) {
           const google = useGoogle();
-          await google.deleteCampaign(id);
+          deleteSuccess = await google.deleteCampaign(id);
+        }
+        if (deleteSuccess) {
+          // Remove from database
+          await db.campaign.delete(id);
         }
 
         // If the deletion is for the active campaign, switch campaign
