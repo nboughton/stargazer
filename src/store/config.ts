@@ -47,7 +47,6 @@ export const useConfig = defineStore({
       this.data.index = campaigns.map((c) => ({
         name: c.name,
         id: c.id,
-        lastSeenGoogleVersion: c.lastSeenGoogleVersion ?? 0,
       }));
     },
   },

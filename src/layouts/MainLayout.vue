@@ -33,28 +33,6 @@
     </q-header>
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
-      <q-item clickable v-ripple v-if="!google.data.googleDriveLinked" @click="google.linkGoogleDrive">
-        <q-item-section avatar>
-          <q-icon name="link" />
-        </q-item-section>
-        <q-item-section>
-          Link Google Drive
-          <q-tooltip>Link your Google Drive account for cross-device play</q-tooltip>
-        </q-item-section>
-      </q-item>
-
-      <q-item clickable v-ripple v-if="google.data.googleDriveLinked" @click="google.unlinkGoogleDrive">
-        <q-item-section avatar>
-          <q-icon name="link_off" />
-        </q-item-section>
-        <q-item-section>
-          Unlink Google Drive
-          <q-tooltip>Unlink your Google Drive account, disabling cross-device play</q-tooltip>
-        </q-item-section>
-      </q-item>
-
-      <q-separator size="lg" />
-
       <!-- left drawer content -->
       <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
       <q-list>
@@ -324,7 +302,6 @@
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue';
 
-import { useGoogle } from 'src/store/google';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
@@ -341,7 +318,6 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
-    const google = useGoogle();
     const campaign = useCampaign();
     const config = useConfig();
     const $q = useQuasar();
@@ -407,7 +383,6 @@ export default defineComponent({
       },
       width,
 
-      google,
       campaign,
       config,
       customAssets,

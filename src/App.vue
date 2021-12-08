@@ -19,7 +19,6 @@ import { useCampaign } from './store/campaign';
 import { debounce, useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
 import { sleep } from './lib/util';
-import { useGoogle } from './store/google';
 
 export default defineComponent({
   name: 'App',
@@ -61,11 +60,9 @@ export default defineComponent({
 
     const initialiseData = async () => {
       const assets = useAssets();
-      const google = useGoogle();
 
       await campaign.populateStore().catch((err) => console.log(err));
       await assets.populateStore().catch((err) => console.log(err));
-      await google.populateStore().catch((err) => console.log(err));
     };
 
     onMounted(async () => {
