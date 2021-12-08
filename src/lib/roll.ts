@@ -71,7 +71,7 @@ export const moveRoll = (attr: number, adds: number, momentum: number, progress?
   }
 
   // Replace action score for a progress move
-  if (progress) {
+  if (progress !== undefined) {
     r.action.score = progress;
   }
   r.challenge.match = false;
@@ -115,24 +115,24 @@ export const tableRoll = (oracle: ISFTable): string => {
   return out;
 };
 
-export const clockRoll = (t: EAtO): { val: number, yn: boolean, match: boolean } => {
-  const n1 = Math.floor(Math.random()*10)
-  const n2 = Math.floor(Math.random()*10)
-  const n = n1 + n2 === 0 ? 100 : n1 === 0 ? n2 : +`${n1}${n2}`
-  
-  let YN = false
+export const clockRoll = (t: EAtO): { val: number; yn: boolean; match: boolean } => {
+  const n1 = Math.floor(Math.random() * 10);
+  const n2 = Math.floor(Math.random() * 10);
+  const n = n1 + n2 === 0 ? 100 : n1 === 0 ? n2 : +`${n1}${n2}`;
+
+  let YN = false;
 
   Move[t].items.forEach((item) => {
     if (item.match.length === 1 && item.match[0] === n) {
-      YN = item.data === 'Yes'
+      YN = item.data === 'Yes';
       return;
     }
 
     if (n >= item.match[0] && n <= item.match[1]) {
-      YN = item.data === 'Yes'
+      YN = item.data === 'Yes';
       return;
     }
   });
 
-  return { val: n, yn: YN, match: n1 === n2 }
-}
+  return { val: n, yn: YN, match: n1 === n2 };
+};
