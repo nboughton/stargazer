@@ -13,8 +13,13 @@
   font-family: Convergence;
   src: url(../fonts/Convergence_Regular.10.ttf);
 }
+
+@font-face {
+  font-family: OpenSans;
+  src: url(../fonts/OpenSans-Regular.ttf);
+}
 * {
-  font-family: Convergence;
+  font-family: OpenSans;
 }
 // declare a class which applies it
 .sf-header {
