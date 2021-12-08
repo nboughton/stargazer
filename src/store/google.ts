@@ -14,28 +14,33 @@ const mapGoogleFileHeader = (file: gapi.client.drive.File) => ({
   version: Number(file.version ?? '1'),
 });
 
-const getGoogleFileHeaders = async (trashed: boolean, contentIds?: string[]) => {
+const getGoogleFileHeaders = async (contentIds?: string[]) => {
   const fileNames = contentIds?.map((id) => `name='${id}.json'`).join(' or ');
   const query = await gapi.client.drive.files.list({
     spaces: 'appDataFolder',
-    q: `trashed=${String(trashed)}` + (fileNames ? ` and (${fileNames})` : ''),
+    q: 'trashed=false' + (fileNames ? ` and (${fileNames})` : ''),
     fields: 'files/id,files/trashed,files/name,files/version',
   });
   const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
   return fileHeaders;
 };
 
-const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number) => {
+const downloadFile = async (googleFileId: string, contentId: string, lastSeenGoogleVersion: number) => {
   const content = await gapi.client.drive.files.get({
     fileId: googleFileId,
     alt: 'media',
   });
 
   try {
-    const campaign = JSON.parse(content.body) as ICampaign;
-    await db.campaign.put(campaign);
+    console.warn(content.body);
+    if (content.body !== 'deleted') {
+      const campaign = JSON.parse(content.body) as ICampaign;
+      await db.campaign.put(campaign);
+    } else {
+      await db.campaign.delete(contentId);
+    }
     await db.googleSyncState.put({
-      id: campaign.id,
+      id: contentId,
       lastSeenGoogleVersion: lastSeenGoogleVersion,
       uploadedToGoogle: true,
     });
@@ -44,7 +49,7 @@ const downloadFile = async (googleFileId: string, lastSeenGoogleVersion: number)
   }
 };
 
-const uploadFile = async (googleFileId: string | undefined, contentId: string) => {
+const uploadFile = async (googleFileId: string | undefined, contentId: string, content: unknown) => {
   if (!googleFileId) {
     const createResult = await gapi.client.drive.files.create({
       resource: { name: `${contentId}.json`, parents: ['appDataFolder'] },
@@ -53,13 +58,12 @@ const uploadFile = async (googleFileId: string | undefined, contentId: string) =
     googleFileId = createResult.result.id ?? '';
   }
 
-  const content = await db.campaign.get(contentId);
   await fetch(
     `https://www.googleapis.com/upload/drive/v3/files/${googleFileId}?uploadType=media&supportsAllDrives=true`,
     {
       method: 'PATCH',
       headers: new Headers({ Authorization: 'Bearer ' + gapi.auth.getToken().access_token }),
-      body: JSON.stringify(content),
+      body: content ? JSON.stringify(content) : 'deleted',
     }
   );
   const header = await gapi.client.drive.files.get({ fileId: googleFileId, fields: 'version' });
@@ -68,6 +72,15 @@ const uploadFile = async (googleFileId: string | undefined, contentId: string) =
     lastSeenGoogleVersion: Number(header.result.version ?? 0),
     uploadedToGoogle: true,
   });
+};
+
+const uploadCampaign = async (googleFileId: string | undefined, contentId: string) => {
+  const content = await db.campaign.get(contentId);
+  await uploadFile(googleFileId, contentId, content);
+};
+
+const deleteGoogleFile = async (googleFileId: string | undefined, contentId: string) => {
+  await uploadFile(googleFileId, contentId, undefined);
 };
 
 export const useGoogle = defineStore({
@@ -88,14 +101,9 @@ export const useGoogle = defineStore({
       const config = useConfig();
       await config.updateIndex(); // ensure index is up to date
 
-      const googleHeaders = await getGoogleFileHeaders(false);
+      const googleHeaders = await getGoogleFileHeaders();
       const localHeaders = config.data.index;
       const googleHeaderMap = new Map(googleHeaders.map((h) => [h.id, h]));
-
-      const potentiallyDeletedIds = localHeaders.filter((h) => !googleHeaderMap.has(h.id)).map((h) => h.id);
-
-      const deletedFromGoogle = await getGoogleFileHeaders(true, potentiallyDeletedIds);
-      const deletedFromGoogleMap = new Map(deletedFromGoogle.map((h) => [h.id, h]));
 
       const campaign = useCampaign();
 
@@ -113,24 +121,10 @@ export const useGoogle = defineStore({
             console.warn('upload conflict', googleSyncStatesMap.get(h.id), h, googleHeaderMap.get(h.id));
             return Promise.resolve();
           }
-          return uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id);
+          return uploadCampaign(googleHeaderMap.get(h.id)?.googleId, h.id);
         });
 
-      const deletePromises = localHeaders
-        .filter((h) => deletedFromGoogleMap.has(h.id))
-        .map((h) => {
-          const googleSyncState = googleSyncStatesMap.get(h.id);
-          const uploadedToGoogle = googleSyncState ? googleSyncState.uploadedToGoogle : false;
-          const conflict = !uploadedToGoogle;
-          if (conflict) {
-            // TODO: Queue conflict handler
-            console.warn('delete conflict', h, googleHeaderMap.get(h.id));
-            return Promise.resolve();
-          }
-          return campaign.delete(h.id, true);
-        });
-
-      // Download campaigns that are in google but not in local
+      // Download/delete campaigns that are more up to date in Google than local
       const downloadPromises = googleHeaders
         .filter((h) => h.version > (googleSyncStatesMap.get(h.id)?.lastSeenGoogleVersion ?? -1))
         .map((h) => {
@@ -141,10 +135,10 @@ export const useGoogle = defineStore({
             console.warn('download conflict', googleSyncStatesMap, googleSyncState, h);
             return Promise.resolve();
           }
-          return downloadFile(h.googleId, h.version);
+          return downloadFile(h.googleId, h.id, h.version);
         });
 
-      await Promise.allSettled([...uploadPromises, ...downloadPromises, ...deletePromises]);
+      await Promise.allSettled([...uploadPromises, ...downloadPromises]);
 
       await campaign.populateStore(); // Refresh with updated data
       await config.updateIndex();
@@ -163,26 +157,26 @@ export const useGoogle = defineStore({
         return;
       }
 
-      const fileHeader = (await getGoogleFileHeaders(false, [campaign.id]))[0];
+      const fileHeader = (await getGoogleFileHeaders([campaign.id]))[0];
       const googleSyncState = await db.googleSyncState.get(campaign.id);
       if (fileHeader?.version > (googleSyncState?.lastSeenGoogleVersion ?? -1)) {
         console.warn('save conflict', fileHeader, campaign, googleSyncState);
         return;
       }
-      await uploadFile(fileHeader?.googleId, campaign.id);
+      await uploadCampaign(fileHeader?.googleId, campaign.id);
     },
 
     async deleteCampaign(campaignId: string) {
       if (!isSignedIn()) return;
 
-      const fileHeader = (await getGoogleFileHeaders(false, [campaignId]))[0];
+      const fileHeader = (await getGoogleFileHeaders([campaignId]))[0];
       if (fileHeader) {
         const googleSyncState = await db.googleSyncState.get(campaignId);
         if (fileHeader.version > (googleSyncState?.lastSeenGoogleVersion ?? -1)) {
           console.warn('delete conflict', fileHeader, googleSyncState);
           return;
         }
-        await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
+        await deleteGoogleFile(fileHeader.googleId, fileHeader.id);
       }
     },
 
