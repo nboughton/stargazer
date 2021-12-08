@@ -16,7 +16,7 @@
     </q-page-container>
   </q-layout>
 
-  <q-dialog v-model="showDialog" transition-show="fade" transition-hide="fade">
+  <q-dialog v-model="showDialog" transition-show="fade" transition-hide="fade" :maximized="$q.platform.is.mobile">
     <q-card class="card-bg" style="min-width: 40%">
       <q-card-section class="row justify-between items-center bg-secondary text-h5">
         <q-input
