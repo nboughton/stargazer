@@ -52,7 +52,7 @@
     />
   </div>
 
-  <q-dialog v-model="showImageLoad">
+  <q-dialog v-model="showImageLoad" :maximized="$q.platform.is.mobile">
     <q-card class="card-bg">
       <q-card-section class="text-center text-bold bg-secondary">Upload Image</q-card-section>
 
