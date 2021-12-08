@@ -204,7 +204,7 @@
         <q-card-section class="text-center text-bold bg-secondary"> Load Character Database </q-card-section>
 
         <q-card-section class="text-subtitle">
-          Please bear in mind that this data will overwrite any existing versions of the same Campaigns
+          Please bear in mind that this data will overwrite any existing versions of the same Campaigns.
         </q-card-section>
 
         <q-card-section>
@@ -295,18 +295,12 @@
 
     <q-dialog v-model="showCampaignDelete" :maximized="$q.platform.is.mobile">
       <q-card>
-        <q-card-section class="row card-bg text-h6">
-          <div class="col-grow">Delete Campaign</div>
-          <q-btn class="col-shrink" flat dense icon="close" @click="showCampaignDelete = false" />
+        <q-card-section class="text-center text-bold bg-secondary"> Delete Campaign </q-card-section>
+        <q-card-section class="text-h6 text-center"> Warning!</q-card-section>
+        <q-card-section class="text-subtitle">
+          <p>Deleting a campaign cannot be reversed. Consider exporting before deleting.</p>
+          <q-card-section class="text-h6 text-center"> Delete '{{ campaignToDeleteName }}'?</q-card-section>
         </q-card-section>
-
-        <q-card-section class="text-h6 text-center"
-          ><p>Warning!</p>
-          <br />
-          <p>Deleting a campaign cannot be reversed. Consider exporting the campaign data before deleting.</p>
-          <br />
-          <p>Delete '{{ campaignToDeleteName }}'?</p></q-card-section
-        >
 
         <q-card-actions align="center">
           <q-btn
