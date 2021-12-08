@@ -76,6 +76,7 @@
               dense
               @click="
                 campaignToDelete = item.id;
+                campaignToDeleteName = item.name;
                 showCampaignDelete = true;
               "
             />
@@ -198,7 +199,7 @@
       <router-view />
     </q-page-container>
 
-    <q-dialog v-model="showDataLoad">
+    <q-dialog v-model="showDataLoad" :maximized="$q.platform.is.mobile">
       <q-card>
         <q-card-section class="text-center text-bold bg-secondary"> Load Character Database </q-card-section>
 
@@ -223,7 +224,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="showAssetLoad">
+    <q-dialog v-model="showAssetLoad" :maximized="$q.platform.is.mobile">
       <q-card>
         <q-card-section class="text-center text-bold bg-secondary"> Load Custom Assets </q-card-section>
 
@@ -254,7 +255,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="showAbout">
+    <q-dialog v-model="showAbout" :maximized="$q.platform.is.mobile">
       <q-card class="card-bg">
         <q-card-section class="row bg-secondary text-h5 justify-between">
           <div class="col-grow sf-header">About</div>
@@ -292,14 +293,20 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="showCampaignDelete">
+    <q-dialog v-model="showCampaignDelete" :maximized="$q.platform.is.mobile">
       <q-card>
         <q-card-section class="row card-bg text-h6">
-          <div class="col-grow">Delete Campaign?</div>
+          <div class="col-grow">Delete Campaign</div>
           <q-btn class="col-shrink" flat dense icon="close" @click="showCampaignDelete = false" />
         </q-card-section>
 
-        <q-card-section class="text-h6 text-center"> Are you sure? </q-card-section>
+        <q-card-section class="text-h6 text-center"
+          ><p>Warning!</p>
+          <br />
+          <p>Deleting a campaign cannot be reversed. Consider exporting the campaign data before deleting.</p>
+          <br />
+          <p>Delete '{{ campaignToDeleteName }}'?</p></q-card-section
+        >
 
         <q-card-actions align="center">
           <q-btn
@@ -311,7 +318,7 @@
               })
             "
           />
-          <q-btn color="primary" label="NOPE" @click="showCampaignDelete = false" />
+          <q-btn color="primary" label="Do not delete" @click="showCampaignDelete = false" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -348,6 +355,7 @@ export default defineComponent({
     const addCampaign = () => campaign.new();
     const removeCampaign = (id: string) => campaign.delete(id);
     const campaignToDelete = ref('');
+    const campaignToDeleteName = ref('');
     const showCampaignDelete = ref(false);
 
     const fileToLoad = ref(null);
@@ -414,6 +422,7 @@ export default defineComponent({
       removeCampaign,
       showCampaignDelete,
       campaignToDelete,
+      campaignToDeleteName,
 
       showDataLoad,
       fileToLoad,
@@ -434,6 +443,9 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
+#rightDrawer
+  padding-bottom: 80px
+
 .about-text a
   color: $primary
 

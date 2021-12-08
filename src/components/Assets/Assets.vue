@@ -1,5 +1,10 @@
 <template>
-  <q-dialog v-model="showDialog" transition-show="slide-up" transition-hide="slide-down">
+  <q-dialog
+    v-model="showDialog"
+    transition-show="slide-up"
+    transition-hide="slide-down"
+    :maximized="$q.platform.is.mobile"
+  >
     <q-layout container class="asset-bg" view="hHh lpR fFf" style="min-width: 50%">
       <q-card class="asset-bg">
         <q-header elevated>
