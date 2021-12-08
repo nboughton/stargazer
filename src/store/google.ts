@@ -18,7 +18,7 @@ const getGoogleFileHeaders = async (trashed: boolean, contentIds?: string[]) => 
   const fileNames = contentIds?.map((id) => `name='${id}.json'`).join(' or ');
   const query = await gapi.client.drive.files.list({
     spaces: 'appDataFolder',
-    q: `trashed=${String(trashed)}` + (fileNames ? `and (${fileNames})` : ''),
+    q: `trashed=${String(trashed)}` + (fileNames ? ` and (${fileNames})` : ''),
     fields: 'files/id,files/trashed,files/name,files/version',
   });
   const fileHeaders = query.result.files?.map((file) => mapGoogleFileHeader(file)) ?? [];
@@ -113,7 +113,6 @@ export const useGoogle = defineStore({
             console.warn('upload conflict', googleSyncStatesMap.get(h.id), h, googleHeaderMap.get(h.id));
             return Promise.resolve();
           }
-          console.warn('upload', googleSyncStatesMap.get(h.id), h, googleHeaderMap.get(h.id));
           return uploadFile(googleHeaderMap.get(h.id)?.googleId, h.id);
         });
 
@@ -128,7 +127,6 @@ export const useGoogle = defineStore({
             console.warn('delete conflict', h, googleHeaderMap.get(h.id));
             return Promise.resolve();
           }
-          console.warn('delete', h, googleHeaderMap.get(h.id));
           return campaign.delete(h.id, true);
         });
 
@@ -143,7 +141,6 @@ export const useGoogle = defineStore({
             console.warn('download conflict', googleSyncStatesMap, googleSyncState, h);
             return Promise.resolve();
           }
-          console.warn('download', googleSyncStatesMap, googleSyncState, h);
           return downloadFile(h.googleId, h.version);
         });
 
@@ -160,7 +157,11 @@ export const useGoogle = defineStore({
     },
 
     async saveCampaign(campaign: ICampaign) {
-      if (!isSignedIn()) return;
+      if (!isSignedIn()) {
+        const statePatch = { uploadedToGoogle: false };
+        await db.campaign.update(campaign.id, statePatch);
+        return;
+      }
 
       const fileHeader = (await getGoogleFileHeaders(false, [campaign.id]))[0];
       const googleSyncState = await db.googleSyncState.get(campaign.id);
@@ -168,7 +169,6 @@ export const useGoogle = defineStore({
         console.warn('save conflict', fileHeader, campaign, googleSyncState);
         return;
       }
-      console.warn('saving');
       await uploadFile(fileHeader?.googleId, campaign.id);
     },
 
@@ -182,7 +182,6 @@ export const useGoogle = defineStore({
           console.warn('delete conflict', fileHeader, googleSyncState);
           return;
         }
-
         await gapi.client.drive.files.delete({ fileId: fileHeader.googleId });
       }
     },
