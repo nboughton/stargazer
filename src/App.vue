@@ -1,7 +1,11 @@
 <template>
   <router-view v-if="loaded" />
   <div v-else>
-    <div class="column q-pa-xl text-h5 self-center text-positive crt" style="height: 100% width: 100%">
+    <div
+      class="column q-pa-xl text-h5 self-center text-positive crt"
+      style="height: 100%; width: 100%"
+      v-on:click="skipIntro"
+    >
       <div class="sf-header" v-for="(line, i) in msg" :key="i">
         {{ line }}
       </div>
@@ -20,13 +24,19 @@ import { useGoogle } from './store/google';
 export default defineComponent({
   name: 'App',
   setup() {
+    let skipIntro = () => {
+      /* placeholder */
+    };
+    const skip = new Promise<void>((resolve) => (skipIntro = resolve));
+    const skippableSleep = (ms: number) => Promise.race([skip, sleep(ms)]);
+
     const loaded = ref(false);
     const msg = ref(<string[]>['']);
 
     const writeLine = async (text: string) => {
       msg.value.push('');
       for (let i = 0; i < text.length; i++) {
-        await sleep(40);
+        await skippableSleep(40);
         msg.value[msg.value.length - 1] += text.charAt(i);
       }
     };
@@ -35,22 +45,31 @@ export default defineComponent({
     $q.dark.set(true);
 
     const campaign = useCampaign();
-    onMounted(async () => {
+
+    const renderIntro = async () => {
       await writeLine('::booting system...');
-      await sleep(500);
+      await skippableSleep(500);
       await writeLine('::assessing damage...');
-      await Promise.all([campaign.populateStore().catch((err) => console.log(err)), sleep(500)]);
-
+      await skippableSleep(500);
       await writeLine('::loading protocols...');
-      const assets = useAssets();
-      await Promise.all([assets.populateStore().catch((err) => console.log(err)), sleep(500)]);
-
+      await skippableSleep(500);
       await writeLine('::synchronising...');
-      const google = useGoogle();
-      await Promise.all([google.populateStore().catch((err) => console.log(err)), sleep(500)]);
-
+      await skippableSleep(500);
       await writeLine('::welcome ' + campaign.data.character.name);
-      await sleep(500);
+      await skippableSleep(500);
+    };
+
+    const initialiseData = async () => {
+      const assets = useAssets();
+      const google = useGoogle();
+
+      await campaign.populateStore().catch((err) => console.log(err));
+      await assets.populateStore().catch((err) => console.log(err));
+      await google.populateStore().catch((err) => console.log(err));
+    };
+
+    onMounted(async () => {
+      await Promise.all([initialiseData(), renderIntro()]);
       loaded.value = true;
     });
 
@@ -83,6 +102,7 @@ export default defineComponent({
     );
 
     return {
+      skipIntro,
       loaded,
       msg,
     };

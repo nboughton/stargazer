@@ -4,6 +4,7 @@ import { useConfig } from './config';
 import { db } from 'src/lib/db';
 import { ICampaign } from 'src/components/models';
 import { useCampaign } from './campaign';
+import { sleep } from '../lib/util';
 
 const isSignedIn = () => !!gapi.auth2?.getAuthInstance()?.isSignedIn.get();
 
@@ -113,7 +114,7 @@ export const useGoogle = defineStore({
     },
 
     async autoSyncFiles() {
-      await new Promise<void>((resolve) => setTimeout(resolve, 1000 * 60));
+      await sleep(1000 * 60);
       await this.syncFiles();
       await this.autoSyncFiles();
     },

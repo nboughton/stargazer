@@ -20,3 +20,19 @@
 .sf-header {
   font-family: 'Teko';
 }
+
+html {
+  height: 100vh;
+}
+
+body {
+  height: 100%;
+}
+
+#q-app {
+  height: 100%;
+}
+
+#q-app > div {
+  height: 100%;
+}
