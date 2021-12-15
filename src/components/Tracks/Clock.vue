@@ -30,34 +30,6 @@
       </q-circular-progress>
     </div>
   </div>
-  <!--div class="column justify-center items-center">
-    <div class="row full-width q-gutter-sm items-center">
-      <i-input class="col-grow" label="Name" v-model="data.name" />
-      <q-select class="col" v-model="data.segments" :options="[4, 6, 8, 10]" borderless />
-      <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="$emit('delete')" />
-    </div>
-
-    <q-circular-progress
-      :value="value"
-      size="200px"
-      :thickness="1"
-      color="negative"
-      track-color="white"
-      class="q-ma-md clock"
-      show-value
-      @click="data.filled++"
-    >
-      <div class="row clock-icon-bgk items-center justify-center">
-        <q-icon :name="`mdi-numeric-${data.segments - data.filled}`" color="white" class="q-ma-none q-pa-none" />
-      </div>
-    </q-circular-progress>
-
-    <div class="row full-width q-gutter-sm items-center">
-      <q-select class="col-grow" label="Advance" v-model="data.advance" :options="Object.values(EAtO)" dense />
-      <q-btn class="col-shrink" flat dense :label="data.roll" disable />
-      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="roll" />
-    </div>
-  </div-->
 </template>
 
 <script lang="ts">
@@ -125,11 +97,12 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 .clock-outline
   cursor: pointer
   background: $secondary
-  padding: 8px
+  padding: 5px
+  margin: auto
   clip-path: circle(50%)
 
 .clock-icon-bgk
