@@ -25,7 +25,6 @@
   [*] Logo avatar in top left of main bar
   [*] Rework Truths tab as Campaign tab with Factions and Campaign name
   [*] "Add" button for Factions on Campaign tab
-  [ ] Shrink scroll to top buttn
   [ ] Add 'random' option to location selector
 
 - BUGS

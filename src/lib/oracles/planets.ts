@@ -2793,6 +2793,27 @@ export const Planets: TPlanetOracles = {
         },
       ],
     },
+
+    diversity: {
+      items: [
+        {
+          match: [1, 20],
+          data: 'Simple (two biomes)',
+        },
+        {
+          match: [21, 70],
+          data: 'Diverse (three biomes)',
+        },
+        {
+          match: [71, 90],
+          data: 'Complex (four biomes)',
+        },
+        {
+          match: [91, 100],
+          data: 'Garden world (five or more biomes)',
+        },
+      ],
+    },
   },
 };
 

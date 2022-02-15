@@ -407,6 +407,7 @@ export interface IPlanet {
   observed: string;
   feature: string;
   life: string;
+  biomes?: string;
   notes: string;
 }
 
@@ -419,6 +420,8 @@ export interface IPlanetOracle {
   observed: ISFTable;
   feature: ISFTable;
   life: ISFTable;
+  diversity?: ISFTable;
+  biomes?: ISFTable;
 }
 
 export type TPlanetOracles = { [index: string]: IPlanetOracle };
