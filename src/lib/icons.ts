@@ -14,22 +14,20 @@ export const icon = {
   },
 
   sighting: (name: string): string => {
-    const res = /(asteroid|debris|comet|meteor|nebula|wave|storm)/i.exec(name);
-    if (res) {
-      return require(`../assets/space/${res[0].toLowerCase()}.svg`) as string;
-    }
-    return require('../assets/space/star.svg') as string;
+    const m = /(asteroid|debris|comet|meteor|nebula|wave|storm)/i.exec(name);
+    return m
+      ? (require(`../assets/space/${m[0].toLowerCase()}.svg`) as string)
+      : (require('../assets/space/star.svg') as string);
   },
 
   star: (type: string): string => {
-    const res =
+    const m =
       /(red|orange|yellow|blue|young|white|corrupted|neutron|two|binary|black|artificial|unstable|hypergiant)/i.exec(
         type
       );
-    if (res) {
-      return require(`../assets/stars/${res[0].toLowerCase()}.png`) as string;
-    }
-    return require('../assets/space/star-sattelites.svg') as string;
+    return m
+      ? (require(`../assets/stars/${m[0].toLowerCase()}.png`) as string)
+      : (require('../assets/space/star-sattelites.svg') as string);
   },
 
   stars: (): string => {
@@ -57,23 +55,14 @@ export const icon = {
   },
 
   creature: (form: string): string => {
-    let out = '';
-    let m = <RegExpExecArray | null>null;
-    while (
-      (m =
-        /(amoeba|amorphous|avian|beast|crustacean|fish|humanoid|insectoid|jellyfish|lizard|octopoid|plant|ray|snake|spider|starfish|worm)/i.exec(
-          form
-        )) !== null
-    ) {
-      out = require(`../assets/life/${m[0].toLowerCase().replace(/[^a-z]/i, '')}.svg`) as string;
-      break;
-    }
+    const m: RegExpExecArray | null =
+      /(amoeba|amorphous|avian|beast|crustacean|fish|humanoid|insectoid|jellyfish|lizard|octopoid|plant|ray|snake|spider|starfish|worm)/i.exec(
+        form
+      );
 
-    if (!m) {
-      out = require('../assets/life/floating-tentacles.svg') as string;
-    }
-
-    return out;
+    return m
+      ? (require(`../assets/life/${m[0].toLowerCase()}.svg`) as string)
+      : (require('../assets/life/floating-tentacles.svg') as string);
   },
 
   npc: (): string => {
