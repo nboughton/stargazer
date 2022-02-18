@@ -204,7 +204,7 @@ export const useCampaign = defineStore({
 
     async exportData() {
       const data = JSON.stringify(await db.campaign.toArray());
-      const blob = new Blob([data], { type: 'text/plain' });
+      const blob = new Blob([data], { type: 'application/json' });
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
@@ -215,7 +215,7 @@ export const useCampaign = defineStore({
       const date = new Date();
       anchor.download = `Starforged-campaign-${date.getTime() / 1000}.json`;
       anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['text/json', anchor.download, anchor.href].join(':');
+      anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
 
       anchor.dispatchEvent(event);
     },

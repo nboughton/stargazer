@@ -60,7 +60,7 @@ export const useAssets = defineStore({
       });
 
       const data = JSON.stringify(assets);
-      const blob = new Blob([data], { type: 'text/plain' });
+      const blob = new Blob([data], { type: 'application/json' });
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
@@ -71,7 +71,7 @@ export const useAssets = defineStore({
       const date = new Date();
       anchor.download = `Starforged-assets-${date.getTime() / 1000}.json`;
       anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['text/json', anchor.download, anchor.href].join(':');
+      anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
 
       anchor.dispatchEvent(event);
     },
