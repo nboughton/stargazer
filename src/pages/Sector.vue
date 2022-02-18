@@ -218,6 +218,7 @@
         <q-card-section>
           <q-toggle label="Stars" v-model="config.data.map.starfield" />
           <q-toggle label="Animations" v-model="config.data.map.animations" />
+          <!--q-toggle label="Set passage as default" v-model="config.data.map.defaultPassage" /-->
         </q-card-section>
       </q-card>
     </q-dialog>

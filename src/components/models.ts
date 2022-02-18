@@ -69,6 +69,7 @@ export interface IConfig {
     hexSize: number;
     animations: boolean;
     starfield: boolean;
+    defaultPassage?: boolean;
   };
 }
 
