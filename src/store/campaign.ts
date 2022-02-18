@@ -204,7 +204,7 @@ export const useCampaign = defineStore({
 
     async exportData() {
       const data = JSON.stringify(await db.campaign.toArray());
-      const blob = new Blob([data], { type: 'text/plain' });
+      const blob = new Blob([data], { type: 'application/json' });
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,

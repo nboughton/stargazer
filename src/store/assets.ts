@@ -60,7 +60,7 @@ export const useAssets = defineStore({
       });
 
       const data = JSON.stringify(assets);
-      const blob = new Blob([data], { type: 'text/plain' });
+      const blob = new Blob([data], { type: 'application/json' });
       const event = new MouseEvent('click', {
         view: window,
         bubbles: true,
