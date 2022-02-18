@@ -71,7 +71,7 @@ export const useAssets = defineStore({
       const date = new Date();
       anchor.download = `Starforged-assets-${date.getTime() / 1000}.json`;
       anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['text/json', anchor.download, anchor.href].join(':');
+      anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
 
       anchor.dispatchEvent(event);
     },
