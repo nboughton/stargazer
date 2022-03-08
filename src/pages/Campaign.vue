@@ -3,29 +3,39 @@
     <!-- content -->
     <i-input class="q-mb-md" label="Campaign Name" v-model="campaign.data.name" />
 
-    <div class="sf-header text-h4">Factions<q-btn icon="add_circle" flat dense @click="addFaction" /></div>
-    <faction
-      v-for="(f, i) in campaign.data.factions"
-      :key="i"
-      v-model="campaign.data.factions[i]"
-      @delete="removeFaction(i)"
-    />
+    <q-expansion-item default-opened>
+      <template v-slot:header>
+        <div class="col sf-header text-h4 rounded-borders">
+          Factions<q-btn icon="add_circle" flat dense @click="addFaction" />
+        </div>
+      </template>
+      <faction
+        v-for="(f, i) in campaign.data.factions"
+        :key="i"
+        v-model="campaign.data.factions[i]"
+        @delete="removeFaction(i)"
+      />
+    </q-expansion-item>
 
-    <div class="sf-header text-h4 q-mt-md">Truths</div>
-    <truth label="Cataclysm" id="cataclysm" />
-    <truth label="Exodus" id="exodus" />
-    <truth label="Communities" id="communities" />
-    <truth label="Iron" id="iron" />
-    <truth label="Laws" id="laws" />
-    <truth label="Religion" id="religion" />
-    <truth label="Magic" id="magic" />
-    <truth label="Communication and Data" id="communication" />
-    <truth label="Medicine" id="medicine" />
-    <truth label="Artificial Intelligence" id="ai" />
-    <truth label="War" id="war" />
-    <truth label="Lifeforms" id="lifeforms" />
-    <truth label="Precursors" id="precursors" />
-    <truth label="Horrors" id="horrors" />
+    <q-expansion-item default-opened>
+      <template v-slot:header>
+        <div class="col sf-header text-h4 rounded-borders">Truths</div>
+      </template>
+      <truth label="Cataclysm" id="cataclysm" />
+      <truth label="Exodus" id="exodus" />
+      <truth label="Communities" id="communities" />
+      <truth label="Iron" id="iron" />
+      <truth label="Laws" id="laws" />
+      <truth label="Religion" id="religion" />
+      <truth label="Magic" id="magic" />
+      <truth label="Communication and Data" id="communication" />
+      <truth label="Medicine" id="medicine" />
+      <truth label="Artificial Intelligence" id="ai" />
+      <truth label="War" id="war" />
+      <truth label="Lifeforms" id="lifeforms" />
+      <truth label="Precursors" id="precursors" />
+      <truth label="Horrors" id="horrors" />
+    </q-expansion-item>
   </q-page>
 </template>
 

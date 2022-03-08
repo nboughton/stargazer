@@ -3,7 +3,7 @@
     <q-expansion-item
       :icon="`img:${icon.npc()}`"
       header-class="person-header sf-header rounded-borders q-mb-sm"
-      :label="`${data.name} (${data.pronouns})`"
+      :label="`${data.name} ${pronouns}`"
       caption="Person"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
@@ -45,7 +45,7 @@
 
 <script lang="ts">
 import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import { INPC } from '../models';
 import ProgressTrack from '../Tracks/ProgressTrack.vue';
 import Controls from './Controls.vue';
@@ -77,12 +77,17 @@ export default defineComponent({
       { deep: true }
     );
 
+    const pronouns = computed((): string => {
+      return data.value.pronouns ? '(' + data.value.pronouns + ')' : '';
+    });
+
     const config = useConfig();
 
     return {
       data,
       config,
       icon,
+      pronouns,
     };
   },
 });

@@ -18,6 +18,9 @@
   [*] Add last-rendered to prevent double render on passage mark
   [ ] Preferred icon for cell
   [ ] Biome and Diversity oracles for Vital planets
+  [ ] New Planet icons
+  [ ] Empty buffer around grid for labels
+  [ ] Dropdown for setting star type
 
 - UX
   [*] Make delete button presentation consistent
@@ -26,6 +29,8 @@
   [*] Rework Truths tab as Campaign tab with Factions and Campaign name
   [*] "Add" button for Factions on Campaign tab
   [ ] Add 'random' option to location selector
+  [ ] Tooltip or autogrow fields for Clock name field
+  [*] Collapsible sections for Factions and Truths
 
 - BUGS
   [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open

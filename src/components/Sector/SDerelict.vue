@@ -35,7 +35,7 @@
         <i-input class="col" label="Outer First Look" v-model="data.outerFirstLook" />
       </div>
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" />
+      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
     </q-expansion-item>
   </div>
 </template>

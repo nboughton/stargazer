@@ -32,7 +32,7 @@
         <i-input class="q-mb-sm" label="Shape" v-model="data.shape" />
       </div>
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" />
+      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
     </q-expansion-item>
   </div>
 </template>
