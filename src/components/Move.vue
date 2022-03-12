@@ -123,4 +123,7 @@ ul li
 
 .recover
  background-color: $recover
+
+.scene
+  background-color: $scene
 </style>
