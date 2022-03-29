@@ -85,6 +85,12 @@ export default defineComponent({
 
     const config = useConfig();
 
+    // Older saves may not have a value for connection stored. In this case it will be undefined.
+    // New NPCs and existing ones, where this flag isn't set explicitly, will be treated as connections.
+    if (data.value.connection === undefined) {
+      data.value.connection = true;
+    }
+
     return {
       data,
       config,

@@ -35,6 +35,7 @@ export const NewNPC = (): INPC => {
     goal: '',
     aspect: '',
     track: NewProgressTrack(),
+    connection: true,
     bond: false,
     notes: '',
   };
@@ -170,12 +171,12 @@ export const CellLabel = (c: ISectorCell, id: string) => {
     type = ESectorOpts.Settlements;
   }
   if (c.name !== id) label = c.name;
-  return { label, type };
+  return {label, type};
 };
 
 export const NewSector = (): ISector => {
   return {
-    name: `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll(['Space', 'Sector Name', 'Suffix'])}`,
+    name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
     region: ERegion.Terminus,
     control: '',
     cells: {},
@@ -184,8 +185,8 @@ export const NewSector = (): ISector => {
 
 export const NewStar = (): IStar => {
   return {
-    name: oracle.star(),
-    description: oracle.roll(['Space', 'Stellar Object']),
+    name: StarName(),
+    description: tableRoll(Space.stellarObject),
   };
 };
 
