@@ -346,6 +346,7 @@ export interface INPC {
   goal: string;
   aspect: string;
   track: IProgressTrack;
+  connection: boolean;
   bond: boolean;
   notes: string;
 }
