@@ -17,9 +17,9 @@
       <o-input label="Shape" v-model="data.shape" @roll="roll.Shape" />
       <o-input label="Material" v-model="data.material" @roll="roll.Material" />
       <o-input label="Outer First Look" v-model="data.outerFirstLook" @roll="roll.OuterFirst" reroll />
-      <o-input label="Inner First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" reroll />
 
       <q-expansion-item label="Interior">
+        <o-input label="First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" reroll />
         <o-input label="Feature" v-model="data.interior.feature" @roll="roll.Int.Feat" />
         <o-input label="Peril" v-model="data.interior.peril" @roll="roll.Int.Peril" />
         <o-input label="Opportunity" v-model="data.interior.opportunity" @roll="roll.Int.Opp" />
@@ -37,15 +37,17 @@
 </template>
 
 <script lang="ts">
-import { Vault } from 'src/lib/oracles/vault';
-import { tableRoll } from 'src/lib/roll';
 import { defineComponent, ref } from 'vue';
+
 import { ESLocation, IVault } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
+import { NewVault } from 'src/lib/sector';
 
 import OInput from 'src/components/Oracles/OInput.vue';
 import OBtns from './OBtns.vue';
-import { NewVault } from 'src/lib/sector';
-import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({
   name: 'OVault',
@@ -55,51 +57,51 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = tableRoll(Vault.location) as ESLocation;
+        data.value.location = oracle.roll(['Vaults', 'Location']) as ESLocation;
       },
       Scale: () => {
-        data.value.scale = tableRoll(Vault.scale);
+        data.value.scale = oracle.roll(['Vaults', 'Scale']);
       },
       Form: () => {
-        data.value.form = tableRoll(Vault.form);
+        data.value.form = oracle.roll(['Vaults', 'Form']);
       },
       Shape: () => {
-        data.value.shape = tableRoll(Vault.shape);
+        data.value.shape = oracle.roll(['Vaults', 'Shape']);
       },
       Material: () => {
-        data.value.material = tableRoll(Vault.material);
+        data.value.material = oracle.roll(['Vaults', 'Material']);
       },
       OuterFirst: () => {
-        const o = tableRoll(Vault.outerFirstLook);
+        const o = oracle.roll(['Vaults', 'Outer First Look']);
         data.value.outerFirstLook ? (data.value.outerFirstLook += ', ' + o) : (data.value.outerFirstLook = o);
       },
       InnerFirst: () => {
-        const i = tableRoll(Vault.innerFirstLook);
+        const i = oracle.roll(['Vaults', 'Interior', 'First Look']);
         data.value.innerFirstLook ? (data.value.innerFirstLook += ', ' + i) : (data.value.innerFirstLook = i);
       },
       Purpose: () => {
-        data.value.purpose = tableRoll(Vault.purpose);
+        data.value.purpose = oracle.roll(['Vaults', 'Sanctum', 'Purpose']);
       },
       Int: {
         Feat: () => {
-          data.value.interior.feature = tableRoll(Vault.interior.feature);
+          data.value.interior.feature = oracle.roll(['Vaults', 'Interior', 'Feature']);
         },
         Peril: () => {
-          data.value.interior.peril = tableRoll(Vault.interior.peril);
+          data.value.interior.peril = oracle.roll(['Vaults', 'Interior', 'Peril']);
         },
         Opp: () => {
-          data.value.interior.opportunity = tableRoll(Vault.interior.opportunity);
+          data.value.interior.opportunity = oracle.roll(['Vaults', 'Interior', 'Opportunity']);
         },
       },
       Sanct: {
         Feat: () => {
-          data.value.sanctum.feature = tableRoll(Vault.sanctum.feature);
+          data.value.sanctum.feature = oracle.roll(['Vaults', 'Sanctum', 'Feature']);
         },
         Peril: () => {
-          data.value.sanctum.peril = tableRoll(Vault.sanctum.peril);
+          data.value.sanctum.peril = oracle.roll(['Vaults', 'Sanctum', 'Peril']);
         },
         Opp: () => {
-          data.value.sanctum.opportunity = tableRoll(Vault.sanctum.opportunity);
+          data.value.sanctum.opportunity = oracle.roll(['Vaults', 'Sanctum', 'Opportunity']);
         },
       },
     };

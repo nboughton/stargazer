@@ -19,8 +19,7 @@ import { INPC } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 
-import { tableRoll } from 'src/lib/roll';
-import { Character } from 'src/lib/oracles/character';
+import * as oracle from 'src/lib/oracles';
 import { NewNPC } from 'src/lib/sector';
 
 import OInput from './OInput.vue';
@@ -34,26 +33,30 @@ export default defineComponent({
 
     const roll = {
       Name: () => {
-        data.value.name = `${tableRoll(Character.givenName)} ${tableRoll(Character.familyName)}`;
+        data.value.name = `${oracle.roll(['Characters', 'Name', 'Given Name'])} ${oracle.roll([
+          'Characters',
+          'Name',
+          'Family Name',
+        ])}`;
       },
       Call: () => {
-        data.value.callsign = tableRoll(Character.callsign);
+        data.value.callsign = oracle.roll(['Characters', 'Name', 'Callsign']);
       },
       First: () => {
-        const f = tableRoll(Character.firstLook);
+        const f = oracle.roll(['Characters', 'First Look']);
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Disp: () => {
-        data.value.disposition = tableRoll(Character.disposition);
+        data.value.disposition = oracle.roll(['Characters', 'Disposition']);
       },
       Role: () => {
-        data.value.role = tableRoll(Character.role);
+        data.value.role = oracle.roll(['Characters', 'Role']);
       },
       Goal: () => {
-        data.value.goal = tableRoll(Character.goal);
+        data.value.goal = oracle.roll(['Characters', 'Goal']);
       },
       Aspect: () => {
-        const a = tableRoll(Character.aspect);
+        const a = oracle.roll(['Characters', 'Revealed Aspect']);
         data.value.aspect ? (data.value.aspect += ', ' + a) : (data.value.aspect = a);
       },
     };

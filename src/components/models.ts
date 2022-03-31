@@ -336,11 +336,6 @@ export interface ITruthsSection {
   table?: ISFTable;
 }
 
-export interface ISFOracle {
-  name: string;
-  table: ISFTable;
-}
-
 export interface INPC {
   name: string;
   pronouns?: string;
@@ -353,36 +348,6 @@ export interface INPC {
   track: IProgressTrack;
   bond: boolean;
   notes: string;
-}
-
-export interface INPCOracle {
-  givenName: ISFTable;
-  familyName: ISFTable;
-  callsign: ISFTable;
-  firstLook: ISFTable;
-  disposition: ISFTable;
-  role: ISFTable;
-  goal: ISFTable;
-  aspect: ISFTable;
-}
-export interface ISpaceOracle {
-  sighting: { [index: string]: ISFTable };
-  stellarObject: ISFTable;
-  sectorPrefix: ISFTable;
-  sectorSuffix: ISFTable;
-  peril: ISFTable;
-  opportunity: ISFTable;
-}
-
-export interface ILocThemeOracle {
-  type: ISFTable;
-  [ELocTheme.Chaotic]: { [index: string]: ISFTable };
-  [ELocTheme.Fortified]: { [index: string]: ISFTable };
-  [ELocTheme.Haunted]: { [index: string]: ISFTable };
-  [ELocTheme.Infested]: { [index: string]: ISFTable };
-  [ELocTheme.Inhabited]: { [index: string]: ISFTable };
-  [ELocTheme.Ruined]: { [index: string]: ISFTable };
-  [ELocTheme.Sacred]: { [index: string]: ISFTable };
 }
 
 export enum EPClass {
@@ -408,6 +373,7 @@ export interface IPlanet {
   observed: string;
   feature: string;
   life: string;
+  diversity?: string;
   biomes?: string;
   notes: string;
 }
@@ -453,17 +419,6 @@ export interface ISettlement {
   notes: string;
 }
 
-export interface ISettlementOracle {
-  name: ISFTable;
-  location: ISFTable;
-  population: { [index: string]: ISFTable };
-  firstLook: ISFTable;
-  initialContact: ISFTable;
-  authority: ISFTable;
-  projects: ISFTable;
-  trouble: ISFTable;
-}
-
 export interface IStarship {
   name: string;
   class: string;
@@ -472,15 +427,6 @@ export interface IStarship {
   firstLook: string;
   mission: string;
   notes: string;
-}
-
-export interface IStarshipOracle {
-  name: ISFTable;
-  class: ISFTable;
-  fleet: ISFTable;
-  initialContact: ISFTable;
-  firstLook: ISFTable;
-  mission: { [index: string]: ISFTable };
 }
 
 export enum EDerelictZone {
@@ -516,23 +462,6 @@ export interface IDerelict {
   notes: '';
 }
 
-export interface IDerelictOracle {
-  location: ISFTable;
-  type: { [index: string]: ISFTable };
-  condition: ISFTable;
-  outerFirstLook: ISFTable;
-  innerFirstLook: ISFTable;
-  zone: { [index: string]: ISFTable };
-  explore: {
-    [index: string]: {
-      area: ISFTable;
-      feature: ISFTable;
-      peril: ISFTable;
-      opportunity: ISFTable;
-    };
-  };
-}
-
 export enum EEnv {
   Space = 'Space',
   Interior = 'Interior',
@@ -550,16 +479,6 @@ export interface ICreature {
   behaviour: string;
   aspect: string;
   notes: '';
-}
-
-export interface ICreatureOracle {
-  environment: ISFTable;
-  scale: ISFTable;
-  ultraScale: ISFTable;
-  form: { [index: string]: ISFTable };
-  firstLook: ISFTable;
-  behaviour: ISFTable;
-  aspect: ISFTable;
 }
 
 export enum EVault {
@@ -588,23 +507,16 @@ export interface IVault {
   notes: string;
 }
 
-export interface IVaultAreaOracle {
-  feature: ISFTable;
-  peril: ISFTable;
-  opportunity: ISFTable;
+export interface IOracleTableItem {
+  floor: number | null;
+  ceil: number | null;
+  result: string;
 }
 
-export interface IVaultOracle {
-  location: ISFTable;
-  scale: ISFTable;
-  form: ISFTable;
-  shape: ISFTable;
-  material: ISFTable;
-  outerFirstLook: ISFTable;
-  innerFirstLook: ISFTable;
-  purpose: ISFTable;
-  interior: IVaultAreaOracle;
-  sanctum: IVaultAreaOracle;
+export interface IOracle {
+  table?: IOracleTableItem[];
+  oracles?: { [index: string]: IOracle };
+  names?: string[];
 }
 
 // Rolls

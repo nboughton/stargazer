@@ -16,12 +16,16 @@
 </template>
 
 <script lang="ts">
-import { tableRoll } from 'src/lib/roll';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineComponent, ref } from 'vue';
+
 import { ELocTheme } from '../models';
-import { LocationTheme } from 'src/lib/oracles/locationTheme';
+
+import * as oracle from 'src/lib/oracles';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OLocationTheme',
@@ -34,18 +38,10 @@ export default defineComponent({
     });
 
     const roll = {
-      Type: () => {
-        data.value.type = tableRoll(LocationTheme.type) as ELocTheme;
-      },
-      Feat: () => {
-        data.value.feature = tableRoll(LocationTheme[data.value.type].feature);
-      },
-      Peril: () => {
-        data.value.peril = tableRoll(LocationTheme[data.value.type].peril);
-      },
-      Opp: () => {
-        data.value.opportunity = tableRoll(LocationTheme[data.value.type].opportunity);
-      },
+      Type: () => (data.value.type = oracle.roll(['Location Themes', 'Theme Type']) as ELocTheme),
+      Feat: () => (data.value.feature = oracle.roll(['Location Themes', data.value.type, 'Feature'])),
+      Peril: () => (data.value.peril = oracle.roll(['Location Themes', data.value.type, 'Peril'])),
+      Opp: () => (data.value.opportunity = oracle.roll(['Location Themes', data.value.type, 'Opportunity'])),
     };
 
     const btns = {

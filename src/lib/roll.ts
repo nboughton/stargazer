@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { IRollData, ISFTable, ECoreCombo, EAtO } from 'src/components/models';
-import { Core } from './oracles/core';
-import { Move } from './oracles/move';
+import * as oracle from 'src/lib/oracles';
 
 export const d = (size: number) => {
   return Math.floor(Math.random() * size) + 1;
@@ -85,10 +85,10 @@ export const moveRoll = (attr: number, adds: number, momentum: number, progress?
   return r;
 };
 
-export const tableRoll = (oracle: ISFTable): string => {
+export const tableRoll = (table: ISFTable): string => {
   const n = d(100);
   let out = 'No match';
-  oracle.items.forEach((item) => {
+  table.items.forEach((item) => {
     if (item.match.length === 1 && item.match[0] === n) {
       out = item.data;
       return;
@@ -100,16 +100,16 @@ export const tableRoll = (oracle: ISFTable): string => {
     }
   });
 
-  if (out === ECoreCombo.ActTheme) out = `${tableRoll(Core.action)} ${tableRoll(Core.theme)}`;
-  if (out === ECoreCombo.DescFoc) out = `${tableRoll(Core.descriptor)} ${tableRoll(Core.focus)}`;
+  if (out === ECoreCombo.ActTheme) out = `${oracle.roll(['Core', 'Action'])} ${oracle.roll(['Core', 'Theme'])}`;
+  if (out === ECoreCombo.DescFoc) out = `${oracle.roll(['Core', 'Descriptor'])} ${oracle.roll(['Core', 'Focus'])}`;
   if (/roll twice/i.test(out)) {
     while (/roll twice/i.test(out)) {
-      out = `${tableRoll(oracle)}, ${tableRoll(oracle)}`;
+      out = `${tableRoll(table)}, ${tableRoll(table)}`;
     }
   }
   if (/roll three/i.test(out)) {
     while (/roll three/i.test(out)) {
-      out = `${tableRoll(oracle)}, ${tableRoll(oracle)}, ${tableRoll(oracle)}`;
+      out = `${tableRoll(table)}, ${tableRoll(table)}, ${tableRoll(table)}`;
     }
   }
   return out;
@@ -120,19 +120,7 @@ export const clockRoll = (t: EAtO): { val: number; yn: boolean; match: boolean }
   const n2 = Math.floor(Math.random() * 10);
   const n = n1 + n2 === 0 ? 100 : n1 === 0 ? n2 : +`${n1}${n2}`;
 
-  let YN = false;
-
-  Move[t].items.forEach((item) => {
-    if (item.match.length === 1 && item.match[0] === n) {
-      YN = item.data === 'Yes';
-      return;
-    }
-
-    if (n >= item.match[0] && n <= item.match[1]) {
-      YN = item.data === 'Yes';
-      return;
-    }
-  });
+  const YN = oracle.roll(['Moves', 'Ask the Oracle', t], n) === 'Yes';
 
   return { val: n, yn: YN, match: n1 === n2 };
 };

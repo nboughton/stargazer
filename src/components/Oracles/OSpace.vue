@@ -17,12 +17,15 @@
 </template>
 
 <script lang="ts">
-import { Space } from 'src/lib/oracles/space';
-import { tableRoll } from 'src/lib/roll';
 import { defineComponent, ref } from 'vue';
+
 import { ERegion } from '../models';
+
+import * as oracle from 'src/lib/oracles';
+
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OSpace',
@@ -39,19 +42,23 @@ export default defineComponent({
 
     const roll = {
       Sight: () => {
-        data.value.sighting = tableRoll(Space.sighting[regionSelect.value]);
+        data.value.sighting = oracle.roll(['Space', 'Sighting', regionSelect.value]);
       },
       Obj: () => {
-        data.value.obj = tableRoll(Space.stellarObject);
+        data.value.obj = oracle.roll(['Space', 'Stellar Object']);
       },
       Name: () => {
-        data.value.sectorName = `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`;
+        data.value.sectorName = `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll([
+          'Space',
+          'Sector Name',
+          'Suffix',
+        ])}`;
       },
       Peril: () => {
-        data.value.peril = tableRoll(Space.peril);
+        data.value.peril = oracle.roll(['Space', 'Peril']);
       },
       Opp: () => {
-        data.value.opportunity = tableRoll(Space.opportunity);
+        data.value.opportunity = oracle.roll(['Space', 'Opportunity']);
       },
     };
 

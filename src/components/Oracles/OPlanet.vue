@@ -25,6 +25,10 @@
 
     <o-input label="Life" v-model="data.life" @roll="roll.Life" />
 
+    <o-input v-if="data.type == EPClass.Vital" label="Diversity" v-model="data.diversity" @roll="roll.Diversity" />
+
+    <o-input v-if="data.type == EPClass.Vital" label="Biomes" v-model="data.biomes" @roll="roll.Biomes" />
+
     <o-input label="Planetside Peril" v-model="poppers.peril" @roll="roll.Peril" />
 
     <o-input label="Planetsiide Opportunity" v-model="poppers.opportunity" @roll="roll.Opp" />
@@ -35,13 +39,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+
 import { IPlanet, ERegion, EPClass } from 'src/components/models';
-import { tableRoll } from 'src/lib/roll';
-import { Opportunity, Peril, Planets, RollPlanetType } from 'src/lib/oracles/planets';
+
+import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
+import { Planets } from 'src/lib/oracles/planets';
+import { NewPlanet } from 'src/lib/sector';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { useCampaign } from 'src/store/campaign';
-import { NewPlanet } from 'src/lib/sector';
 
 export default defineComponent({
   components: { OInput, OBtns },
@@ -58,39 +66,68 @@ export default defineComponent({
 
     const roll = {
       Type: () => {
-        data.value.type = RollPlanetType();
+        data.value.type = oracle.roll(['Planets', 'Class']).replace(' World', '') as EPClass;
         data.value.description = Planets[data.value.type].description;
       },
       Name: () => {
-        data.value.name =
-          Planets[data.value.type].names[Math.floor(Math.random() * Planets[data.value.type].names.length)];
+        data.value.name = oracle.roll(['Planets', data.value.type]);
       },
       Atmos: () => {
-        data.value.atmosphere = tableRoll(Planets[data.value.type].atmosphere);
+        data.value.atmosphere = oracle.roll(['Planets', data.value.type, 'Atmosphere']);
       },
       Sett: () => {
-        data.value.settlements = tableRoll(Planets[data.value.type].settlements[regionSelect.value]);
+        data.value.settlements = oracle.roll(['Planets', data.value.type, 'Settlements', regionSelect.value]);
       },
       Obs: () => {
-        const o = tableRoll(Planets[data.value.type].observed);
-        data.value.observed ? (data.value.observed += ', ' + o) : (data.value.observed = o);
+        const o = oracle.roll(['Planets', data.value.type, 'Observed From Space']);
+        data.value.observed ? (data.value.observed += `, ${o}`) : (data.value.observed = o);
       },
       Feat: () => {
-        const f = tableRoll(Planets[data.value.type].feature);
-        data.value.feature ? (data.value.feature += ', ' + f) : (data.value.feature = f);
+        const f = oracle.roll(['Planets', data.value.type, 'Feature']);
+        data.value.feature ? (data.value.feature += `, ${f}`) : (data.value.feature = f);
       },
       Life: () => {
-        data.value.life = tableRoll(Planets[data.value.type].life);
+        data.value.life = oracle.roll(['Planets', data.value.type, 'Life']);
+      },
+      Diversity: () => {
+        if (data.value.type == EPClass.Vital)
+          data.value.diversity = oracle.roll(['Planets', data.value.type, 'Diversity']);
+      },
+      Biomes: () => {
+        const b = oracle.roll(['Planets', EPClass.Vital, 'Biomes']);
+        data.value.biomes ? (data.value.biomes += `, ${b}`) : (data.value.biomes = b);
+      },
+      BiomesAuto: () => {
+        if (data.value.type == EPClass.Vital)
+          if (data.value.diversity && data.value.diversity.length > 0)
+            switch (data.value.diversity) {
+              case 'Simple (two biomes)':
+                data.value.biomes = [1, 2].map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes'])).join(', ');
+                break;
+              case 'Diverse (three biomes)':
+                data.value.biomes = [1, 2, 3].map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes'])).join(', ');
+                break;
+              case 'Complex (four biomes)':
+                data.value.biomes = [1, 2, 3, 4]
+                  .map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes']))
+                  .join(', ');
+                break;
+              case 'Garden world (five or more biomes)':
+                data.value.biomes = [1, 2, 3, 4, 5]
+                  .map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes']))
+                  .join(', ');
+                break;
+            }
       },
       Peril: () => {
         poppers.value.peril = /(none|extinct)/i.test(data.value.life)
-          ? tableRoll(Peril.lifeless)
-          : tableRoll(Peril.lifebearing);
+          ? oracle.roll(['Planets', 'Peril', 'Lifeless'])
+          : oracle.roll(['Planets', 'Peril', 'Lifebearing']);
       },
       Opp: () => {
         poppers.value.opportunity = /(none|extinct)/i.test(data.value.life)
-          ? tableRoll(Opportunity.lifeless)
-          : tableRoll(Opportunity.lifebearing);
+          ? oracle.roll(['Planets', 'Opportunity', 'Lifeless'])
+          : oracle.roll(['Planets', 'Opportunity', 'Lifebearing']);
       },
     };
 

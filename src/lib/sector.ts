@@ -21,9 +21,7 @@ import {
   ISighting,
 } from 'src/components/models';
 
-import { Space } from './oracles/space';
-import { StarName } from './oracles/star';
-import { tableRoll } from './roll';
+import * as oracle from 'src/lib/oracles';
 import { NewProgressTrack } from './tracks';
 
 export const NewNPC = (): INPC => {
@@ -177,7 +175,7 @@ export const CellLabel = (c: ISectorCell, id: string) => {
 
 export const NewSector = (): ISector => {
   return {
-    name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
+    name: `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll(['Space', 'Sector Name', 'Suffix'])}`,
     region: ERegion.Terminus,
     control: '',
     cells: {},
@@ -186,8 +184,8 @@ export const NewSector = (): ISector => {
 
 export const NewStar = (): IStar => {
   return {
-    name: StarName(),
-    description: tableRoll(Space.stellarObject),
+    name: oracle.star(),
+    description: oracle.roll(['Space', 'Stellar Object']),
   };
 };
 

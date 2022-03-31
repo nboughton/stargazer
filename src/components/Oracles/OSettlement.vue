@@ -35,13 +35,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+
 import { ISettlement, ESLocation, ERegion, ESettPop } from 'src/components/models';
-import { tableRoll } from 'src/lib/roll';
-import { Settlement } from 'src/lib/oracles/settlement';
+
+import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
+import { NewSettlement } from 'src/lib/sector';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { useCampaign } from 'src/store/campaign';
-import { NewSettlement } from 'src/lib/sector';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OSettlement',
@@ -51,30 +55,30 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = tableRoll(Settlement.location) as ESLocation;
+        data.value.location = oracle.roll(['Settlements', 'Location']) as ESLocation;
       },
       Name: () => {
-        data.value.name = tableRoll(Settlement.name);
+        data.value.name = oracle.roll(['Settlements', 'Name']);
       },
       Pop: () => {
-        data.value.population = tableRoll(Settlement.population[regionSelect.value]);
+        data.value.population = oracle.roll(['Settlements', 'Population', regionSelect.value]);
       },
       First: () => {
-        const f = tableRoll(Settlement.firstLook);
+        const f = oracle.roll(['Settlements', 'First Look']);
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Cont: () => {
-        data.value.initialContact = tableRoll(Settlement.initialContact);
+        data.value.initialContact = oracle.roll(['Settlements', 'Initial Contact']);
       },
       Auth: () => {
-        data.value.authority = tableRoll(Settlement.authority);
+        data.value.authority = oracle.roll(['Settlements', 'Authority']);
       },
       Proj: () => {
-        const p = tableRoll(Settlement.projects);
+        const p = oracle.roll(['Settlements', 'Projects']);
         data.value.projects ? (data.value.projects += ', ' + p) : (data.value.projects = p);
       },
       Trouble: () => {
-        data.value.trouble = tableRoll(Settlement.trouble);
+        data.value.trouble = oracle.roll(['Settlements', 'Trouble']);
       },
     };
 

@@ -11,8 +11,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { tableRoll } from 'src/lib/roll';
-import { Core } from 'src/lib/oracles/core';
+import * as oracle from 'src/lib/oracles';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
@@ -30,16 +29,16 @@ export default defineComponent({
 
     const roll = {
       Action: () => {
-        data.value.action = tableRoll(Core.action);
+        data.value.action = oracle.roll(['Core', 'Action']);
       },
       Theme: () => {
-        data.value.theme = tableRoll(Core.theme);
+        data.value.theme = oracle.roll(['Core', 'Theme']);
       },
       Desc: () => {
-        data.value.desc = tableRoll(Core.descriptor);
+        data.value.desc = oracle.roll(['Core', 'Descriptor']);
       },
       Focus: () => {
-        data.value.focus = tableRoll(Core.focus);
+        data.value.focus = oracle.roll(['Core', 'Focus']);
       },
     };
 

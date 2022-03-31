@@ -1,7 +1,13 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
-      <q-select class="col-grow" label="Type" v-model="data.type" :options="tableOpts(Faction.type)" dense />
+      <q-select
+        class="col-grow"
+        label="Type"
+        v-model="data.type"
+        :options="oracle.values(['Factions', 'Type'])"
+        dense
+      />
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="Roll.Type" />
     </div>
     <o-input label="Name" v-model="data.name" @roll="Roll.Name" />
@@ -28,16 +34,16 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 
-import { Faction } from 'src/lib/oracles/faction';
+import { IFaction } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
 import { NewFaction } from 'src/lib/campaign';
-import { tableOpts } from 'src/lib/util';
-import { tableRoll } from 'src/lib/roll';
 import { v4 as uuid } from 'uuid';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { useCampaign } from 'src/store/campaign';
-import { IFaction } from '../models';
 
 export default defineComponent({
   name: 'OFaction',
@@ -50,40 +56,38 @@ export default defineComponent({
     });
 
     const Roll = {
-      Type: () => {
-        data.value.type = tableRoll(Faction.type);
-      },
+      Type: () => (data.value.type = oracle.roll(['Factions', 'Type'])),
       Name: () => {
-        let format = tableRoll(Faction.name_template);
+        let format = oracle.roll(['Factions', 'Name Template']);
 
         const matches = ['Legacy', 'Affiliation', 'Identity'];
         matches.forEach((m) => {
-          format = format.replace(m, tableRoll(Faction[m.toLowerCase()]));
+          format = format.replace(m, oracle.roll(['Factions', m]));
         });
 
-        format = format.replace(/[\[\]]/g, '');
+        format = format.replace(/[\[\]\*]/g, '');
         data.value.name = format;
       },
-      Inf: () => (data.value.influence = tableRoll(Faction.influence)),
+      Inf: () => (data.value.influence = oracle.roll(['Factions', 'Influence'])),
       Sphere: () => {
         isDominion.value
-          ? (data.value.sphere += ', ' + tableRoll(Faction[data.value.type.toLowerCase().replace(' ', '_')]))
-          : (data.value.sphere = tableRoll(Faction[data.value.type.toLowerCase().replace(' ', '_')]));
+          ? (data.value.sphere += ', ' + oracle.roll(['Factions', data.value.type]))
+          : (data.value.sphere = oracle.roll(['Factions', data.value.type]));
 
         data.value.sphere = data.value.sphere.replace(/^, /, '');
       },
-      Lead: () => (data.value.leadership = tableRoll(Faction.leadership)),
+      Lead: () => (data.value.leadership = oracle.roll(['Factions', 'Leadership'])),
       Proj: () => {
-        const p = tableRoll(Faction.projects);
+        const p = oracle.roll(['Factions', 'Projects']);
         data.value.projects ? (data.value.projects += ', ' + p) : (data.value.projects = p);
       },
-      Rel: () => (data.value.relationships = tableRoll(Faction.relationships)),
+      Rel: () => (data.value.relationships = oracle.roll(['Factions', 'Relationships'])),
       Quirks: () => {
-        const q = tableRoll(Faction.quirks);
+        const q = oracle.roll(['Factions', 'Quirks']);
         data.value.quirks ? (data.value.quirks += ', ' + q) : (data.value.quirks = q);
       },
       Rumours: () => {
-        const r = tableRoll(Faction.rumors);
+        const r = oracle.roll(['Factions', 'Rumors']);
         data.value.rumors ? (data.value.rumors += ', ' + r) : (data.value.rumors = r);
       },
     };
@@ -111,8 +115,7 @@ export default defineComponent({
       data,
       Roll,
       btns,
-      tableOpts,
-      Faction,
+      oracle,
       isDominion,
     };
   },

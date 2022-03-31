@@ -1,16 +1,15 @@
 import { ICampaign, ICharacter, IJournalEntry, IFaction } from 'src/components/models';
 
 import { v4 as uuid } from 'uuid';
-import { Character } from './oracles/character';
-import { tableRoll } from './roll';
+import * as oracle from 'src/lib/oracles';
 import { NewSector } from './sector';
 import { NewLegacyTrack, NewProgressTrack } from './tracks';
 
 export const NewCharacter = (): ICharacter => {
   return {
-    name: `${tableRoll(Character.givenName)} ${tableRoll(Character.familyName)}`,
+    name: `${oracle.roll(['Characters', 'Name', 'Given Name'])} ${oracle.roll(['Characters', 'Name', 'Family Name'])}`,
     pronouns: '',
-    callsign: '',
+    callsign: oracle.roll(['Characters', 'Name', 'Callsign']),
     characteristics: '',
     location: '',
     stats: {

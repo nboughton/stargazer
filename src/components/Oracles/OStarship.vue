@@ -22,13 +22,17 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+
 import { ERegion, IStarship } from 'src/components/models';
-import { tableRoll } from 'src/lib/roll';
-import { Starship } from 'src/lib/oracles/starship';
+
+import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
+import { NewShip } from 'src/lib/sector';
+
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { useCampaign } from 'src/store/campaign';
-import { NewShip } from 'src/lib/sector';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'OStarship',
@@ -38,26 +42,28 @@ export default defineComponent({
 
     const roll = {
       Name: () => {
-        data.value.name = tableRoll(Starship.name);
+        data.value.name = oracle.roll(['Starships', 'Name']);
       },
       Class: () => {
-        let c = tableRoll(Starship.class);
-        c = /Fleet/i.test(c) ? `Fleet: ${tableRoll(Starship.fleet)}` : c;
-        c = /Starship Mission/i.test(c) ? `Starship Mission: ${tableRoll(Starship.mission[regionSelect.value])}` : c;
+        let c = oracle.roll(['Starships', 'Type']);
+        c = /Fleet/i.test(c) ? `Fleet: ${oracle.roll(['Starships', 'Fleet'])}` : c;
+        c = /Starship Mission/i.test(c)
+          ? `Starship Mission: ${oracle.roll(['Starships', 'Mission', regionSelect.value])}`
+          : c;
         data.value.class = c;
       },
       Fleet: () => {
-        data.value.fleet = tableRoll(Starship.fleet);
+        data.value.fleet = oracle.roll(['Starships', 'Fleet']);
       },
       Cont: () => {
-        data.value.initialContact = tableRoll(Starship.initialContact);
+        data.value.initialContact = oracle.roll(['Starships', 'Initial Contact']);
       },
       First: () => {
-        const f = tableRoll(Starship.firstLook);
+        const f = oracle.roll(['Starships', 'First Look']);
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Mission: () => {
-        data.value.mission = tableRoll(Starship.mission[regionSelect.value]);
+        data.value.mission = oracle.roll(['Starships', 'Mission', regionSelect.value]);
       },
     };
 

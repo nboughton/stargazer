@@ -23,8 +23,7 @@ import { EEnv, ICreature } from '../models';
 import { useCampaign } from 'src/store/campaign';
 
 import { NewCreature } from 'src/lib/sector';
-import { Creature } from 'src/lib/oracles/creature';
-import { tableRoll } from 'src/lib/roll';
+import * as oracle from 'src/lib/oracles';
 
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
@@ -37,27 +36,27 @@ export default defineComponent({
 
     const roll = {
       Env: () => {
-        data.value.environment = tableRoll(Creature.environment) as EEnv;
+        data.value.environment = oracle.roll(['Creatures', 'Environment']) as EEnv;
       },
       Scale: () => {
-        let s = tableRoll(Creature.scale);
+        let s = oracle.roll(['Creatures', 'Scale']);
         if (s === 'Ultra-scale') {
-          s = tableRoll(Creature.ultraScale);
+          s = oracle.roll(['Creatures', 'Ultra-scale']);
         }
         data.value.scale = s;
       },
       Form: () => {
-        data.value.form = tableRoll(Creature.form[data.value.environment]);
+        data.value.form = oracle.roll(['Creatures', 'Basic Form', data.value.environment]);
       },
       First: () => {
-        const f = tableRoll(Creature.firstLook);
+        const f = oracle.roll(['Creatures', 'First Look']);
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Behave: () => {
-        data.value.behaviour = tableRoll(Creature.behaviour);
+        data.value.behaviour = oracle.roll(['Creatures', 'Encountered Behavior']);
       },
       Aspect: () => {
-        const a = tableRoll(Creature.aspect);
+        const a = oracle.roll(['Creatures', 'Revealed Aspect']);
         data.value.aspect ? (data.value.aspect += ', ' + a) : (data.value.aspect = a);
       },
     };

@@ -28,10 +28,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from 'vue';
+
 import { IMove } from 'src/components/models';
-import { Move } from 'src/lib/oracles/move';
-import { tableRoll } from 'src/lib/roll';
+
 import { useCampaign } from 'src/store/campaign';
+
+import * as oracle from 'src/lib/oracles';
 
 export default defineComponent({
   name: 'Move',
@@ -50,7 +52,9 @@ export default defineComponent({
     const click = (o: string) => {
       if (props.move.oracles !== undefined) {
         try {
-          results.value.push(tableRoll(Move[o]));
+          props.move.name === 'Ask the Oracle'
+            ? results.value.push(oracle.roll(['Moves', 'Ask the Oracle', o]))
+            : results.value.push(oracle.roll(['Moves', o]));
         } catch (err) {
           alert('Move data not found');
         }

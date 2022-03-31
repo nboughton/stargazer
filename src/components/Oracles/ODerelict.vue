@@ -32,16 +32,19 @@
 </template>
 
 <script lang="ts">
-import { NewDerelict } from 'src/lib/sector';
-import { Derelict } from 'src/lib/oracles/derelict';
-import { Settlement } from 'src/lib/oracles/settlement';
-import { Starship } from 'src/lib/oracles/starship';
-import { tableRoll } from 'src/lib/roll';
-import { useCampaign } from 'src/store/campaign';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineComponent, ref } from 'vue';
+
 import { ESLocation, EDerelictType, EDerelictZone, IDerelict } from '../models';
+
+import { useCampaign } from 'src/store/campaign';
+
+import { NewDerelict } from 'src/lib/sector';
+import * as oracle from 'src/lib/oracles';
+
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+
 export default defineComponent({
   components: { OInput, OBtns },
   name: 'ODerelict',
@@ -50,39 +53,41 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = tableRoll(Derelict.location) as ESLocation;
+        data.value.location = oracle.roll(['Derelicts', 'Location']) as ESLocation;
       },
       Type: () => {
-        data.value.type = tableRoll(Derelict.type[data.value.location]) as EDerelictType;
+        data.value.type = oracle.roll(['Derelicts', 'Type', data.value.location]) as EDerelictType;
       },
       Name: () => {
         data.value.name =
-          data.value.type === EDerelictType.Starship ? tableRoll(Starship.name) : tableRoll(Settlement.name);
+          data.value.type === EDerelictType.Starship
+            ? oracle.roll(['Starships', 'Name'])
+            : oracle.roll(['Settlements', 'Name']);
       },
       Cond: () => {
-        data.value.condition = tableRoll(Derelict.condition);
+        data.value.condition = oracle.roll(['Derelicts', 'Condition']);
       },
       OuterFirst: () => {
-        data.value.outerFirstLook = tableRoll(Derelict.outerFirstLook);
+        data.value.outerFirstLook = oracle.roll(['Derelicts', 'Outer First Look']);
       },
       InnerFirst: () => {
-        data.value.innerFirstLook = tableRoll(Derelict.innerFirstLook);
+        data.value.innerFirstLook = oracle.roll(['Derelicts', 'Inner First Look']);
       },
       Zone: () => {
-        data.value.currentZone = tableRoll(Derelict.zone[data.value.type]) as EDerelictZone;
+        data.value.currentZone = oracle.roll(['Derelicts', 'Zones', data.value.type]) as EDerelictZone;
       },
       Explore: {
         Area: () => {
-          data.value.explore.area = tableRoll(Derelict.explore[data.value.currentZone].area);
+          data.value.explore.area = oracle.roll(['Derelicts', data.value.currentZone, 'Area']);
         },
         Feat: () => {
-          data.value.explore.feature = tableRoll(Derelict.explore[data.value.currentZone].feature);
+          data.value.explore.feature = oracle.roll(['Derelicts', data.value.currentZone, 'Feature']);
         },
         Peril: () => {
-          data.value.explore.peril = tableRoll(Derelict.explore[data.value.currentZone].peril);
+          data.value.explore.peril = oracle.roll(['Derelicts', data.value.currentZone, 'Peril']);
         },
         Opp: () => {
-          data.value.explore.opportunity = tableRoll(Derelict.explore[data.value.currentZone].opportunity);
+          data.value.explore.opportunity = oracle.roll(['Derelicts', data.value.currentZone, 'Opportunity']);
         },
       },
     };
