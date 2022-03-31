@@ -45,7 +45,6 @@ import { IPlanet, ERegion, EPClass } from 'src/components/models';
 import { useCampaign } from 'src/store/campaign';
 
 import * as oracle from 'src/lib/oracles';
-import { Planets } from 'src/lib/oracles/planets';
 import { NewPlanet } from 'src/lib/sector';
 
 import OInput from './OInput.vue';
@@ -67,7 +66,7 @@ export default defineComponent({
     const roll = {
       Type: () => {
         data.value.type = oracle.roll(['Planets', 'Class']).replace(' World', '') as EPClass;
-        data.value.description = Planets[data.value.type].description;
+        data.value.description = oracle.description(['Planets', data.value.type]);
       },
       Name: () => {
         data.value.name = oracle.roll(['Planets', data.value.type]);
@@ -155,7 +154,7 @@ export default defineComponent({
         useCampaign().data.sectors[args.sector].cells[args.cell].planets.unshift(storeCopy);
       },
       DescText: () => {
-        data.value.description = Planets[data.value.type].description;
+        data.value.description = oracle.description(['Planets', data.value.type]);
       },
     };
 

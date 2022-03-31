@@ -517,6 +517,7 @@ export interface IOracle {
   table?: IOracleTableItem[];
   oracles?: { [index: string]: IOracle };
   names?: string[];
+  description?: string;
 }
 
 // Rolls

@@ -76,6 +76,31 @@ export const values = (path: string[]): string[] => {
   return t.map((i) => i.result);
 };
 
+export const description = (path: string[]): string => {
+  const errMsg = 'Description not found';
+  if (path.length < 2) return errMsg;
+
+  // This is necessary so that outer functions don't get stuck with a
+  // modified path variable, yay javascript passing by reference :/
+  const pathCopy = JSON.parse(JSON.stringify(path)) as string[];
+
+  const section = pathCopy.shift() as string;
+  const parent = pathCopy.pop() as string;
+
+  if (!Oracles[section]) return errMsg;
+
+  let o = Oracles[section].oracles!;
+  for (const p of pathCopy) {
+    if (o[p].oracles) {
+      o = o[p].oracles!;
+    } else {
+      return errMsg;
+    }
+  }
+
+  return o[parent].description ? (o[parent].description as string) : errMsg;
+};
+
 export const star = (): string => {
   const n = Math.floor(Math.random() * starNames.length);
   return starNames[n];
@@ -187,6 +212,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Tomb Raider',
           },
         ],
+        description:
+          'If you want some direction for your starting paths, roll or pick from the table below and take the two paths associated with your selected background.',
       },
       'Backstory Prompts': {
         table: [
@@ -266,6 +293,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Your wanderlust carried you far away',
           },
         ],
+        description:
+          'For some backstory inspiration, roll or pick from the table below. Then, take a moment to elaborate on the suggestion. Or just leave it a bit vague and mysterious for now; you can flesh it out in play.',
       },
       'Starship History': {
         table: [
@@ -330,6 +359,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Won in a bet',
           },
         ],
+        description:
+          'Envision how you obtained or earned this ship. You can come up with your own origin, or roll or pick from the table below. If you use a result from the table, take a moment to consider and elaborate on the suggestion.',
       },
       'Starship Quirks': {
         table: [
@@ -434,6 +465,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Timers and clocks are always just a bit off',
           },
         ],
+        description:
+          'Your ship is an important aspect of your character—and a character in its own right. What does it look like? What makes it interesting or uniquely yours? Does it have any particular quirks? If nothing occurs to you now, you can flesh it out in play, or roll once or twice on the table below.',
       },
       'Sector Trouble': {
         table: [
@@ -2367,6 +2400,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Zoya',
               },
             ],
+            description:
+              'Given and family names can be used independently as standalone names. In many cases you can reverse the order.',
           },
           Callsign: {
             table: [
@@ -2871,6 +2906,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Zephyr',
               },
             ],
+            description:
+              'Spacers are often known only by their callsigns, with their “dirtside names” reserved for family and close friends.',
           },
           'Family Name': {
             table: [
@@ -3375,6 +3412,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Volkov',
               },
             ],
+            description:
+              'Given and family names can be used independently as standalone names. In many cases you can reverse the order.',
           },
         },
       },
@@ -3885,6 +3924,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Withdraw',
           },
         ],
+        description:
+          'Use these oracle tables to reveal details about a goal, situation, or event. They provide a word or phrase that can be taken literally or interpreted as an abstraction.\n\nAction and Theme can answer questions such as:\n\n  * “What does this character want?”\n  * “What is this faction’s mission?”\n  * “What caused the downfall of this settlement?”\n  * “What is this device’s purpose?”',
       },
       Theme: {
         table: [
@@ -4389,6 +4430,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'World',
           },
         ],
+        description:
+          'Use these oracle tables to reveal details about a goal, situation, or event. They provide a word or phrase that can be taken literally or interpreted as an abstraction.\n\nAction and Theme can answer questions such as:\n\n  * “What does this character want?”\n  * “What is this faction’s mission?”\n  * “What caused the downfall of this settlement?”\n  * “What is this device’s purpose?”',
       },
       Descriptor: {
         table: [
@@ -4893,6 +4936,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Violent',
           },
         ],
+        description:
+          'Use these oracles to generate the details of a location, discovery, or encounter. The Descriptor oracle is particularly handy for quick generation of a location. For example, use it to describe the basic nature of a planet instead of rolling on the detailed planet oracles.\n\nDescriptor and Focus can answer questions such as:\n\n  * “What is this ship’s cargo?”\n  * “What is the nature of this planet?”\n  * “What is inside this station?”\n  * “What hazard do I encounter?”',
       },
       Focus: {
         table: [
@@ -5397,6 +5442,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Wreckage',
           },
         ],
+        description:
+          'Use these oracles to generate the details of a location, discovery, or encounter. The Descriptor oracle is particularly handy for quick generation of a location. For example, use it to describe the basic nature of a planet instead of rolling on the detailed planet oracles.\n\nDescriptor and Focus can answer questions such as:\n\n  * “What is this ship’s cargo?”\n  * “What is the nature of this planet?”\n  * “What is inside this station?”\n  * “What hazard do I encounter?”',
       },
     },
   },
@@ -5430,6 +5477,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Air',
           },
         ],
+        description:
+          'Choose the closest match for your location. Or roll to identify the primary habitat of a creature.',
       },
       Scale: {
         table: [
@@ -5962,6 +6011,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'Roll for a basic form, and flesh out the creature’s appearance using the First Look table.',
       },
       'First Look': {
         table: [
@@ -6216,6 +6266,7 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Visible symbiote',
           },
         ],
+        description: 'Roll for a basic form, and flesh out the creature’s appearance using the First Look table.',
       },
       'Encountered Behavior': {
         table: [
@@ -6325,6 +6376,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'Roll once on the Encountered Behavior table to define this creature’s motivation and frame how the encounter begins.',
       },
       'Revealed Aspect': {
         table: [
@@ -6579,6 +6632,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Toxic spew',
           },
         ],
+        description:
+          'Roll on this table as you interact with the creature to introduce new features or behaviors. Some results may contradict the established nature of a creature. For example, an amorphous creature which you envisioned as a mass of pure energy would not have typical physical features. If a result doesn’t fit, feel free to ignore, reroll, or adjust. Or simply envision how this contradiction signals a new understanding or unexpected transformation.',
       },
     },
   },
@@ -7038,6 +7093,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Airlock or external',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -7142,6 +7199,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -7201,6 +7260,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -7230,6 +7291,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful equipment',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -7298,6 +7361,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -7362,6 +7427,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -7421,6 +7488,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -7450,6 +7519,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Valuable item',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -7518,6 +7589,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -7582,6 +7655,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -7641,6 +7716,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -7670,6 +7747,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful tool or device',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -7738,6 +7817,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -7802,6 +7883,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -7861,6 +7944,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -7890,6 +7975,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful personal gear',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -7958,6 +8045,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -8022,6 +8111,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -8081,6 +8172,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -8110,6 +8203,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful medical equipment',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -8178,6 +8273,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -8242,6 +8339,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -8301,6 +8400,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -8330,6 +8431,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Secure area offers a moment of peace',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -8398,6 +8501,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -8462,6 +8567,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -8521,6 +8628,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -8550,6 +8659,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Valuable cargo',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
@@ -8618,6 +8729,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'New zone via Access',
               },
             ],
+            description:
+              'Roll on this table to help envision the spaces you encounter in that segment of your exploration. Each zone may consist of one or more areas as appropriate to what you envision for the overall complexity of the derelict. If you [Undertake an Expedition](Moves#Undertake-an-Expedition), an area can serve as a waypoint in your survey of the derelict.',
           },
           Feature: {
             table: [
@@ -8682,6 +8795,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Roll on this table when you want to reveal new aspects of your current surroundings. This is best used sparingly—a bit of occasional extra detail or ambiance—rather than rolling for every segment of your exploration.',
           },
           Peril: {
             table: [
@@ -8741,6 +8856,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Roll on this table when you want help envisioning a complication or danger within a zone, such as when suffering a cost as an outcome of your exploration.',
           },
           Opportunity: {
             table: [
@@ -8770,10 +8887,14 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful navigational data',
               },
             ],
+            description:
+              'Roll on this table when you want inspiration for a beneficial encounter or event within a derelict, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
           },
         },
       },
     },
+    description:
+      'Derelicts are the forsaken relics of human endeavors. Use these First Look tables for your initial survey of the derelict. To reveal more about the look and original function or nature of the site, roll on appropriate tables in the Starship or Settlement oracles. If you explore the depths of a derelict, you may use the zone oracles on the following pages to help envision what you find.',
   },
   Factions: {
     oracles: {
@@ -9324,6 +9445,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Action + Theme',
           },
         ],
+        description:
+          'Pick or roll on this table to reveal the current focus of a faction. Then, use the nature of the organization to help envision the meaning of the project. The result may introduce events that motivate your character to aid or resist the project, or can serve as background detail for your setting. If you would like to track the faction’s progress, set a clock for the project using the campaign clock guidelines on page 235.',
       },
       Relationships: {
         table: [
@@ -9468,6 +9591,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'Factions add scale and narrative opportunities to your setting. But keep it manageable. Don’t overload your campaign with factions. Instead, focus on your interactions and entanglements with members of a few interesting factions. Then, when you have a question about the relationship of one faction to another, use this table. The result is the commonly understood connection between those factions. Further investigations or events may reveal a deeper or alternate truth.',
       },
       'Name Template': {
         table: [
@@ -9492,6 +9617,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: '[Affiliation] *of the* [Legacy] [Identity]',
           },
         ],
+        description:
+          'To generate a faction name, first roll or choose the name template. Then, follow the structure of the template to build the name from individual tables. If you’ve already set the faction type, picking from the tables (instead of rolling) will likely provide a more appropriate result. For example, “Silver Jackals” is a fitting name for a criminal organization. The “Empire of the Undying Suns” is a less apt name for that gang—unless their leader is prone to delusions of grandeur. In short, choosing a name will give you more control. Rolling might give you a result that doesn’t square with known aspects, but those contradictions may prove inspiring.\n\nAn alternative approach to generating a faction from scratch is to start with a random name. Then, consider what the name evokes and choose an appropriate faction type instead of rolling on those tables. For example, “Bloody Ravens” might suggest a mercenary guild, while the “Republic of the Radiant Servants” brings to mind a dominion built upon a religion, or one that idolizes a prophesied leader. If a result doesn’t inspire anything interesting, roll again or pick.',
       },
       Legacy: {
         table: [
@@ -10298,6 +10425,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Action + Theme',
           },
         ],
+        description:
+          'Roll or pick known characteristics of the faction and its members using this table. But keep in mind that even within a small or specialized faction, there are no absolutes. These quirks represent common attitudes, practices, or approaches, but are not universal to every member of that faction. Leave room in your portrayal for diversity and contradictions.',
       },
       Rumors: {
         table: [
@@ -10467,6 +10596,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Action + Theme',
           },
         ],
+        description:
+          'Use this table when you are in a position to investigate a faction by uncovering secrets or fishing for gossip.',
       },
     },
   },
@@ -10515,6 +10646,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Sacred',
           },
         ],
+        description:
+          'You will typically choose a theme which supports what you know of that location’s nature. If you want a random theme, roll on the table above.',
       },
       Chaotic: {
         oracles: {
@@ -10586,6 +10719,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -10650,6 +10784,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -10679,8 +10814,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Insight into the source or nature of the chaos',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Reality is corrupted or warped in this place.',
       },
       Fortified: {
         oracles: {
@@ -10752,6 +10890,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -10816,6 +10955,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -10845,8 +10985,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Access to useful equipment or weapons',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Enemies defend this place against intruders.',
       },
       Haunted: {
         oracles: {
@@ -10918,6 +11061,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -10982,6 +11126,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11011,8 +11156,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Useful or interesting artifact or device',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Restless spirits are bound to this place.',
       },
       Infested: {
         oracles: {
@@ -11084,6 +11232,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -11148,6 +11297,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11177,8 +11327,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Helpful resource or equipment',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Foul creatures have overrun this place.',
       },
       Inhabited: {
         oracles: {
@@ -11250,6 +11403,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -11314,6 +11468,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11343,8 +11498,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Old friend or connection resurfaces',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'People have built a community in this place.',
       },
       Mechanical: {
         oracles: {
@@ -11416,6 +11574,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -11480,6 +11639,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11509,8 +11669,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Wondrous technology',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Machines and technology hold sway in this place.',
       },
       Ruined: {
         oracles: {
@@ -11582,6 +11745,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -11646,6 +11810,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11675,8 +11840,11 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Shortcut or passage through the destruction',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Time, disaster, or war have ravaged this place.',
       },
       Sacred: {
         oracles: {
@@ -11748,6 +11916,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description: 'Use this table to reveal a new aspect of the location.',
           },
           Peril: {
             table: [
@@ -11812,6 +11981,7 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description: 'Use this table to help envision a complication or hazard.',
           },
           Opportunity: {
             table: [
@@ -11841,10 +12011,15 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Interesting or valuable artifact or device',
               },
             ],
+            description:
+              'Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.',
           },
         },
+        description: 'Worshipers glorify strange powers in this place.',
       },
     },
+    description:
+      'Themes help you envision atmosphere, features, and encounters within an unusual, aberrant, or important location. You can answer questions about a place using only the tables provided for a theme, such as when delving into an **Infested** cave. Or you can pair a theme with other location oracles for more flavor and variety; for example, you might explore a **Haunted Grave World**, a **Ruined Derelict**, a **Sacred Precusor Vault**, or an **Inhabited Settlement**.\n\nEach theme on the following pages includes a set of oracles.\n\n  * **Feature:** Use this table to reveal a new aspect of the location.\n  * **Peril:** Use this table to help envision a complication or hazard.\n  * **Opportunity:** Use this table to help envision a beneficial encounter or event, such as when rolling a strong hit with a match in a location.\n\nWhen mixing-and-matching a theme with another set of tables, use the techniques described for an **oracle array** (page 378) to determine which oracle you will reference for that question or phase of your exploration.',
   },
   Misc: {
     oracles: {
@@ -11996,6 +12171,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'This oracle will introduce narrative turns, troubles, and revelations. It can be used as an alternative to the Pay the Price table when you encounter a negative outcome at a crucial moment. In particular, you might use this table after rolling matched 10s on the challenge dice.',
       },
       'Story Clue': {
         table: [
@@ -12155,6 +12332,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Descriptor + Focus',
           },
         ],
+        description:
+          'When you [Gather Information](Moves#Gather-Information) to investigate a mystery, you might uncover clues in the form of messages, rumors, eyewitness reports, data, or physical evidence. You can use this oracle to help reveal what this evidence connects to or implicates. Then, use the outcome of the [Gather Information](Moves#Gather-Information) roll—strong hit, weak hit, or miss—to guide whether the clue brings clarity or complications.',
       },
       'Anomaly Effect': {
         table: [
@@ -12324,6 +12503,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'Meddling with alien artifacts or forbidden magic may put you at the mercy of chaos. Use this table to resolve the effects of ancient tech, rituals, or other strange forces. Results on this table may have devastating implications, so use it only in rare and dramatic moments.',
       },
       'Combat Action': {
         table: [
@@ -12493,6 +12674,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'Use this oracle to help inspire an action for a foe in a fight. When you’re not sure what an enemy does next, particularly when they have you in a bad spot, roll on this table and interpret the result as appropriate to the nature of the enemy and your objective.',
       },
     },
   },
@@ -13170,6 +13353,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Vital World',
           },
         ],
+        description:
+          'This oracle provides a simple method of generating a planetary class. If this is enough information, stop there and envision the world as appropriate to its type. For a bit more detail, make a roll on the Descriptor oracle and envision how that aspect defines the nature of the planet or a specific planetside location.',
       },
       Peril: {
         oracles: {
@@ -13522,6 +13707,8 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description:
+          'Choose or roll on this table when you want inspiration for a trouble during planetside exploration or a planetside expedition.',
       },
       Opportunity: {
         oracles: {
@@ -13784,6 +13971,8 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description:
+          'Choose or roll on this table when you want inspiration for a beneficial encounter or event on a planetside journey, such as when you roll a strong hit with a match as you Undertake an Expedition, or if you Explore a Waypoint and find an opportunity.',
       },
       Desert: {
         names: [
@@ -14102,6 +14291,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A pitiless planet of searing heat, blowing sand, and sunbaked rock.',
       },
       Furnace: {
         names: [
@@ -14420,6 +14610,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A planet with relentless volcanic activity, wreathed in fire and ash.',
       },
       Grave: {
         names: [
@@ -14738,6 +14929,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A once-thriving world—now a grim monument to a fallen civilization.',
       },
       Ice: {
         names: [
@@ -15056,6 +15248,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A rugged, frozen world—locked in an unending winter.',
       },
       Jovian: {
         names: [
@@ -15374,6 +15567,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A massive planet with vast layers of dense gases surrounding a rocky core.',
       },
       Jungle: {
         names: [
@@ -15692,6 +15886,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A humid, rain-soaked planet that keeps its secrets under a thick canopy of vegetation.',
       },
       Ocean: {
         names: [
@@ -16010,6 +16205,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A planet completely or almost entirely covered by a boundless ocean.',
       },
       Rocky: {
         names: [
@@ -16328,6 +16524,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A rugged planet scarred by eons of destructive asteroid impacts.',
       },
       Shattered: {
         names: [
@@ -16646,6 +16843,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A planet sundered by cataclysmic destruction.',
       },
       Tainted: {
         names: [
@@ -16964,6 +17162,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'A foul planet wracked by a poisonous climate and virulent growths.',
       },
       Vital: {
         names: [
@@ -17410,6 +17609,7 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description: 'This diverse, life-bearing planet might provide some small measure of hope.',
       },
     },
   },
@@ -17900,6 +18100,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Action + Theme',
           },
         ],
+        description:
+          'Check the Settlement Projects table when it’s appropriate for your character to know or uncover these details. Projects are the main industry, function, or focus of a settlement. They do not necessarily represent every activity at the site—particularly at a large settlement—but are the most visible or noteworthy aspects.',
       },
       Trouble: {
         table: [
@@ -18074,6 +18276,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Action + Theme',
           },
         ],
+        description:
+          'Check the Settlement Trouble table when it’s appropriate for your character to know or uncover these details. The Settlement Trouble table provides a broad description of the site’s most dramatic current issue.',
       },
       Name: {
         table: [
@@ -18578,6 +18782,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Wreck',
           },
         ],
+        description:
+          'Choose a name appropriate to the nature of the settlement, or roll for a random result. You can let the name stand alone, or pair it with one of the following tags: Base, Citadel, Depot, Fortress, Hold, Landing, Outpost, Port, Station, Terminal.',
       },
     },
   },
@@ -18913,6 +19119,8 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description:
+          'Use the Space Sightings oracle to introduce a location or encounter on a spaceborne expedition. For example, roll on this table when you [Ask the Oracle](Moves#Ask-the-Oracle) to envision the primary feature of a waypoint as you [Undertake an Expedition](Moves#Undertake-an-Expedition). Check your result by referencing the column for your current location: Terminus, Outlands, or Expanse.',
       },
       'Sector Name': {
         oracles: {
@@ -19169,6 +19377,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Wasted',
               },
             ],
+            description:
+              'To give a sector or region of space a random name, roll once for the first word and once for the second word. Or just roll once choose a suitable pairing from anywhere in that row.',
           },
           Suffix: {
             table: [
@@ -19423,6 +19633,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Zenith',
               },
             ],
+            description:
+              'To give a sector or region of space a random name, roll once for the first word and once for the second word. Or just roll once choose a suitable pairing from anywhere in that row.',
           },
         },
       },
@@ -19494,6 +19706,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Unstable star showing signs of impending supernova',
           },
         ],
+        description:
+          'Use the Stellar Object oracle to learn more about the primary star at a location. This is mostly to help you visualize your surroundings, but the strange or hazardous nature of some rare stars can incite new adventures.',
       },
       Peril: {
         table: [
@@ -19668,6 +19882,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Roll twice',
           },
         ],
+        description:
+          'Choose or roll on this table when you want inspiration for a trouble during spaceborne exploration or on an interstellar expedition.',
       },
       Opportunity: {
         table: [
@@ -19797,6 +20013,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Vehicle or equipment performs beyond expectations',
           },
         ],
+        description:
+          'Choose or roll on this table when you want inspiration for a beneficial encounter or event on a spaceborne journey, such as when you roll a strong hit with a match as you [Undertake an Expedition](Moves#Undertake-an-Expedition), or if you [Explore a Waypoint](Moves#Explore-a-Waypoint) and find an opportunity.',
       },
     },
   },
@@ -20633,6 +20851,8 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description:
+          'Use the Starship Mission table when prompted by another oracle, or to flesh out the nature of a ship or fleet which has a flexible or uncertain role. You can also roll to generate the focus of a spaceborne quest.',
       },
       Name: {
         table: [
@@ -21137,6 +21357,8 @@ const Oracles: { [index: string]: IOracle } = {
             result: 'Vulture',
           },
         ],
+        description:
+          'Give a starship a name when it has an important role in your story. Scan this table and select a name which fits what you know of the ship’s appearance and role. Or generate a random result and let any contradictions contribute to the ship’s history or nature.',
       },
     },
   },
@@ -21676,6 +21898,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Descriptor + Focus',
               },
             ],
+            description:
+              'Use this table to reveal what you see or encounter when first entering the site. These aspects, combined with the exterior features, will help you envision the nature and condition of the vault and provide context for the rest of your exploration.',
           },
           Feature: {
             table: [
@@ -21964,6 +22188,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Use this table to help envision a complication within a vault, such as when you [Explore a Waypoint](Moves#Explore-a-Waypoint) and are prompted to envision a peril.',
           },
           Opportunity: {
             table: [
@@ -22018,8 +22244,12 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Shortcut or less perilous path speeds your way',
               },
             ],
+            description:
+              'Use this table to help envision a favorable circumstance within a vault, such as when you [Explore a Waypoint](Moves#Explore-a-Waypoint) and are prompted to envision an opportunity.',
           },
         },
+        description:
+          'If you enter the site, check the Inner First Look table for initial impressions of what lies within. If you explore further, use the Interior Feature table to define what you find or encounter. If you Undertake an Expedition within a vault, check this table if you want help setting the scene for a waypoint.',
       },
       Sanctum: {
         oracles: {
@@ -22171,6 +22401,8 @@ const Oracles: { [index: string]: IOracle } = {
                 result: 'Roll twice',
               },
             ],
+            description:
+              'Because precursor vaults are alien and enigmatic, understanding their ultimate purpose requires investigation and exploration. Use this table to reveal the vault’s original function or role at an appropriate point in your survey. This can come as an outcome of completing an expedition, or when your story naturally leads you to a revelation of the site’s nature.',
           },
           Feature: {
             table: [
@@ -22515,8 +22747,12 @@ const Oracles: { [index: string]: IOracle } = {
             ],
           },
         },
+        description:
+          'As you delve deeper into a vault, the corruption and strangeness of the place takes hold. Use the Sanctum Feature table to represent the aberrant nature of a vault’s depths.',
       },
     },
+    description:
+      '# Summary: Exploring Precursor Vaults\n\nWhen you first come upon a vault, use the tables on the previous two pages to help envision its form and nature. For a more abstract prompt, just use the Descriptor oracle (page 298). In either case—if that’s enough detail for the role of the vault in your story—stop there.\n\n## Detailed Precursor Vault Generation\n\nIf the survey of a vault is a focus for your current quest, use the oracle tables in this section to generate a more complete picture of the site. See the next page for a diagram of the three main phases of exploration.\n\n  * Exterior: Start by generating the basic form and characteristics of the vault using the tables on the previous two pages. These features represent what you observe from a safe distance.\n  * Interior: If you enter the site, check the Inner First Look table (page 1)   for initial impressions of what lies within. If you explore further, use the Interior Feature table (page 366) to define what you find or encounter. If you Undertake an Expedition within a vault, check this table if you want help setting the scene for a waypoint.\n  * Sanctum: As you delve deeper into a vault, the corruption and strangeness of the place takes hold. Use the Sanctum Feature table (page 368) to represent the aberrant nature of a vault’s depths.',
   },
 };
 
