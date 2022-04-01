@@ -24,24 +24,20 @@
 
       <div class="row q-gutter-sm justify-between q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Atmosphere" v-model="data.atmosphere" />
-        <i-input class="col" label="Life" v-model="data.life" />
         <i-input class="col" label="Settlements" v-model="data.settlements" />
+        <i-input class="col" label="Life" v-model="data.life" />
       </div>
       <div v-else>
         <div class="row q-gutter-sm justify-between q-mb-sm">
           <i-input class="col" label="Atmosphere" v-model="data.atmosphere" />
-          <i-input class="col" label="Life" v-model="data.life" />
+          <i-input class="q-mb-sm" label="Settlements" v-model="data.settlements" />
         </div>
 
-        <i-input v-if="data.type == EPClass.Vital" class="q-mb-sm" label="Diversity" v-model="data.diversity" />
-        <i-input v-if="data.type == EPClass.Vital" class="q-mb-sm" label="Biomes" v-model="data.biomes" />
-        <i-input class="q-mb-sm" label="Settlements" v-model="data.settlements" />
+        <i-input class="col" label="Life" v-model="data.life" />
       </div>
 
-      <div class="row q-gutter-sm justify-between q-mb-sm" v-if="$q.screen.gt.xs && data.type == EPClass.Vital">
-        <i-input class="col" label="Diversity" v-model="data.diversity" />
-        <i-input class="col" label="Biomes" v-model="data.biomes" />
-      </div>
+      <i-input v-if="data.type == EPClass.Vital" class="q-mb-sm" label="Diversity" v-model="data.diversity" />
+      <i-input v-if="data.type == EPClass.Vital" class="q-mb-sm" label="Biomes" v-model="data.biomes" />
 
       <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
         <i-input class="col" label="Observed from Space" v-model="data.observed" />
