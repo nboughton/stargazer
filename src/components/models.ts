@@ -73,11 +73,6 @@ export interface IConfig {
   };
 }
 
-export interface IEvent {
-  msg: string;
-  acknowledged: boolean;
-}
-
 // Stats and Tracks
 export interface IStats {
   edge: number;
