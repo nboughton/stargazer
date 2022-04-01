@@ -100,20 +100,10 @@ export const useCampaign = defineStore({
       });
 
       const text = new XMLSerializer().serializeToString(doc);
-      const blob = new Blob([text], { type: 'text/html' });
-      const event = new MouseEvent('click', {
-        view: window,
-        bubbles: true,
-        cancelable: false,
+      const status = exportFile(`Starforged-journal-${now()}.html`, text, {
+        mimeType: 'text/html',
       });
-      const anchor = document.createElement('a');
-
-      const date = new Date();
-      anchor.download = `Starforged-journal-${date.getTime() / 1000}.html`;
-      anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['text/html', anchor.download, anchor.href].join(':');
-
-      anchor.dispatchEvent(event);
+      if (status != true) alert(status);
     },
 
     async populateStore() {
