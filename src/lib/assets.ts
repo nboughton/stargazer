@@ -279,24 +279,6 @@ export const Assets: { [index: string]: IAsset } = {
       value: 5,
     },
   },
-  Commander: {
-    title: 'Commander',
-    type: 'Path',
-    items: [
-      {
-        text: '<p>When you <i>Aid Your Ally</i> through leadership, coordination, or planning, add +1. On a strong hit, any allies who are present take +1 momentum.</p>',
-        marked: true,
-      },
-      {
-        text: '<p>When you <i>Enter the Fray</i> (+heart) by coordinating with your team as they wade into the fight, make your move before your allies act. On a strong hit, all allies may take an automatic strong hit. On a strong hit with a match, also mark progress on any objectives in this fight.</p>',
-        marked: false,
-      },
-      {
-        text: '<p>When you make a move to influence someone (not an ally) through leadership, add +1 and take +1 momentum on a hit. On a strong hit with a match, your command galvanizes them into unexpected action. Take another +1 momentum, and mark 1 tick on your bonds legacy track.</p>',
-        marked: false,
-      },
-    ],
-  },
   Courier: {
     title: 'Courier',
     type: 'Path',
@@ -529,7 +511,7 @@ export const Assets: { [index: string]: IAsset } = {
     type: 'Path',
     items: [
       {
-        text: '<p>You are hunted by a power or authority. When you make a move, you may rely on your resourcefulness to improve the result to a strong hit. If you do, mark a box above to represent hunters closing in on you. On the third mark, a notable foe or force has tracked you down. If you overcome them or escape, clear the boxes and mark 1 tick on your quests legacy track.</p>',
+        text: '<p>You are hunted by a power or authority. When you make a move, you may improve the result to a strong hit. If you do, fill one segment of a four-segment clock to represent hunters closing in. When the clock is filled, a notable foe or force has tracked you down. If you overcome them or escape, reset the clock and mark 1 tick on your quests legacy track.</p>',
         marked: true,
       },
       {
@@ -802,6 +784,24 @@ export const Assets: { [index: string]: IAsset } = {
       },
     ],
   },
+  Leader: {
+    title: 'Leader',
+    type: 'Path',
+    items: [
+      {
+        text: '<p>When you <i>Aid Your Ally</i> through leadership, coordination, or planning, add +1. On a strong hit, any allies who are present take +1 momentum.</p>',
+        marked: true,
+      },
+      {
+        text: '<p>When you <i>Enter the Fray</i> (+heart) by coordinating with your team as they wade into the fight, make your move before your allies act. On a strong hit, all allies may take an automatic strong hit. On a strong hit with a match, also mark progress on any objectives in this fight.</p>',
+        marked: false,
+      },
+      {
+        text: '<p>When you make a move to influence someone (not an ally) through leadership, add +1 and take +1 momentum on a hit. On a strong hit with a match, your command galvanizes them into unexpected action. Take another +1 momentum, and mark 1 tick on your bonds legacy track.</p>',
+        marked: false,
+      },
+    ],
+  },
   Looper: {
     title: 'Looper',
     type: 'Path',
@@ -866,15 +866,15 @@ export const Assets: { [index: string]: IAsset } = {
     },
     items: [
       {
-        text: '<p>Envision the title, sigil, uniform, or tattoo you bear in recognition of your achievements. When you <i>Compel</i> or <i>Make a Connection</i> among those who would know or recognize your reputation, add +1 and take +1 momentum on a hit. On a strong hit with a match, your notoriety grows; mark 2 ticks on your bonds legacy track.</p>',
+        text: '<p>Envision the title, sigil, uniform, or tattoo you bear in recognition of your achievements. When you <i>Compel</i> or <i>Make a Connection</i> among those who would know your reputation, add +1. On a strong hit with a match, your notoriety grows; mark 2 ticks on your bonds legacy track.</p>',
         marked: true,
       },
       {
-        text: '<p>When you risk your reputation to overcome failure, reroll any dice. If you score a miss, make a mark on this asset. When you have 5 such marks, discard this asset.</p>',
+        text: '<p>When you risk your reputation to overcome a miss, reroll any dice. If you score a miss again, fill one segment of a six-segment clock to represent the stain on your reputation. When the clock is filled, discard this asset.</p>',
         marked: false,
       },
       {
-        text: '<p>Once per fight, when you <i>Gain Ground</i> through threat or leadership, reroll any dice and mark progress on a hit.</p>',
+        text: '<p>Once per fight, when you <i>Gain Ground</i> through intimidation or command, reroll any dice and mark progress on a hit.</p>',
         marked: false,
       },
     ],
@@ -1229,7 +1229,7 @@ export const Assets: { [index: string]: IAsset } = {
     type: 'Module',
     items: [
       {
-        text: '<p>Your advanced sensors scan the paths ahead to help spot dangers. When you <i>Undertake an Expedition</i> (+wits), and roll a 10 on only one challenge die, you may reroll that die.</p>',
+        text: '<p>Your advanced sensors scan the paths ahead to help spot dangers. When you <i>Undertake an Expedition</i> (+wits), you may reroll one challenge die.</p>',
         marked: true,
       },
       {
@@ -1324,7 +1324,7 @@ export const Assets: { [index: string]: IAsset } = {
         marked: true,
       },
       {
-        text: '<p>When you <i>Face Danger</i> or <i>React Under Fire</i> to navigate through hazardous skies or around obstacles, add +1 and take +1 momentum on a hit.</p>',
+        text: '<p>When you <i>Face Danger</i> or <i>React Under Fire</i> to navigate through hazardous skies, avoid obstacles, or evade an attack, add +1 and take +1 momentum on a hit.</p>',
         marked: false,
       },
       {
@@ -1538,11 +1538,11 @@ export const Assets: { [index: string]: IAsset } = {
     type: 'Module',
     items: [
       {
-        text: '<p>When you make a move against a specific foe or threat to avoid detection, add +1. If you <i>Enter the Fray</i> by ambushing an unaware foe, add +1 and mark progress on a strong hit.</p>',
+        text: '<p>Your vehicle is rigged for silent running. When you make a move against a specific foe or threat to avoid detection, add +1. If you <i>Enter the Fray</i> by ambushing an unaware foe, add +1 and mark progress on a strong hit.</p>',
         marked: true,
       },
       {
-        text: '<p>When you <i>Undertake an Expedition</i> (+shadow), and roll a 1 on your action die, you may reroll it.</p>',
+        text: '<p>When you travel stealthily as you <i>Undertake an Expedition</i> (+shadow), you may reroll your action die.</p>',
         marked: false,
       },
       {
@@ -1715,7 +1715,7 @@ export const Assets: { [index: string]: IAsset } = {
         marked: true,
       },
       {
-        text: "<p>When a support vehicle is destroyed, and you are able to retrieve its wreckage, you may <i>Ask the Oracle</i> using the yes/no table if something can be salvaged from the mess. Make it '50/50'. On a yes, spend 2 experience to restore the support vehicle asset with all previously marked abilities. Until you <i>Repair</i> and bring it back to full working order, the vehicle is battered with 0 integrity.</p>",
+        text: '<p>When a support vehicle is destroyed, and you are able to retrieve its wreckage, you may <i>Ask the Oracle</i> using the yes/no table if something can be salvaged from the mess. Make it 50/50. On a yes, spend 1 experience to restore the support vehicle asset with all previously marked abilities. Until you <i>Repair</i> and bring it back to full working order, the vehicle is battered with 0 integrity.</p>',
         marked: false,
       },
       {
@@ -1791,7 +1791,7 @@ export const Assets: { [index: string]: IAsset } = {
     },
     items: [
       {
-        text: '<p>Your voidglider companion cruises in your starship’s energy wake and helps guide the way on spacebound expeditions. When you <i>Undertake an Expedition</i> and score a strong hit, take +1 momentum.</p>',
+        text: '<p>Your voidglider companion cruises in your starship’s energy wake and can help guide the way on spaceborne journeys. When you <i>Undertake an Expedition</i>, add +1.</p>',
         marked: true,
       },
       {
@@ -1799,7 +1799,7 @@ export const Assets: { [index: string]: IAsset } = {
         marked: false,
       },
       {
-        text: '<p>When you make a move by signaling the voidglider to distract or attack a spacebound foe, roll +its health and take +1 momentum on a hit.</p>',
+        text: '<p>When you make a move by signaling the voidglider to distract or attack a spaceborne foe, roll +its health and take +1 momentum on a hit.</p>',
         marked: false,
       },
     ],

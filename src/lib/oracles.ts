@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { d } from './roll';
-import { IOracleTableItem } from 'src/components/models';
-import { IOracle } from 'src/components/models';
+import { IOracleTableItem, IOracle } from 'src/components/models';
 
 const table = (path: string[]): IOracleTableItem[] | string[] | undefined => {
   if (path.length < 2) return undefined;
