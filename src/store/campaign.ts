@@ -202,20 +202,19 @@ export const useCampaign = defineStore({
       if (status != true) alert(status);
     },
 
-    async loadData(file: File) {
+    loadData(file: File) {
       const reader = new FileReader();
       reader.onload = async (ev) => {
         const campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
         try {
           await db.campaign.bulkPut(campaigns);
+          // Repopulate store with updated content
+          await this.populateStore();
         } catch (err) {
-          console.log(err);
+          alert(err);
         }
       };
       reader.readAsText(file);
-
-      // Repopulate store with updated content
-      await this.populateStore();
     },
   },
 });

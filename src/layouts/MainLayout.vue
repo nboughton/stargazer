@@ -334,18 +334,18 @@ export default defineComponent({
 
     const fileToLoad = ref(null);
     const showDataLoad = ref(false);
-    const loadData = async () => {
+    const loadData = () => {
       const f: File = fileToLoad.value as unknown as File;
-      await campaign.loadData(f);
+      campaign.loadData(f);
       showDataLoad.value = false;
     };
 
     const customAssets = useAssets();
     const assetsToLoad = ref(null);
     const showAssetLoad = ref(false);
-    const loadAssetData = async () => {
+    const loadAssetData = () => {
       const f: File = assetsToLoad.value as unknown as File;
-      await customAssets.loadData(f);
+      customAssets.loadData(f);
       showAssetLoad.value = false;
     };
 

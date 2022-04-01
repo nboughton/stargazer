@@ -67,7 +67,7 @@ export const useAssets = defineStore({
       if (status != true) alert(status);
     },
 
-    async loadData(file: File) {
+    loadData(file: File) {
       const reader = new FileReader();
       reader.onload = async (ev) => {
         const assets = JSON.parse(ev.target?.result as string) as IAsset[];
@@ -78,14 +78,13 @@ export const useAssets = defineStore({
 
         try {
           await db.assets.bulkPut(assets);
+          // Repopulate store with updated content
+          await this.populateStore();
         } catch (err) {
           console.log(err);
         }
       };
       reader.readAsText(file);
-
-      // Repopulate store with updated content
-      await this.populateStore();
     },
   },
 });
