@@ -30,10 +30,10 @@
       <div v-else>
         <div class="row q-gutter-sm justify-between q-mb-sm">
           <i-input class="col" label="Atmosphere" v-model="data.atmosphere" />
-          <i-input class="q-mb-sm" label="Settlements" v-model="data.settlements" />
+          <i-input class="col" label="Settlements" v-model="data.settlements" />
         </div>
 
-        <i-input class="col" label="Life" v-model="data.life" />
+        <i-input class="q-mb-sm" label="Life" v-model="data.life" />
       </div>
 
       <i-input v-if="data.type == EPClass.Vital" class="q-mb-sm" label="Diversity" v-model="data.diversity" />

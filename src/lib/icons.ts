@@ -35,7 +35,7 @@ export const icon = {
   },
 
   planet: (type: string): string => {
-    return require(`../assets/planets/${type.toLowerCase()}.png`) as string;
+    return require(`../assets/planets/${type}-01.webp`) as string;
   },
 
   settlement: (): string => {
