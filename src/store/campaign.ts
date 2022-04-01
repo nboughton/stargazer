@@ -14,7 +14,9 @@ import {
 } from 'components/models';
 import { NewCampaign } from 'src/lib/campaign';
 import { useConfig } from './config';
+import { exportFile } from 'quasar';
 import { db } from 'src/lib/db';
+import { now } from 'src/lib/util';
 
 export const useCampaign = defineStore({
   id: 'campaign',
@@ -204,20 +206,10 @@ export const useCampaign = defineStore({
 
     async exportData() {
       const data = JSON.stringify(await db.campaign.toArray());
-      const blob = new Blob([data], { type: 'application/json' });
-      const event = new MouseEvent('click', {
-        view: window,
-        bubbles: true,
-        cancelable: false,
+      const status = exportFile(`Starforged-campaign-${now()}.json`, data, {
+        mimeType: 'application/json',
       });
-      const anchor = document.createElement('a');
-
-      const date = new Date();
-      anchor.download = `Starforged-campaign-${date.getTime() / 1000}.json`;
-      anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
-
-      anchor.dispatchEvent(event);
+      if (status != true) alert(status);
     },
 
     async loadData(file: File) {

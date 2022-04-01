@@ -252,6 +252,10 @@
           </div>
 
           <div class="q-my-sm">
+            Ironsworn: Starforged planet tokens by <a href="https://joshmeehanart.com/">Joshua Meehan</a>.
+          </div>
+
+          <div class="q-my-sm">
             With many thanks to
             <a href="https://twitter.com/r_sek">rsek</a> for the amazing
             <a href="https://github.com/rsek/dataforged">Dataforged repository</a> and all their contributions to

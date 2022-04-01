@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { IAsset } from 'components/models';
 import { db } from 'src/lib/db';
-import { stripTags } from 'src/lib/util';
+import { now, stripTags } from 'src/lib/util';
+import { exportFile } from 'quasar';
 
 export const useAssets = defineStore({
   id: 'assets',
@@ -60,20 +61,10 @@ export const useAssets = defineStore({
       });
 
       const data = JSON.stringify(assets);
-      const blob = new Blob([data], { type: 'application/json' });
-      const event = new MouseEvent('click', {
-        view: window,
-        bubbles: true,
-        cancelable: false,
+      const status = exportFile(`Starforged-assets-${now()}.json`, data, {
+        mimeType: 'application/json',
       });
-      const anchor = document.createElement('a');
-
-      const date = new Date();
-      anchor.download = `Starforged-assets-${date.getTime() / 1000}.json`;
-      anchor.href = window.URL.createObjectURL(blob);
-      anchor.dataset.downloadurl = ['application/json', anchor.download, anchor.href].join(':');
-
-      anchor.dispatchEvent(event);
+      if (status != true) alert(status);
     },
 
     async loadData(file: File) {
