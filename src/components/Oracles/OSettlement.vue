@@ -9,6 +9,7 @@
     <o-input label="Name" v-model="data.name" @roll="roll.Name" />
 
     <div class="row items-center">
+      <clipboard-btn :data="data.population" />
       <q-select
         class="col-grow"
         label="Population"
@@ -45,9 +46,10 @@ import { NewSettlement } from 'src/lib/sector';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+import ClipboardBtn from '../ClipboardBtn.vue';
 
 export default defineComponent({
-  components: { OInput, OBtns },
+  components: { OInput, OBtns, ClipboardBtn },
   name: 'OSettlement',
   setup() {
     const data = ref(NewSettlement());
