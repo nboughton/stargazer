@@ -171,12 +171,12 @@ export const CellLabel = (c: ISectorCell, id: string) => {
     type = ESectorOpts.Settlements;
   }
   if (c.name !== id) label = c.name;
-  return {label, type};
+  return { label, type };
 };
 
 export const NewSector = (): ISector => {
   return {
-    name: `${tableRoll(Space.sectorPrefix)} ${tableRoll(Space.sectorSuffix)}`,
+    name: `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll(['Space', 'Sector Name', 'Suffix'])}`,
     region: ERegion.Terminus,
     control: '',
     cells: {},
@@ -185,8 +185,8 @@ export const NewSector = (): ISector => {
 
 export const NewStar = (): IStar => {
   return {
-    name: StarName(),
-    description: tableRoll(Space.stellarObject),
+    name: oracle.star(),
+    description: oracle.roll(['Space', 'Stellar Object']),
   };
 };
 
