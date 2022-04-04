@@ -423,6 +423,7 @@ export interface IStarship {
   name: string;
   class: string;
   fleet: string;
+  factionId: string;
   initialContact: string;
   firstLook: string;
   mission: string;
