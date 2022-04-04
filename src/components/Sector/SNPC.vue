@@ -8,12 +8,12 @@
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
-        <i-input class="col" label="Name" v-model="data.name"/>
-        <i-input class="col" label="Pronouns" v-model="data.pronouns"/>
-        <i-input class="col" label="Role" v-model="data.role"/>
-        <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection"/>
-        <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond"/>
-        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')"/>
+        <i-input class="col" label="Name" v-model="data.name" />
+        <i-input class="col" label="Pronouns" v-model="data.pronouns" />
+        <i-input class="col" label="Role" v-model="data.role" />
+        <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection" />
+        <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond" />
+        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
       <div v-else>
         <div class="row q-gutter-sm q-mb-sm no-wrap">
@@ -39,7 +39,7 @@
 
       <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
 
-      <progress-track v-if="data.connection" class="q-mb-sm" v-model="data.track"/>
+      <progress-track v-if="data.connection" class="q-mb-sm" v-model="data.track" />
     </q-expansion-item>
   </div>
 </template>
@@ -52,6 +52,7 @@ import ProgressTrack from '../Tracks/ProgressTrack.vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { icon } from 'src/lib/icons';
+
 export default defineComponent({
   components: { IInput, ProgressTrack, Controls },
   name: 'SNPC',
