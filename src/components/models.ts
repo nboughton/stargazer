@@ -511,13 +511,21 @@ export interface IOracleTableItem {
   floor: number | null;
   ceil: number | null;
   result: string;
+  summary?: string;
+  subtable?: IOracleTableItem[]; // Truths
 }
 
 export interface IOracle {
   table?: IOracleTableItem[];
   oracles?: { [index: string]: IOracle };
-  names?: string[];
-  description?: string;
+  names?: string[]; // For planet names
+  description?: string; // For planet descriptions
+}
+
+export interface ITruthResult {
+  result: string;
+  index: number;
+  summary?: string;
 }
 
 // Rolls
