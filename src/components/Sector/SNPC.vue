@@ -92,10 +92,15 @@ export default defineComponent({
     });
 
     const updateChallengeTracksVisibility = () => {
-      if (challenge_tracks.value !== undefined && data.value.connection) {
-        // Open the NPCs challenge tracks expansion item, if the NPC is a connection.
-        // This will do nothing, if the user has already expanded the challenge tracks expansion item.
-        challenge_tracks.value.show();
+      if (challenge_tracks.value !== undefined) {
+        // Check if the user has filled any of the boxes on this npcs progress track.
+        const anyBoxesFilled = data.value.track.boxes.filter((x) => x > 0).length > 0;
+
+        if (data.value.connection || anyBoxesFilled) {
+          // Open the NPCs challenge tracks expansion item, if the NPC is a connection or the progress track has any boxes filled.
+          // This will do nothing, if the user has already expanded the challenge tracks expansion item.
+          challenge_tracks.value.show();
+        }
       }
     };
 
