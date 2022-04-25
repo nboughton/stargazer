@@ -423,11 +423,11 @@ export interface IStarship {
   name: string;
   class: string;
   fleet: string;
-  factionId: string;
   initialContact: string;
   firstLook: string;
   mission: string;
   notes: string;
+  factionId?: string;
 }
 
 export enum EDerelictZone {

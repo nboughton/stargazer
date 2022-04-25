@@ -54,7 +54,7 @@ export default defineComponent({
        * Gets or sets the underlying data.faction IFaction. The IFaction will be identified by the name.
        */
       get() {
-        if (this.data.factionId === '') {
+        if (this.data.factionId === '' || this.data.factionId === undefined) {
           // The faction is either not set yet, or was deleted.
           return 'None';
         }
