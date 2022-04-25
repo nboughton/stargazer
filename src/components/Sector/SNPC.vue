@@ -39,19 +39,22 @@
 
       <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
 
-      <progress-track v-if="data.connection" class="q-mb-sm" v-model="data.track" />
+      <q-expansion-item class="q-mb-sm" label="Challenge tracks" ref="challenge_tracks">
+        <progress-track class="q-mb-sm" v-model="data.track" />
+      </q-expansion-item>
     </q-expansion-item>
   </div>
 </template>
 
 <script lang="ts">
 import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import { defineComponent, PropType, ref, watch, computed, onMounted } from 'vue';
 import { INPC } from '../models';
 import ProgressTrack from '../Tracks/ProgressTrack.vue';
 import Controls from './Controls.vue';
 import IInput from '../IInput.vue';
 import { icon } from 'src/lib/icons';
+import { QExpansionItem } from 'quasar';
 
 export default defineComponent({
   components: { IInput, ProgressTrack, Controls },
@@ -67,6 +70,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue', 'delete', 'move'],
   setup(props, { emit }) {
+    const challenge_tracks = ref<QExpansionItem>();
     const data = ref(props.modelValue);
     watch(
       () => props.modelValue,
@@ -78,9 +82,26 @@ export default defineComponent({
       () => emit('update:modelValue', data.value),
       { deep: true }
     );
+    watch(
+      () => data.value.connection,
+      () => updateChallengeTracksVisibility()
+    );
 
     const pronouns = computed((): string => {
       return data.value.pronouns ? '(' + data.value.pronouns + ')' : '';
+    });
+
+    const updateChallengeTracksVisibility = () => {
+      if (challenge_tracks.value !== undefined && data.value.connection) {
+        // Open the NPCs challenge tracks expansion item, if the NPC is a connection.
+        // This will do nothing, if the user has already expanded the challenge tracks expansion item.
+        challenge_tracks.value.show();
+      }
+    };
+
+    onMounted(() => {
+      // Update the NPCs challenge tracks expansion item visibility at the start.
+      updateChallengeTracksVisibility();
     });
 
     const config = useConfig();
@@ -96,6 +117,7 @@ export default defineComponent({
       config,
       icon,
       pronouns,
+      challenge_tracks,
     };
   },
 });
