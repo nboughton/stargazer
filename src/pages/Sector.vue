@@ -118,7 +118,6 @@
           <template v-slot:header>
             <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data.sectors[+sID].name }}</div>
           </template>
-          <!--div class="row sf-header text-h4">Sector: {{ campaign.data.sectors[+sID].name }}</div-->
 
           <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
 

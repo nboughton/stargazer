@@ -119,7 +119,7 @@ export const truth = (path: string[], subtable: number): ITruthResult => {
         return;
       }
     });
-  } else if (subtable < 3) {
+  } else if (subtable >= 0 && subtable < 3) {
     const table = t.table![subtable].subtable;
     table?.forEach((item) => {
       if (item.floor != null && item.ceil != null && n >= item.floor && n <= item.ceil) {

@@ -117,7 +117,7 @@ export const NewCell = (id: string, name?: string): ISectorCell => {
 };
 
 export const CellLabel = (c: ISectorCell, id: string) => {
-  let label = c.name;
+  let label = c.name ? c.name : '';
   let type = '';
   const v: { [index: string]: number } = {
     [ESettPop.Few]: 1,

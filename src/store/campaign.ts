@@ -149,6 +149,8 @@ export const useCampaign = defineStore({
 
     async loadFirst() {
       const config = useConfig();
+      // Set sector ID to 0 to prevent Sector page crash
+      config.data.sector = 0;
 
       const allCampaigns = await db.campaign.toCollection().sortBy('name');
       const nextCampaign = allCampaigns[0];
@@ -167,6 +169,11 @@ export const useCampaign = defineStore({
       try {
         const campaign = await db.campaign.get(id);
         if (campaign) {
+          // Set sector ID to 0 to prevent Sector page crash
+          const config = useConfig();
+          config.data.sector = 0;
+
+          // Load campaign data
           this.data = campaign;
         } else {
           // we've entered bad state, rectify

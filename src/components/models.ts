@@ -37,6 +37,7 @@ export enum ELocTheme {
   Inhabited = 'Inhabited',
   Ruined = 'Ruined',
   Sacred = 'Sacred',
+  Mechanical = 'Mechanical',
 }
 
 export enum ECoreCombo {
@@ -70,6 +71,7 @@ export interface IConfig {
     animations: boolean;
     starfield: boolean;
     defaultPassage?: boolean;
+    filters?: ESectorOpts[];
   };
 }
 

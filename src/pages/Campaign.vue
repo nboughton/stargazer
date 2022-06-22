@@ -22,8 +22,14 @@
         <div class="col sf-header text-h4 rounded-borders">Truths</div>
       </template>
       <truth label="Cataclysm" id="cataclysm" />
+      <new-truth label="Cataclysm" />
+
       <truth label="Exodus" id="exodus" />
+      <new-truth label="Exodus" />
+
       <truth label="Communities" id="communities" />
+      <new-truth label="Communities" />
+
       <truth label="Iron" id="iron" />
       <truth label="Laws" id="laws" />
       <truth label="Religion" id="religion" />
@@ -45,13 +51,14 @@ import { defineComponent } from 'vue';
 import { useCampaign } from 'src/store/campaign';
 
 import Truth from 'src/components/Truth.vue';
+import NewTruth from 'src/components/NewTruth.vue';
 import IInput from 'src/components/IInput.vue';
 import Faction from 'src/components/Faction.vue';
 import { NewFaction } from 'src/lib/campaign';
 
 export default defineComponent({
   name: 'Truths',
-  components: { Truth, IInput, Faction },
+  components: { Truth, NewTruth, IInput, Faction },
   setup() {
     const campaign = useCampaign();
 

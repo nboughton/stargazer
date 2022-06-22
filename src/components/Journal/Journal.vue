@@ -16,8 +16,15 @@
           <q-tooltip>Add a journal entry</q-tooltip>
         </q-btn>
       </template>
+
       <template v-slot:prepend>
         <q-icon name="search" />
+      </template>
+
+      <template v-slot:after>
+        <q-btn icon="sort" flat dense @click="journalSortByTitle">
+          <q-tooltip>Sort journal entries by title</q-tooltip>
+        </q-btn>
       </template>
     </q-input>
   </div>
@@ -92,6 +99,7 @@ import { IJournalEntry } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
+import { useQuasar } from 'quasar';
 
 import { NewJournal } from 'src/lib/campaign';
 
@@ -129,6 +137,16 @@ export default defineComponent({
       return false;
     };
 
+    const $q = useQuasar();
+    const journalSortByTitle = () =>
+      $q
+        .dialog({
+          title: 'Confirm',
+          message: 'This will re-order your journal entries and cannot be undone. Are you sure?',
+          cancel: true,
+        })
+        .onOk(() => campaign.data.journal.sort((a: IJournalEntry, b: IJournalEntry) => b.title.localeCompare(a.title)));
+
     enum imageFloat {
       Left = 'left',
       Right = 'right',
@@ -162,6 +180,7 @@ export default defineComponent({
       showJournal,
       addJournal,
       removeJournal,
+      journalSortByTitle,
       loadImage,
       showImageLoad,
       imageFloat,

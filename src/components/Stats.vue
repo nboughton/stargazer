@@ -1,10 +1,10 @@
 <template>
-  <div class="row justify-evenly">
-    <stat v-model.number="data.edge" label="Edge" />
-    <stat v-model.number="data.heart" label="Heart" />
-    <stat v-model.number="data.iron" label="Iron" />
-    <stat v-model.number="data.shadow" label="Shadow" />
-    <stat v-model.number="data.wits" label="Wits" />
+  <div class="row justify-evenly q-gutter-xs">
+    <stat class="col-2" v-model.number="data.edge" label="Edge" />
+    <stat class="col-2" v-model.number="data.heart" label="Heart" />
+    <stat class="col-2" v-model.number="data.iron" label="Iron" />
+    <stat class="col-2" v-model.number="data.shadow" label="Shadow" />
+    <stat class="col-2" v-model.number="data.wits" label="Wits" />
   </div>
 </template>
 

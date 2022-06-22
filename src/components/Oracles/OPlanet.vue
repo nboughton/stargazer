@@ -32,7 +32,7 @@
 
     <o-input label="Planetside Peril" v-model="poppers.peril" @roll="roll.Peril" />
 
-    <o-input label="Planetsiide Opportunity" v-model="poppers.opportunity" @roll="roll.Opp" />
+    <o-input label="Planetside Opportunity" v-model="poppers.opportunity" @roll="roll.Opp" />
 
     <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
   </div>

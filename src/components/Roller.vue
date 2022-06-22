@@ -254,11 +254,7 @@ export default defineComponent({
         data.value.action.score -= data.value.action.die;
       }
 
-      data.value.challenge.match = false;
-
-      if (data.value.challenge.die1.roll === data.value.challenge.die2.roll) {
-        data.value.challenge.match = true;
-      }
+      data.value.challenge.match = data.value.challenge.die1.roll === data.value.challenge.die2.roll;
 
       data.value = updateResults(data.value);
     };

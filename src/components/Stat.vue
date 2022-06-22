@@ -1,6 +1,5 @@
 <template>
   <q-input
-    class="col-xs-2 col-sm-1 col-1"
     type="number"
     :min="0"
     :max="4"

@@ -297,29 +297,29 @@ export default defineComponent({
 
       // Add search results
       Object.keys(props.searchResults[config.data.sector]).forEach((id) => {
-        // if (props.searchResults[config.data.sector][id]) {
-        const { x, y } = getXY(id);
-        const cell = props.searchResults[config.data.sector][id];
-        const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id], id);
+        if (campaign.data.sectors[config.data.sector].cells[id]) {
+          const { x, y } = getXY(id);
+          const cell = props.searchResults[config.data.sector][id];
+          const { label } = CellLabel(campaign.data.sectors[config.data.sector].cells[id], id);
 
-        if (map.find(`.${id}`).length > 0) {
-          SVG()
-            .text(function (add) {
-              Object.keys(cell).forEach((oType) => {
-                cell[oType].forEach((i) => {
-                  const c = campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i];
-                  if (c && c.name !== label) {
-                    add.tspan(c.name).stroke({ color: 'black', width: 1 }).fill(colours[oType]).newLine();
-                  }
+          if (map.find(`.${id}`).length > 0) {
+            SVG()
+              .text(function (add) {
+                Object.keys(cell).forEach((oType) => {
+                  cell[oType].forEach((i) => {
+                    const c = campaign.data.sectors[config.data.sector].cells[id][oType as ESectorOpts][i];
+                    if (c && c.name !== label) {
+                      add.tspan(c.name).stroke({ color: 'black', width: 1 }).fill(colours[oType]).newLine();
+                    }
+                  });
                 });
-              });
-            })
-            .addClass('search-label')
-            .addTo(map)
-            .move(x, y + config.data.map.hexSize * 2)
-            .font({ size: config.data.map.hexSize * 0.7, weight: 'bold' });
+              })
+              .addClass('search-label')
+              .addTo(map)
+              .move(x, y + config.data.map.hexSize * 2)
+              .font({ size: config.data.map.hexSize * 0.7, weight: 'bold' });
+          }
         }
-        // }
       });
     };
 
