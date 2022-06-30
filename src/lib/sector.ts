@@ -35,6 +35,7 @@ export const NewNPC = (): INPC => {
     goal: '',
     aspect: '',
     track: NewProgressTrack(),
+    connection: true,
     bond: false,
     notes: '',
   };
