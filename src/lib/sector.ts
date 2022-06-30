@@ -231,6 +231,7 @@ export const NewShip = (): IStarship => {
     name: '',
     class: '',
     fleet: '',
+    factionId: '',
     initialContact: '',
     firstLook: '',
     mission: '',

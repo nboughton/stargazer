@@ -394,6 +394,7 @@ export interface IStarship {
   firstLook: string;
   mission: string;
   notes: string;
+  factionId?: string;
 }
 
 export enum EDerelictZone {
