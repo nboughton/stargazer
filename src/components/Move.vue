@@ -30,9 +30,10 @@
 import { defineComponent, PropType, ref, computed } from 'vue';
 
 import { IMove } from 'dataforged';
-import { mdToHtml } from 'src/lib/util';
 
 import { useCampaign } from 'src/store/campaign';
+
+import { mdToHtml } from 'src/lib/util';
 
 import * as oracle from 'src/lib/oracles';
 

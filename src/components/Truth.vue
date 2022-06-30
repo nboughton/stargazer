@@ -16,7 +16,7 @@
         dense
         borderless
       />
-      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollMain(id)" />
+      <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollMain" />
     </div>
 
     <div class="row items-center" v-if="subOpts.length > 0">
@@ -35,9 +35,9 @@ import { ISelectOpt } from 'src/components/models';
 
 import { useCampaign } from 'src/store/campaign';
 
-import { SFTruths, RollTruth } from 'src/lib/truths';
-import { tableRoll } from 'src/lib/roll';
 import { icon } from 'src/lib/icons';
+import { starforged } from 'dataforged';
+import * as oracle from 'src/lib/oracles';
 
 export default defineComponent({
   name: 'Truths',
@@ -53,16 +53,22 @@ export default defineComponent({
   },
   setup(props) {
     const campaign = useCampaign();
+
+    const truth = starforged['Setting Truths'].find((t) => t.Name === props.label);
+    if (!truth) alert(`No truth found for ${props.label}`);
+
     const subOptSelect = ref('');
     let subOpts = ref([] as string[]);
+
+    // I'm going to be doing this a few times
+    const truncate = (s: string): string => s.substring(0, 30) + '...';
 
     const optSelect = ref('');
     const optID = ref(0);
     const opts = (): ISelectOpt[] => {
       const out: ISelectOpt[] = [];
-      SFTruths[props.id].forEach((t) => {
-        const opt = { label: `${t.summary.substring(0, 30)}...`, value: t.text };
-        out.push(opt);
+      truth?.Table.forEach((t) => {
+        out.push({ label: truncate(t.Result), value: `${t.Result} ${t.Description}` });
       });
       return out;
     };
@@ -71,13 +77,17 @@ export default defineComponent({
       () => optSelect.value,
       () => {
         subOpts.value = [];
-        SFTruths[props.id].forEach((t, i) => {
-          if (optSelect.value === t.text) campaign.data.truths[props.id] = `${t.summary} ${t.text}`;
-          if (optSelect.value === t.text && t.table) {
-            optID.value = i;
-            t.table.items.forEach((i) => {
-              subOpts.value.push(i.data);
-            });
+        truth?.Table.forEach((t, i) => {
+          const r = new RegExp(`^${truncate(t.Result)}`);
+          if (r.test(optSelect.value)) {
+            campaign.data.truths[props.id] = `${t.Result} ${t.Description}`;
+            console.log(t);
+            if (t.Subtable) {
+              optID.value = i;
+              t.Subtable.forEach((i) => {
+                subOpts.value.push(i.Result);
+              });
+            }
           }
         });
       }
@@ -90,23 +100,18 @@ export default defineComponent({
       }
     );
 
-    const rollMain = (id: string) => {
-      optSelect.value = RollTruth(id);
-    };
+    const rollMain = () => (optSelect.value = truncate(oracle.truth(truth?.$id as string, -1).Result));
 
-    const rollSub = () => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      subOptSelect.value = tableRoll(SFTruths[props.id][optID.value].table!);
-    };
+    const rollSub = () => (subOptSelect.value = oracle.truth(truth?.$id as string, optID.value).Result);
 
     return {
       campaign,
+      truth,
       optSelect,
       opts,
       optID,
       subOptSelect,
       subOpts,
-      RollTruth,
       rollSub,
       rollMain,
       icon,

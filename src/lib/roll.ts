@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { IRollData, ISFTable, ECoreCombo, EAtO } from 'src/components/models';
+import { IRollData, EAtO } from 'src/components/models';
 import * as oracle from 'src/lib/oracles';
 
 export const d = (size: number) => {
@@ -85,38 +85,6 @@ export const moveRoll = (attr: number, adds: number, momentum: number, progress?
   }
 
   return r;
-};
-
-export const tableRoll = (table: ISFTable): string => {
-  const n = d(100);
-  let out = 'No match';
-  table.items.forEach((item) => {
-    if (item.match.length === 1 && item.match[0] === n) {
-      out = item.data;
-      return;
-    }
-
-    if (n >= item.match[0] && n <= item.match[1]) {
-      out = item.data;
-      return;
-    }
-  });
-
-  if (out === ECoreCombo.ActTheme)
-    out = `${oracle.roll('Starforged/Oracles/Core/Action')} ${oracle.roll('Starforged/Oracles/Core/Theme')}`;
-  if (out === ECoreCombo.DescFoc)
-    out = `${oracle.roll('Starforged/Oracles/Core/Descriptor')} ${oracle.roll('Starforged/Oracles/Core/Focus')}`;
-  if (/roll twice/i.test(out)) {
-    while (/roll twice/i.test(out)) {
-      out = `${tableRoll(table)}, ${tableRoll(table)}`;
-    }
-  }
-  if (/roll three/i.test(out)) {
-    while (/roll three/i.test(out)) {
-      out = `${tableRoll(table)}, ${tableRoll(table)}, ${tableRoll(table)}`;
-    }
-  }
-  return out;
 };
 
 export const clockRoll = (t: EAtO): { val: number; yn: boolean; match: boolean } => {

@@ -17,7 +17,7 @@ const find = (id: string): IOracleBase | ISettingTruth | string[] | false => {
   const category = path[2]; // Moves | Planets
 
   // Handle a truth category
-  const truth = type === 'Truths';
+  const truth = type === 'Setting_Truths';
   if (truth) {
     const truthCategory = starforged['Setting Truths'].find((v) => v.$id === id);
     if (!truthCategory) return false;
@@ -144,26 +144,18 @@ export const truth = (id: string, subtable: number): ISettingTruthOption => {
 
   t = t as ISettingTruth;
 
-  const res = <ISettingTruthOption>{ Result: 'No match' };
+  let res = <ISettingTruthOption>{ Result: 'No match' };
   const n = d(100);
   if (subtable === -1) {
     const table = t.Table as ISettingTruthOption[];
-    table.forEach((item) => {
-      if (item.Floor != null && item.Ceiling != null && n >= item.Floor && n <= item.Ceiling) {
-        res.Result = item.Result;
-        res.Subtable = item.Subtable;
-        if (item.Summary) res.Summary = item.Summary;
-        return;
-      }
-    });
+    res = table.find(
+      (row) => row.Floor != null && row.Ceiling != null && n >= row.Floor && n <= row.Ceiling
+    ) as ISettingTruthOption;
   } else if (subtable >= 0 && subtable < 3) {
     const table = t.Table![subtable].Subtable;
-    table?.forEach((item) => {
-      if (item.Floor != null && item.Ceiling != null && n >= item.Floor && n <= item.Ceiling) {
-        res.Result = item.Result;
-        return;
-      }
-    });
+    res = table?.find(
+      (row) => row.Floor != null && row.Ceiling != null && n >= row.Floor && n <= row.Ceiling
+    ) as ISettingTruthOption;
   }
   return res;
 };

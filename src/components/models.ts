@@ -45,7 +45,6 @@ export enum ECoreCombo {
   DescFoc = 'Descriptor + Focus',
 }
 
-/* eslint-disable no-unused-vars */
 export interface ISelectOpt {
   label: string | number;
   value: string | number;
@@ -319,26 +318,6 @@ export interface IMove {
   oracles?: string[];
 }
 
-// Oracles
-// Starforged Oracles
-
-export interface ISFTableItem {
-  match: number[];
-  data: string;
-}
-
-export interface ISFTable {
-  match?: number[];
-  items: ISFTableItem[];
-}
-
-export interface ITruthsSection {
-  match: number[];
-  summary: string;
-  text: string;
-  table?: ISFTable;
-}
-
 export interface INPC {
   name: string;
   pronouns?: string;
@@ -380,21 +359,6 @@ export interface IPlanet {
   biomes?: string;
   notes: string;
 }
-
-export interface IPlanetOracle {
-  match: number[];
-  names: string[];
-  description: string;
-  atmosphere: ISFTable;
-  settlements: { [index: string]: ISFTable };
-  observed: ISFTable;
-  feature: ISFTable;
-  life: ISFTable;
-  diversity?: ISFTable;
-  biomes?: ISFTable;
-}
-
-export type TPlanetOracles = { [index: string]: IPlanetOracle };
 
 export enum ESLocation {
   Planetside = 'Planetside',
@@ -509,29 +473,6 @@ export interface IVault {
   sanctum: IVaultArea;
   notes: string;
 }
-
-/* These three should soon be deprecated */
-export interface IOracleTableItem {
-  floor: number | null;
-  ceil: number | null;
-  result: string;
-  summary?: string;
-  subtable?: IOracleTableItem[]; // Truths
-}
-
-export interface IOracle {
-  table?: IOracleTableItem[];
-  oracles?: { [index: string]: IOracle };
-  names?: string[]; // For planet names
-  description?: string; // For planet descriptions
-}
-
-export interface ITruthResult {
-  result: string;
-  index: number;
-  summary?: string;
-}
-/* End of block */
 
 // Rolls
 export interface IRollData {

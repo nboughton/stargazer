@@ -22,8 +22,6 @@
         <div class="col sf-header text-h4 rounded-borders">Truths</div>
       </template>
       <truth label="Cataclysm" id="cataclysm" />
-      <!--new-truth label="Cataclysm" /-->
-
       <truth label="Exodus" id="exodus" />
       <truth label="Communities" id="communities" />
       <truth label="Iron" id="iron" />
@@ -47,7 +45,6 @@ import { defineComponent } from 'vue';
 import { useCampaign } from 'src/store/campaign';
 
 import Truth from 'src/components/Truth.vue';
-//import NewTruth from 'src/components/NewTruth.vue';
 import IInput from 'src/components/IInput.vue';
 import Faction from 'src/components/Faction.vue';
 import { NewFaction } from 'src/lib/campaign';
