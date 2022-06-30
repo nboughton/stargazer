@@ -1,39 +1,14 @@
-- Tracks
-  [*] Header for legacy tracks
-  [*] remove menace tracks
-
-- Assets
-  [*] battered/cursed on vehicle assets (cursed for CV only)
-
-- Roller
-  [*] d6 roll on roller (consider icon choices)
-  [*] clickable reroll on individual dice in roller
-
-- Fonts
-  [ ] Try Exo for headers
-  [*] Try Encode for body text
-
 - Sector
-  [*] Add notes field per sector
-  [*] Add last-rendered to prevent double render on passage mark
   [ ] Preferred icon for cell
-  [ ] Biome and Diversity oracles for Vital planets
-  [ ] New Planet icons
   [ ] Empty buffer around grid for labels
   [ ] Dropdown for setting star type
 
 - UX
-  [*] Make delete button presentation consistent
-  [*] Modal confirm for campaign delete
-  [*] Logo avatar in top left of main bar
-  [*] Rework Truths tab as Campaign tab with Factions and Campaign name
-  [*] "Add" button for Factions on Campaign tab
   [ ] Add 'random' option to location selector
   [ ] Tooltip or autogrow fields for Clock name field
-  [*] Collapsible sections for Factions and Truths
+  [ ] "Jump to" buttons for Move categories
+  [ ] Improve Move search
+  [ ] "Collapse all" button for Move/Oracles in right drawer
 
 - BUGS
-  [*] Bug report (android, windows/chrome): tap + to open asset selector > tap outside of asset selector so it is dismissed (not on the x) > tap + to open asset selector => asset selector does not open
-  Workaround: changing to Truths/Sector and back to character page makes the + open the asset selector again
-  [*] Add Move oracles: Begin a Session, Ask The Oracle
-  [*] Changing campaign doesn't fully re-render the sector map.
+  [ ] Adding a Progress Track moves the most recent Progress roll to the new track (looks like an indexing issue)
