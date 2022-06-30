@@ -67,35 +67,40 @@ export default defineComponent({
 
     const roll = {
       Type: () => {
-        data.value.type = oracle.roll(['Planets', 'Class']).replace(' World', '') as EPClass;
-        data.value.description = oracle.description(['Planets', data.value.type]);
+        data.value.type = oracle
+          .roll('Starforged/Oracles/Planets/Class')
+          .replace(/[^a-z]/gi, '')
+          .replace('World', '') as EPClass;
+        data.value.description = oracle.description(`Starforged/Oracles/Planets/${data.value.type}`);
       },
       Name: () => {
-        data.value.name = oracle.roll(['Planets', data.value.type]);
+        data.value.name = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Sample Names`);
       },
       Atmos: () => {
-        data.value.atmosphere = oracle.roll(['Planets', data.value.type, 'Atmosphere']);
+        data.value.atmosphere = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Atmosphere`);
       },
       Sett: () => {
-        data.value.settlements = oracle.roll(['Planets', data.value.type, 'Settlements', regionSelect.value]);
+        data.value.settlements = oracle.roll(
+          `Starforged/Oracles/Planets/${data.value.type}/Settlements/${regionSelect.value}`
+        );
       },
       Obs: () => {
-        const o = oracle.roll(['Planets', data.value.type, 'Observed From Space']);
+        const o = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Observed_From_Space`);
         data.value.observed ? (data.value.observed += `, ${o}`) : (data.value.observed = o);
       },
       Feat: () => {
-        const f = oracle.roll(['Planets', data.value.type, 'Feature']);
+        const f = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Feature`);
         data.value.feature ? (data.value.feature += `, ${f}`) : (data.value.feature = f);
       },
       Life: () => {
-        data.value.life = oracle.roll(['Planets', data.value.type, 'Life']);
+        data.value.life = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Life`);
       },
       Diversity: () => {
         if (data.value.type == EPClass.Vital)
-          data.value.diversity = oracle.roll(['Planets', data.value.type, 'Diversity']);
+          data.value.diversity = oracle.roll(`Starforged/Oracles/Planets/${data.value.type}/Diversity`);
       },
       Biomes: () => {
-        const b = oracle.roll(['Planets', EPClass.Vital, 'Biomes']);
+        const b = oracle.roll(`Starforged/Oracles/Planets/${EPClass.Vital}/Biomes`);
         data.value.biomes ? (data.value.biomes += `, ${b}`) : (data.value.biomes = b);
       },
       BiomesAuto: () => {
@@ -103,32 +108,36 @@ export default defineComponent({
           if (data.value.diversity && data.value.diversity.length > 0)
             switch (data.value.diversity) {
               case 'Simple (two biomes)':
-                data.value.biomes = [1, 2].map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes'])).join(', ');
+                data.value.biomes = [1, 2]
+                  .map(() => oracle.roll(`Starforged/Oracles/Planets/${EPClass.Vital}/Biomes`))
+                  .join(', ');
                 break;
               case 'Diverse (three biomes)':
-                data.value.biomes = [1, 2, 3].map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes'])).join(', ');
+                data.value.biomes = [1, 2, 3]
+                  .map(() => oracle.roll(`Starforged/Oracles/Planets/${EPClass.Vital}/Biomes`))
+                  .join(', ');
                 break;
               case 'Complex (four biomes)':
                 data.value.biomes = [1, 2, 3, 4]
-                  .map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes']))
+                  .map(() => oracle.roll(`Starforged/Oracles/Planets/${EPClass.Vital}/Biomes`))
                   .join(', ');
                 break;
               case 'Garden world (five or more biomes)':
                 data.value.biomes = [1, 2, 3, 4, 5]
-                  .map(() => oracle.roll(['Planets', EPClass.Vital, 'Biomes']))
+                  .map(() => oracle.roll(`Starforged/Oracles/Planets/${EPClass.Vital}/Biomes`))
                   .join(', ');
                 break;
             }
       },
       Peril: () => {
         poppers.value.peril = /(none|extinct)/i.test(data.value.life)
-          ? oracle.roll(['Planets', 'Peril', 'Lifeless'])
-          : oracle.roll(['Planets', 'Peril', 'Lifebearing']);
+          ? oracle.roll('Starforged/Oracles/Planets/Peril/Lifeless')
+          : oracle.roll('Starforged/Oracles/Planets/Peril/Lifebearing');
       },
       Opp: () => {
         poppers.value.opportunity = /(none|extinct)/i.test(data.value.life)
-          ? oracle.roll(['Planets', 'Opportunity', 'Lifeless'])
-          : oracle.roll(['Planets', 'Opportunity', 'Lifebearing']);
+          ? oracle.roll('Starforged/Oracles/Planets/Opportunity/Lifeless')
+          : oracle.roll('Starforged/Oracles/Planets/Opportunity/Lifebearing');
       },
     };
 
@@ -156,7 +165,7 @@ export default defineComponent({
         useCampaign().data.sectors[args.sector].cells[args.cell].planets.unshift(storeCopy);
       },
       DescText: () => {
-        data.value.description = oracle.description(['Planets', data.value.type]);
+        // data.value.description = oracle.description(['Planets', data.value.type]);
       },
     };
 

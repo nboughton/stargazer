@@ -56,7 +56,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
 
-import { IAsset } from '../models';
+import { ISGAsset } from '../models';
 
 import { useConfig } from 'src/store/config';
 
@@ -70,7 +70,7 @@ export default defineComponent({
   name: 'Asset',
   props: {
     modelValue: {
-      type: Object as PropType<IAsset>,
+      type: Object as PropType<ISGAsset>,
       required: true,
     },
     expanded: {

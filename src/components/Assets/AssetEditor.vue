@@ -74,7 +74,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineComponent, ref, watch } from 'vue';
 
-import { IAsset } from 'src/components/models';
+import { ISGAsset } from 'src/components/models';
 
 import { useAssets } from 'src/store/assets';
 
@@ -105,7 +105,7 @@ export default defineComponent({
     const close = () => {
       ctx.emit('update:modelValue', false);
     };
-    const save = (a: IAsset) => {
+    const save = (a: ISGAsset) => {
       assets.save(a).catch((err) => console.log(err));
       close();
     };
@@ -152,7 +152,7 @@ export default defineComponent({
     // Load data if it's not a new asset
     void (async () => {
       if (props.id !== 'new') {
-        data.value = (await db.assets.get(props.id)) as IAsset;
+        data.value = (await db.assets.get(props.id)) as ISGAsset;
 
         if (data.value.subtitle) subtitle.value = data.value.subtitle;
 

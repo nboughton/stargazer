@@ -57,30 +57,30 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = oracle.roll(['Settlements', 'Location']) as ESLocation;
+        data.value.location = oracle.roll('Starforged/Oracles/Settlements/Location') as ESLocation;
       },
       Name: () => {
-        data.value.name = oracle.roll(['Settlements', 'Name']);
+        data.value.name = oracle.roll('Starforged/Oracles/Settlements/Name');
       },
       Pop: () => {
-        data.value.population = oracle.roll(['Settlements', 'Population', regionSelect.value]);
+        data.value.population = oracle.roll(`Starforged/Oracles/Settlements/Population/${regionSelect.value}`);
       },
       First: () => {
-        const f = oracle.roll(['Settlements', 'First Look']);
+        const f = oracle.roll('Starforged/Oracles/Settlements/First_Look');
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Cont: () => {
-        data.value.initialContact = oracle.roll(['Settlements', 'Initial Contact']);
+        data.value.initialContact = oracle.roll('Starforged/Oracles/Settlements/Initial_Contact');
       },
       Auth: () => {
-        data.value.authority = oracle.roll(['Settlements', 'Authority']);
+        data.value.authority = oracle.roll('Starforged/Oracles/Settlements/Authority');
       },
       Proj: () => {
-        const p = oracle.roll(['Settlements', 'Projects']);
+        const p = oracle.roll('Starforged/Oracles/Settlements/Projects');
         data.value.projects ? (data.value.projects += ', ' + p) : (data.value.projects = p);
       },
       Trouble: () => {
-        data.value.trouble = oracle.roll(['Settlements', 'Trouble']);
+        data.value.trouble = oracle.roll('Starforged/Oracles/Settlements/Trouble');
       },
     };
 

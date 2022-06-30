@@ -33,30 +33,28 @@ export default defineComponent({
 
     const roll = {
       Name: () => {
-        data.value.name = `${oracle.roll(['Characters', 'Name', 'Given Name'])} ${oracle.roll([
-          'Characters',
-          'Name',
-          'Family Name',
-        ])}`;
+        data.value.name = `${oracle.roll('Starforged/Oracles/Characters/Name/Given_Name')} ${oracle.roll(
+          'Starforged/Oracles/Characters/Name/Family_Name'
+        )}`;
       },
       Call: () => {
-        data.value.callsign = oracle.roll(['Characters', 'Name', 'Callsign']);
+        data.value.callsign = oracle.roll('Starforged/Oracles/Characters/Name/Callsign');
       },
       First: () => {
-        const f = oracle.roll(['Characters', 'First Look']);
+        const f = oracle.roll('Starforged/Oracles/Characters/First_Look');
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Disp: () => {
-        data.value.disposition = oracle.roll(['Characters', 'Disposition']);
+        data.value.disposition = oracle.roll('Starforged/Oracles/Characters/Disposition');
       },
       Role: () => {
-        data.value.role = oracle.roll(['Characters', 'Role']);
+        data.value.role = oracle.roll('Starforged/Oracles/Characters/Role');
       },
       Goal: () => {
-        data.value.goal = oracle.roll(['Characters', 'Goal']);
+        data.value.goal = oracle.roll('Starforged/Oracles/Characters/Goal');
       },
       Aspect: () => {
-        const a = oracle.roll(['Characters', 'Revealed Aspect']);
+        const a = oracle.roll('Starforged/Oracles/Characters/Revealed_Aspect');
         data.value.aspect ? (data.value.aspect += ', ' + a) : (data.value.aspect = a);
       },
     };

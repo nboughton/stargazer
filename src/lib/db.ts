@@ -1,10 +1,10 @@
-import { IConfig, ICampaign, IAsset } from 'components/models';
+import { IConfig, ICampaign, ISGAsset } from 'components/models';
 import Dexie from 'dexie';
 
 export class StargazerDB extends Dexie {
   config: Dexie.Table<IConfig, number>;
   campaign: Dexie.Table<ICampaign, string>;
-  assets: Dexie.Table<IAsset, string>;
+  assets: Dexie.Table<ISGAsset, string>;
 
   constructor() {
     super('StargazerDB');

@@ -62,7 +62,7 @@
           <q-btn-toggle
             class="col-grow"
             flat
-            :options="opts"
+            :options="opts as unknown as any"
             label="Attribute"
             dense
             spread
@@ -246,6 +246,8 @@ export default defineComponent({
       if (cd2) data.value.challenge.die2.roll = d(10);
 
       data.value.action.score = +data.value.action.die + +adds.value + +attribute.value;
+      if (data.value.action.score > 10) data.value.action.score = 10; // Action score can't be higher than 10
+
       // Account for negative momentum
       if (
         campaign.data.character.tracks.momentum.value < 0 &&

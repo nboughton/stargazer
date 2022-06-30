@@ -42,23 +42,21 @@ export default defineComponent({
 
     const roll = {
       Sight: () => {
-        data.value.sighting = oracle.roll(['Space', 'Sighting', regionSelect.value]);
+        data.value.sighting = oracle.roll(`Starforged/Oracles/Space/Sighting/${regionSelect.value}`);
       },
       Obj: () => {
-        data.value.obj = oracle.roll(['Space', 'Stellar Object']);
+        data.value.obj = oracle.roll('Starforged/Oracles/Space/Stellar_Object');
       },
       Name: () => {
-        data.value.sectorName = `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll([
-          'Space',
-          'Sector Name',
-          'Suffix',
-        ])}`;
+        data.value.sectorName = `${oracle.roll('Starforged/Oracles/Space/Sector_Name/Prefix')} ${oracle.roll(
+          'Starforged/Oracles/Space/Sector_Name/Suffix'
+        )}`;
       },
       Peril: () => {
-        data.value.peril = oracle.roll(['Space', 'Peril']);
+        data.value.peril = oracle.roll('Starforged/Oracles/Space/Peril');
       },
       Opp: () => {
-        data.value.opportunity = oracle.roll(['Space', 'Opportunity']);
+        data.value.opportunity = oracle.roll('Starforged/Oracles/Space/Opportunity');
       },
     };
 

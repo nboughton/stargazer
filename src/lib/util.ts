@@ -1,10 +1,30 @@
 import sanitize from 'sanitize-html';
+import Showdown from 'showdown';
+
+export const validTags = ['p', 'br', 'b', 'i', 'table', 'tr', 'td', 'th', 'ul', 'ol', 'li'];
+
+const converter = new Showdown.Converter({
+  tables: true,
+});
+
+// For on the fly Markdown -> HTML conversion
+const clean = (text: string, stripAll?: boolean): string => {
+  return sanitize(text, {
+    allowedTags: stripAll ? [] : validTags,
+    transformTags: {
+      a: 'i',
+    },
+  });
+};
+
+export const mdToHtml = (md: string): string => clean(converter.makeHtml(md));
+export const mdToText = (md: string): string => clean(converter.makeHtml(md), true);
 
 export const sleep = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-export const validTags = ['br', 'b', 'i', 'table', 'tr', 'td', 'th', 'ul', 'ol', 'li'];
+// For stripping tags when loading potentially user generated content
 export const stripTags = (text: string): string => {
   return sanitize(text, {
     allowedTags: validTags,

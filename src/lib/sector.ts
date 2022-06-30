@@ -175,7 +175,9 @@ export const CellLabel = (c: ISectorCell, id: string) => {
 
 export const NewSector = (): ISector => {
   return {
-    name: `${oracle.roll(['Space', 'Sector Name', 'Prefix'])} ${oracle.roll(['Space', 'Sector Name', 'Suffix'])}`,
+    name: `${oracle.roll('Starforged/Oracles/Sector_Name/Prefix')} ${oracle.roll(
+      'Starforged/Oracles/Sector_Name/Suffix'
+    )}`,
     region: ERegion.Terminus,
     control: '',
     cells: {},
@@ -185,7 +187,7 @@ export const NewSector = (): ISector => {
 export const NewStar = (): IStar => {
   return {
     name: oracle.star(),
-    description: oracle.roll(['Space', 'Stellar Object']),
+    description: oracle.roll('Starforged/Oracles/Stellar_Object'),
   };
 };
 

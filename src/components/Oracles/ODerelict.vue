@@ -53,41 +53,45 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = oracle.roll(['Derelicts', 'Location']) as ESLocation;
+        data.value.location = oracle.roll('Starforged/Oracles/Derelicts/Location') as ESLocation;
       },
       Type: () => {
-        data.value.type = oracle.roll(['Derelicts', 'Type', data.value.location]) as EDerelictType;
+        data.value.type = oracle.roll(`Starforged/Oracles/Derelicts/Type/${data.value.location}`) as EDerelictType;
       },
       Name: () => {
         data.value.name =
           data.value.type === EDerelictType.Starship
-            ? oracle.roll(['Starships', 'Name'])
-            : oracle.roll(['Settlements', 'Name']);
+            ? oracle.roll('Starforged/Oracles/Starships/Name')
+            : oracle.roll('Starforged/Oracles/Settlements/Name');
       },
       Cond: () => {
-        data.value.condition = oracle.roll(['Derelicts', 'Condition']);
+        data.value.condition = oracle.roll('Starforged/Oracles/Derelicts/Condition');
       },
       OuterFirst: () => {
-        data.value.outerFirstLook = oracle.roll(['Derelicts', 'Outer First Look']);
+        data.value.outerFirstLook = oracle.roll('Starforged/Oracles/Derelicts/Outer_First_Look');
       },
       InnerFirst: () => {
-        data.value.innerFirstLook = oracle.roll(['Derelicts', 'Inner First Look']);
+        data.value.innerFirstLook = oracle.roll('Starforged/Oracles/Derelicts/Inner_First_Look');
       },
       Zone: () => {
-        data.value.currentZone = oracle.roll(['Derelicts', 'Zones', data.value.type]) as EDerelictZone;
+        data.value.currentZone = oracle
+          .roll(`Starforged/Oracles/Derelicts/Zones/${data.value.type}`)
+          .replace(/[^a-z]/gi, '') as EDerelictZone;
       },
       Explore: {
         Area: () => {
-          data.value.explore.area = oracle.roll(['Derelicts', data.value.currentZone, 'Area']);
+          data.value.explore.area = oracle.roll(`Starforged/Oracles/Derelicts/${data.value.currentZone}/Area`);
         },
         Feat: () => {
-          data.value.explore.feature = oracle.roll(['Derelicts', data.value.currentZone, 'Feature']);
+          data.value.explore.feature = oracle.roll(`Starforged/Oracles/Derelicts/${data.value.currentZone}/Feature`);
         },
         Peril: () => {
-          data.value.explore.peril = oracle.roll(['Derelicts', data.value.currentZone, 'Peril']);
+          data.value.explore.peril = oracle.roll(`Starforged/Oracles/Derelicts/${data.value.currentZone}/Peril`);
         },
         Opp: () => {
-          data.value.explore.opportunity = oracle.roll(['Derelicts', data.value.currentZone, 'Opportunity']);
+          data.value.explore.opportunity = oracle.roll(
+            `Starforged/Oracles/Derelicts/${data.value.currentZone}/Opportunity`
+          );
         },
       },
     };

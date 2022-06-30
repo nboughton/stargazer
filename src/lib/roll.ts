@@ -65,6 +65,8 @@ export const moveRoll = (attr: number, adds: number, momentum: number, progress?
   r.challenge.die2.roll = d(10);
 
   r.action.score = +r.action.die + +adds + +attr;
+  if (r.action.score > 10) r.action.score = 10;
+
   // Account for negative momentum
   if (momentum < 0 && Math.abs(momentum) === Math.abs(r.action.die)) {
     r.action.score -= r.action.die;
@@ -100,8 +102,10 @@ export const tableRoll = (table: ISFTable): string => {
     }
   });
 
-  if (out === ECoreCombo.ActTheme) out = `${oracle.roll(['Core', 'Action'])} ${oracle.roll(['Core', 'Theme'])}`;
-  if (out === ECoreCombo.DescFoc) out = `${oracle.roll(['Core', 'Descriptor'])} ${oracle.roll(['Core', 'Focus'])}`;
+  if (out === ECoreCombo.ActTheme)
+    out = `${oracle.roll('Starforged/Oracles/Core/Action')} ${oracle.roll('Starforged/Oracles/Core/Theme')}`;
+  if (out === ECoreCombo.DescFoc)
+    out = `${oracle.roll('Starforged/Oracles/Core/Descriptor')} ${oracle.roll('Starforged/Oracles/Core/Focus')}`;
   if (/roll twice/i.test(out)) {
     while (/roll twice/i.test(out)) {
       out = `${tableRoll(table)}, ${tableRoll(table)}`;
@@ -120,7 +124,7 @@ export const clockRoll = (t: EAtO): { val: number; yn: boolean; match: boolean }
   const n2 = Math.floor(Math.random() * 10);
   const n = n1 + n2 === 0 ? 100 : n1 === 0 ? n2 : +`${n1}${n2}`;
 
-  const YN = oracle.roll(['Moves', 'Ask the Oracle', t], n) === 'Yes';
+  const YN = oracle.roll(`Starforged/Oracles/Moves/Ask_the_Oracle/${t.replace(/ /g, '_')}`, n) === 'Yes';
 
   return { val: n, yn: YN, match: n1 === n2 };
 };

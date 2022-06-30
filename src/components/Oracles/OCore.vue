@@ -29,16 +29,16 @@ export default defineComponent({
 
     const roll = {
       Action: () => {
-        data.value.action = oracle.roll(['Core', 'Action']);
+        data.value.action = oracle.roll('Starforged/Oracles/Core/Action');
       },
       Theme: () => {
-        data.value.theme = oracle.roll(['Core', 'Theme']);
+        data.value.theme = oracle.roll('Starforged/Oracles/Core/Theme');
       },
       Desc: () => {
-        data.value.desc = oracle.roll(['Core', 'Descriptor']);
+        data.value.desc = oracle.roll('Starforged/Oracles/Core/Descriptor');
       },
       Focus: () => {
-        data.value.focus = oracle.roll(['Core', 'Focus']);
+        data.value.focus = oracle.roll('Starforged/Oracles/Core/Focus');
       },
     };
 

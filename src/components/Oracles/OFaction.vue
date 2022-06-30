@@ -5,7 +5,7 @@
         class="col-grow"
         label="Type"
         v-model="data.type"
-        :options="oracle.values(['Factions', 'Type'])"
+        :options="oracle.values('Starforged/Oracles/Factions/Type')"
         dense
       />
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="Roll.Type" />
@@ -44,6 +44,7 @@ import { v4 as uuid } from 'uuid';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+import { mdToText } from 'src/lib/util';
 
 export default defineComponent({
   name: 'OFaction',
@@ -51,43 +52,43 @@ export default defineComponent({
   setup() {
     const data = ref(NewFaction());
 
-    const isDominion = computed((): boolean => {
-      return data.value.type === 'Dominion';
-    });
+    const isDominion = computed((): boolean => data.value.type === 'Dominion');
 
     const Roll = {
-      Type: () => (data.value.type = oracle.roll(['Factions', 'Type'])),
+      Type: () =>
+        (data.value.type = mdToText(oracle.roll('Starforged/Oracles/Factions/Type')).replace(/[^a-z ]/gi, '')),
       Name: () => {
-        let format = oracle.roll(['Factions', 'Name Template']);
+        let format = mdToText(oracle.roll('Starforged/Oracles/Factions/Name_Template'));
 
         const matches = ['Legacy', 'Affiliation', 'Identity'];
         matches.forEach((m) => {
-          format = format.replace(m, oracle.roll(['Factions', m]));
+          format = format.replace(m, oracle.roll(`Starforged/Oracles/Factions/${m}`));
         });
 
-        format = format.replace(/[\[\]\*]/g, '');
+        format = format.replace(/[^a-z ]/gi, '');
         data.value.name = format;
       },
-      Inf: () => (data.value.influence = oracle.roll(['Factions', 'Influence'])),
+      Inf: () => (data.value.influence = oracle.roll('Starforged/Oracles/Factions/Influence')),
       Sphere: () => {
         isDominion.value
-          ? (data.value.sphere += ', ' + oracle.roll(['Factions', data.value.type]))
-          : (data.value.sphere = oracle.roll(['Factions', data.value.type]));
+          ? (data.value.sphere +=
+              ', ' + oracle.roll(`Starforged/Oracles/Factions/${data.value.type.replace(' ', '_')}`))
+          : (data.value.sphere = oracle.roll(`Starforged/Oracles/Factions/${data.value.type.replace(' ', '_')}`));
 
         data.value.sphere = data.value.sphere.replace(/^, /, '');
       },
-      Lead: () => (data.value.leadership = oracle.roll(['Factions', 'Leadership'])),
+      Lead: () => (data.value.leadership = oracle.roll('Starforged/Oracles/Factions/Leadership')),
       Proj: () => {
-        const p = oracle.roll(['Factions', 'Projects']);
+        const p = oracle.roll('Starforged/Oracles/Factions/Projects');
         data.value.projects ? (data.value.projects += ', ' + p) : (data.value.projects = p);
       },
-      Rel: () => (data.value.relationships = oracle.roll(['Factions', 'Relationships'])),
+      Rel: () => (data.value.relationships = oracle.roll('Starforged/Oracles/Factions/Relationships')),
       Quirks: () => {
-        const q = oracle.roll(['Factions', 'Quirks']);
+        const q = oracle.roll('Starforged/Oracles/Factions/Quirks');
         data.value.quirks ? (data.value.quirks += ', ' + q) : (data.value.quirks = q);
       },
       Rumours: () => {
-        const r = oracle.roll(['Factions', 'Rumors']);
+        const r = oracle.roll('Starforged/Oracles/Factions/Rumors');
         data.value.rumors ? (data.value.rumors += ', ' + r) : (data.value.rumors = r);
       },
     };

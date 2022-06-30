@@ -350,7 +350,7 @@ export default defineComponent({
     };
 
     const width = computed((): number => {
-      return $q.screen.lt.sm || $q.platform.is.mobile
+      return !$q.platform.is.ipad && ($q.screen.lt.sm || $q.platform.is.mobile)
         ? Math.floor($q.screen.width * 0.9)
         : Math.floor($q.screen.width * 0.4);
     });

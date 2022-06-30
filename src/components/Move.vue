@@ -1,19 +1,19 @@
 <template>
   <q-expansion-item
     class="shadow-1 overflow-hidden"
-    :label="move.name"
+    :label="move.Name"
     :caption="caption"
     :header-class="cardStyle"
     style="border-radius: 4px"
   >
     <q-card class="card-bg">
-      <q-card-section v-html="move.text" />
-      <q-card-section v-if="move.oracles" class="q-gutter-md">
+      <q-card-section v-html="mdToHtml(move.Text)" />
+      <q-card-section v-if="move.Oracles" class="q-gutter-md">
         <q-btn
-          v-for="(table, index) in move.oracles"
+          v-for="(oracleID, index) in move.Oracles"
           :key="index"
-          :label="'Roll ' + table"
-          @click="click(table)"
+          :label="'Roll ' + oracleID.split('/').splice(-1)[0].replace(/_/g, ' ')"
+          @click="click(oracleID)"
           outline
         />
         <q-btn label="Clear results" outline @click="results = []" />
@@ -29,7 +29,8 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from 'vue';
 
-import { IMove } from 'src/components/models';
+import { IMove } from 'dataforged';
+import { mdToHtml } from 'src/lib/util';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -49,33 +50,39 @@ export default defineComponent({
   },
   setup(props) {
     const results = ref([] as string[]);
+
     const click = (o: string) => {
-      if (props.move.oracles !== undefined) {
+      if (props.move.Oracles !== undefined) {
         try {
-          props.move.name === 'Ask the Oracle'
-            ? results.value.push(oracle.roll(['Moves', 'Ask the Oracle', o]))
-            : results.value.push(oracle.roll(['Moves', o]));
+          results.value.push(oracle.roll(o));
         } catch (err) {
           alert('Move data not found');
         }
       }
     };
+
     const cardStyle = computed((): string => {
       return 'text-h6 move-header ' + props.moveType.split(' ')[0].toLowerCase();
     });
+
     const caption = computed((): string => {
-      return `${props.moveType}: ${props.move.source}`;
+      return `${props.moveType}: ${props.move.Source.Title} (pg. ${
+        props.move.Source.Page ? props.move.Source.Page : '?'
+      })`;
     });
+
     const save = () => {
       const campaign = useCampaign();
       results.value.forEach((v) => {
-        campaign.appendToJournal(0, `<div class="note moveoracleroll"><b>[${props.move.name}: ${v}]</b></div>`);
+        campaign.appendToJournal(0, `<div class="note moveoracleroll"><b>[${props.move.Name}: ${v}]</b></div>`);
       });
     };
+
     return {
       click,
       results,
       save,
+      mdToHtml,
       cardStyle,
       caption,
     };

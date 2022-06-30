@@ -104,7 +104,7 @@ export interface ITracks {
 export enum EAtO {
   AlmostCertain = 'Almost Certain',
   Likely = 'Likely',
-  FiftyFifty = '50/50',
+  FiftyFifty = 'Fifty-fifty',
   Unlikely = 'Unlikely',
   SmallChance = 'Small Chance',
   NoRoll = 'No Roll',
@@ -155,24 +155,25 @@ export interface ILegacyTrack {
 }
 
 // Assets
-export interface IAssetInput {
+export interface ISGAssetInput {
   label: string;
   text: string;
 }
 
-export interface IAssetItem {
+export interface ISGAssetItem {
   text: string;
   marked: boolean;
-  input?: IAssetInput;
+  input?: ISGAssetInput;
 }
 
-export interface IAsset {
+export interface ISGAsset {
   id?: string;
+  icon?: string;
   title: string;
   subtitle?: string;
-  input?: IAssetInput;
+  input?: ISGAssetInput;
   type: string;
-  items: IAssetItem[];
+  items: ISGAssetItem[];
   track?: ITrack;
   cursed?: boolean;
   battered?: boolean;
@@ -195,7 +196,7 @@ export interface ICharacter {
   vows: IProgressTrack[];
   clocks: IClock[];
   gear: string;
-  assets: IAsset[];
+  assets: ISGAsset[];
 }
 
 export interface IJournalEntry {
@@ -509,6 +510,7 @@ export interface IVault {
   notes: string;
 }
 
+/* These three should soon be deprecated */
 export interface IOracleTableItem {
   floor: number | null;
   ceil: number | null;
@@ -529,6 +531,7 @@ export interface ITruthResult {
   index: number;
   summary?: string;
 }
+/* End of block */
 
 // Rolls
 export interface IRollData {

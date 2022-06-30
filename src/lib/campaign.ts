@@ -7,9 +7,11 @@ import { NewLegacyTrack, NewProgressTrack } from './tracks';
 
 export const NewCharacter = (): ICharacter => {
   return {
-    name: `${oracle.roll(['Characters', 'Name', 'Given Name'])} ${oracle.roll(['Characters', 'Name', 'Family Name'])}`,
+    name: `${oracle.roll('Starforged/Oracles/Characters/Name/Given_Name')} ${oracle.roll(
+      'Starforged/Oracles/Characters/Name/Family_Name'
+    )}`,
     pronouns: '',
-    callsign: oracle.roll(['Characters', 'Name', 'Callsign']),
+    callsign: oracle.roll('Starforged/Oracles/Characters/Name/Callsign'),
     characteristics: '',
     location: '',
     stats: {

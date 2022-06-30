@@ -30,7 +30,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item v-for="(a, i) in cards" :key="i" clickable v-ripple @click="selectAsset(i)">
+            <q-item v-for="(a, i) in cards" :key="i" clickable v-ripple @click="selectAsset(i as string)">
               <q-item-section avatar>
                 <q-avatar :icon="icon.asset(a.title)" size="lg" />
               </q-item-section>
@@ -54,7 +54,7 @@
                   flat
                   dense
                   @click="
-                    editID = ca.id;
+                    editID = ca.id as string;
                     showEditor = true;
                   "
                 />
@@ -99,17 +99,18 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch } from 'vue';
 
-import { IAsset } from 'src/components/models';
+import { ISGAsset } from 'src/components/models';
 
 import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
 import { useCampaign } from 'src/store/campaign';
 
-import { Assets } from 'src/lib/assets';
+import { convertDFAsset } from 'src/lib/assets';
 import { icon } from 'src/lib/icons';
 
 import AssetEditor from './AssetEditor.vue';
 import Hexbox from '../Hexbox.vue';
+import { IAsset, starforged } from 'dataforged';
 
 export default defineComponent({
   name: 'Assets',
@@ -142,7 +143,7 @@ export default defineComponent({
     const customAssets = useAssets();
 
     const filter = ref('');
-    const show = (asset: IAsset): boolean => {
+    const show = (asset: ISGAsset): boolean => {
       if (filter.value === '' || filter.value === null) {
         return true;
       }
@@ -161,16 +162,20 @@ export default defineComponent({
       return false;
     };
 
-    const cards = computed((): { [index: string]: IAsset } => {
-      const out: { [index: string]: IAsset } = {};
+    const cards = computed((): { [index: string]: ISGAsset } => {
+      const out: { [index: string]: ISGAsset } = {};
       customAssets.data.forEach((a) => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         if (show(a)) out[a.id!] = a;
       });
 
-      Object.keys(Assets).forEach((key) => {
-        if (show(Assets[key])) out[key] = Assets[key];
+      starforged['Asset Types'].forEach((t) => {
+        t.Assets.forEach((a) => {
+          const sgAsset = convertDFAsset(a);
+          if (show(sgAsset)) out[sgAsset.title] = sgAsset;
+        });
       });
+
       return out;
     });
 
@@ -180,20 +185,23 @@ export default defineComponent({
     };
 
     const addAsset = (id: string) => {
-      const dataCopy = JSON.parse(JSON.stringify(cards.value[id])) as IAsset;
+      const dataCopy = JSON.parse(JSON.stringify(cards.value[id])) as ISGAsset;
       campaign.data.character.assets.push(dataCopy);
     };
 
     const showEditor = ref(false);
     const showList = ref(true);
     const editID = ref('new');
-    const ca = ref(Assets['Ace']);
+    const ca = ref(
+      convertDFAsset(
+        starforged['Asset Types'].find((t) => t.Name === 'Path')?.Assets.find((a) => a.Name === 'Ace') as IAsset
+      )
+    );
 
     return {
       config,
       showDialog,
       close,
-      Assets,
       filter,
       cards,
 

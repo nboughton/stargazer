@@ -38,10 +38,14 @@ export default defineComponent({
     });
 
     const roll = {
-      Type: () => (data.value.type = oracle.roll(['Location Themes', 'Theme Type']) as ELocTheme),
-      Feat: () => (data.value.feature = oracle.roll(['Location Themes', data.value.type, 'Feature'])),
-      Peril: () => (data.value.peril = oracle.roll(['Location Themes', data.value.type, 'Peril'])),
-      Opp: () => (data.value.opportunity = oracle.roll(['Location Themes', data.value.type, 'Opportunity'])),
+      Type: () =>
+        (data.value.type = oracle
+          .roll('Starforged/Oracles/Location_Themes/Theme_Type')
+          .replace(/[^a-z ]/gi, '') as ELocTheme),
+      Feat: () => (data.value.feature = oracle.roll(`Starforged/Oracles/Location_Themes/${data.value.type}/Feature`)),
+      Peril: () => (data.value.peril = oracle.roll(`Starforged/Oracles/Location_Themes/${data.value.type}/Peril`)),
+      Opp: () =>
+        (data.value.opportunity = oracle.roll(`Starforged/Oracles/Location_Themes/${data.value.type}/Opportunity`)),
     };
 
     const btns = {

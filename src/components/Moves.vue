@@ -14,10 +14,10 @@
         <q-icon name="search" />
       </template>
     </q-input>
-    <div v-for="(category, index) in Moves" :key="index">
-      <div v-for="(move, mIndex) in category" :key="mIndex">
-        <div v-if="show(index, move)" class="q-mb-sm">
-          <move :move="move" :moveType="index" />
+    <div v-for="(category, index) in starforged['Move Categories']" :key="index">
+      <div v-for="(move, mIndex) in category.Moves" :key="mIndex">
+        <div v-if="show(category.Name, move)" class="q-mb-sm">
+          <move :move="move" :moveType="category.Name" />
         </div>
       </div>
     </div>
@@ -26,8 +26,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { IMove } from 'src/components/models';
-import { Moves } from 'src/lib/moves';
+
+import { starforged } from 'dataforged';
+import { IMove } from 'dataforged';
+//import { Moves } from 'src/lib/moves';
 
 import Move from 'src/components/Move.vue';
 
@@ -45,26 +47,26 @@ export default defineComponent({
         return true;
       }
 
-      if (move.name !== undefined) {
-        if (RegExp(filter.value, 'i').test(move.name)) {
+      if (move.Name !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.Name)) {
           return true;
         }
       }
 
-      if (move.keywords !== undefined) {
-        if (RegExp(filter.value, 'i').test(move.keywords)) {
+      if (move.Tags !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.Tags.join(', '))) {
           return true;
         }
       }
 
-      if (move.text !== undefined) {
-        if (RegExp(filter.value, 'i').test(move.text)) {
+      if (move.Text !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.Text)) {
           return true;
         }
       }
 
-      if (move.source !== undefined) {
-        if (RegExp(filter.value, 'i').test(move.source)) {
+      if (move.Source !== undefined) {
+        if (RegExp(filter.value, 'i').test(move.Source.Title)) {
           return true;
         }
       }
@@ -72,7 +74,7 @@ export default defineComponent({
     };
 
     return {
-      Moves,
+      starforged,
       filter,
       show,
     };

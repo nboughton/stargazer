@@ -57,51 +57,51 @@ export default defineComponent({
 
     const roll = {
       Loc: () => {
-        data.value.location = oracle.roll(['Vaults', 'Location']) as ESLocation;
+        data.value.location = oracle.roll('Starforged/Oracles/Vaults/Location') as ESLocation;
       },
       Scale: () => {
-        data.value.scale = oracle.roll(['Vaults', 'Scale']);
+        data.value.scale = oracle.roll('Starforged/Oracles/Vaults/Scale');
       },
       Form: () => {
-        data.value.form = oracle.roll(['Vaults', 'Form']);
+        data.value.form = oracle.roll('Starforged/Oracles/Vaults/Form');
       },
       Shape: () => {
-        data.value.shape = oracle.roll(['Vaults', 'Shape']);
+        data.value.shape = oracle.roll('Starforged/Oracles/Vaults/Shape');
       },
       Material: () => {
-        data.value.material = oracle.roll(['Vaults', 'Material']);
+        data.value.material = oracle.roll('Starforged/Oracles/Vaults/Material');
       },
       OuterFirst: () => {
-        const o = oracle.roll(['Vaults', 'Outer First Look']);
+        const o = oracle.roll('Starforged/Oracles/Vaults/Outer_First_Look');
         data.value.outerFirstLook ? (data.value.outerFirstLook += ', ' + o) : (data.value.outerFirstLook = o);
       },
       InnerFirst: () => {
-        const i = oracle.roll(['Vaults', 'Interior', 'First Look']);
+        const i = oracle.roll('Starforged/Oracles/Vaults/Interior/First_Look');
         data.value.innerFirstLook ? (data.value.innerFirstLook += ', ' + i) : (data.value.innerFirstLook = i);
       },
       Purpose: () => {
-        data.value.purpose = oracle.roll(['Vaults', 'Sanctum', 'Purpose']);
+        data.value.purpose = oracle.roll('Starforged/Oracles/Vaults/Sanctum/Purpose');
       },
       Int: {
         Feat: () => {
-          data.value.interior.feature = oracle.roll(['Vaults', 'Interior', 'Feature']);
+          data.value.interior.feature = oracle.roll('Starforged/Oracles/Vaults/Interior/Feature');
         },
         Peril: () => {
-          data.value.interior.peril = oracle.roll(['Vaults', 'Interior', 'Peril']);
+          data.value.interior.peril = oracle.roll('Starforged/Oracles/Vaults/Interior/Peril');
         },
         Opp: () => {
-          data.value.interior.opportunity = oracle.roll(['Vaults', 'Interior', 'Opportunity']);
+          data.value.interior.opportunity = oracle.roll('Starforged/Oracles/Vaults/Interior/Opportunity');
         },
       },
       Sanct: {
         Feat: () => {
-          data.value.sanctum.feature = oracle.roll(['Vaults', 'Sanctum', 'Feature']);
+          data.value.sanctum.feature = oracle.roll('Starforged/Oracles/Vaults/Sanctum/Feature');
         },
         Peril: () => {
-          data.value.sanctum.peril = oracle.roll(['Vaults', 'Sanctum', 'Peril']);
+          data.value.sanctum.peril = oracle.roll('Starforged/Oracles/Vaults/Sanctum/Peril');
         },
         Opp: () => {
-          data.value.sanctum.opportunity = oracle.roll(['Vaults', 'Sanctum', 'Opportunity']);
+          data.value.sanctum.opportunity = oracle.roll('Starforged/Oracles/Vaults/Sanctum/Opportunity');
         },
       },
     };

@@ -28,10 +28,11 @@ export default defineComponent({
     });
 
     const roll = {
-      storyComplication: () => (data.value.storyComplication = oracle.roll(['Misc', 'Story Complication'])),
-      storyClue: () => (data.value.storyClue = oracle.roll(['Misc', 'Story Clue'])),
-      anomalyEffect: () => (data.value.anomalyEffect = oracle.roll(['Misc', 'Anomaly Effect'])),
-      combatAction: () => (data.value.combatAction = oracle.roll(['Misc', 'Combat Action'])),
+      storyComplication: () =>
+        (data.value.storyComplication = oracle.roll('Starforged/Oracles/Misc/Story_Complication')),
+      storyClue: () => (data.value.storyClue = oracle.roll('Starforged/Oracles/Misc/Story_Clue')),
+      anomalyEffect: () => (data.value.anomalyEffect = oracle.roll('Starforged/Oracles/Misc/Anomaly_Effect')),
+      combatAction: () => (data.value.combatAction = oracle.roll('Starforged/Oracles/Misc/Combat_Action')),
     };
 
     const btns = {

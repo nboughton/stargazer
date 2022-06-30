@@ -42,28 +42,28 @@ export default defineComponent({
 
     const roll = {
       Name: () => {
-        data.value.name = oracle.roll(['Starships', 'Name']);
+        data.value.name = oracle.roll('Starforged/Oracles/Starships/Name');
       },
       Class: () => {
-        let c = oracle.roll(['Starships', 'Type']);
-        c = /Fleet/i.test(c) ? `Fleet: ${oracle.roll(['Starships', 'Fleet'])}` : c;
+        let c = oracle.roll('Starforged/Oracles/Starships/Type');
+        c = /Fleet/i.test(c) ? `Fleet: ${oracle.roll('Starforged/Oracles/Starships/Fleet')}` : c;
         c = /Starship Mission/i.test(c)
-          ? `Starship Mission: ${oracle.roll(['Starships', 'Mission', regionSelect.value])}`
+          ? `Starship Mission: ${oracle.roll(`Starforged/Oracles/Starships/Mission/${regionSelect.value}`)}`
           : c;
         data.value.class = c;
       },
       Fleet: () => {
-        data.value.fleet = oracle.roll(['Starships', 'Fleet']);
+        data.value.fleet = oracle.roll('Starforged/Oracles/Starships/Fleet');
       },
       Cont: () => {
-        data.value.initialContact = oracle.roll(['Starships', 'Initial Contact']);
+        data.value.initialContact = oracle.roll('Starforged/Oracles/Starships/Initial_Contact');
       },
       First: () => {
-        const f = oracle.roll(['Starships', 'First Look']);
+        const f = oracle.roll('Starforged/Oracles/Starships/First_Look');
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Mission: () => {
-        data.value.mission = oracle.roll(['Starships', 'Mission', regionSelect.value]);
+        data.value.mission = oracle.roll(`Starforged/Oracles/Starships/Mission/${regionSelect.value}`);
       },
     };
 

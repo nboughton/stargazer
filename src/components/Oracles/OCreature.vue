@@ -36,27 +36,27 @@ export default defineComponent({
 
     const roll = {
       Env: () => {
-        data.value.environment = oracle.roll(['Creatures', 'Environment']) as EEnv;
+        data.value.environment = oracle.roll('Starforged/Oracles/Creatures/Environment') as EEnv;
       },
       Scale: () => {
-        let s = oracle.roll(['Creatures', 'Scale']);
+        let s = oracle.roll('Starforged/Oracles/Creatures/Scale').replace(/[^a-z \(\)-]/gi, '');
         if (s === 'Ultra-scale') {
-          s = oracle.roll(['Creatures', 'Ultra-scale']);
+          s = oracle.roll('Starforged/Oracles/Creatures/Ultra-scale');
         }
         data.value.scale = s;
       },
       Form: () => {
-        data.value.form = oracle.roll(['Creatures', 'Basic Form', data.value.environment]);
+        data.value.form = oracle.roll(`Starforged/Oracles/Creatures/Basic_Form/${data.value.environment}`);
       },
       First: () => {
-        const f = oracle.roll(['Creatures', 'First Look']);
+        const f = oracle.roll('Starforged/Oracles/Creatures/First_Look');
         data.value.firstLook ? (data.value.firstLook += ', ' + f) : (data.value.firstLook = f);
       },
       Behave: () => {
-        data.value.behaviour = oracle.roll(['Creatures', 'Encountered Behavior']);
+        data.value.behaviour = oracle.roll('Starforged/Oracles/Creatures/Encountered_Behavior');
       },
       Aspect: () => {
-        const a = oracle.roll(['Creatures', 'Revealed Aspect']);
+        const a = oracle.roll('Starforged/Oracles/Creatures/Revealed_Aspect');
         data.value.aspect ? (data.value.aspect += ', ' + a) : (data.value.aspect = a);
       },
     };

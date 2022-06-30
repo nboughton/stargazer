@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IAsset } from 'components/models';
+import { ISGAsset } from 'components/models';
 import { db } from 'src/lib/db';
 import { now, stripTags } from 'src/lib/util';
 import { exportFile } from 'quasar';
@@ -9,7 +9,7 @@ export const useAssets = defineStore({
 
   state() {
     return {
-      data: <IAsset[]>[],
+      data: <ISGAsset[]>[],
     };
   },
 
@@ -31,11 +31,11 @@ export const useAssets = defineStore({
       }
     },
 
-    async save(asset: IAsset) {
+    async save(asset: ISGAsset) {
       // Strip script tags from item texts
       asset.items.forEach((a, i) => (asset.items[i].text = stripTags(a.text)));
 
-      const storeCopy = JSON.parse(JSON.stringify(asset)) as IAsset;
+      const storeCopy = JSON.parse(JSON.stringify(asset)) as ISGAsset;
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       await db.assets.put(storeCopy).catch((err) => console.log(err));
 
@@ -43,7 +43,7 @@ export const useAssets = defineStore({
       await this.populateStore();
     },
 
-    async delete(asset: IAsset) {
+    async delete(asset: ISGAsset) {
       const id = asset.id;
       await db.assets.delete(id as string);
       this.data.forEach((asset, index) => {
@@ -70,7 +70,7 @@ export const useAssets = defineStore({
     loadData(file: File) {
       const reader = new FileReader();
       reader.onload = async (ev) => {
-        const assets = JSON.parse(ev.target?.result as string) as IAsset[];
+        const assets = JSON.parse(ev.target?.result as string) as ISGAsset[];
         // Strip script tags
         assets.forEach((a, i) => {
           assets[i].items.forEach((item, index) => (assets[i].items[index].text = stripTags(item.text)));

@@ -38,10 +38,10 @@ export default defineComponent({
     const optSelect = ref(null);
     const opts = (): ISelectOpt[] => {
       const out: ISelectOpt[] = [];
-      truthOpts([props.label], -1).forEach((o) => {
+      truthOpts(props.label.replace(' ', '_'), -1).forEach((o) => {
         out.push({
-          label: o.summary as string,
-          value: o.result,
+          label: o.Summary as string,
+          value: o.Result,
         });
       });
       return out;
@@ -54,7 +54,7 @@ export default defineComponent({
       return out;
     });
 
-    console.log(truth([props.label], -1));
+    console.log(truth(props.label.replace(' ', '_'), -1));
 
     return {
       icon,
