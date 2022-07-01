@@ -1,8 +1,6 @@
-# License
+# Licensing and Content Attribution
 
-Ironsworn: Starforged is copyright ©2021 Shawn Tomkin and Absolute Tabletop, LLC.
-
-## Licensing
+_Ironsworn: Starforged_ is copyright ©2022 [Shawn Tomkin](https://www.ironswornrpg.com/) and [Absolute Tabletop, LLC](https://absolutetabletop.com/).
 
 Ironsworn: Starforged content licensed under the [Creative Commons 4.0 License](https://creativecommons.org/licenses/by/4.0/)
 
@@ -31,12 +29,34 @@ If you would like to license these tokens for commercial use, contact us at http
 
 ---
 
-Icons by [Nathen Grey](https://twitter.com/owlbare) licensed under ...
+Asset and Truth Category Icons by [Nathen Grey](https://linktr.ee/owlbare), licensed under the [Creative Commons 4.0 License](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
-Made with icons from [game-icons.net](https://game-icons.net/) by [Lorc](https://lorcblog.blogspot.com/) and [Delapouite](https://delapouite.com/)
+Various icons from [game-icons.net](https://game-icons.net/) by [Lorc](https://lorcblog.blogspot.com/) and [Delapouite](https://delapouite.com/)
 
 ---
 
 The Iron Journal: Stargazer codebase is licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License)
+
+### MIT License
+
+Copyright (c) 2022 Nick Boughton
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
