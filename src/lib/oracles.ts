@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { d } from './roll';
-//import { IOracleTableItem, ITruthResult } from 'src/components/models';
-//import { Oracles } from 'src/data/oracles';
-//import { Truths } from 'src/data/truths';
 import { StarNames } from 'src/data/starNames';
 import { starforged, ISettingTruth, IRow, ISettingTruthOption, IOracleCategory, IOracleBase } from 'dataforged';
 import { mdToText } from './util';
@@ -152,7 +148,7 @@ export const truth = (id: string, subtable: number): ISettingTruthOption => {
       (row) => row.Floor != null && row.Ceiling != null && n >= row.Floor && n <= row.Ceiling
     ) as ISettingTruthOption;
   } else if (subtable >= 0 && subtable < 3) {
-    const table = t.Table![subtable].Subtable;
+    const table = t.Table?.[subtable].Subtable;
     res = table?.find(
       (row) => row.Floor != null && row.Ceiling != null && n >= row.Floor && n <= row.Ceiling
     ) as ISettingTruthOption;
@@ -172,7 +168,7 @@ export const truthOpts = (id: string, subtable: number): ISettingTruthOption[] =
       res.push(item as ISettingTruthOption);
     });
   } else if (subtable < 3) {
-    t.Table![subtable].Subtable?.forEach((item) => {
+    t.Table?.[subtable].Subtable?.forEach((item) => {
       res.push(item as ISettingTruthOption);
     });
   }

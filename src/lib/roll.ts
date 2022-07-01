@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { IRollData, EAtO } from 'src/components/models';
 import * as oracle from 'src/lib/oracles';
 
