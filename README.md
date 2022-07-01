@@ -8,13 +8,13 @@ An app for journaling solo Ironsworn: Starforged campaigns
 
 Modifications to the data model at this point must be limited to optional props which are verified where used to prevent runtime errors.
 
-## Avoid unnecessary syntax sugar
+## Write clear and readable code
 
-I know js/ts allows some very clever syntax shorthands but please ensure all code submissions are designed to be as readable as possible and include comments where appropriate to ensure the intent of your code is obvious.
+Please ensure all code submissions are designed to be as readable as possible and include comments where appropriate to ensure the intent of your code is obvious.
 
 ## Please don't try to implement multiplayer
 
-I know people want multi-character/multi-player support but Stargazer is designed as a solo-play app and Oracle dashboard. Pull requests attempting to add multi-player/multi-character will not be merged.
+Stargazer is designed as a solo-play app and Oracle dashboard. Pull requests attempting to add multi-player/multi-character will not be merged.
 
 ## Install the dependencies
 
