@@ -178,6 +178,7 @@ export interface ISGAsset {
   battered?: boolean;
 }
 
+// Character
 export interface ICharacter {
   name: string;
   pronouns: string;
@@ -198,6 +199,7 @@ export interface ICharacter {
   assets: ISGAsset[];
 }
 
+// Journal
 export interface IJournalEntry {
   title: string;
   content: string;
@@ -209,20 +211,16 @@ export interface ITruths {
   [index: string]: string;
 }
 
+// Stars
 export interface IStar {
   name: string;
   description: string;
 }
 
+// Space sightings
 export interface ISighting {
   name: string;
   notes: string;
-}
-
-export enum ECellStatus {
-  Empty = 'empty',
-  Passage = 'passage',
-  Location = 'location',
 }
 
 // SearchResults as follows:
@@ -233,6 +231,14 @@ export interface ISearchResults {
       [index: string]: number[];
     };
   };
+}
+
+// Sectors
+
+export enum ECellStatus {
+  Empty = 'empty',
+  Passage = 'passage',
+  Location = 'location',
 }
 
 export enum ESectorItem {
@@ -283,6 +289,7 @@ export interface ISector {
   cells: { [index: string]: ISectorCell };
 }
 
+// Factions
 export interface IFaction {
   id: string;
   name: string;
@@ -298,6 +305,7 @@ export interface IFaction {
   colour: string;
 }
 
+// Campaign
 export interface ICampaign {
   id: string;
   name: string;
@@ -309,15 +317,7 @@ export interface ICampaign {
   factions: IFaction[];
 }
 
-// Moves
-export interface IMove {
-  name: string;
-  source: string;
-  text: string;
-  keywords: string;
-  oracles?: string[];
-}
-
+// NPCs
 export interface INPC {
   name: string;
   pronouns?: string;
@@ -333,6 +333,7 @@ export interface INPC {
   notes: string;
 }
 
+// Planets
 export enum EPClass {
   Desert = 'Desert',
   Furnace = 'Furnace',
@@ -361,6 +362,7 @@ export interface IPlanet {
   notes: string;
 }
 
+// Settlements
 export enum ESLocation {
   Planetside = 'Planetside',
   Orbital = 'Orbital',
@@ -387,6 +389,7 @@ export interface ISettlement {
   notes: string;
 }
 
+// Starships
 export interface IStarship {
   name: string;
   class: string;
@@ -398,6 +401,7 @@ export interface IStarship {
   factionId?: string;
 }
 
+// Derelicts
 export enum EDerelictZone {
   Access = 'Access',
   Community = 'Community',
@@ -431,6 +435,7 @@ export interface IDerelict {
   notes: '';
 }
 
+// Creatures
 export enum EEnv {
   Space = 'Space',
   Interior = 'Interior',
@@ -450,6 +455,7 @@ export interface ICreature {
   notes: '';
 }
 
+// Vaults
 export enum EVault {
   Planet = 'Precursor Vault (planetside)',
   Orbital = 'Precursor Vault (orbital)',

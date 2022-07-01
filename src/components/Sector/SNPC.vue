@@ -39,7 +39,7 @@
 
       <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
 
-      <q-expansion-item class="q-mb-sm" label="Challenge tracks" ref="challenge_tracks">
+      <q-expansion-item class="q-mb-sm" header-class="sf-header" label="Challenge tracks" ref="challenge_tracks">
         <progress-track class="q-mb-sm" v-model="data.track" />
       </q-expansion-item>
     </q-expansion-item>

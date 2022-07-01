@@ -9,6 +9,11 @@
   [ ] "Jump to" buttons for Move categories
   [ ] Improve Move search
   [ ] "Collapse all" button for Move/Oracles in right drawer
+  [ ] Default Sector search data to place current sector first
+
+- Data
+  [ ] Cuistom oracles
+  [ ] Custom moves
 
 - BUGS
   [ ] Adding a Progress Track moves the most recent Progress roll to the new track (looks like an indexing issue)
