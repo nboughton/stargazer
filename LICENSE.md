@@ -25,7 +25,7 @@ Don't:
 - Package for resale (for example, within the Roll20 Marketplace)
 - Use as art in your own work
 
-If you would like to license these tokens for commercial use, contact us at https://www.ironswornrpg.com/contact
+If you would like to license these tokens for commercial use, [contact us](mailto:meehan.joshua@gmail.com)
 
 ---
 
@@ -33,7 +33,7 @@ Asset and Truth Category Icons by [Nathen Grey](https://linktr.ee/owlbare), lice
 
 ---
 
-Various icons from [game-icons.net](https://game-icons.net/) by [Lorc](https://lorcblog.blogspot.com/) and [Delapouite](https://delapouite.com/)
+Sector map icons (except planet tokens) from [game-icons.net](https://game-icons.net/) by [Lorc](https://lorcblog.blogspot.com/) and [Delapouite](https://delapouite.com/)
 
 ---
 
