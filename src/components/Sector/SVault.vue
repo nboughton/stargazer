@@ -38,12 +38,17 @@
 </template>
 
 <script lang="ts">
-import { useConfig } from 'src/store/config';
 import { defineComponent, ref, PropType, watch } from 'vue';
-import Controls from './Controls.vue';
-import IInput from '../IInput.vue';
+
 import { IVault, ESLocation } from '../models';
+
+import { useConfig } from 'src/store/config';
+
 import { icon } from 'src/lib/icons';
+
+import Controls from './Controls.vue';
+import IInput from '../Widgets/IInput.vue';
+
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SVault',

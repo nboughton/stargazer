@@ -69,7 +69,7 @@ import { boxIcon, Difficulty } from 'src/lib/tracks';
 import { moveRoll, NewRollData } from 'src/lib/roll';
 import { sleep } from 'src/lib/util';
 
-import IInput from 'src/components/IInput.vue';
+import IInput from 'src/components/Widgets/IInput.vue';
 import Clocks from 'src/components/Tracks/Clocks.vue';
 
 export default defineComponent({

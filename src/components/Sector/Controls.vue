@@ -9,7 +9,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LocationSelect from '../LocationSelect.vue';
+
+import LocationSelect from '../Widgets/LocationSelect.vue';
+
 export default defineComponent({
   components: { LocationSelect },
   name: 'Controls',

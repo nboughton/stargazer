@@ -44,10 +44,11 @@ import { defineComponent } from 'vue';
 
 import { useCampaign } from 'src/store/campaign';
 
-import Truth from 'src/components/Truth.vue';
-import IInput from 'src/components/IInput.vue';
-import Faction from 'src/components/Faction.vue';
 import { NewFaction } from 'src/lib/campaign';
+
+import Truth from 'src/components/Truth.vue';
+import IInput from 'src/components/Widgets/IInput.vue';
+import Faction from 'src/components/Faction.vue';
 
 export default defineComponent({
   name: 'Truths',

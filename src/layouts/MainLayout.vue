@@ -312,8 +312,8 @@ import { useAssets } from 'src/store/assets';
 import { useQuasar, scroll } from 'quasar';
 
 import Oracles from 'src/components/Oracles/Oracles.vue';
-import Moves from 'src/components/Moves.vue';
-import Roller from 'src/components/Roller.vue';
+import Moves from 'src/components/Moves/Moves.vue';
+import Roller from 'src/components/Widgets/Roller.vue';
 import Journal from 'src/components/Journal/Journal.vue';
 
 export default defineComponent({

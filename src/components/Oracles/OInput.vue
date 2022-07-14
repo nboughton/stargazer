@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 
-import ClipboardBtn from 'components/ClipboardBtn.vue';
+import ClipboardBtn from 'src/components/Widgets/ClipboardBtn.vue';
 
 export default defineComponent({
   name: 'OInput',

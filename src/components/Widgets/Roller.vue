@@ -135,7 +135,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from 'vue';
 
-import { ISelectOpt } from './models';
+import { ISelectOpt } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 
