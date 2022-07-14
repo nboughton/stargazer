@@ -14,10 +14,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, watch, ref, onMounted } from 'vue';
+
 import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
-import { debounce, useQuasar } from 'quasar';
 import { useAssets } from './store/assets';
+import { useOracles } from './store/oracles';
+
+import { debounce, useQuasar } from 'quasar';
 import { sleep } from './lib/util';
 
 export default defineComponent({
@@ -52,17 +55,19 @@ export default defineComponent({
       await skippableSleep(500);
       await writeLine('::loading protocols...');
       await skippableSleep(500);
-      await writeLine('::synchronising...');
-      await skippableSleep(500);
+      // await writeLine('::synchronising...');
+      //await skippableSleep(500);
       await writeLine('::welcome ' + campaign.data.character.name);
       await sleep(500);
     };
 
     const initialiseData = async () => {
       const assets = useAssets();
+      const oracles = useOracles();
 
       await campaign.populateStore().catch((err) => console.log(err));
       await assets.populateStore().catch((err) => console.log(err));
+      await oracles.populateStore().catch((err) => console.log(err));
     };
 
     onMounted(async () => {

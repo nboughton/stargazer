@@ -7,7 +7,7 @@
 
       <div class="row items-center q-mb-lg">
         <q-toggle class="q-mr-md q-mt-sm" label="Text input?" v-model="hasMainInput" dense @click="mInputClick" />
-        <q-input class="col-grow" v-if="hasMainInput" label="Input Label" v-model="data.input.label" dense />
+        <q-input class="col-grow" v-if="hasMainInput" label="Input Label" v-model="data.input!.label" dense />
       </div>
 
       <p>You can use the following subset of HTML tags to style your item text:</p>
@@ -22,7 +22,7 @@
       />
       <div class="row items-center q-mb-lg q-mt-xs">
         <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem1Input" dense @click="item1Click" />
-        <q-input class="col-grow" v-if="hasItem1Input" label="Input Label" v-model="data.items[0].input.label" dense />
+        <q-input class="col-grow" v-if="hasItem1Input" label="Input Label" v-model="data.items[0].input!.label" dense />
       </div>
 
       <q-input
@@ -34,7 +34,7 @@
       />
       <div class="row items-center q-mb-lg q-mt-xs">
         <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem2Input" dense @click="item2Click" />
-        <q-input class="col-grow" v-if="hasItem2Input" label="Input Label" v-model="data.items[1].input.label" dense />
+        <q-input class="col-grow" v-if="hasItem2Input" label="Input Label" v-model="data.items[1].input!.label" dense />
       </div>
 
       <q-input
@@ -46,13 +46,13 @@
       />
       <div class="row items-center q-mb-lg q-mt-xs">
         <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem3Input" dense @click="item3Click" />
-        <q-input class="col-grow" v-if="hasItem3Input" label="Input Label" v-model="data.items[2].input.label" dense />
+        <q-input class="col-grow" v-if="hasItem3Input" label="Input Label" v-model="data.items[2].input!.label" dense />
       </div>
 
       <q-toggle class="row" label="Resource track?" v-model="hasTrack" dense @click="trackClick" />
       <div class="row items-center q-mb-lg">
-        <q-input class="col-grow" v-if="hasTrack" label="Min" type="number" v-model.number="data.track.min" dense />
-        <q-input class="col-grow" v-if="hasTrack" label="Max" type="number" v-model.number="data.track.max" dense />
+        <q-input class="col-grow" v-if="hasTrack" label="Min" type="number" v-model.number="data.track!.min" dense />
+        <q-input class="col-grow" v-if="hasTrack" label="Max" type="number" v-model.number="data.track!.max" dense />
       </div>
 
       <div class="row justify-between">

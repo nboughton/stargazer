@@ -107,11 +107,24 @@
     >
       <o-misc />
     </q-expansion-item>
+
+    <q-expansion-item
+      class="shadow-1 overflow-hidden oracles q-mb-sm"
+      style="border-radius: 4px"
+      header-class="text-h6"
+      label="Custom"
+    >
+      <o-custom @new="addOracle" @edit="editOracle" />
+    </q-expansion-item>
+
+    <q-dialog v-model="showEditor" :maximized="$q.platform.is.mobile">
+      <o-editor @close="showEditor = false" :oracle="editorData" />
+    </q-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import OSpace from './OSpace.vue';
 import OPlanet from './OPlanet.vue';
@@ -125,6 +138,11 @@ import ONPC from './ONPC.vue';
 import OFaction from './OFaction.vue';
 import OLocationTheme from './OLocationTheme.vue';
 import OMisc from './OMisc.vue';
+import OCustom from './OCustom.vue';
+import { ICustomOracle } from '../models';
+import { NewCustomOracle } from 'src/lib/oracles';
+import { useOracles } from 'src/store/oracles';
+import OEditor from './OEditor.vue';
 
 export default defineComponent({
   name: 'Oracles',
@@ -141,6 +159,27 @@ export default defineComponent({
     OFaction,
     OLocationTheme,
     OMisc,
+    OCustom,
+    OEditor,
+  },
+  setup() {
+    const showEditor = ref(false);
+    const editorData = ref(<ICustomOracle>{});
+    const addOracle = () => {
+      editorData.value = NewCustomOracle('Custom Oracle');
+      showEditor.value = true;
+    };
+    const editOracle = (id: string) => {
+      editorData.value = useOracles().data.find((o) => o.$id === id) as ICustomOracle;
+      showEditor.value = true;
+    };
+
+    return {
+      showEditor,
+      editorData,
+      addOracle,
+      editOracle,
+    };
   },
 });
 </script>

@@ -1,23 +1,51 @@
 import { d } from './roll';
 import { StarNames } from 'src/data/starNames';
-import { starforged, ISettingTruth, IRow, ISettingTruthOption, IOracleCategory, IOracleBase } from 'dataforged';
+import {
+  starforged,
+  ISettingTruth,
+  IRow,
+  ISettingTruthOption,
+  IOracleCategory,
+  IOracleBase,
+  IDisplayOracle,
+  ISource,
+} from 'dataforged';
 import { mdToText } from './util';
+import { ICustomOracle } from 'src/components/models';
+import { uid } from 'quasar';
+import { useOracles } from 'src/store/oracles';
+
+export const NewCustomOracle = (name: string): ICustomOracle => {
+  return {
+    $id: 'Stargazer/Oracles/Custom/' + uid(), // Ensure IDs are unique
+    Name: name,
+    Display: <IDisplayOracle>{},
+    Category: 'Custom',
+    Source: <ISource>{},
+    Table: <IRow[]>[],
+  };
+};
 
 // This is where the magic really happens
-const find = (id: string): IOracleBase | ISettingTruth | string[] | false => {
+const find = (id: string): ICustomOracle | IOracleBase | ISettingTruth | string[] | false => {
   if (id.length === 0) return false;
   //console.log(id);
 
   const path = id.split('/');
+  const source = path[0];
   const type = path[1]; // Truths | Oracles
   const category = path[2]; // Moves | Planets
+
+  // Handle custom oracles
+  if (source === 'Stargazer' && category === 'Custom') {
+    return useOracles().data.find((o) => o.$id === id) as ICustomOracle;
+  }
 
   // Handle a truth category
   const truth = type === 'Setting_Truths';
   if (truth) {
     const truthCategory = starforged['Setting Truths'].find((v) => v.$id === id);
-    if (!truthCategory) return false;
-    return truthCategory;
+    return truthCategory ? truthCategory : false;
   }
 
   const oracleCategory = starforged['Oracle Categories'].find((v) => v.Name === category.replace('_', ' '));
@@ -35,19 +63,8 @@ const find = (id: string): IOracleBase | ISettingTruth | string[] | false => {
       return;
     }
 
-    if (o.Categories) {
-      for (const ocl of o.Categories) {
-        if (found) return;
-        findById(ocl);
-      }
-    }
-
-    if (o.Oracles) {
-      for (const ocl of o.Oracles) {
-        if (found) return;
-        findById(ocl);
-      }
-    }
+    if (o.Categories) for (const ocl of o.Categories) findById(ocl);
+    if (o.Oracles) for (const ocl of o.Oracles) findById(ocl);
   };
 
   // Edge Cases
@@ -111,6 +128,21 @@ export const roll = (id: string, num?: number): string => {
   }
 
   return out;
+};
+
+export const rollCustom = (id: string): string => {
+  const oracle = find(id) as ICustomOracle;
+  const splitD = oracle.Dice?.split('d') as string[];
+
+  let n = 0;
+  if (splitD.length < 2) {
+    return `Bad dice string: ${oracle.Dice as string}`;
+  } else {
+    for (let i = 0; i < +splitD[0]; i++) n += d(+splitD[1]);
+  }
+
+  return oracle.Table?.find((row) => row.Floor != null && row.Ceiling != null && row.Floor <= n && row.Ceiling >= n)
+    ?.Result as string;
 };
 
 export const values = (id: string): string[] => {
