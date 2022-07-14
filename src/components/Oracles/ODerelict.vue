@@ -56,7 +56,9 @@ export default defineComponent({
         data.value.location = oracle.roll('Starforged/Oracles/Derelicts/Location') as ESLocation;
       },
       Type: () => {
-        data.value.type = oracle.roll(`Starforged/Oracles/Derelicts/Type/${data.value.location}`) as EDerelictType;
+        data.value.type = oracle.roll(
+          `Starforged/Oracles/Derelicts/Type/${data.value.location.replace(' ', '_')}`
+        ) as EDerelictType;
       },
       Name: () => {
         data.value.name =
