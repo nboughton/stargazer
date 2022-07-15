@@ -18,5 +18,5 @@ tar czvf Stargazer-linux-$version.tar.gz 'Stargazer-linux-x64'
 
 echo "Tarring Mac build in 3s"
 sleep 3
-tar czvf Stargazer-darwin-$version.tar.gz 'Stargazer-darwin-x64'
+tar czvf Stargazer-OSX-$version.tar.gz 'Stargazer-darwin-x64'
 
