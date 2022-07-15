@@ -19,6 +19,7 @@ export const NewCustomOracle = (name: string): ICustomOracle => {
   return {
     $id: 'Stargazer/Oracles/Custom/' + uid(), // Ensure IDs are unique
     Name: name,
+    Dice: '1d100',
     Display: <IDisplayOracle>{},
     Category: 'Custom',
     Source: <ISource>{},
