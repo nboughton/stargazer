@@ -126,6 +126,13 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
+import { ICustomOracle } from '../models';
+
+import { useOracles } from 'src/store/oracles';
+
+import { NewCustomOracle } from 'src/lib/oracles';
+import { deepCopy } from 'src/lib/util';
+
 import OSpace from './OSpace.vue';
 import OPlanet from './OPlanet.vue';
 import OSettlement from './OSettlement.vue';
@@ -139,9 +146,6 @@ import OFaction from './OFaction.vue';
 import OLocationTheme from './OLocationTheme.vue';
 import OMisc from './OMisc.vue';
 import OCustom from './OCustom.vue';
-import { ICustomOracle } from '../models';
-import { NewCustomOracle } from 'src/lib/oracles';
-import { useOracles } from 'src/store/oracles';
 import OEditor from './OEditor.vue';
 
 export default defineComponent({
@@ -170,7 +174,9 @@ export default defineComponent({
       showEditor.value = true;
     };
     const editOracle = (id: string) => {
-      editorData.value = useOracles().data.find((o) => o.$id === id) as ICustomOracle;
+      // make a copy so that we don't pass a reference and modify the store
+      const d = useOracles().data.find((o) => o.$id === id) as ICustomOracle;
+      editorData.value = deepCopy(d);
       showEditor.value = true;
     };
 

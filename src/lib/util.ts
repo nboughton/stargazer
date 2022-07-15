@@ -43,3 +43,5 @@ export const now = (): string => {
 
   return `${YYYY}${MM}${DD}_${hh}${mm}`;
 };
+
+export const deepCopy = <T>(obj: T): T => JSON.parse(JSON.stringify(obj)) as T;
