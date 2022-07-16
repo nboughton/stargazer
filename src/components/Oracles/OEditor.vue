@@ -1,12 +1,16 @@
 <template>
   <q-card>
     <!-- editor column-->
-    <q-card-section class="row full-width q-gutter-sm items-baseline">
-      <q-input class="col-grow" label="Name" v-model="data.Name" />
-      <span>Dice:</span>
-      <q-select :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" v-model="diceNum" dense outlined />
-      <span>d</span>
-      <q-select :options="[2, 4, 6, 8, 10, 12, 20, 100]" v-model="diceSize" dense outlined />
+    <q-card-section class="row full-width items-baseline">
+      <q-input class="col-xs-12 col-md-6" label="Name" v-model="data.Name" />
+      <div class="col-xs-12 col-md-6">
+        <div class="row items-baseline q-gutter-xs">
+          <span class="col-shrink">Dice:</span>
+          <q-select class="col" :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" v-model="diceNum" dense outlined />
+          <span class="col-shrink">d</span>
+          <q-select class="col" :options="[2, 4, 6, 8, 10, 12, 20, 100]" v-model="diceSize" dense outlined />
+        </div>
+      </div>
     </q-card-section>
 
     <q-card-section>
@@ -137,12 +141,12 @@ export default defineComponent({
         }
 
         // Check floor/ceiling don't fall outside of min/max
-        if (f < min) {
+        if (f < min || f > max) {
           if (!rows[i]) rows[i] = [];
           rows[i].push('Floor out of bounds');
         }
 
-        if (c > max) {
+        if (c < min || c > max) {
           if (!rows[i]) rows[i] = [];
           rows[i].push('Ceiling out of bounds');
         }
