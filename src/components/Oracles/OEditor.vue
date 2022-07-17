@@ -6,9 +6,12 @@
       <div class="col-xs-12 col-md-6">
         <div class="row items-baseline q-gutter-xs">
           <span class="col-shrink">Dice:</span>
-          <q-select class="col" :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" v-model="diceNum" dense outlined />
+          <q-select class="col" :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" v-model.number="diceNum" dense outlined />
           <span class="col-shrink">d</span>
-          <q-select class="col" :options="[2, 4, 6, 8, 10, 12, 20, 100]" v-model="diceSize" dense outlined />
+          <q-select class="col" :options="[2, 4, 6, 8, 10, 12, 20, 100]" v-model.number="diceSize" dense outlined />
+        </div>
+        <div class="col-12 q-mt-xs">
+          <div class="text-subtitle2 text-right">Dice range: {{ diceNum }} - {{ diceNum * diceSize }}</div>
         </div>
       </div>
     </q-card-section>
@@ -19,8 +22,8 @@
         <q-btn class="col-shrink" icon="add_circle" flat dense @click="addRow" />
       </div>
       <div class="row q-ml-sm items-center" v-for="(row, index) of data.Table" :key="index">
-        <q-input class="col-2" v-model.number="data.Table![index].Floor" label="Floor" dense />
-        <q-input class="col-2" v-model.number="data.Table![index].Ceiling" label="Ceiling" dense />
+        <q-input class="col-2" type="number" v-model.number="data.Table![index].Floor" label="Floor" dense />
+        <q-input class="col-2" type="number" v-model.number="data.Table![index].Ceiling" label="Ceiling" dense />
         <q-input class="col" v-model="data.Table![index].Result" label="Result Text" dense />
         <q-icon class="col-shrink q-px-xs" v-if="badRows[index]" name="error" color="negative" size="sm">
           <q-tooltip>{{ badRows[index].join(', ') }}</q-tooltip>
@@ -143,12 +146,12 @@ export default defineComponent({
         // Check floor/ceiling don't fall outside of min/max
         if (f < min || f > max) {
           if (!rows[i]) rows[i] = [];
-          rows[i].push('Floor out of bounds');
+          rows[i].push(`cannot roll ${f} with ${diceNum.value}d${diceSize.value}`);
         }
 
         if (c < min || c > max) {
           if (!rows[i]) rows[i] = [];
-          rows[i].push('Ceiling out of bounds');
+          rows[i].push(`cannot roll ${c} with ${diceNum.value}d${diceSize.value}`);
         }
 
         // Collate every possible result range to check for overlaps
