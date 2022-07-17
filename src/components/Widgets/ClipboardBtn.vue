@@ -6,7 +6,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 import { copyToClipboard, useQuasar } from 'quasar';
+
 export default defineComponent({
   name: 'ClipboardBtn',
   props: {

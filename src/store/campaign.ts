@@ -28,8 +28,22 @@ export const useCampaign = defineStore({
   },
 
   actions: {
+    /* This is a problem to be solved another day
+    moveItem<T>(
+      obj: T,
+      type: ESectorOpts,
+      index: number,
+      from: { sector: number; cell: string },
+      to: { sector: number; cell: string }
+    ) {
+      this.data.sectors[to.sector].cells[to.cell][type].unshift(obj as unknown as T);
+      this.data.sectors[from.sector].cells[from.cell][type].splice(index, 1);
+    },
+    */
     moveSighting(index: number, from: { sector: number; cell: string }, to: { sector: number; cell: string }) {
-      const o = JSON.parse(JSON.stringify(this.data.sectors[from.sector].cells[from.cell].stars[index])) as ISighting;
+      const o = JSON.parse(
+        JSON.stringify(this.data.sectors[from.sector].cells[from.cell].sightings[index])
+      ) as ISighting;
       this.data.sectors[to.sector].cells[to.cell].sightings.unshift(o);
       this.data.sectors[from.sector].cells[from.cell].sightings.splice(index, 1);
     },

@@ -189,12 +189,12 @@ import { defineComponent, ref } from 'vue';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 
-import Stats from 'src/components/Stats.vue';
+import Stats from 'src/components/Stats/Stats.vue';
 import Asset from 'src/components/Assets/Asset.vue';
 import Assets from 'src/components/Assets/Assets.vue';
 import ResourceTrack from 'src/components/Tracks/ResourceTrack.vue';
 import LegacyTrack from 'src/components/Tracks/LegacyTrack.vue';
-import IInput from 'src/components/IInput.vue';
+import IInput from 'src/components/Widgets/IInput.vue';
 
 export default defineComponent({
   name: 'Character',

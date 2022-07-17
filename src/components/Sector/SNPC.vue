@@ -47,14 +47,18 @@
 </template>
 
 <script lang="ts">
-import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch, computed, onMounted } from 'vue';
+
 import { INPC } from '../models';
-import ProgressTrack from '../Tracks/ProgressTrack.vue';
-import Controls from './Controls.vue';
-import IInput from '../IInput.vue';
+
+import { useConfig } from 'src/store/config';
+
 import { icon } from 'src/lib/icons';
 import { QExpansionItem } from 'quasar';
+
+import ProgressTrack from '../Tracks/ProgressTrack.vue';
+import Controls from './Controls.vue';
+import IInput from '../Widgets/IInput.vue';
 
 export default defineComponent({
   components: { IInput, ProgressTrack, Controls },

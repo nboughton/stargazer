@@ -50,7 +50,7 @@ import { NewPlanet } from 'src/lib/sector';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import ClipboardBtn from '../ClipboardBtn.vue';
+import ClipboardBtn from '../Widgets/ClipboardBtn.vue';
 
 export default defineComponent({
   components: { OInput, OBtns, ClipboardBtn },

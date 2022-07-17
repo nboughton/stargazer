@@ -63,7 +63,7 @@ import { useConfig } from 'src/store/config';
 import { icon } from 'src/lib/icons';
 
 import ResourceTrack from '../Tracks/ResourceTrack.vue';
-import Hexbox from '../Hexbox.vue';
+import Hexbox from '../Widgets/Hexbox.vue';
 
 export default defineComponent({
   components: { ResourceTrack, Hexbox },

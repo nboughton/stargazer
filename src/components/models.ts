@@ -1,3 +1,5 @@
+import { IOracle } from 'dataforged';
+
 // Enum ID sets
 export enum ERegion {
   Terminus = 'Terminus',
@@ -72,6 +74,10 @@ export interface IConfig {
     defaultPassage?: boolean;
     filters?: ESectorOpts[];
   };
+}
+
+export interface ICustomOracle extends IOracle {
+  Dice?: string;
 }
 
 // Stats and Tracks
@@ -432,7 +438,7 @@ export interface IDerelict {
     peril: string;
     opportunity: string;
   };
-  notes: '';
+  notes: string;
 }
 
 // Creatures
@@ -452,7 +458,7 @@ export interface ICreature {
   firstLook: string;
   behaviour: string;
   aspect: string;
-  notes: '';
+  notes: string;
 }
 
 // Vaults

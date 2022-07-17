@@ -1,15 +1,15 @@
-import { app, BrowserWindow, nativeTheme } from 'electron'
-import path from 'path'
+import { app, BrowserWindow, nativeTheme } from 'electron';
+import path from 'path';
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
-    require('fs').unlinkSync(require('path').join(app.getPath('userData'), 'DevTools Extensions'))
+    require('fs').unlinkSync(require('path').join(app.getPath('userData'), 'DevTools Extensions'));
   }
-} catch (_) { }
+} catch (_) {}
 
-let mainWindow
+let mainWindow;
 
-function createWindow () {
+function createWindow() {
   /**
    * Initial window options
    */
@@ -20,37 +20,40 @@ function createWindow () {
     webPreferences: {
       contextIsolation: true,
       // More info: /quasar-cli/developing-electron-apps/electron-preload-script
-      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
-    }
-  })
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+    },
+  });
 
-  mainWindow.loadURL(process.env.APP_URL)
+  // Hide that pesky menu bar
+  mainWindow.setMenuBarVisibility(false);
+
+  mainWindow.loadURL(process.env.APP_URL);
 
   if (process.env.DEBUGGING) {
     // if on DEV or Production with debug enabled
-    mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
   } else {
     // we're on production; no access to devtools pls
     mainWindow.webContents.on('devtools-opened', () => {
-      mainWindow.webContents.closeDevTools()
-    })
+      mainWindow.webContents.closeDevTools();
+    });
   }
 
   mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+    mainWindow = null;
+  });
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
-})
+});

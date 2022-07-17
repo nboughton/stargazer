@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue';
-import Stat from 'src/components/Stat.vue';
-import { IStats } from './models';
+import Stat from 'src/components/Stats/Stat.vue';
+import { IStats } from '../models';
 export default defineComponent({
   name: 'Stats',
   components: { Stat },

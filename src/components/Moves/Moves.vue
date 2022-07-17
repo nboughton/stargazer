@@ -31,7 +31,7 @@ import { starforged } from 'dataforged';
 import { IMove } from 'dataforged';
 //import { Moves } from 'src/lib/moves';
 
-import Move from 'src/components/Move.vue';
+import Move from 'src/components/Moves/Move.vue';
 
 export default defineComponent({
   name: 'Moves',

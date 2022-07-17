@@ -54,12 +54,17 @@
 </template>
 
 <script lang="ts">
-import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
-import Controls from './Controls.vue';
-import IInput from '../IInput.vue';
+
 import { IPlanet, EPClass } from '../models';
+
+import { useConfig } from 'src/store/config';
+
 import { icon } from 'src/lib/icons';
+
+import Controls from './Controls.vue';
+import IInput from '../Widgets/IInput.vue';
+
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SPlanet',

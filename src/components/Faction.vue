@@ -32,7 +32,7 @@ import { IFaction } from './models';
 
 import { useConfig } from 'src/store/config';
 
-import IInput from 'src/components/IInput.vue';
+import IInput from 'src/components/Widgets/IInput.vue';
 
 export default defineComponent({
   name: 'Faction',

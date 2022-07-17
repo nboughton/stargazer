@@ -109,6 +109,28 @@
 
         <q-separator size="lg" />
 
+        <q-item clickable v-ripple @click="customOracles.exportData">
+          <q-item-section avatar>
+            <q-icon name="download" />
+          </q-item-section>
+          <q-item-section>
+            Export Custom Oracles
+            <q-tooltip>Download your custom Oracles as a .json file</q-tooltip>
+          </q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple @click="showOracleLoad = true">
+          <q-item-section avatar>
+            <q-icon name="upload" />
+          </q-item-section>
+          <q-item-section>
+            Load Custom Oracles
+            <q-tooltip>Load a custom Oracles file</q-tooltip>
+          </q-item-section>
+        </q-item>
+
+        <q-separator size="lg" />
+
         <q-item clickable v-ripple @click="campaign.exportJournal">
           <q-item-section avatar>
             <q-icon name="download" />
@@ -233,6 +255,37 @@
       </q-card>
     </q-dialog>
 
+    <q-dialog v-model="showOracleLoad" :maximized="$q.platform.is.mobile">
+      <q-card>
+        <q-card-section class="text-center text-bold bg-secondary"> Load Custom Oracles </q-card-section>
+
+        <q-card-section class="text-subtitle text-center">
+          <q-avatar icon="warning" size="xl" color="warning" />
+          <div class="text-justify">
+            Warning: loading user supplied oracle data can be risky. Stargazer attempts to strip any potentially
+            malicious code (i.e script tags in oracles) but cannot absolutely guarantee the safety of any data loaded.
+            Please check over the contents of the Oracle file before loading it. And always ensure you only load data
+            from sources you trust.
+          </div>
+        </q-card-section>
+
+        <q-card-section>
+          <q-file
+            v-model="oraclesToLoad"
+            standout="bg-blue-grey text-white"
+            :input-style="{ color: '#ECEFF4' }"
+            label="Select File"
+            accept=".json"
+          />
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn label="load" color="primary" @click="loadOracleData" flat />
+          <q-btn label="close" color="warning" @click="showOracleLoad = false" flat />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
     <q-dialog v-model="showAbout" :maximized="$q.platform.is.mobile">
       <q-card class="card-bg">
         <q-card-section class="row bg-secondary text-h5 justify-between">
@@ -312,9 +365,10 @@ import { useAssets } from 'src/store/assets';
 import { useQuasar, scroll } from 'quasar';
 
 import Oracles from 'src/components/Oracles/Oracles.vue';
-import Moves from 'src/components/Moves.vue';
-import Roller from 'src/components/Roller.vue';
+import Moves from 'src/components/Moves/Moves.vue';
+import Roller from 'src/components/Widgets/Roller.vue';
 import Journal from 'src/components/Journal/Journal.vue';
+import { useOracles } from 'src/store/oracles';
 
 export default defineComponent({
   components: { Oracles, Moves, Roller, Journal },
@@ -347,6 +401,15 @@ export default defineComponent({
       const f: File = assetsToLoad.value as unknown as File;
       customAssets.loadData(f);
       showAssetLoad.value = false;
+    };
+
+    const customOracles = useOracles();
+    const oraclesToLoad = ref(null);
+    const showOracleLoad = ref(false);
+    const loadOracleData = () => {
+      const f: File = oraclesToLoad.value as unknown as File;
+      customOracles.loadData(f);
+      showOracleLoad.value = false;
     };
 
     const width = computed((): number => {
@@ -390,6 +453,7 @@ export default defineComponent({
       campaign,
       config,
       customAssets,
+      customOracles,
 
       addCampaign,
       removeCampaign,
@@ -404,6 +468,10 @@ export default defineComponent({
       showAssetLoad,
       assetsToLoad,
       loadAssetData,
+
+      showOracleLoad,
+      oraclesToLoad,
+      loadOracleData,
 
       showRoller,
       showAbout,

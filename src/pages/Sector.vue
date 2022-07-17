@@ -249,7 +249,7 @@ import { useConfig } from 'src/store/config';
 
 import { NewSector, CellLabel } from 'src/lib/sector';
 
-import IInput from 'src/components/IInput.vue';
+import IInput from 'src/components/Widgets/IInput.vue';
 import SSettlement from 'src/components/Sector/SSettlement.vue';
 import SNPC from 'src/components/Sector/SNPC.vue';
 import SStar from 'src/components/Sector/SStar.vue';

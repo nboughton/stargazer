@@ -29,11 +29,13 @@
 </template>
 
 <script lang="ts">
-import { CellLabel } from 'src/lib/sector';
+import { defineComponent, computed, ref } from 'vue';
+
+import { ECellStatus, ISelectOpt } from '../models';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
-import { defineComponent, computed, ref } from 'vue';
-import { ECellStatus, ISelectOpt } from './models';
+import { CellLabel } from 'src/lib/sector';
+
 export default defineComponent({
   name: 'LocationSelect',
   props: {

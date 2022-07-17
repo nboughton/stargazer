@@ -20,12 +20,16 @@
 </template>
 
 <script lang="ts">
-import { useConfig } from 'src/store/config';
 import { defineComponent, PropType, ref, watch } from 'vue';
-import IInput from '../IInput.vue';
-import Controls from './Controls.vue';
+
 import { IStar } from '../models';
+
+import { useConfig } from 'src/store/config';
+
 import { icon } from 'src/lib/icons';
+
+import IInput from '../Widgets/IInput.vue';
+import Controls from './Controls.vue';
 
 export default defineComponent({
   components: { IInput, Controls },

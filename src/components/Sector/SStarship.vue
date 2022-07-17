@@ -28,13 +28,18 @@
 </template>
 
 <script lang="ts">
-import { useConfig } from 'src/store/config';
-import { defineComponent, PropType, ref, watch } from 'vue';
-import Controls from './Controls.vue';
-import IInput from '../IInput.vue';
+import { defineComponent, PropType, ref, watch, computed } from 'vue';
+
 import { IFaction, IStarship } from '../models';
-import { icon } from 'src/lib/icons';
+
 import { useCampaign } from 'src/store/campaign';
+import { useConfig } from 'src/store/config';
+
+import { icon } from 'src/lib/icons';
+
+import Controls from './Controls.vue';
+import IInput from '../Widgets/IInput.vue';
+
 export default defineComponent({
   components: { IInput, Controls },
   name: 'SStarship',
@@ -48,18 +53,30 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue', 'delete', 'move'],
-  computed: {
-    faction: {
+  setup(props, { emit }) {
+    const data = ref(props.modelValue);
+    watch(
+      () => props.modelValue,
+      () => (data.value = props.modelValue),
+      { deep: true }
+    );
+    watch(
+      () => data.value,
+      () => emit('update:modelValue', data.value),
+      { deep: true }
+    );
+
+    const faction = computed({
       /**
        * Gets or sets the underlying data.faction IFaction. The IFaction will be identified by the name.
        */
       get() {
-        if (this.data.factionId === '' || this.data.factionId === undefined) {
+        if (data.value.factionId === '' || data.value.factionId === undefined) {
           // The faction is either not set yet, or was deleted.
           return 'None';
         }
 
-        const factionForId = this.getFactionForId(this.data.factionId);
+        const factionForId = getFactionForId(data.value.factionId);
 
         if (!factionForId) {
           return 'None';
@@ -67,24 +84,26 @@ export default defineComponent({
 
         return factionForId.name;
       },
+
       set(value: string) {
         if (value === 'None') {
           // The user has unassigned the faction of the ship.
-          this.data.factionId = '';
+          data.value.factionId = '';
         } else {
           // Find the IFaction that matches the name of the faction given.
-          const factionForSelectedName = this.getFactionForName(value);
+          const factionForSelectedName = getFactionForName(value);
 
           if (!factionForSelectedName) {
             // Fallback: A faction for the given name couldn't be found. This is most likely a bug.
-            this.data.factionId = '';
+            data.value.factionId = '';
           } else {
-            this.data.factionId = factionForSelectedName.id;
+            data.value.factionId = factionForSelectedName.id;
           }
         }
       },
-    },
-    campaignFactionNames: function () {
+    });
+
+    const campaignFactionNames = () => {
       /**
        * Get the names of the factions in the campaign.
        */
@@ -98,20 +117,7 @@ export default defineComponent({
       // Always add 'None' as an option to the array.
       factionNames.unshift('None');
       return factionNames;
-    },
-  },
-  setup(props, { emit }) {
-    const data = ref(props.modelValue);
-    watch(
-      () => props.modelValue,
-      () => (data.value = props.modelValue),
-      { deep: true }
-    );
-    watch(
-      () => data.value,
-      () => emit('update:modelValue', data.value),
-      { deep: true }
-    );
+    };
 
     const getFactionForName = function (factionName: string) {
       return useCampaign().data.factions.find((x) => x.name === factionName) as IFaction;
@@ -130,6 +136,8 @@ export default defineComponent({
       data,
       config,
       icon,
+      faction,
+      campaignFactionNames,
       getFactionForName,
       getFactionForId,
     };

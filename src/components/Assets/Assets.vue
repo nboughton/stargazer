@@ -109,7 +109,7 @@ import { convertDFAsset } from 'src/lib/assets';
 import { icon } from 'src/lib/icons';
 
 import AssetEditor from './AssetEditor.vue';
-import Hexbox from '../Hexbox.vue';
+import Hexbox from '../Widgets/Hexbox.vue';
 import { IAsset, starforged } from 'dataforged';
 
 export default defineComponent({
