@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-sm card-bg rounded-borders">
     <div class="row q-gutter-sm" v-if="showName">
-      <i-input class="col-grow" v-model="data.name" @update:modelValue="updateValue" />
+      <i-input class="col-grow" v-model="data.name" @update:modelValue="updateValue" autogrow />
       <slot name="action" class="col-shrink" />
     </div>
 
