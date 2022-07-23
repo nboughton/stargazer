@@ -98,12 +98,13 @@ export default defineComponent({
         }
       }
     };
-    const removeRow = (index: number) => {
-      $q.dialog({
-        title: 'Delete this row?',
-        cancel: true,
-      }).onOk(() => data.value.Table?.splice(index, 1));
-    };
+    const removeRow = (index: number) =>
+      $q
+        .dialog({
+          title: 'Delete this row?',
+          cancel: true,
+        })
+        .onOk(() => data.value.Table?.splice(index, 1));
 
     interface IBadRows {
       [index: number]: string[];
