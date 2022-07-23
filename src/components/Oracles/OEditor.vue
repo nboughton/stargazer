@@ -99,29 +99,10 @@ export default defineComponent({
       }
     };
     const removeRow = (index: number) => {
-      $q.notify({
-        message: 'Delete this row?',
-        color: 'warning',
-        textColor: 'dark',
-        position: 'center',
-        timeout: 0,
-        actions: [
-          {
-            label: 'Yes',
-            color: 'negative',
-            handler: () => {
-              data.value.Table?.splice(index, 1);
-            },
-          },
-          {
-            label: 'No',
-            color: 'dark',
-            handler: () => {
-              console.log('No toucha da fishie');
-            },
-          },
-        ],
-      });
+      $q.dialog({
+        title: 'Delete this row?',
+        cancel: true,
+      }).onOk(() => data.value.Table?.splice(index, 1));
     };
 
     interface IBadRows {
@@ -170,30 +151,15 @@ export default defineComponent({
     const save = () => oracles.save(data.value);
 
     const del = () =>
-      $q.notify({
-        message: 'Delete this Oracle?',
-        color: 'warning',
-        textColor: 'dark',
-        position: 'center',
-        timeout: 0,
-        actions: [
-          {
-            label: 'Yes',
-            color: 'negative',
-            handler: () => {
-              oracles.delete(data.value).catch((err) => console.log(err));
-              emit('close');
-            },
-          },
-          {
-            label: 'No',
-            color: 'dark',
-            handler: () => {
-              console.log('No toucha da fishie');
-            },
-          },
-        ],
-      });
+      $q
+        .dialog({
+          title: 'Delete this Oracle?',
+          cancel: true,
+        })
+        .onOk(() => {
+          oracles.delete(data.value).catch((err) => console.log(err));
+          emit('close');
+        });
 
     return {
       data,
