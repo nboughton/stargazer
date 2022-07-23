@@ -12,13 +12,13 @@
   - [ ] Improve Move search
   - [ ] "Collapse all" button for Move/Oracles in right drawer
   - [ ] Default Sector search data to place current sector first
+  - [ ] Character creation oracles (can be hidden by user)
+  - [ ] New game dialog with basic setup perhaps?
 
 - Data
 
   - [*] Custom oracles
   - [ ] Custom moves
-  - [ ] Character creation oracles (can be hidden by user)
-  - [ ] New game dialog with basic setup perhaps?
 
 - BUGS
   - [ ] Adding a Progress Track moves the most recent Progress roll to the new track (looks like an indexing issue)
