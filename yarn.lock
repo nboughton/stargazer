@@ -3705,9 +3705,9 @@ csstype@^2.6.8:
   integrity sha512-/WwNkdXfckNgw6S5R125rrW8ez139lBHWouiBvX8dfMFtcn6V81REDqnH7+CRpRipfYlyU1CmOnOxrmGcFOjeA==
 
 dataforged@^1.2.2:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/dataforged/-/dataforged-1.4.1.tgz#a273d0dd631b5daab3b7db31ce07d5b36a28a6c6"
-  integrity sha512-ikE0jnFpIh8SC+UTxcSebBaDlPSvgIKAZ3TOwcJTViXBP1wc84W3e4tqtp3rdrCPjjje71rfNVmsMFWMVlo7Eg==
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/dataforged/-/dataforged-1.4.2.tgz#42468726640bda7d5ca6a2bfc7bde356c7e8e48a"
+  integrity sha512-XeJ8GBcFCV8Eb6BaNItRAMfIw58MCKoCZ4CIp4O1emTYXDvtzGz72HVrRcmug0R7JR4wwXB+mrAyy9JTL5P4aw==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
