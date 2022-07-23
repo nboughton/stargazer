@@ -1,9 +1,11 @@
 - Sector
+
   - [ ] Preferred icon for cell
   - [ ] Empty buffer around grid for labels
   - [ ] Dropdown for setting star type
 
 - UX
+
   - [ ] Add 'random' option to location selector
   - [ ] Tooltip or autogrow fields for Clock name field
   - [ ] "Jump to" buttons for Move categories
@@ -12,8 +14,11 @@
   - [ ] Default Sector search data to place current sector first
 
 - Data
-  - [ ] Cuistom oracles
+
+  - [*] Custom oracles
   - [ ] Custom moves
+  - [ ] Character creation oracles (can be hidden by user)
+  - [ ] New game dialog with basic setup perhaps?
 
 - BUGS
   - [ ] Adding a Progress Track moves the most recent Progress roll to the new track (looks like an indexing issue)
