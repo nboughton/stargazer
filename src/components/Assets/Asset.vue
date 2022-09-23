@@ -38,8 +38,8 @@
             class="q-mb-sm"
             dense
             v-if="data.items[index].input"
-            :label="data.items[index].input.label"
-            v-model="data.items[index].input.text"
+            :label="data.items[index].input!.label"
+            v-model="data.items[index].input!.text"
           />
         </div>
       </div>

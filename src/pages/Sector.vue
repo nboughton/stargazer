@@ -113,7 +113,7 @@
 
     <div class="column q-mt-md">
       <!--Raw: {{ results }}-->
-      <div v-if="results != {}">
+      <div v-if="results">
         <q-expansion-item class="q-mb-lg" v-for="(sector, sID) in results" :key="sID" default-opened>
           <template v-slot:header>
             <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data.sectors[+sID].name }}</div>
@@ -130,7 +130,7 @@
           >
             <template v-slot:header>
               <div class="card-bg sf-header text-h5 q-pa-none col-grow">
-                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID], cID).label }}
+                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID], cID as string).label }}
               </div>
             </template>
 
@@ -140,63 +140,63 @@
                 <div v-if="oType === ESectorOpts.Settlements">
                   <s-settlement
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Settlements, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Settlements, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.NPCs">
                   <s-NPC
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.NPCs, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.NPCs, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Stars">
                   <s-star
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Stars, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Stars, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Planets">
                   <s-planet
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Planets, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Planets, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Ships">
                   <s-starship
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Ships, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Ships, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Derelicts">
                   <s-derelict
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Derelicts, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Derelicts, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Vaults">
                   <s-vault
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Vaults, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Vaults, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Creatures">
                   <s-creature
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Creatures, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Creatures, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Sightings">
                   <s-sighting
                     v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
-                    @delete="campaign.removeObject(ESectorOpts.Sightings, sID, cID, oID)"
+                    @delete="campaign.removeObject(ESectorOpts.Sightings, sID, cID as string, oID)"
                   />
                 </div>
               </div>
@@ -303,7 +303,7 @@ export default defineComponent({
     };
 
     const results = computed((): ISearchResults => {
-      const res = <ISearchResults>{};
+      const res = {} as ISearchResults;
       const ensureData = (sector: number, cell: string, oType: string) => {
         if (!res[sector]) res[sector] = {};
         if (!res[sector][cell]) res[sector][cell] = {};

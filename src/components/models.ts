@@ -293,6 +293,7 @@ export interface ISector {
   region: ERegion;
   control: string;
   cells: { [index: string]: ISectorCell };
+  notes: string;
 }
 
 // Factions
@@ -508,4 +509,9 @@ export interface IRollData {
   };
   progress: boolean;
   result: string;
+}
+
+export interface IFaq {
+  question: string;
+  answer: string;
 }
