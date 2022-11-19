@@ -65,6 +65,7 @@ export interface IConfig {
   index: IIndexItem[];
   edit: boolean;
   saving: boolean;
+  journalTab?: boolean;
   map: {
     height: number;
     width: number;
@@ -328,6 +329,7 @@ export interface ICampaign {
 export interface INPC {
   name: string;
   pronouns?: string;
+  image?: string;
   callsign: string;
   firstLook: string;
   disposition: string;

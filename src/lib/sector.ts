@@ -182,6 +182,7 @@ export const NewSector = (): ISector => {
     region: ERegion.Terminus,
     control: '',
     cells: {},
+    notes: '',
   };
 };
 
