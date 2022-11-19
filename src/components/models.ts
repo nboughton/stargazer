@@ -65,6 +65,7 @@ export interface IConfig {
   index: IIndexItem[];
   edit: boolean;
   saving: boolean;
+  journalTab?: boolean;
   map: {
     height: number;
     width: number;
@@ -293,6 +294,7 @@ export interface ISector {
   region: ERegion;
   control: string;
   cells: { [index: string]: ISectorCell };
+  notes: string;
 }
 
 // Factions
@@ -327,6 +329,7 @@ export interface ICampaign {
 export interface INPC {
   name: string;
   pronouns?: string;
+  image?: string;
   callsign: string;
   firstLook: string;
   disposition: string;
@@ -508,4 +511,9 @@ export interface IRollData {
   };
   progress: boolean;
   result: string;
+}
+
+export interface IFaq {
+  question: string;
+  answer: string;
 }

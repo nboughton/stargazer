@@ -57,9 +57,7 @@ export default defineComponent({
       { deep: true }
     );
 
-    const isDominion = computed((): boolean => {
-      return data.value.type === 'Dominion';
-    });
+    const isDominion = computed((): boolean => data.value.type === 'Dominion');
 
     const config = useConfig();
     return {

@@ -8,7 +8,7 @@
 
   - [ ] Add 'random' option to location selector
   - [ ] Tooltip or autogrow fields for Clock name field
-  - [ ] "Jump to" buttons for Move categories
+  - [*] "Jump to" buttons for Move categories
   - [ ] Improve Move search
   - [ ] "Collapse all" button for Move/Oracles in right drawer
   - [ ] Default Sector search data to place current sector first
@@ -16,6 +16,7 @@
   - [ ] New game dialog with basic setup perhaps?
   - [ ] Enable rolling new oracle data in sector map entries
   - [ ] Button in left drawer to open FAQ dialog
+  - [ ] Images for npcs/locations
 
 - Data
 

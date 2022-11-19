@@ -22,6 +22,7 @@
 
       <q-tabs align="center" dense :class="{ crt: crt }">
         <q-route-tab to="/campaign" label="Campaign" />
+        <q-route-tab v-if="config.data.journalTab" to="/journal" label="Journal" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
         <q-route-tab to="/challenges" label="Challenges" />
         <q-route-tab to="/sector" label="Sector" />
@@ -139,6 +140,14 @@
 
         <q-separator size="lg" />
 
+        <q-item>
+          <q-item-section avatar>
+            <q-toggle v-model="config.data.journalTab" label="Use Journal Tab" />
+          </q-item-section>
+        </q-item>
+
+        <q-separator size="lg" />
+
         <q-item clickable v-ripple @click="showAbout = true">
           <q-item-section avatar>
             <q-icon name="info" />
@@ -180,7 +189,7 @@
       </div>
 
       <div id="journal" />
-      <journal />
+      <journal v-if="!config.data.journalTab" />
 
       <q-fab color="primary" icon="keyboard_arrow_left" direction="left" class="journal-to-top">
         <q-fab-action color="primary" @click="scrollTo('oracles')" icon="mdi-dice-multiple">
@@ -189,7 +198,7 @@
         <q-fab-action color="primary" @click="scrollTo('moves')" icon="mdi-file-document-multiple">
           <q-tooltip>Scroll to Moves</q-tooltip>
         </q-fab-action>
-        <q-fab-action color="primary" @click="scrollTo('journal')" icon="mdi-notebook">
+        <q-fab-action v-if="!config.data.journalTab" color="primary" @click="scrollTo('journal')" icon="mdi-notebook">
           <q-tooltip>Scroll to Journal</q-tooltip>
         </q-fab-action>
       </q-fab>
