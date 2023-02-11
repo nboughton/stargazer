@@ -17,11 +17,7 @@
     </q-card-section>
 
     <q-card-section>
-      <div class="row justify-between items-center q-ml-sm">
-        <div class="col-grow text-bold">Add Row</div>
-        <q-btn class="col-shrink" icon="add_circle" flat dense @click="addRow" />
-      </div>
-      <div class="row q-ml-sm items-center" v-for="(row, index) of data.Table" :key="index">
+      <div class="row q-ml-sm items-center q-mb-sm" v-for="(row, index) of data.Table" :key="index">
         <q-input class="col-2" type="number" v-model.number="data.Table![index].Floor" label="Floor" dense />
         <q-input class="col-2" type="number" v-model.number="data.Table![index].Ceiling" label="Ceiling" dense />
         <q-input class="col" v-model="data.Table![index].Result" label="Result Text" dense />
@@ -32,10 +28,13 @@
           <q-tooltip>Remove row</q-tooltip>
         </q-btn>
       </div>
+      <div class="row justify-between items-center q-ml-sm">
+        <div class="col-grow text-bold">Add Row</div>
+        <q-btn class="col-shrink" icon="add_circle" flat dense @click="addRow" />
+      </div>
     </q-card-section>
     <q-card-actions class="justify-between row">
       <div class="col-shrink">
-        <q-btn label="Delete" flat class="self-start" color="warning" @click="del" />
         <q-btn label="Delete" flat class="self-start" color="warning" @click="del" v-if="isExistingOracle" />
       </div>
       <div class="col-shrink">
