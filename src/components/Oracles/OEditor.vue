@@ -36,6 +36,7 @@
     <q-card-actions class="justify-between row">
       <div class="col-shrink">
         <q-btn label="Delete" flat class="self-start" color="warning" @click="del" />
+        <q-btn label="Delete" flat class="self-start" color="warning" @click="del" v-if="isExistingOracle" />
       </div>
       <div class="col-shrink">
         <q-btn
@@ -162,6 +163,10 @@ export default defineComponent({
           emit('close');
         });
 
+    const isExistingOracle = computed((): boolean => {
+      return oracles.data.findIndex((oracle) => oracle.$id == data.value.$id) != -1;
+    });
+
     return {
       data,
       diceNum,
@@ -171,6 +176,7 @@ export default defineComponent({
       save,
       del,
       badRows,
+      isExistingOracle,
     };
   },
 });
