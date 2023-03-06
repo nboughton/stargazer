@@ -2,7 +2,7 @@
   <div>
     <div
       class="row q-gutter-sm q-mb-sm items-center justify-center"
-      v-if="all && campaign.data.character.clocks.length > 0"
+      v-if="all && campaign.data[campaign.camId].clocks.length > 0"
     >
       <q-btn label="Begin a Session" flat dense @click="rollAllClocks" />
     </div>
@@ -17,16 +17,16 @@
       <clock
         v-for="index in clockIndices"
         :key="index"
-        v-model="campaign.data.character.clocks[index]"
+        v-model="campaign.data[campaign.camId].clocks[index]"
         @delete="removeClock(index)"
       />
     </div>
 
     <div class="row q-gutter-sm justify-evenly" v-else>
       <clock
-        v-for="(clock, index) in campaign.data.character.clocks"
+        v-for="(clock, index) in campaign.data[campaign.camId].clocks"
         :key="index"
-        v-model="campaign.data.character.clocks[index]"
+        v-model="campaign.data[campaign.camId].clocks[index]"
         @delete="removeClock(index)"
       />
     </div>
@@ -72,7 +72,7 @@ export default defineComponent({
       const out: number[] = [];
       if (!idList.value) return out;
       idList.value.forEach((id) => {
-        campaign.data.character.clocks.forEach((c, i) => {
+        campaign.data[campaign.camId].clocks.forEach((c, i) => {
           if (c.id === id) {
             out.push(i);
           }
@@ -82,7 +82,7 @@ export default defineComponent({
     });
     const clockOpts = computed(() => {
       const out: ISelectOpt[] = [{ label: 'New', value: 'new' }];
-      campaign.data.character.clocks.forEach((c) => {
+      campaign.data[campaign.camId].clocks.forEach((c) => {
         out.push({
           label: c.name,
           value: c.id,
@@ -94,7 +94,7 @@ export default defineComponent({
     const addClock = (id: string) => {
       if (id === 'new') {
         const c = NewClock();
-        campaign.data.character.clocks.unshift(c);
+        campaign.data[campaign.camId].clocks.unshift(c);
         idList.value.unshift(c.id);
         return;
       }
@@ -106,13 +106,13 @@ export default defineComponent({
       });
     };
     const removeClock = (index: number) => {
-      campaign.data.character.clocks.splice(index, 1);
+      campaign.data[campaign.camId].clocks.splice(index, 1);
     };
 
     const rollAllClocks = () => {
-      campaign.data.character.clocks.forEach((clock, index) => {
+      campaign.data[campaign.camId].clocks.forEach((clock, index) => {
         if (clock.advance !== EAtO.NoRoll) {
-          campaign.data.character.clocks[index] = RollClock(clock);
+          campaign.data[campaign.camId].clocks[index] = RollClock(clock);
         }
       });
     };

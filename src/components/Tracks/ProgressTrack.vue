@@ -182,7 +182,7 @@ export default defineComponent({
       const out: number[] = [];
       if (!data.value.clocks) return out;
       data.value.clocks.forEach((id) => {
-        campaign.data.character.clocks.forEach((c, i) => {
+        campaign.data[campaign.camId].clocks.forEach((c, i) => {
           if (c.id === id) {
             out.push(i);
           }

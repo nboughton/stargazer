@@ -30,7 +30,7 @@
   </div>
 
   <!-- Pinned -->
-  <div v-for="(journal, index) in campaign.data.journal" :key="index">
+  <div v-for="(journal, index) in campaign.data[campaign.charId].journal" :key="index">
     <journal-entry
       v-if="journal.pinned"
       :index="index"
@@ -45,7 +45,7 @@
   </div>
 
   <!-- Not pinned -->
-  <div v-for="(journal, index) in campaign.data.journal" :key="index">
+  <div v-for="(journal, index) in campaign.data[campaign.charId].journal" :key="index">
     <journal-entry
       v-if="showJournal(journal) && !journal.pinned"
       :index="index"
@@ -98,7 +98,6 @@ import { defineComponent, ref } from 'vue';
 import { IJournalEntry } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 import { useQuasar } from 'quasar';
 
 import { NewJournal } from 'src/lib/campaign';
@@ -110,11 +109,11 @@ export default defineComponent({
   components: { JournalEntry },
   setup() {
     const campaign = useCampaign();
-    const config = useConfig();
 
-    const addJournal = () => campaign.data.journal.unshift(NewJournal());
+    const addJournal = () => campaign.data[campaign.charId].journal.unshift(NewJournal());
     const removeJournal = (index: number) => {
-      if (window.confirm('Are you sure you want to delete this entry?')) campaign.data.journal.splice(index, 1);
+      if (window.confirm('Are you sure you want to delete this entry?'))
+        campaign.data[campaign.charId].journal.splice(index, 1);
     };
 
     const filter = ref('');
@@ -145,7 +144,11 @@ export default defineComponent({
           message: 'This will re-order your journal entries and cannot be undone. Are you sure?',
           cancel: true,
         })
-        .onOk(() => campaign.data.journal.sort((a: IJournalEntry, b: IJournalEntry) => b.title.localeCompare(a.title)));
+        .onOk(() =>
+          campaign.data[campaign.charId].journal.sort((a: IJournalEntry, b: IJournalEntry) =>
+            b.title.localeCompare(a.title)
+          )
+        );
 
     enum imageFloat {
       Left = 'left',
@@ -188,7 +191,6 @@ export default defineComponent({
       imageFloatSelect,
       journalEntryID,
       filter,
-      config,
       campaign,
     };
   },

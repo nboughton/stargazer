@@ -32,7 +32,6 @@ export const NewCharacter = (): ICharacter => {
       bonds: NewLegacyTrack(),
       discoveries: NewLegacyTrack(),
     },
-    clocks: [],
     impacts: {
       Misfortunes: [
         {
@@ -119,11 +118,12 @@ export const NewCampaign = (): ICampaign => {
   return {
     id: uuid(),
     name: `New Campaign - ${character.name}`,
-    character: character,
+    character: [character],
     truths: {},
     progressTracks: [NewProgressTrack()],
+    clocks: [],
     journal: [NewJournal()],
     sectors: [NewSector()],
-    factions: [NewFaction()],
+    factions: [],
   };
 };

@@ -12,7 +12,7 @@
 
       <div class="row q-gutter-sm q-mb-sm">
         <i-input class="col-grow" label="Name" v-model="data.name" />
-        <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn class="col-shrink" v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
       <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
     </q-expansion-item>
@@ -24,7 +24,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 
 import { IStar } from '../models';
 
-import { useConfig } from 'src/store/config';
+import { useCampaign } from 'src/store/campaign';
 
 import { icon } from 'src/lib/icons';
 
@@ -57,9 +57,9 @@ export default defineComponent({
       { deep: true }
     );
 
-    const config = useConfig();
+    const campaign = useCampaign();
 
-    return { data, config, icon };
+    return { data, campaign, icon };
   },
 });
 </script>

@@ -15,7 +15,7 @@
 
       <div class="col-4 sf-header text-h5 q-mx-xs text-center">
         {{ data.title }}
-        <slot name="append" v-if="config.data.edit" />
+        <slot name="append" v-if="campaign.config.edit" />
       </div>
 
       <div class="col-3 text-h6 sf-header q-mr-sm text-right">
@@ -58,12 +58,11 @@ import { defineComponent, PropType, ref, watch, computed } from 'vue';
 
 import { ISGAsset } from '../models';
 
-import { useConfig } from 'src/store/config';
-
 import { icon } from 'src/lib/icons';
 
 import ResourceTrack from '../Tracks/ResourceTrack.vue';
 import Hexbox from '../Widgets/Hexbox.vue';
+import { useCampaign } from 'src/store/campaign';
 
 export default defineComponent({
   components: { ResourceTrack, Hexbox },
@@ -100,12 +99,12 @@ export default defineComponent({
     });
 
     const dExpanded = ref(props.expanded);
-    const config = useConfig();
+    const campaign = useCampaign();
     return {
       data,
       dExpanded,
       icon,
-      config,
+      campaign,
       dots,
     };
   },

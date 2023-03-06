@@ -4,7 +4,7 @@
       <div class="row full-width q-gutter-sm items-center q-mb-xs">
         <q-input class="col-grow" label="Name" v-model="data.name" debounce="750" dense />
         <q-select class="col" v-model="data.segments" :options="[4, 6, 8, 10]" borderless dense />
-        <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="$emit('delete')" />
+        <q-btn class="col-shrink" v-if="campaign.config.edit" flat dense icon="delete" @click="$emit('delete')" />
       </div>
 
       <div class="row full-width q-gutter-sm items-center">
@@ -38,7 +38,6 @@ import { defineComponent, watch, computed, ref, PropType } from 'vue';
 import { IClock, EAtO } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 
 import { RollClock } from 'src/lib/tracks';
 
@@ -53,7 +52,6 @@ export default defineComponent({
   emits: ['update:modelValue', 'delete'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
-    const config = useConfig();
     const campaign = useCampaign();
 
     watch(
@@ -87,8 +85,8 @@ export default defineComponent({
       }
     };
     return {
-      config,
       data,
+      campaign,
       value,
       EAtO,
       roll,

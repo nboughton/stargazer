@@ -37,7 +37,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { ISettlement, ESLocation, ERegion, ESettPop } from 'src/components/models';
+import { ESLocation, ERegion, ESettPop } from 'src/components/models';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -47,6 +47,7 @@ import { NewSettlement } from 'src/lib/sector';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import ClipboardBtn from '../Widgets/ClipboardBtn.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   components: { OInput, OBtns, ClipboardBtn },
@@ -96,8 +97,9 @@ export default defineComponent({
         roll.First();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as ISettlement;
-        useCampaign().data.sectors[args.sector].cells[args.cell].settlements.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].settlements.unshift(storeCopy);
       },
     };
 

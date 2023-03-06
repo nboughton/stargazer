@@ -12,7 +12,7 @@
         <i-input class="col" label="Class" v-model="data.class" />
         <i-input class="col" label="Fleet" v-model="data.fleet" />
         <q-select class="col" label="Faction" v-model="faction" :options="campaignFactionNames" />
-        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
@@ -33,7 +33,6 @@ import { defineComponent, PropType, ref, watch, computed } from 'vue';
 import { IFaction, IStarship } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 
 import { icon } from 'src/lib/icons';
 
@@ -65,6 +64,7 @@ export default defineComponent({
       () => emit('update:modelValue', data.value),
       { deep: true }
     );
+    const campaign = useCampaign();
 
     const faction = computed({
       /**
@@ -107,7 +107,7 @@ export default defineComponent({
       /**
        * Get the names of the factions in the campaign.
        */
-      const factionNames = useCampaign().data.factions.map((x) => x.name);
+      const factionNames = campaign.data[campaign.camId].factions.map((x) => x.name);
 
       if (factionNames.length == 0) {
         // This campaign has no factions created yet.
@@ -120,10 +120,10 @@ export default defineComponent({
     };
 
     const getFactionForName = function (factionName: string) {
-      return useCampaign().data.factions.find((x) => x.name === factionName) as IFaction;
+      return campaign.data[campaign.camId].factions.find((x) => x.name === factionName) as IFaction;
     };
     const getFactionForId = function (factionId: string) {
-      return useCampaign().data.factions.find((x) => x.id === factionId) as IFaction;
+      return campaign.data[campaign.camId].factions.find((x) => x.id === factionId) as IFaction;
     };
 
     // Older saves may not have this value set. Set it to a default, if it is undefined.
@@ -131,10 +131,9 @@ export default defineComponent({
       data.value.factionId = '';
     }
 
-    const config = useConfig();
     return {
       data,
-      config,
+      campaign,
       icon,
       faction,
       campaignFactionNames,

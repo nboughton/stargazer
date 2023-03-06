@@ -35,7 +35,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { defineComponent, ref } from 'vue';
 
-import { ESLocation, EDerelictType, EDerelictZone, IDerelict } from '../models';
+import { ESLocation, EDerelictType, EDerelictZone } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -44,6 +44,7 @@ import * as oracle from 'src/lib/oracles';
 
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   components: { OInput, OBtns },
@@ -111,8 +112,9 @@ export default defineComponent({
         roll.OuterFirst();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IDerelict;
-        useCampaign().data.sectors[args.sector].cells[args.cell].derelicts.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].derelicts.unshift(storeCopy);
       },
     };
     return {

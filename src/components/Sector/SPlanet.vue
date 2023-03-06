@@ -17,7 +17,7 @@
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
@@ -58,7 +58,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 
 import { IPlanet, EPClass } from '../models';
 
-import { useConfig } from 'src/store/config';
+import { useCampaign } from 'src/store/campaign';
 
 import { icon } from 'src/lib/icons';
 
@@ -91,11 +91,11 @@ export default defineComponent({
       { deep: true }
     );
 
-    const config = useConfig();
+    const campaign = useCampaign();
 
     return {
       data,
-      config,
+      campaign,
       EPClass,
       icon,
     };

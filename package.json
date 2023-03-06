@@ -1,6 +1,6 @@
 {
   "name": "stargazer",
-  "version": "0.9.5",
+  "version": "2.0.0-beta",
   "description": "An app for journaling solo Ironsworn: Starforged campaigns",
   "productName": "Stargazer",
   "author": "Nick Boughton <nicholasboughton@gmail.com>",
@@ -18,6 +18,7 @@
     "dexie": "^3.0.3",
     "honeycomb-grid": "^3.1.8",
     "pinia": "^2.0.0",
+    "pinia-plugin-persist": "^1.0.0",
     "quasar": "^2.7.5",
     "sanitize-html": "^2.5.2",
     "seedrandom": "^3.0.5",

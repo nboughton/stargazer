@@ -17,7 +17,7 @@
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <div class="row q-gutter-sm justify-between q-mb-sm" v-if="$q.screen.gt.xs">
@@ -70,7 +70,7 @@ import { defineComponent, PropType, ref, watch } from 'vue';
 
 import { ISettlement, ESLocation, ESettPop } from '../models';
 
-import { useConfig } from 'src/store/config';
+import { useCampaign } from 'src/store/campaign';
 
 import { icon } from 'src/lib/icons';
 
@@ -103,11 +103,11 @@ export default defineComponent({
       { deep: true }
     );
 
-    const config = useConfig();
+    const campaign = useCampaign();
 
     return {
       data,
-      config,
+      campaign,
       ESLocation,
       ESettPop,
       icon,

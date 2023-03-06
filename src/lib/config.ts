@@ -3,7 +3,10 @@ import { IConfig } from 'src/components/models';
 export function NewConfig(): IConfig {
   return {
     id: 1,
-    current: '',
+    current: {
+      campaign: '',
+      character: 0,
+    },
     sector: 0,
     index: [],
     edit: true,

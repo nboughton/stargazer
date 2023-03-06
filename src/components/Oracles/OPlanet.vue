@@ -41,7 +41,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { IPlanet, ERegion, EPClass } from 'src/components/models';
+import { ERegion, EPClass } from 'src/components/models';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -51,6 +51,7 @@ import { NewPlanet } from 'src/lib/sector';
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
 import ClipboardBtn from '../Widgets/ClipboardBtn.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   components: { OInput, OBtns, ClipboardBtn },
@@ -161,8 +162,9 @@ export default defineComponent({
       },
       Save: (args: { sector: number; cell: number }) => {
         // prevent side effects from passing by reference
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IPlanet;
-        useCampaign().data.sectors[args.sector].cells[args.cell].planets.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].planets.unshift(storeCopy);
       },
       DescText: () => {
         // data.value.description = oracle.description(['Planets', data.value.type]);

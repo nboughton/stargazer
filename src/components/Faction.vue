@@ -1,6 +1,6 @@
 <template>
   <div class="row q-mb-sm text-h6">
-    {{ data.name }} <q-btn v-if="config.data.edit" flat dense icon="delete" @click="$emit('delete')" />
+    {{ data.name }} <q-btn v-if="campaign.config.edit" flat dense icon="delete" @click="$emit('delete')" />
   </div>
   <div class="row q-gutter-sm q-mb-sm">
     <i-input class="col" label="Name" v-model="data.name" />
@@ -30,7 +30,7 @@ import { defineComponent, ref, watch, PropType, computed } from 'vue';
 
 import { IFaction } from './models';
 
-import { useConfig } from 'src/store/config';
+import { useCampaign } from 'src/store/campaign';
 
 import IInput from 'src/components/Widgets/IInput.vue';
 
@@ -59,11 +59,11 @@ export default defineComponent({
 
     const isDominion = computed((): boolean => data.value.type === 'Dominion');
 
-    const config = useConfig();
+    const campaign = useCampaign();
     return {
       data,
       isDominion,
-      config,
+      campaign,
     };
   },
 });

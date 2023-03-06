@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { EEnv, ICreature } from '../models';
+import { EEnv } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -27,6 +27,7 @@ import * as oracle from 'src/lib/oracles';
 
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   components: { OInput, OBtns },
@@ -73,8 +74,9 @@ export default defineComponent({
         roll.First();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as ICreature;
-        useCampaign().data.sectors[args.sector].cells[args.cell].creatures.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].creatures.unshift(storeCopy);
       },
     };
     return {

@@ -2,9 +2,9 @@
   <q-expansion-item class="q-px-sm" header-class="q-py-none q-px-none" :default-opened="open" expand-icon-toggle>
     <template v-slot:header>
       <div class="row full-width items-center">
-        <i-input class="col-grow q-mr-sm" label="Title" v-model="campaign.data.journal[index].title" />
+        <i-input class="col-grow q-mr-sm" label="Title" v-model="campaign.data[campaign.camId].journal[index].title" />
         <q-btn class="col-shrink" flat dense :icon="pinIcon(index)" @click="pin(index)" />
-        <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="$emit('remove')">
+        <q-btn class="col-shrink" v-if="campaign.config.edit" flat dense icon="delete" @click="$emit('remove')">
           <q-tooltip>Delete this journal entry</q-tooltip>
         </q-btn>
       </div>
@@ -12,7 +12,7 @@
 
     <q-editor
       placeholder="Content"
-      v-model="campaign.data.journal[index].content"
+      v-model="campaign.data[campaign.camId].journal[index].content"
       :definitions="{
         image: {
           tip: 'Upload an image',
@@ -44,7 +44,6 @@
 import { defineComponent } from 'vue';
 
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 
 import IInput from 'src/components/Widgets/IInput.vue';
 
@@ -63,18 +62,16 @@ export default defineComponent({
   emits: ['remove', 'imgUpload'],
   setup() {
     const campaign = useCampaign();
-    const config = useConfig();
 
     const pinIcon = (index: number): string => {
-      return campaign.data.journal[index].pinned ? 'mdi-pin' : 'mdi-pin-off';
+      return campaign.data[campaign.camId].journal[index].pinned ? 'mdi-pin' : 'mdi-pin-off';
     };
     const pin = (index: number) => {
-      campaign.data.journal[index].pinned = !campaign.data.journal[index].pinned;
+      campaign.data[campaign.camId].journal[index].pinned = !campaign.data[campaign.camId].journal[index].pinned;
     };
 
     return {
       campaign,
-      config,
       pinIcon,
       pin,
     };

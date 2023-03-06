@@ -60,7 +60,10 @@ export interface IIndexItem {
 
 export interface IConfig {
   id: number;
-  current: string;
+  current: {
+    campaign: string;
+    character: number;
+  };
   sector: number;
   index: IIndexItem[];
   edit: boolean;
@@ -201,7 +204,6 @@ export interface ICharacter {
     discoveries: ILegacyTrack;
   };
   vows: IProgressTrack[];
-  clocks: IClock[];
   gear: string;
   assets: ISGAsset[];
 }
@@ -317,8 +319,9 @@ export interface IFaction {
 export interface ICampaign {
   id: string;
   name: string;
-  character: ICharacter;
+  character: ICharacter[];
   progressTracks: IProgressTrack[];
+  clocks: IClock[];
   journal: IJournalEntry[];
   truths: ITruths;
   sectors: ISector[];

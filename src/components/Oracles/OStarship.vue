@@ -32,6 +32,7 @@ import { NewShip } from 'src/lib/sector';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   components: { OInput, OBtns },
@@ -78,8 +79,9 @@ export default defineComponent({
         roll.First();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IStarship;
-        useCampaign().data.sectors[args.sector].cells[args.cell].ships.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].ships.unshift(storeCopy);
       },
     };
 

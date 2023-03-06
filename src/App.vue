@@ -13,14 +13,13 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, watch, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 
-import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
 import { useAssets } from './store/assets';
 import { useOracles } from './store/oracles';
 
-import { debounce, useQuasar } from 'quasar';
+import { useQuasar } from 'quasar';
 import { sleep } from './lib/util';
 
 export default defineComponent({
@@ -65,7 +64,6 @@ export default defineComponent({
       const assets = useAssets();
       const oracles = useOracles();
 
-      await campaign.populateStore().catch((err) => console.log(err));
       await assets.populateStore().catch((err) => console.log(err));
       await oracles.populateStore().catch((err) => console.log(err));
     };
@@ -74,34 +72,6 @@ export default defineComponent({
       await Promise.all([initialiseData(), renderIntro()]);
       loaded.value = true;
     });
-
-    const config = useConfig();
-
-    watch(
-      () => config.$state,
-      async () => {
-        await config.save();
-      },
-      { deep: true }
-    );
-
-    watch(
-      () => config.$state.data.current,
-      async () => {
-        await campaign.load(config.data.current);
-      }
-    );
-
-    watch(
-      () => campaign.$state,
-      debounce(async () => {
-        config.data.saving = true;
-        await campaign.save();
-        await sleep(200);
-        config.data.saving = false;
-      }, 1000),
-      { deep: true }
-    );
 
     return {
       skipIntro,

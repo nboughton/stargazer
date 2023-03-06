@@ -33,7 +33,6 @@ import { defineComponent, computed, ref } from 'vue';
 
 import { ECellStatus, ISelectOpt } from '../models';
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 import { CellLabel } from 'src/lib/sector';
 
 export default defineComponent({
@@ -47,12 +46,11 @@ export default defineComponent({
   emits: ['selected'],
   setup() {
     const campaign = useCampaign();
-    const config = useConfig();
 
-    const sectorSelect = ref(config.data.sector);
+    const sectorSelect = ref(campaign.config.sector);
     const sOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      campaign.data.sectors.forEach((s, si) => {
+      campaign.data[campaign.camId].sectors.forEach((s, si) => {
         opts.push({
           label: s.name,
           value: si,
@@ -64,9 +62,9 @@ export default defineComponent({
     const cellSelect = ref(null);
     const cOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      Object.keys(campaign.data.sectors[sectorSelect.value].cells).forEach((id) => {
-        if (campaign.data.sectors[sectorSelect.value].cells[id].stat === ECellStatus.Location) {
-          const { label } = CellLabel(campaign.data.sectors[sectorSelect.value].cells[id], id);
+      Object.keys(campaign.data[campaign.camId].sectors[sectorSelect.value].cells).forEach((id) => {
+        if (campaign.data[campaign.camId].sectors[sectorSelect.value].cells[id].stat === ECellStatus.Location) {
+          const { label } = CellLabel(campaign.data[campaign.camId].sectors[sectorSelect.value].cells[id], id);
           opts.push({
             label: label,
             value: id,

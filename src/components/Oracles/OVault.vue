@@ -39,7 +39,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { ESLocation, IVault } from '../models';
+import { ESLocation } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 
@@ -48,6 +48,7 @@ import { NewVault } from 'src/lib/sector';
 
 import OInput from 'src/components/Oracles/OInput.vue';
 import OBtns from './OBtns.vue';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   name: 'OVault',
@@ -120,8 +121,9 @@ export default defineComponent({
         roll.OuterFirst();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IVault;
-        useCampaign().data.sectors[args.sector].cells[args.cell].vaults.unshift(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].vaults.unshift(storeCopy);
       },
     };
 

@@ -34,8 +34,6 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 
-import { IFaction } from '../models';
-
 import { useCampaign } from 'src/store/campaign';
 
 import * as oracle from 'src/lib/oracles';
@@ -44,7 +42,7 @@ import { v4 as uuid } from 'uuid';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
-import { mdToText } from 'src/lib/util';
+import { deepCopy, mdToText } from 'src/lib/util';
 
 export default defineComponent({
   name: 'OFaction',
@@ -107,8 +105,9 @@ export default defineComponent({
         if (isDominion.value) Roll.Lead();
       },
       Save: () => {
-        const storeCopy = JSON.parse(JSON.stringify(data.value)) as IFaction;
-        useCampaign().data.factions.push(storeCopy);
+        const storeCopy = deepCopy(data.value);
+        const campaign = useCampaign();
+        campaign.data[campaign.camId].factions.push(storeCopy);
       },
     };
 

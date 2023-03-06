@@ -24,7 +24,7 @@
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollSub" />
     </div>
 
-    <q-input label="Text" v-model="campaign.data.truths[id]" dense outlined autogrow />
+    <q-input label="Text" v-model="campaign.data[campaign.camId].truths[id]" dense outlined autogrow />
   </div>
 </template>
 
@@ -80,7 +80,7 @@ export default defineComponent({
         truth?.Table.forEach((t, i) => {
           const r = new RegExp(`^${truncate(t.Result)}`);
           if (r.test(optSelect.value)) {
-            campaign.data.truths[props.id] = `${t.Result} ${t.Description}`;
+            campaign.data[campaign.camId].truths[props.id] = `${t.Result} ${t.Description}`;
             console.log(t);
             if (t.Subtable) {
               optID.value = i;
@@ -96,7 +96,7 @@ export default defineComponent({
     watch(
       () => subOptSelect.value,
       () => {
-        campaign.data.truths[props.id] += '\n\n' + subOptSelect.value;
+        campaign.data[campaign.camId].truths[props.id] += '\n\n' + subOptSelect.value;
       }
     );
 

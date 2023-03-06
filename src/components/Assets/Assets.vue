@@ -76,7 +76,7 @@
 
               <div class="row full-width justify-between">
                 <q-btn
-                  v-if="config.data.edit && ca.id"
+                  v-if="campaign.config.edit && ca.id"
                   class="q-ma-md"
                   outline
                   label="Delete"
@@ -101,7 +101,6 @@ import { defineComponent, ref, computed, watch } from 'vue';
 
 import { ISGAsset } from 'src/components/models';
 
-import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
 import { useCampaign } from 'src/store/campaign';
 
@@ -111,6 +110,7 @@ import { icon } from 'src/lib/icons';
 import AssetEditor from './AssetEditor.vue';
 import Hexbox from '../Widgets/Hexbox.vue';
 import { IAsset, starforged } from 'dataforged';
+import { deepCopy } from 'src/lib/util';
 
 export default defineComponent({
   name: 'Assets',
@@ -124,7 +124,6 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, ctx) {
     const campaign = useCampaign();
-    const config = useConfig();
     const showDialog = ref(props.modelValue);
     watch(
       () => props.modelValue,
@@ -185,8 +184,8 @@ export default defineComponent({
     };
 
     const addAsset = (id: string) => {
-      const dataCopy = JSON.parse(JSON.stringify(cards.value[id])) as ISGAsset;
-      campaign.data.character.assets.push(dataCopy);
+      const dataCopy = deepCopy(cards.value[id]);
+      campaign.data[campaign.camId].character[campaign.charId].assets.push(dataCopy);
     };
 
     const showEditor = ref(false);
@@ -199,7 +198,7 @@ export default defineComponent({
     );
 
     return {
-      config,
+      campaign,
       showDialog,
       close,
       filter,

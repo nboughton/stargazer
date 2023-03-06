@@ -100,7 +100,7 @@
                 class="col-shrink"
                 dense
                 flat
-                :label="campaign.data.character.tracks.momentum.value"
+                :label="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value"
                 icon="mdi-fire"
                 @click="burn"
                 :size="btnSize"
@@ -181,17 +181,17 @@ export default defineComponent({
     const adds = ref(0);
     const opts = computed((): ISelectOpt[] => {
       return [
-        { label: 'Edge', value: `edge:${campaign.data.character.stats.edge}` },
+        { label: 'Edge', value: `edge:${campaign.data[campaign.camId].character[campaign.charId].stats.edge}` },
         {
           label: 'Heart',
-          value: `heart:${campaign.data.character.stats.heart}`,
+          value: `heart:${campaign.data[campaign.camId].character[campaign.charId].stats.heart}`,
         },
-        { label: 'Iron', value: `iron:${campaign.data.character.stats.iron}` },
+        { label: 'Iron', value: `iron:${campaign.data[campaign.camId].character[campaign.charId].stats.iron}` },
         {
           label: 'Shadow',
-          value: `shadow:${campaign.data.character.stats.shadow}`,
+          value: `shadow:${campaign.data[campaign.camId].character[campaign.charId].stats.shadow}`,
         },
-        { label: 'Wits', value: `wits:${campaign.data.character.stats.wits}` },
+        { label: 'Wits', value: `wits:${campaign.data[campaign.camId].character[campaign.charId].stats.wits}` },
         { label: 'Other', value: 'other' },
       ];
     });
@@ -212,23 +212,27 @@ export default defineComponent({
     const roll = () => {
       burnt.value = false;
       if (select.value === 'other') attribute.value = otherAttr.value;
-      data.value = moveRoll(attribute.value, adds.value, campaign.data.character.tracks.momentum.value);
+      data.value = moveRoll(
+        attribute.value,
+        adds.value,
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value
+      );
     };
 
     const burnt = ref(false);
     const burn = () => {
-      const m = campaign.data.character.tracks.momentum.value;
-      const r = campaign.data.character.tracks.momentum.reset;
+      const m = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value;
+      const r = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset;
       if (data.value.result && data.value.result !== 'Strong Hit' && data.value.action.score < m) {
         data.value.action.score = m;
-        campaign.data.character.tracks.momentum.value = r;
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value = r;
         data.value = updateResults(data.value);
         burnt.value = true;
       }
     };
 
     const adIcon = computed(() => {
-      const m = campaign.data.character.tracks.momentum.value;
+      const m = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value;
       return m < 0 && Math.abs(m) === data.value.action.die
         ? `mdi-dice-${data.value.action.die}-outline`
         : `mdi-dice-${data.value.action.die}`;
@@ -250,8 +254,9 @@ export default defineComponent({
 
       // Account for negative momentum
       if (
-        campaign.data.character.tracks.momentum.value < 0 &&
-        Math.abs(campaign.data.character.tracks.momentum.value) === Math.abs(data.value.action.die)
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value < 0 &&
+        Math.abs(campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value) ===
+          Math.abs(data.value.action.die)
       ) {
         data.value.action.score -= data.value.action.die;
       }
@@ -271,13 +276,19 @@ export default defineComponent({
     };
 
     const mInc = () => {
-      if (campaign.data.character.tracks.momentum.value < campaign.data.character.tracks.momentum.max)
-        campaign.data.character.tracks.momentum.value++;
+      if (
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value <
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.max
+      )
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value++;
     };
 
     const mDec = () => {
-      if (campaign.data.character.tracks.momentum.value > campaign.data.character.tracks.momentum.min)
-        campaign.data.character.tracks.momentum.value--;
+      if (
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value >
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.min
+      )
+        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value--;
     };
 
     return {
