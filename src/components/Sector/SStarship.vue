@@ -11,11 +11,25 @@
         <i-input class="col" label="Name" v-model="data.name" />
         <i-input class="col" label="Class" v-model="data.class" />
         <i-input class="col" label="Fleet" v-model="data.fleet" />
-        <q-select class="col" label="Faction" v-model="faction" :options="campaignFactionNames" />
+        <q-select
+          v-if="$q.screen.gt.sm"
+          class="col"
+          label="Faction"
+          v-model="faction"
+          :options="campaignFactionNames"
+          dense
+          standout
+        />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
-      <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
+      <div class="row q-gutter-sm q-mb items-baseline" v-if="$q.screen.lt.md">
+        <i-input class="col q-mb-sm" label="First Look" v-model="data.firstLook" />
+        <q-select class="col" label="Faction" v-model="faction" :options="campaignFactionNames" dense standout />
+      </div>
+      <v-else>
+        <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
+      </v-else>
 
       <div class="row q-gutter-sm q-mb-sm">
         <i-input class="col" label="Initial Contact" v-model="data.initialContact" />
@@ -78,11 +92,7 @@ export default defineComponent({
 
         const factionForId = getFactionForId(data.value.factionId);
 
-        if (!factionForId) {
-          return 'None';
-        }
-
-        return factionForId.name;
+        return !factionForId ? 'None' : factionForId.name;
       },
 
       set(value: string) {
@@ -93,17 +103,12 @@ export default defineComponent({
           // Find the IFaction that matches the name of the faction given.
           const factionForSelectedName = getFactionForName(value);
 
-          if (!factionForSelectedName) {
-            // Fallback: A faction for the given name couldn't be found. This is most likely a bug.
-            data.value.factionId = '';
-          } else {
-            data.value.factionId = factionForSelectedName.id;
-          }
+          data.value.factionId = !factionForSelectedName ? '' : factionForSelectedName.id;
         }
       },
     });
 
-    const campaignFactionNames = () => {
+    const campaignFactionNames = computed((): string[] => {
       /**
        * Get the names of the factions in the campaign.
        */
@@ -117,19 +122,17 @@ export default defineComponent({
       // Always add 'None' as an option to the array.
       factionNames.unshift('None');
       return factionNames;
-    };
+    });
 
-    const getFactionForName = function (factionName: string) {
+    const getFactionForName = function (factionName: string): IFaction {
       return useCampaign().data.factions.find((x) => x.name === factionName) as IFaction;
     };
-    const getFactionForId = function (factionId: string) {
+    const getFactionForId = function (factionId: string): IFaction {
       return useCampaign().data.factions.find((x) => x.id === factionId) as IFaction;
     };
 
     // Older saves may not have this value set. Set it to a default, if it is undefined.
-    if (data.value.factionId === undefined) {
-      data.value.factionId = '';
-    }
+    if (data.value.factionId === undefined) data.value.factionId = '';
 
     const config = useConfig();
     return {

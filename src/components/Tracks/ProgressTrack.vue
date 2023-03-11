@@ -49,6 +49,11 @@
       <q-btn :icon="clockIcon" flat dense :size="btnSize" @click="showClocks = !showClocks">{{
         clockIndices.length
       }}</q-btn>
+      <q-btn :icon="notesIcon" flat dense :size="btnSize" @click="showNotes = !showNotes" />
+    </div>
+
+    <div v-if="showNotes" class="q-mt-sm">
+      <i-input v-model="data.notes" autogrow label="Notes" />
     </div>
 
     <div v-if="showClocks">
@@ -175,9 +180,7 @@ export default defineComponent({
 
     const campaign = useCampaign();
     const showClocks = ref(false);
-    const clockIcon = computed(() => {
-      return showClocks.value ? 'mdi-clock-time-two' : 'mdi-clock-time-two-outline';
-    });
+    const clockIcon = computed(() => (showClocks.value ? 'mdi-clock-time-two' : 'mdi-clock-time-two-outline'));
     const clockIndices = computed(() => {
       const out: number[] = [];
       if (!data.value.clocks) return out;
@@ -190,6 +193,11 @@ export default defineComponent({
       });
       return out;
     });
+    const showNotes = ref(false);
+    const notesIcon = computed(() => (showNotes.value ? 'mdi-note' : 'mdi-note-outline'));
+    if (data.value.notes === undefined) {
+      data.value.notes = '';
+    }
 
     return {
       data,
@@ -206,6 +214,9 @@ export default defineComponent({
       showClocks,
       clockIcon,
       clockIndices,
+
+      showNotes,
+      notesIcon,
       campaign,
     };
   },

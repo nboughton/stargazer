@@ -148,6 +148,7 @@ export interface IProgressTrack {
   difficulty: number;
   boxes: number[];
   clocks: string[];
+  notes?: string;
 }
 
 export interface ILegacyBox {
