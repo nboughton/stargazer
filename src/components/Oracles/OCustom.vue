@@ -5,7 +5,7 @@
       <q-btn class="col-shrink" icon="add_circle" flat dense @click="$emit('new')" />
     </div>
     <o-input
-      v-for="(o, i) of oracles.data"
+      v-for="(o, i) of sortedOracleData"
       :key="i"
       :label="o.Name"
       v-model="results[i]"
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, Ref, ref } from 'vue';
+import { defineComponent, Ref, ref, computed } from 'vue';
 
 import { useOracles } from 'src/store/oracles';
 
@@ -35,9 +35,12 @@ export default defineComponent({
     const results: Ref<string[]> = ref(new Array(oracles.data.length).fill('') as string[]);
     const roll = (id: string, index: number) => (results.value[index] = rollCustom(id));
     const clear = () => results.value.forEach((r, i) => (results.value[i] = ''));
+    const sortedOracleData = computed(() => {
+      return [...oracles.data].sort((a, b) => a.Name.localeCompare(b.Name));
+    });
 
     return {
-      oracles,
+      sortedOracleData,
       results,
       roll,
       clear,
