@@ -43,7 +43,7 @@
             dense
             outline
             label="Go here"
-            @click="campaign.data[campaign.camId].character.location = selectedID"
+            @click="campaign.data[campaign.camId].character[campaign.charId].location = selectedID"
           />
         </div>
       </q-card-section>
@@ -326,11 +326,11 @@ export default defineComponent({
     };
 
     const renderPlayer = () => {
-      if (campaign.data[campaign.camId].character.location != '') {
+      if (campaign.data[campaign.camId].character[campaign.charId].location != '') {
         // Clear existing player ship
         map.find('.ship').forEach((i) => i.remove());
 
-        const { x, y } = getXY(campaign.data[campaign.camId].character.location);
+        const { x, y } = getXY(campaign.data[campaign.camId].character[campaign.charId].location);
 
         SVG()
           .image(icon.player().replace('img:', ''))
@@ -394,7 +394,7 @@ export default defineComponent({
     );
 
     watch(
-      () => campaign.data[campaign.camId].character.location,
+      () => campaign.data[campaign.camId].character[campaign.charId].location,
       () => renderPlayer()
     );
 

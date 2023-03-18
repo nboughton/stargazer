@@ -97,9 +97,8 @@ export default defineComponent({
         roll.First();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = deepCopy(data.value);
         const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].settlements.unshift(storeCopy);
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].settlements.unshift(deepCopy(data.value));
       },
     };
 

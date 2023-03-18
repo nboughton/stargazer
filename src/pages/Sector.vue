@@ -6,7 +6,7 @@
       <q-select
         class="col"
         label="Sector"
-        v-model="config.data.sector"
+        v-model="campaign.config.sector"
         :options="sectorOpts"
         map-options
         emit-value
@@ -15,7 +15,7 @@
         dense
       />
       <q-btn
-        v-if="campaign.data.sectors.length > 1 && config.data.edit"
+        v-if="campaign.data[campaign.camId].sectors.length > 1 && campaign.config.edit"
         class="col-shrink"
         flat
         dense
@@ -25,13 +25,17 @@
       <q-select
         class="col"
         label="Region"
-        v-model="campaign.data.sectors[config.data.sector].region"
+        v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].region"
         :options="Object.values(ERegion)"
         standout="bg-blue-grey text-white"
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
-      <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
+      <i-input
+        class="col"
+        label="Faction/Control"
+        v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].control"
+      />
     </div>
     <div v-else>
       <div class="row q-mb-sm">
@@ -39,7 +43,7 @@
         <q-select
           class="col"
           label="Sector"
-          v-model="config.data.sector"
+          v-model="campaign.config.sector"
           :options="sectorOpts"
           map-options
           emit-value
@@ -48,7 +52,7 @@
           dense
         />
         <q-btn
-          v-if="campaign.data.sectors.length > 1 && config.data.edit"
+          v-if="campaign.data[campaign.camId].sectors.length > 1 && campaign.config.edit"
           class="col-shrink"
           flat
           dense
@@ -60,13 +64,17 @@
         <q-select
           class="col"
           label="Region"
-          v-model="campaign.data.sectors[config.data.sector].region"
+          v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].region"
           :options="Object.values(ERegion)"
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
+        <i-input
+          class="col"
+          label="Faction/Control"
+          v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].control"
+        />
       </div>
     </div>
 
@@ -75,7 +83,11 @@
     </div>
 
     <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
-      <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
+      <i-input
+        class="col"
+        label="Sector name"
+        v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].name"
+      />
       <i-input class="col" label="Search" v-model="searchText" clearable />
       <q-select
         class="col"
@@ -92,7 +104,11 @@
     </div>
     <div v-else>
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
+        <i-input
+          class="col"
+          label="Sector name"
+          v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].name"
+        />
         <q-btn class="col-shrink" flat dense icon="mdi-cog" @click="showMapConfig = true" />
       </div>
       <div class="row q-gutter-sm q-mb-sm">
@@ -116,10 +132,15 @@
       <div v-if="results">
         <q-expansion-item class="q-mb-lg" v-for="(sector, sID) in results" :key="sID" default-opened>
           <template v-slot:header>
-            <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data.sectors[+sID].name }}</div>
+            <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data[campaign.camId].sectors[+sID].name }}</div>
           </template>
 
-          <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
+          <i-input
+            class="q-mb-sm"
+            label="Sector Notes"
+            v-model="campaign.data[campaign.camId].sectors[+sID].notes"
+            autogrow
+          />
 
           <q-expansion-item
             class="q-mb-md card-bg rounded-borders"
@@ -130,7 +151,7 @@
           >
             <template v-slot:header>
               <div class="card-bg sf-header text-h5 q-pa-none col-grow">
-                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID], cID as string).label }}
+                Cell: {{ CellLabel(campaign.data[campaign.camId].sectors[+sID].cells[cID], cID as string).label }}
               </div>
             </template>
 
@@ -139,63 +160,63 @@
               <div v-for="oID in itemIDs" :key="oID">
                 <div v-if="oType === ESectorOpts.Settlements">
                   <s-settlement
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Settlements, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.NPCs">
                   <s-NPC
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.NPCs, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Stars">
                   <s-star
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Stars, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Planets">
                   <s-planet
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Planets, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Ships">
                   <s-starship
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Ships, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Derelicts">
                   <s-derelict
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Derelicts, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Vaults">
                   <s-vault
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Vaults, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Creatures">
                   <s-creature
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Creatures, sID, cID as string, oID)"
                   />
                 </div>
 
                 <div v-if="oType === ESectorOpts.Sightings">
                   <s-sighting
-                    v-model="campaign.data.sectors[+sID].cells[cID][oType][+oID]"
+                    v-model="campaign.data[campaign.camId].sectors[+sID].cells[cID][oType][+oID]"
                     @delete="campaign.removeObject(ESectorOpts.Sightings, sID, cID as string, oID)"
                   />
                 </div>
@@ -215,9 +236,9 @@
         </q-card-section>
 
         <q-card-section>
-          <q-toggle label="Stars" v-model="config.data.map.starfield" />
-          <q-toggle label="Animations" v-model="config.data.map.animations" />
-          <!--q-toggle label="Set passage as default" v-model="config.data.map.defaultPassage" /-->
+          <q-toggle label="Stars" v-model="campaign.config.map.starfield" />
+          <q-toggle label="Animations" v-model="campaign.config.map.animations" />
+          <!--q-toggle label="Set passage as default" v-model="campaign.config.map.defaultPassage" /-->
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -245,7 +266,6 @@ import {
 } from 'src/components/models';
 
 import { useCampaign } from 'src/store/campaign';
-import { useConfig } from 'src/store/config';
 
 import { NewSector, CellLabel } from 'src/lib/sector';
 
@@ -266,12 +286,11 @@ export default defineComponent({
   name: 'Sector',
   setup() {
     const campaign = useCampaign();
-    const config = useConfig();
     const showMapConfig = ref(false);
 
     const sectorOpts = computed(() => {
       const out: ISelectOpt[] = [];
-      campaign.data.sectors.forEach((s, i) => {
+      campaign.data[campaign.camId].sectors.forEach((s, i) => {
         out.push({
           label: s.name,
           value: i,
@@ -281,13 +300,13 @@ export default defineComponent({
     });
 
     const addSector = () => {
-      campaign.data.sectors.push(NewSector());
-      config.data.sector = campaign.data.sectors.length - 1;
+      campaign.data[campaign.camId].sectors.push(NewSector());
+      campaign.config.sector = campaign.data[campaign.camId].sectors.length - 1;
     };
     const removeSector = () => {
-      const d = config.data.sector;
-      config.data.sector = 0;
-      campaign.data.sectors.splice(d, 1);
+      const d = campaign.config.sector;
+      campaign.config.sector = 0;
+      campaign.data[campaign.camId].sectors.splice(d, 1);
     };
 
     // Search stuff
@@ -311,7 +330,7 @@ export default defineComponent({
       };
 
       // Construct results
-      campaign.data.sectors.forEach((sector, sectorI) => {
+      campaign.data[campaign.camId].sectors.forEach((sector, sectorI) => {
         Object.keys(sector.cells).forEach((cellI) => {
           Object.values(ESectorOpts).forEach((oType) => {
             for (let i = 0; i < sector.cells[cellI][oType].length; i++) {
@@ -433,7 +452,7 @@ export default defineComponent({
 
     return {
       campaign,
-      config,
+
       showMapConfig,
       ERegion,
       ECellStatus,

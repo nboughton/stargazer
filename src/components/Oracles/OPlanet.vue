@@ -162,9 +162,8 @@ export default defineComponent({
       },
       Save: (args: { sector: number; cell: number }) => {
         // prevent side effects from passing by reference
-        const storeCopy = deepCopy(data.value);
         const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].planets.unshift(storeCopy);
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].planets.unshift(deepCopy(data.value));
       },
       DescText: () => {
         // data.value.description = oracle.description(['Planets', data.value.type]);

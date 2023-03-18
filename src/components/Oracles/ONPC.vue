@@ -15,8 +15,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-import { INPC } from '../models';
-
 import { useCampaign } from 'src/store/campaign';
 
 import * as oracle from 'src/lib/oracles';
@@ -72,9 +70,8 @@ export default defineComponent({
         roll.Disp();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const storeCopy = deepCopy(data.value);
         const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].npcs.unshift(storeCopy);
+        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].npcs.unshift(deepCopy(data.value));
       },
     };
     return {

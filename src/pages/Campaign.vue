@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- content -->
-    <i-input class="q-mb-md" label="Campaign Name" v-model="campaign.data.name" />
+    <i-input class="q-mb-md" label="Campaign Name" v-model="campaign.data[campaign.camId].name" />
 
     <q-expansion-item default-opened>
       <template v-slot:header>
@@ -10,9 +10,9 @@
         </div>
       </template>
       <faction
-        v-for="(f, i) in campaign.data.factions"
+        v-for="(f, i) in campaign.data[campaign.camId].factions"
         :key="i"
-        v-model="campaign.data.factions[i]"
+        v-model="campaign.data[campaign.camId].factions[i]"
         @delete="removeFaction(i)"
       />
     </q-expansion-item>
@@ -57,10 +57,10 @@ export default defineComponent({
     const campaign = useCampaign();
 
     const addFaction = () => {
-      campaign.data.factions.unshift(NewFaction());
+      campaign.data[campaign.camId].factions.unshift(NewFaction());
     };
     const removeFaction = (index: number) => {
-      campaign.data.factions.splice(index, 1);
+      campaign.data[campaign.camId].factions.splice(index, 1);
     };
 
     return {
