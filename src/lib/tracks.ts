@@ -5,15 +5,15 @@ import { clockRoll } from './roll';
 export const boxIcon = (value: number): string => {
   switch (value) {
     case 0:
-      return 'mdi-checkbox-blank-outline';
+      return 'svguse:icons/progress-icons.svg#progress0';
     case 1:
-      return 'mdi-circle-small';
+      return 'svguse:icons/progress-icons.svg#progress1';
     case 2:
-      return 'mdi-star-four-points';
+      return 'svguse:icons/progress-icons.svg#progress2';
     case 3:
-      return 'mdi-hexagram';
+      return 'svguse:icons/progress-icons.svg#progress3';
     case 4:
-      return 'mdi-flare';
+      return 'svguse:icons/progress-icons.svg#progress4';
     default:
       break;
   }
