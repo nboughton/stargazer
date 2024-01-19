@@ -266,7 +266,7 @@ export default defineComponent({
 
       campaign.appendToJournal(
         0,
-        `<div class="note actionroll"><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = ${data.value.action.score} vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b>&nbsp;</div>`
+        `<div class="note actionroll"><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = ${data.value.action.score} vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b></div>`
       );
     };
 

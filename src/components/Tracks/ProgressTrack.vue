@@ -146,7 +146,7 @@ export default defineComponent({
         updateValue();
         campaign.appendToJournal(
           0,
-          `<div class="note progress"><b>[Mark Progress: ${data.value.name} :${actionScore.value} boxes]</b>&nbsp;</div>`
+          `<div class="note progress"><b>[Mark Progress: ${data.value.name} :${actionScore.value} boxes]</b></div>`
         );
       })();
     };
@@ -174,7 +174,7 @@ export default defineComponent({
 
       campaign.appendToJournal(
         0,
-        `<div class="note progressroll"><b>[Progress Roll: ${data.value.name} :${rollData.value.result} = ${rollData.value.action.score} vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}]</b>&nbsp;</div>`
+        `<div class="note progressroll"><b>[Progress Roll: ${data.value.name} :${rollData.value.result} = ${rollData.value.action.score} vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}]</b></div>`
       );
     };
 

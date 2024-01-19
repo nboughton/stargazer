@@ -66,7 +66,7 @@ export default defineComponent({
       () => {
         if (data.value.filled === data.value.segments && !data.value.complete) {
           data.value.complete = true;
-          campaign.appendToJournal(0, `<div class="note clock"><b>[Clock completed: ${data.value.name}]</b>&nbsp;</div>`);
+          campaign.appendToJournal(0, `<div class="note clock"><b>[Clock completed: ${data.value.name}]</b></div>`);
         }
         if (data.value.filled > data.value.segments) {
           data.value.filled = 0;
