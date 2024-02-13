@@ -43,14 +43,18 @@ export const useAssets = defineStore({
       const reader = new FileReader();
       reader.onload = (ev) => {
         const assets = JSON.parse(ev.target?.result as string) as ISGAsset[];
-        // Strip script tags
-        assets.forEach((a, i) => {
-          assets[i].items.forEach((item, index) => (assets[i].items[index].text = stripTags(item.text)));
+        if (assets satisfies ISGAsset[]) {
+          // Strip script tags
+          assets.forEach((a, i) => {
+            assets[i].items.forEach((item, index) => (assets[i].items[index].text = stripTags(item.text)));
 
-          // Check ID to either update or add new asset
-          const idx = this.data.findIndex((t) => t.id && t.id === a.id);
-          idx >= 0 ? (this.data[idx] = deepCopy(a)) : this.data.push(deepCopy(a));
-        });
+            // Check ID to either update or add new asset
+            const idx = this.data.findIndex((t) => t.id && t.id === a.id);
+            idx >= 0 ? (this.data[idx] = deepCopy(a)) : this.data.push(deepCopy(a));
+          });
+        } else {
+          alert('Data does not satisfy Asset interface');
+        }
       };
       reader.readAsText(file);
     },

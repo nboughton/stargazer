@@ -53,14 +53,17 @@ export const useOracles = defineStore({
       const reader = new FileReader();
       reader.onload = (ev) => {
         let oracles = JSON.parse(ev.target?.result as string) as ICustomOracle[];
-
-        oracles = strip(oracles);
-        // Strip script tahgs
-        oracles.forEach((o) => {
-          // Check ID to either update or add new asset
-          const idx = this.data.findIndex((t) => t.$id === o.$id);
-          idx >= 0 ? (this.data[idx] = deepCopy(o)) : this.data.push(deepCopy(o));
-        });
+        if (oracles satisfies ICustomOracle[]) {
+          oracles = strip(oracles);
+          // Strip script tahgs
+          oracles.forEach((o) => {
+            // Check ID to either update or add new asset
+            const idx = this.data.findIndex((t) => t.$id === o.$id);
+            idx >= 0 ? (this.data[idx] = deepCopy(o)) : this.data.push(deepCopy(o));
+          });
+        } else {
+          alert('Data does not satisfy custom Oracles interface');
+        }
       };
       reader.readAsText(file);
     },

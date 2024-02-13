@@ -89,16 +89,27 @@ export const useCampaign = defineStore({
         switch (version) {
           case 1:
             const v1campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
-            v1campaigns.forEach((c) => {
-              this.campaigns[c.id] = deepCopy(c);
-            });
+            if (v1campaigns satisfies ICampaign[]) {
+              v1campaigns.forEach((c) => {
+                this.campaigns[c.id] = deepCopy(c);
+              });
+            } else {
+              alert('This does not look like usable data');
+            }
             break;
           case 2:
             const v2campaigns = JSON.parse(ev.target?.result as string) as ICampaigns;
-            Object.keys(v2campaigns).forEach((key) => {
-              this.campaigns[key] = deepCopy(v2campaigns[key]);
-            });
+            if (v2campaigns satisfies ICampaigns) {
+              Object.keys(v2campaigns).forEach((key) => {
+                this.campaigns[key] = deepCopy(v2campaigns[key]);
+              });
+            } else {
+              alert('This does not look like usable data');
+            }
             break;
+
+          default:
+            alert('Unsupported version or version not specified');
         }
       };
       reader.readAsText(file);
