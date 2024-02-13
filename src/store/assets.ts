@@ -53,7 +53,7 @@ export const useAssets = defineStore({
             idx >= 0 ? (this.data[idx] = deepCopy(a)) : this.data.push(deepCopy(a));
           });
         } else {
-          alert('Data does not satisfy Asset interface');
+          alert('This data does not satisfy the Asset interface');
         }
       };
       reader.readAsText(file);

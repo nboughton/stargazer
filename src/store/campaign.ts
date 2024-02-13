@@ -94,7 +94,7 @@ export const useCampaign = defineStore({
                 this.campaigns[c.id] = deepCopy(c);
               });
             } else {
-              alert('This does not look like usable data');
+              alert('This does not look like Stargazer 1.x data');
             }
             break;
           case 2:
@@ -104,7 +104,7 @@ export const useCampaign = defineStore({
                 this.campaigns[key] = deepCopy(v2campaigns[key]);
               });
             } else {
-              alert('This does not look like usable data');
+              alert('This does not look like Stargazer 2.x usable data');
             }
             break;
 

@@ -62,7 +62,7 @@ export const useOracles = defineStore({
             idx >= 0 ? (this.data[idx] = deepCopy(o)) : this.data.push(deepCopy(o));
           });
         } else {
-          alert('Data does not satisfy custom Oracles interface');
+          alert('This data does not satisfy the custom Oracles interface');
         }
       };
       reader.readAsText(file);

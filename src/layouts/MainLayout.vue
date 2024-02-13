@@ -224,6 +224,7 @@
             label="Select File"
             accept=".json"
           />
+          <q-select label="Stargazer Version" :options="[1, 2]" v-model.number="dataLoadVersion" />
         </q-card-section>
 
         <q-card-actions align="center">
@@ -394,9 +395,10 @@ export default defineComponent({
 
     const fileToLoad = ref(null);
     const showDataLoad = ref(false);
+    const dataLoadVersion = ref(1);
     const loadData = () => {
       const f: File = fileToLoad.value as unknown as File;
-      app.loadData(f, 1);
+      app.loadData(f, dataLoadVersion.value); // HMMM, can we autodetect version structure? Probably not.
       showDataLoad.value = false;
     };
 
@@ -467,6 +469,7 @@ export default defineComponent({
       campaignToDeleteName,
 
       showDataLoad,
+      dataLoadVersion,
       fileToLoad,
       loadData,
 
