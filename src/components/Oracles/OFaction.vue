@@ -35,10 +35,10 @@
 import { defineComponent, ref, computed } from 'vue';
 
 import { useCampaign } from 'src/store/campaign';
+import { uid } from 'quasar';
 
 import * as oracle from 'src/lib/oracles';
 import { NewFaction } from 'src/lib/campaign';
-import { v4 as uuid } from 'uuid';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
@@ -97,7 +97,7 @@ export default defineComponent({
       },
       Initial: () => {
         btns.Clear();
-        data.value.id = uuid();
+        data.value.id = uid();
         Roll.Type();
         Roll.Name();
         Roll.Inf();

@@ -16,8 +16,6 @@
 import { defineComponent, ref, onMounted } from 'vue';
 
 import { useCampaign } from './store/campaign';
-import { useAssets } from './store/assets';
-import { useOracles } from './store/oracles';
 
 import { useQuasar } from 'quasar';
 import { sleep } from './lib/util';
@@ -45,7 +43,7 @@ export default defineComponent({
     const $q = useQuasar();
     $q.dark.set(true);
 
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     const renderIntro = async () => {
       await writeLine('::booting system...');
@@ -56,10 +54,11 @@ export default defineComponent({
       await skippableSleep(500);
       // await writeLine('::synchronising...');
       //await skippableSleep(500);
-      await writeLine('::welcome ' + campaign.data.character.name);
+      await writeLine('::welcome ' + app.ch.name);
       await sleep(500);
     };
 
+    /*
     const initialiseData = async () => {
       const assets = useAssets();
       const oracles = useOracles();
@@ -67,9 +66,9 @@ export default defineComponent({
       await assets.populateStore().catch((err) => console.log(err));
       await oracles.populateStore().catch((err) => console.log(err));
     };
-
+*/
     onMounted(async () => {
-      await Promise.all([initialiseData(), renderIntro()]);
+      await Promise.all([renderIntro()]);
       loaded.value = true;
     });
 

@@ -10,12 +10,16 @@ import { deepCopy, now } from 'src/lib/util';
 import { NewCampaign } from 'src/lib/campaign';
 import { NewConfig } from 'src/lib/config';
 
+const defCampaign = NewCampaign();
+
 export const useCampaign = defineStore({
   id: 'campaign',
 
   state: () => ({
     config: NewConfig(),
-    campaigns: <ICampaigns>{},
+    campaigns: <ICampaigns>{
+      [defCampaign.id]: defCampaign,
+    },
   }),
 
   actions: {

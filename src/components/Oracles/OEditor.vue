@@ -158,7 +158,7 @@ export default defineComponent({
           cancel: true,
         })
         .onOk(() => {
-          oracles.delete(data.value).catch((err) => console.log(err));
+          oracles.delete(data.value);
           emit('close');
         });
 

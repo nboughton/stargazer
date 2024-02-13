@@ -1,5 +1,5 @@
 import { IDiff, ILegacyBox, ILegacyTrack, IProgressTrack, IClock, EAtO } from 'src/components/models';
-import { v4 as uuid } from 'uuid';
+import { uid } from 'quasar';
 import { clockRoll } from './roll';
 
 export const boxIcon = (value: number): string => {
@@ -52,7 +52,7 @@ export const NewLegacyTrack = (): ILegacyTrack => {
 
 export const NewClock = (): IClock => {
   return {
-    id: uuid(),
+    id: uid(),
     name: '',
     segments: 4,
     filled: 0,

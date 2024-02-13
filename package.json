@@ -22,8 +22,7 @@
     "sanitize-html": "^2.11.0",
     "seedrandom": "^3.0.5",
     "showdown": "^2.1.0",
-    "uuid": "^8.3.2",
-    "vue": "^3.0.0",
+    "vue": "^3.4.19",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {

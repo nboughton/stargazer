@@ -1,11 +1,14 @@
 import { ISGAsset, ISGAssetItem } from 'src/components/models';
+
 import { IAsset } from 'dataforged';
-import { v4 as uuid } from 'uuid';
+
+import { uid } from 'quasar';
+
 import { mdToHtml } from './util';
 
 export const NewAsset = (): ISGAsset => {
   return {
-    id: uuid(),
+    id: uid(),
     title: 'Custom Asset',
     type: 'Custom',
     items: [

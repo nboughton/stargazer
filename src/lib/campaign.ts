@@ -1,6 +1,6 @@
 import { ICampaign, ICharacter, IJournalEntry, IFaction } from 'src/components/models';
 
-import { v4 as uuid } from 'uuid';
+import { uid } from 'quasar';
 import * as oracle from 'src/lib/oracles';
 import { NewSector } from './sector';
 import { NewLegacyTrack, NewProgressTrack } from './tracks';
@@ -98,7 +98,7 @@ export const NewJournal = (): IJournalEntry => {
 
 export const NewFaction = (): IFaction => {
   return {
-    id: uuid(),
+    id: uid(),
     name: '',
     type: '',
     influence: '',
@@ -116,7 +116,7 @@ export const NewCampaign = (): ICampaign => {
   const character = NewCharacter();
 
   return {
-    id: uuid(),
+    id: uid(),
     name: `New Campaign - ${character.name}`,
     character: [character],
     truths: {},
