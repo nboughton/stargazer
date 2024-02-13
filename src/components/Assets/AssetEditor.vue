@@ -72,6 +72,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+// file deepcode ignore OverwriteAssignment: Learn how to read fucking ternary operators.
 import { defineComponent, ref, watch } from 'vue';
 
 import { ISGAsset } from 'src/components/models';
@@ -80,7 +81,6 @@ import { useAssets } from 'src/store/assets';
 
 import { NewAsset } from 'src/lib/assets';
 import { validTags } from 'src/lib/util';
-import { db } from 'src/lib/db';
 
 import Asset from './Asset.vue';
 
@@ -106,7 +106,7 @@ export default defineComponent({
       ctx.emit('update:modelValue', false);
     };
     const save = (a: ISGAsset) => {
-      assets.save(a).catch((err) => console.log(err));
+      assets.save(a);
       close();
     };
 
@@ -150,19 +150,18 @@ export default defineComponent({
     };
 
     // Load data if it's not a new asset
-    void (async () => {
-      if (props.id !== 'new') {
-        data.value = (await db.assets.get(props.id)) as ISGAsset;
 
-        if (data.value.subtitle) subtitle.value = data.value.subtitle;
+    if (props.id !== 'new') {
+      data.value = assets.data.find((a) => a.id === props.id) as ISGAsset;
 
-        hasMainInput.value = !!data.value.input;
-        hasItem1Input.value = !!data.value.items[0].input;
-        hasItem2Input.value = !!data.value.items[1].input;
-        hasItem3Input.value = !!data.value.items[2].input;
-        hasTrack.value = !!data.value.track;
-      }
-    })();
+      if (data.value.subtitle) subtitle.value = data.value.subtitle;
+
+      hasMainInput.value = !!data.value.input;
+      hasItem1Input.value = !!data.value.items[0].input;
+      hasItem2Input.value = !!data.value.items[1].input;
+      hasItem3Input.value = !!data.value.items[2].input;
+      hasTrack.value = !!data.value.track;
+    }
 
     return {
       data,

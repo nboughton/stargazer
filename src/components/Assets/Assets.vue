@@ -76,11 +76,11 @@
 
               <div class="row full-width justify-between">
                 <q-btn
-                  v-if="campaign.config.edit && ca.id"
+                  v-if="app.config.edit && ca.id"
                   class="q-ma-md"
                   outline
                   label="Delete"
-                  @click="customAssets.delete(ca)"
+                  @click="customAssets.delete(ca.id)"
                 />
                 <q-btn class="q-ma-md" outline label="Add" @click="addAsset(ca.id || ca.title)" />
               </div>
@@ -123,7 +123,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, ctx) {
-    const campaign = useCampaign();
+    const app = useCampaign();
     const showDialog = ref(props.modelValue);
     watch(
       () => props.modelValue,
@@ -185,7 +185,7 @@ export default defineComponent({
 
     const addAsset = (id: string) => {
       const dataCopy = deepCopy(cards.value[id]);
-      campaign.data[campaign.camId].character[campaign.charId].assets.push(dataCopy);
+      app.ch.assets.push(dataCopy);
     };
 
     const showEditor = ref(false);
@@ -198,7 +198,7 @@ export default defineComponent({
     );
 
     return {
-      campaign,
+      app,
       showDialog,
       close,
       filter,

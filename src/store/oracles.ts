@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import { ICustomOracle } from 'src/components/models';
-import { db } from 'src/lib/db';
 import { exportFile } from 'quasar';
-import { stripTags, now } from 'src/lib/util';
+import { stripTags, now, deepCopy } from 'src/lib/util';
 
 const strip = (oracles: ICustomOracle[]): ICustomOracle[] => {
   oracles.forEach((o, i) => {
@@ -26,45 +25,24 @@ export const useOracles = defineStore({
   },
 
   actions: {
-    async populateStore() {
-      await db.oracles.count(); // This is a hack that pokes the db after a data load
-      if ((await db.oracles.count()) > 0) {
-        try {
-          const oracles = await db.oracles.toArray();
-
-          this.data = strip(oracles);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    },
-
-    async save(oracle: ICustomOracle) {
+    save(oracle: ICustomOracle) {
       // Strip script tags from item texts
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       oracle.Table?.forEach((r, i) => (oracle.Table![i].Result = stripTags(r.Result)));
 
-      const storeCopy = JSON.parse(JSON.stringify(oracle)) as ICustomOracle;
-      await db.oracles.put(storeCopy).catch((err) => console.log(err));
-
-      // repopulate store
-      await this.populateStore();
+      const idx = this.data.findIndex((t) => t.$id === oracle.$id);
+      idx >= 0 ? (this.data[idx] = deepCopy(oracle)) : this.data.push(deepCopy(oracle));
     },
 
-    async delete(oracle: ICustomOracle) {
+    delete(oracle: ICustomOracle) {
       const id = oracle.$id;
-      await db.oracles.delete(id);
-      this.data.forEach((oracle, index) => {
-        if (oracle.$id === id) {
-          this.data.splice(index, 1);
-        }
+      this.data.forEach((o, i) => {
+        if (o.$id === id) this.data.splice(i, 1);
       });
     },
 
-    async exportData() {
-      const oracles = await db.oracles.toArray();
-
-      const data = JSON.stringify(strip(oracles));
+    exportData() {
+      const data = JSON.stringify(strip(this.data));
       const status = exportFile(`Starforged-oracles-${now()}.json`, data, {
         mimeType: 'application/json',
       });
@@ -73,18 +51,28 @@ export const useOracles = defineStore({
 
     loadData(file: File) {
       const reader = new FileReader();
-      reader.onload = async (ev) => {
-        const oracles = JSON.parse(ev.target?.result as string) as ICustomOracle[];
+      reader.onload = (ev) => {
+        let oracles = JSON.parse(ev.target?.result as string) as ICustomOracle[];
 
-        try {
-          await db.oracles.bulkPut(strip(oracles));
-          // Repopulate store with updated content
-          await this.populateStore();
-        } catch (err) {
-          console.log(err);
-        }
+        oracles = strip(oracles);
+        // Strip script tahgs
+        oracles.forEach((o) => {
+          // Check ID to either update or add new asset
+          const idx = this.data.findIndex((t) => t.$id === o.$id);
+          idx >= 0 ? (this.data[idx] = deepCopy(o)) : this.data.push(deepCopy(o));
+        });
       };
       reader.readAsText(file);
     },
+  },
+
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'StargazerCustomOracles',
+        storage: localStorage,
+      },
+    ],
   },
 });

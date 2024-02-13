@@ -26,22 +26,22 @@ export const useCampaign = defineStore({
       from: { sector: number; cell: string },
       to: { sector: number; cell: string }
     ) {
-      this.campaigns[this.camId].sectors[to.sector].cells[to.cell][type].unshift(deepCopy(obj));
-      this.campaigns[this.camId].sectors[from.sector].cells[from.cell][type].splice(index, 1);
+      this.ca.sectors[to.sector].cells[to.cell][type].unshift(deepCopy(obj));
+      this.ca.sectors[from.sector].cells[from.cell][type].splice(index, 1);
     },
 
     removeObject(type: ESectorOpts, sector: number, cell: string, index: number) {
-      this.campaigns[this.camId].sectors[sector].cells[cell][type].splice(index, 1);
+      this.ca.sectors[sector].cells[cell][type].splice(index, 1);
     },
 
     appendToJournal(index: number, text: string) {
-      this.campaigns[this.camId].journal[index].content += text;
+      this.ca.journal[index].content += text;
     },
 
     exportJournal() {
       const doc = document.implementation.createHTMLDocument('Journal');
 
-      this.campaigns[this.camId].journal.forEach((j) => {
+      this.ca.journal.forEach((j) => {
         const div = doc.createElement('div');
         div.classList.add('entry');
         div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`;
