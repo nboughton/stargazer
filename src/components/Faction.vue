@@ -1,6 +1,6 @@
 <template>
   <div class="row q-mb-sm text-h6">
-    {{ data.name }} <q-btn v-if="campaign.config.edit" flat dense icon="delete" @click="$emit('delete')" />
+    {{ data.name }} <q-btn v-if="app.config.edit" flat dense icon="delete" @click="$emit('delete')" />
   </div>
   <div class="row q-gutter-sm q-mb-sm">
     <i-input class="col" label="Name" v-model="data.name" />
@@ -59,11 +59,11 @@ export default defineComponent({
 
     const isDominion = computed((): boolean => data.value.type === 'Dominion');
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     return {
       data,
       isDominion,
-      campaign,
+      app,
     };
   },
 });

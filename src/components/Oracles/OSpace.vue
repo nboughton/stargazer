@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="card-bg q-pa-xs">
     <q-select label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
 

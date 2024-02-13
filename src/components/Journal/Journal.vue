@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: Return values are being passed to components. -->
   <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
     <span class="col-shrink text-h4 q-pr-sm sf-header">JOURNAL</span>
     <q-input
@@ -30,7 +31,7 @@
   </div>
 
   <!-- Pinned -->
-  <div v-for="(journal, index) in campaign.data[campaign.charId].journal" :key="index">
+  <div v-for="(journal, index) in app.ca.journal" :key="index">
     <journal-entry
       v-if="journal.pinned"
       :index="index"
@@ -45,7 +46,7 @@
   </div>
 
   <!-- Not pinned -->
-  <div v-for="(journal, index) in campaign.data[campaign.charId].journal" :key="index">
+  <div v-for="(journal, index) in app.ca.journal" :key="index">
     <journal-entry
       v-if="showJournal(journal) && !journal.pinned"
       :index="index"
@@ -74,12 +75,14 @@
       </q-card-section>
 
       <q-card-section>
+        <!-- deepcode ignore PureFunctionReturnValueIgnored: The return value is passed to component -->
         <q-select
           label="Float"
           v-model="imageFloatSelect"
           :options="Object.values(imageFloat)"
           dense
-          hint="Select image float (allows text to wrap around the image)"
+          hint="Select image float (allows text to
+        wrap around the image)"
         />
       </q-card-section>
 
@@ -108,12 +111,11 @@ export default defineComponent({
   name: 'Journal',
   components: { JournalEntry },
   setup() {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
-    const addJournal = () => campaign.data[campaign.charId].journal.unshift(NewJournal());
+    const addJournal = () => app.ca.journal.unshift(NewJournal());
     const removeJournal = (index: number) => {
-      if (window.confirm('Are you sure you want to delete this entry?'))
-        campaign.data[campaign.charId].journal.splice(index, 1);
+      if (window.confirm('Are you sure you want to delete this entry?')) app.ca.journal.splice(index, 1);
     };
 
     const filter = ref('');
@@ -144,11 +146,7 @@ export default defineComponent({
           message: 'This will re-order your journal entries and cannot be undone. Are you sure?',
           cancel: true,
         })
-        .onOk(() =>
-          campaign.data[campaign.charId].journal.sort((a: IJournalEntry, b: IJournalEntry) =>
-            b.title.localeCompare(a.title)
-          )
-        );
+        .onOk(() => app.ca.journal.sort((a: IJournalEntry, b: IJournalEntry) => b.title.localeCompare(a.title)));
 
     enum imageFloat {
       Left = 'left',
@@ -172,7 +170,7 @@ export default defineComponent({
         if (imageFloatSelect.value === imageFloat.Right) {
           imgClass += ' float-right';
         }
-        campaign.appendToJournal(journalEntryID.value, `<img class="${imgClass}" src="${img as string}" />`);
+        app.appendToJournal(journalEntryID.value, `<img class="${imgClass}" src="${img as string}" />`);
       };
 
       reader.readAsDataURL(f);
@@ -180,6 +178,7 @@ export default defineComponent({
     };
 
     return {
+      app,
       showJournal,
       addJournal,
       removeJournal,
@@ -191,7 +190,6 @@ export default defineComponent({
       imageFloatSelect,
       journalEntryID,
       filter,
-      campaign,
     };
   },
 });

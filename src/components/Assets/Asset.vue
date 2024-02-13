@@ -15,7 +15,7 @@
 
       <div class="col-4 sf-header text-h5 q-mx-xs text-center">
         {{ data.title }}
-        <slot name="append" v-if="campaign.config.edit" />
+        <slot name="append" v-if="app.config.edit" />
       </div>
 
       <div class="col-3 text-h6 sf-header q-mr-sm text-right">
@@ -99,12 +99,12 @@ export default defineComponent({
     });
 
     const dExpanded = ref(props.expanded);
-    const campaign = useCampaign();
+    const app = useCampaign();
     return {
       data,
       dExpanded,
       icon,
-      campaign,
+      app,
       dots,
     };
   },

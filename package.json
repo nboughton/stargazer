@@ -11,16 +11,15 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.14.3",
+    "@quasar/extras": "^1.16.9",
     "@svgdotjs/svg.js": "^3.1.1",
     "core-js": "^3.19.0",
     "dataforged": "^1.2.2",
-    "dexie": "^3.0.3",
     "honeycomb-grid": "^3.1.8",
     "pinia": "^2.0.0",
     "pinia-plugin-persist": "^1.0.0",
-    "quasar": "^2.7.5",
-    "sanitize-html": "^2.5.2",
+    "quasar": "^2.14.3",
+    "sanitize-html": "^2.11.0",
     "seedrandom": "^3.0.5",
     "showdown": "^2.1.0",
     "uuid": "^8.3.2",
@@ -29,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.8",
-    "@quasar/app-webpack": "^3.5.7",
+    "@quasar/app-webpack": "^3.12.3",
     "@types/node": "^16.11.6",
     "@types/sanitize-html": "^2.5.0",
     "@types/seedrandom": "^3.0.1",

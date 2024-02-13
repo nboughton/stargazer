@@ -45,12 +45,12 @@ export default defineComponent({
   },
   emits: ['selected'],
   setup() {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
-    const sectorSelect = ref(campaign.config.sector);
+    const sectorSelect = ref(app.config.sector);
     const sOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      campaign.data[campaign.camId].sectors.forEach((s, si) => {
+      app.ca.sectors.forEach((s, si) => {
         opts.push({
           label: s.name,
           value: si,
@@ -62,9 +62,9 @@ export default defineComponent({
     const cellSelect = ref(null);
     const cOpts = computed((): ISelectOpt[] => {
       let opts: ISelectOpt[] = [];
-      Object.keys(campaign.data[campaign.camId].sectors[sectorSelect.value].cells).forEach((id) => {
-        if (campaign.data[campaign.camId].sectors[sectorSelect.value].cells[id].stat === ECellStatus.Location) {
-          const { label } = CellLabel(campaign.data[campaign.camId].sectors[sectorSelect.value].cells[id], id);
+      Object.keys(app.ca.sectors[sectorSelect.value].cells).forEach((id) => {
+        if (app.ca.sectors[sectorSelect.value].cells[id].stat === ECellStatus.Location) {
+          const { label } = CellLabel(app.ca.sectors[sectorSelect.value].cells[id], id);
           opts.push({
             label: label,
             value: id,

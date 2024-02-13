@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div>
     <q-expansion-item
       :icon="`img:${icon.settlement()}`"
@@ -17,7 +18,7 @@
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <div class="row q-gutter-sm justify-between q-mb-sm" v-if="$q.screen.gt.xs">
@@ -103,11 +104,11 @@ export default defineComponent({
       { deep: true }
     );
 
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     return {
       data,
-      campaign,
+      app,
       ESLocation,
       ESettPop,
       icon,

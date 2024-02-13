@@ -53,7 +53,7 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value: string) {
-        emit('update:modelValue', value);
+        return emit('update:modelValue', value);
       },
     });
 

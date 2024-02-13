@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
       <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(ELocTheme)" dense />

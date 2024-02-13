@@ -19,9 +19,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, PropType, watch, computed } from 'vue';
+
 import { ILegacyTrack } from '../models';
-import { boxIcon } from 'src/lib/tracks';
+
 import { useQuasar } from 'quasar';
+
+import { boxIcon } from 'src/lib/tracks';
+
 export default defineComponent({
   name: 'LegacyTrack',
   props: {

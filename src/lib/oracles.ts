@@ -49,7 +49,7 @@ const find = (id: string): ICustomOracle | IOracleBase | ISettingTruth | string[
     return truthCategory ? truthCategory : false;
   }
 
-  const oracleCategory = starforged['Oracle Categories'].find((v) => v.Name === category.replace('_', ' '));
+  const oracleCategory = starforged['Oracle Categories'].find((v) => v.Name === category.replace(/_/g, ' '));
   if (!oracleCategory) return false;
 
   // We need a function to recursively traverse oracles

@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div>
     <q-expansion-item
       :icon="`img:${icon.starship()}`"
@@ -12,7 +13,7 @@
         <i-input class="col" label="Class" v-model="data.class" />
         <i-input class="col" label="Fleet" v-model="data.fleet" />
         <q-select class="col" label="Faction" v-model="faction" :options="campaignFactionNames" />
-        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
@@ -64,7 +65,7 @@ export default defineComponent({
       () => emit('update:modelValue', data.value),
       { deep: true }
     );
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     const faction = computed({
       /**
@@ -100,6 +101,7 @@ export default defineComponent({
             data.value.factionId = factionForSelectedName.id;
           }
         }
+        return true;
       },
     });
 
@@ -107,7 +109,7 @@ export default defineComponent({
       /**
        * Get the names of the factions in the campaign.
        */
-      const factionNames = campaign.data[campaign.camId].factions.map((x) => x.name);
+      const factionNames = app.ca.factions.map((x) => x.name);
 
       if (factionNames.length == 0) {
         // This campaign has no factions created yet.
@@ -120,10 +122,10 @@ export default defineComponent({
     };
 
     const getFactionForName = function (factionName: string) {
-      return campaign.data[campaign.camId].factions.find((x) => x.name === factionName) as IFaction;
+      return app.ca.factions.find((x) => x.name === factionName) as IFaction;
     };
     const getFactionForId = function (factionId: string) {
-      return campaign.data[campaign.camId].factions.find((x) => x.id === factionId) as IFaction;
+      return app.ca.factions.find((x) => x.id === factionId) as IFaction;
     };
 
     // Older saves may not have this value set. Set it to a default, if it is undefined.
@@ -133,7 +135,7 @@ export default defineComponent({
 
     return {
       data,
-      campaign,
+      app,
       icon,
       faction,
       campaignFactionNames,

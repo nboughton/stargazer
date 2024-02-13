@@ -1,3 +1,4 @@
+// file deepcode ignore OverwriteAssignment: DeepCode needs to learn how to read conditional fucking statements.
 import { IRollData, EAtO } from 'src/components/models';
 import * as oracle from 'src/lib/oracles';
 

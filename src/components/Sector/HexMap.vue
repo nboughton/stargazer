@@ -1,15 +1,16 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <q-layout
     view="hHh lpR fFf"
     container
-    :style="{ width: `${campaign.config.map.width}px`, 'min-height': `${campaign.config.map.height + 20}px` }"
+    :style="{ width: `${app.config.map.width}px`, 'min-height': `${app.config.map.height + 20}px` }"
   >
     <q-page-container>
       <q-page>
         <div
           class="hexmap"
           ref="hexmap"
-          :style="{ width: `${campaign.config.map.width}px`, height: `${campaign.config.map.height}px` }"
+          :style="{ width: `${app.config.map.width}px`, height: `${app.config.map.height}px` }"
           @click="click($event)"
         ></div>
       </q-page>
@@ -22,7 +23,7 @@
         <q-input
           class="col"
           label="Cell Name"
-          v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].cells[selectedID].name"
+          v-model="app.ca.sectors[app.config.sector].cells[selectedID].name"
           dense
           borderless
         />
@@ -35,21 +36,15 @@
             class="col-grow"
             label="Set cell status"
             hint="Set to 'location' to save Oracle generated content and enable search for this cell"
-            v-model="campaign.data[campaign.camId].sectors[campaign.config.sector].cells[selectedID].stat"
+            v-model="app.ca.sectors[app.config.sector].cells[selectedID].stat"
             :options="Object.values(ECellStatus)"
           />
-          <q-btn
-            class="col-shrink"
-            dense
-            outline
-            label="Go here"
-            @click="campaign.data[campaign.camId].character[campaign.charId].location = selectedID"
-          />
+          <q-btn class="col-shrink" dense outline label="Go here" @click="app.ch.location = selectedID" />
         </div>
       </q-card-section>
 
       <q-card-section class="q-pa-sm">
-        <cell :sectorID="campaign.config.sector" :cellID="selectedID" />
+        <cell :sectorID="app.config.sector" :cellID="selectedID" />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -82,7 +77,7 @@ export default defineComponent({
   },
   setup(props) {
     // Grab stores
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     const showDialog = ref(false);
     const selectedID = ref('');
@@ -94,11 +89,11 @@ export default defineComponent({
     };
 
     // Define initial grid data
-    const Hex = extendHex({ size: campaign.config.map.hexSize });
+    const Hex = extendHex({ size: app.config.map.hexSize });
     const Grid = defineGrid(Hex);
     const grid = Grid.rectangle({
-      width: Math.floor(campaign.config.map.width / (campaign.config.map.hexSize * 2)) + 3,
-      height: Math.floor(campaign.config.map.height / (campaign.config.map.hexSize * 2)) + 3,
+      width: Math.floor(app.config.map.width / (app.config.map.hexSize * 2)) + 3,
+      height: Math.floor(app.config.map.height / (app.config.map.hexSize * 2)) + 3,
     });
     const corners = Hex().corners();
     const points = corners.map((p) => `${p.x},${p.y}`).join(' ');
@@ -138,7 +133,7 @@ export default defineComponent({
     };
 
     const renderFills = () => {
-      const cells = campaign.data[campaign.camId].sectors[campaign.config.sector].cells;
+      const cells = app.ca.sectors[app.config.sector].cells;
       Object.keys(cells).forEach((id) => {
         map.find(`.${id}`).forEach((cell) => {
           const c = cells[id];
@@ -184,7 +179,7 @@ export default defineComponent({
       const icons = SVG().group().addClass('icons');
 
       // Populate it
-      const cells = campaign.data[campaign.camId].sectors[campaign.config.sector].cells;
+      const cells = app.ca.sectors[app.config.sector].cells;
       Object.keys(cells).forEach((id) => {
         const c = cells[id];
         if (c.stat != ECellStatus.Location) return;
@@ -204,9 +199,9 @@ export default defineComponent({
         const i = SVG()
           .image(path)
           .addClass('icon')
-          .size(campaign.config.map.hexSize, campaign.config.map.hexSize)
+          .size(app.config.map.hexSize, app.config.map.hexSize)
           .addTo(icons)
-          .move(x + (campaign.config.map.hexSize / 2) * 0.7, y + campaign.config.map.hexSize / 2);
+          .move(x + (app.config.map.hexSize / 2) * 0.7, y + app.config.map.hexSize / 2);
 
         i.mouseenter(() => {
           i.animate(100).transform({ scale: 1.3 });
@@ -228,22 +223,20 @@ export default defineComponent({
       // Clear an existing starfield if it exists
       map.find('.starfield').forEach((i) => i.remove());
 
-      if (!campaign.config.map.starfield) return;
+      if (!app.config.map.starfield) return;
 
       // Render a star field
       const stars = SVG().group().addClass('starfield');
       // Get a pseudorandom generator to produce consistent results)
       const random = seedrandom(
-        `${campaign.data[campaign.camId].sectors[campaign.config.sector].name}:${
-          campaign.data[campaign.camId].sectors[campaign.config.sector].region
-        }`
+        `${app.ca.sectors[app.config.sector].name}:${app.ca.sectors[app.config.sector].region}`
       );
 
       const star = SVG().circle('10');
       for (let i = 0; i < Math.floor(grid.length * 1.5); i++) {
-        const hw = Math.floor(random() * (campaign.config.map.hexSize / 4));
-        const x = Math.floor(random() * campaign.config.map.width - 1);
-        const y = Math.floor(random() * campaign.config.map.height - 1);
+        const hw = Math.floor(random() * (app.config.map.hexSize / 4));
+        const x = Math.floor(random() * app.config.map.width - 1);
+        const y = Math.floor(random() * app.config.map.height - 1);
 
         const r = Math.floor(random() * 64) + 194;
         const g = Math.floor(random() * 64) + 194;
@@ -252,7 +245,7 @@ export default defineComponent({
         const n = star.clone();
         n.fill(`rgb(${r}, ${g}, ${b})`).size(hw, hw).addTo(stars).dx(x).dy(y);
 
-        if (campaign.config.map.animations && i % 10 == 0) {
+        if (app.config.map.animations && i % 10 == 0) {
           n.animate(2000 + Math.floor(Math.random() * 5000))
             .attr({ fill: '#2e3440' })
             .loop();
@@ -269,7 +262,7 @@ export default defineComponent({
       const labels = SVG().group().addClass('labels');
 
       // Populate it
-      const cells = campaign.data[campaign.camId].sectors[campaign.config.sector].cells;
+      const cells = app.ca.sectors[app.config.sector].cells;
       Object.keys(cells).forEach((id) => {
         const c = cells[id];
 
@@ -281,9 +274,9 @@ export default defineComponent({
             .text(label)
             .addClass('label')
             .addTo(labels)
-            .font({ fill: colours[type] || 'white', weight: 'bold', size: campaign.config.map.hexSize * 0.8 })
+            .font({ fill: colours[type] || 'white', weight: 'bold', size: app.config.map.hexSize * 0.8 })
             .stroke({ color: 'black', width: 1 })
-            .move(x - campaign.config.map.hexSize * 0.5, y - campaign.config.map.hexSize * 1);
+            .move(x - app.config.map.hexSize * 0.5, y - app.config.map.hexSize * 1);
         }
       });
 
@@ -294,22 +287,21 @@ export default defineComponent({
       //clear existing search labels
       map.find('.search-label').forEach((i) => i.remove());
 
-      if (!props.searchResults[campaign.config.sector]) return;
+      if (!props.searchResults[app.config.sector]) return;
 
       // Add search results
-      Object.keys(props.searchResults[campaign.config.sector]).forEach((id) => {
-        if (campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id]) {
+      Object.keys(props.searchResults[app.config.sector]).forEach((id) => {
+        if (app.ca.sectors[app.config.sector].cells[id]) {
           const { x, y } = getXY(id);
-          const cell = props.searchResults[campaign.config.sector][id];
-          const { label } = CellLabel(campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id], id);
+          const cell = props.searchResults[app.config.sector][id];
+          const { label } = CellLabel(app.ca.sectors[app.config.sector].cells[id], id);
 
           if (map.find(`.${id}`).length > 0) {
             SVG()
               .text(function (add) {
                 Object.keys(cell).forEach((oType) => {
                   cell[oType].forEach((i) => {
-                    const c =
-                      campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id][oType as ESectorOpts][i];
+                    const c = app.ca.sectors[app.config.sector].cells[id][oType as ESectorOpts][i];
                     if (c && c.name !== label) {
                       add.tspan(c.name).stroke({ color: 'black', width: 1 }).fill(colours[oType]).newLine();
                     }
@@ -318,26 +310,26 @@ export default defineComponent({
               })
               .addClass('search-label')
               .addTo(map)
-              .move(x, y + campaign.config.map.hexSize * 2)
-              .font({ size: campaign.config.map.hexSize * 0.7, weight: 'bold' });
+              .move(x, y + app.config.map.hexSize * 2)
+              .font({ size: app.config.map.hexSize * 0.7, weight: 'bold' });
           }
         }
       });
     };
 
     const renderPlayer = () => {
-      if (campaign.data[campaign.camId].character[campaign.charId].location != '') {
+      if (app.ch.location != '') {
         // Clear existing player ship
         map.find('.ship').forEach((i) => i.remove());
 
-        const { x, y } = getXY(campaign.data[campaign.camId].character[campaign.charId].location);
+        const { x, y } = getXY(app.ch.location);
 
         SVG()
           .image(icon.player().replace('img:', ''))
           .addClass('ship')
-          .size(campaign.config.map.hexSize, campaign.config.map.hexSize)
+          .size(app.config.map.hexSize, app.config.map.hexSize)
           .addTo(map)
-          .move(x + campaign.config.map.hexSize, y)
+          .move(x + app.config.map.hexSize, y)
           .front();
       }
     };
@@ -368,33 +360,33 @@ export default defineComponent({
       // Note that all changes to cell data should happen in the renderMap function as
       // the map will re-render whenever the underlying cell data changes.
       if (
-        !campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id] ||
-        campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id].stat == ECellStatus.Empty
+        !app.ca.sectors[app.config.sector].cells[id] ||
+        app.ca.sectors[app.config.sector].cells[id].stat == ECellStatus.Empty
       ) {
         // Set hex fill here (rather than trigger a map re-render) for better mobile performance
         map.find(`.${id}`).forEach((c) => c.fill(colours.Passage));
 
         const c = NewCell(id);
         c.stat = ECellStatus.Passage;
-        campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id] = c;
+        app.ca.sectors[app.config.sector].cells[id] = c;
         return;
       }
 
       // If we've reached here then we probably want to open the dialog and do something with it
-      // const c = campaign.data[campaign.camId].sectors[campaign.config.sector].cells[id]
+      // const c = app.ca.sectors[app.config.sector].cells[id]
       selectedID.value = id;
       showDialog.value = true;
     };
 
     /* RENDER TRIGGERS */
     watch(
-      () => campaign.config.map,
+      () => app.config.map,
       () => renderStarfield(),
       { deep: true }
     );
 
     watch(
-      () => campaign.data[campaign.camId].character[campaign.charId].location,
+      () => app.ch.location,
       () => renderPlayer()
     );
 
@@ -405,7 +397,7 @@ export default defineComponent({
     );
 
     watch(
-      () => campaign.$state.data[campaign.camId].sectors[campaign.config.sector].cells,
+      () => app.$state.campaigns[app.camId].sectors[app.config.sector].cells,
       () => {
         renderFills();
         renderIcons();
@@ -415,22 +407,22 @@ export default defineComponent({
     );
 
     watch(
-      () => campaign.config.sector,
+      () => app.config.sector,
       () => fullRender()
     );
 
     watch(
-      () => campaign.data[campaign.camId].id,
+      () => app.ca.id,
       () => fullRender()
     );
 
     watch(
-      () => campaign.data[campaign.camId].sectors[campaign.config.sector].name,
+      () => app.ca.sectors[app.config.sector].name,
       () => renderStarfield()
     );
 
     return {
-      campaign,
+      app,
       hexmap,
 
       click,

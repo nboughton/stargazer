@@ -316,6 +316,11 @@ export interface IFaction {
 }
 
 // Campaign
+
+export interface ICampaigns {
+  [index: string]: ICampaign;
+}
+
 export interface ICampaign {
   id: string;
   name: string;

@@ -32,7 +32,7 @@ export const convertDFAsset = (asset: IAsset): ISGAsset => {
   newAsset.title = asset.Name;
   newAsset.icon = asset.Display.Icon;
   if (asset.Requirement) newAsset.subtitle = mdToHtml(asset.Requirement);
-  newAsset.type = asset['Asset Type'].split('/').pop()?.replace('_', ' ') as string;
+  newAsset.type = asset['Asset Type'].split('/').pop()?.replace(/_/g, ' ') as string;
 
   if (asset.Inputs) {
     const labels: string[] = [];

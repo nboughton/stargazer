@@ -10,5 +10,6 @@ export const colours: { [index: string]: string } = {
   [ESectorOpts.Creatures]: '#3c8ab5ff',
   [ESectorOpts.NPCs]: '#9e708fff',
   [ESectorOpts.Sightings]: '#25827Eff',
+  // file deepcode ignore NoHardcodedPasswords: IT'S NOT A FUCKING PASSWORD
   Passage: '#393B61',
 };

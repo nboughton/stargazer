@@ -105,8 +105,8 @@ export default defineComponent({
         if (isDominion.value) Roll.Lead();
       },
       Save: () => {
-        const campaign = useCampaign();
-        campaign.data[campaign.camId].factions.push(deepCopy(data.value));
+        const app = useCampaign();
+        app.ca.factions.push(deepCopy(data.value));
       },
     };
 

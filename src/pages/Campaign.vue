@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <!-- content -->
-    <i-input class="q-mb-md" label="Campaign Name" v-model="campaign.data[campaign.camId].name" />
+    <i-input class="q-mb-md" label="Campaign Name" v-model="app.ca.name" />
 
     <q-expansion-item default-opened>
       <template v-slot:header>
@@ -9,12 +9,7 @@
           Factions<q-btn icon="add_circle" flat dense @click="addFaction" />
         </div>
       </template>
-      <faction
-        v-for="(f, i) in campaign.data[campaign.camId].factions"
-        :key="i"
-        v-model="campaign.data[campaign.camId].factions[i]"
-        @delete="removeFaction(i)"
-      />
+      <faction v-for="(f, i) in app.ca.factions" :key="i" v-model="app.ca.factions[i]" @delete="removeFaction(i)" />
     </q-expansion-item>
 
     <q-expansion-item default-opened>
@@ -54,17 +49,17 @@ export default defineComponent({
   name: 'Truths',
   components: { Truth, IInput, Faction },
   setup() {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     const addFaction = () => {
-      campaign.data[campaign.camId].factions.unshift(NewFaction());
+      app.ca.factions.unshift(NewFaction());
     };
     const removeFaction = (index: number) => {
-      campaign.data[campaign.camId].factions.splice(index, 1);
+      app.ca.factions.splice(index, 1);
     };
 
     return {
-      campaign,
+      app,
       addFaction,
       removeFaction,
     };

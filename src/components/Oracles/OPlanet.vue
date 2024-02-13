@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
       <q-select class="col-grow" label="Region" v-model="regionSelect" dense :options="Object.values(ERegion)" />
@@ -162,8 +163,8 @@ export default defineComponent({
       },
       Save: (args: { sector: number; cell: number }) => {
         // prevent side effects from passing by reference
-        const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].planets.unshift(deepCopy(data.value));
+        const app = useCampaign();
+        app.ca.sectors[args.sector].cells[args.cell].planets.unshift(deepCopy(data.value));
       },
       DescText: () => {
         // data.value.description = oracle.description(['Planets', data.value.type]);

@@ -139,7 +139,7 @@ export default defineComponent({
           }
         }
         updateValue();
-        campaign.appendToJournal(
+        app.appendToJournal(
           0,
           `<div class="note progress"><b>[Mark Progress: ${data.value.name} :${actionScore.value} boxes]</b></div>`
         );
@@ -167,13 +167,13 @@ export default defineComponent({
     const conclude = () => {
       rollData.value = moveRoll(0, 0, 0, actionScore.value);
 
-      campaign.appendToJournal(
+      app.appendToJournal(
         0,
         `<div class="note progressroll"><b>[Progress Roll: ${data.value.name} :${rollData.value.result} = ${rollData.value.action.score} vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}]</b></div>`
       );
     };
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     const showClocks = ref(false);
     const clockIcon = computed(() => {
       return showClocks.value ? 'mdi-clock-time-two' : 'mdi-clock-time-two-outline';
@@ -182,7 +182,7 @@ export default defineComponent({
       const out: number[] = [];
       if (!data.value.clocks) return out;
       data.value.clocks.forEach((id) => {
-        campaign.data[campaign.camId].clocks.forEach((c, i) => {
+        app.ca.clocks.forEach((c, i) => {
           if (c.id === id) {
             out.push(i);
           }
@@ -206,7 +206,7 @@ export default defineComponent({
       showClocks,
       clockIcon,
       clockIndices,
-      campaign,
+      app,
     };
   },
 });

@@ -2,48 +2,25 @@
   <q-page padding>
     <!-- Name, pronouns, callsign etc -->
     <div class="row full-width items-center" id="top">
-      <q-input
-        class="col-grow"
-        label="Name"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].name"
-        dense
-      />
-      <q-input
-        class="col-4"
-        label="Pronouns"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].pronouns"
-        dense
-      />
+      <q-input class="col-grow" label="Name" v-model="app.ch.name" dense />
+      <q-input class="col-4" label="Pronouns" v-model="app.ch.pronouns" dense />
     </div>
     <div class="row full-width items-center">
-      <q-input
-        class="col-xs-4 col-sm-3 col-2"
-        label="Callsign"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].callsign"
-        dense
-      />
-      <q-input
-        class="col-grow"
-        label="Characteristics"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].characteristics"
-        dense
-      />
+      <q-input class="col-xs-4 col-sm-3 col-2" label="Callsign" v-model="app.ch.callsign" dense />
+      <q-input class="col-grow" label="Characteristics" v-model="app.ch.characteristics" dense />
     </div>
 
     <!-- Momentum -->
     <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
       <span class="col-shrink text-bold q-mx-sm">Momentum</span>
-      <resource-track
-        class="col-grow"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum"
-      />
+      <resource-track class="col-grow" v-model="app.ch.tracks.momentum" />
       <q-input
         class="col-xs-2 col-sm-1 col-1"
         label="Max"
         type="number"
         :max="10"
         :min="-6"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.max"
+        v-model="app.ch.tracks.momentum.max"
         dense
         borderless
       />
@@ -53,7 +30,7 @@
         type="number"
         :max="4"
         :min="0"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset"
+        v-model="app.ch.tracks.momentum.reset"
         dense
         borderless
       />
@@ -70,7 +47,7 @@
           type="number"
           :max="10"
           :min="-6"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.max"
+          v-model="app.ch.tracks.momentum.max"
           dense
           borderless
         />
@@ -80,7 +57,7 @@
           type="number"
           :max="4"
           :min="0"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset"
+          v-model="app.ch.tracks.momentum.reset"
           dense
           borderless
         />
@@ -88,10 +65,7 @@
           <q-tooltip>Burn momentum</q-tooltip>
         </q-btn>
       </div>
-      <resource-track
-        class="row full-width"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum"
-      />
+      <resource-track class="row full-width" v-model="app.ch.tracks.momentum" />
     </div>
 
     <q-separator />
@@ -99,61 +73,38 @@
     <!-- Tracks -->
     <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
       <span class="col-shrink text-bold q-mx-sm">Health</span>
-      <resource-track
-        class="col-grow"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.health"
-      />
+      <resource-track class="col-grow" v-model="app.ch.tracks.health" />
       <q-separator vertical />
 
       <span class="col-shrink text-bold q-mx-sm">Spirit</span>
-      <resource-track
-        class="col-grow"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.spirit"
-      />
+      <resource-track class="col-grow" v-model="app.ch.tracks.spirit" />
       <q-separator vertical />
 
       <span class="col-shrink text-bold q-mx-sm">Supply</span>
-      <resource-track
-        class="col-grow"
-        v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.supply"
-      />
+      <resource-track class="col-grow" v-model="app.ch.tracks.supply" />
     </div>
     <div v-else>
       <div class="row justify-between items-center">
         <span class="col-2 text-bold">Health</span>
-        <resource-track
-          class="col-grow"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.health"
-        />
+        <resource-track class="col-grow" v-model="app.ch.tracks.health" />
       </div>
 
       <div class="row justify-between items-center">
         <span class="col-2 text-bold">Spirit</span>
-        <resource-track
-          class="col-grow"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.spirit"
-        />
+        <resource-track class="col-grow" v-model="app.ch.tracks.spirit" />
       </div>
 
       <div class="row justify-between items-center">
         <span class="col-2 text-bold">Supply</span>
-        <resource-track
-          class="col-grow"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].tracks.supply"
-        />
+        <resource-track class="col-grow" v-model="app.ch.tracks.supply" />
       </div>
     </div>
 
     <q-separator />
 
     <!-- Stats -->
-    <stats class="q-mt-md" v-model="campaign.data[campaign.camId].character[campaign.charId].stats" />
-    <i-input
-      class="q-mt-md q-mb-md"
-      label="Gear &amp; Notes"
-      v-model="campaign.data[campaign.camId].character[campaign.charId].gear"
-      autogrow
-    />
+    <stats class="q-mt-md" v-model="app.ch.stats" />
+    <i-input class="q-mt-md q-mb-md" label="Gear &amp; Notes" v-model="app.ch.gear" autogrow />
 
     <q-separator />
 
@@ -164,14 +115,10 @@
 
     <div class="row assets-container" v-if="$q.screen.gt.sm">
       <div class="col left-assets q-mr-xs">
-        <div v-for="(a, i) in campaign.data[campaign.camId].character[campaign.charId].assets" :key="i">
-          <asset
-            class="q-mb-sm"
-            v-if="i % 2 == 0"
-            v-model="campaign.data[campaign.camId].character[campaign.charId].assets[i]"
-          >
+        <div v-for="(a, i) in app.ch.assets" :key="i">
+          <asset class="q-mb-sm" v-if="i % 2 == 0" v-model="app.ch.assets[i]">
             <template v-slot:append>
-              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="campaign.config.edit">
+              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="app.config.edit">
                 <q-tooltip>Remove asset</q-tooltip>
               </q-btn>
             </template>
@@ -180,14 +127,10 @@
       </div>
 
       <div class="col right-assets q-ml-xs">
-        <div v-for="(a, i) in campaign.data[campaign.camId].character[campaign.charId].assets" :key="i">
-          <asset
-            class="q-mb-sm"
-            v-if="i % 2 != 0"
-            v-model="campaign.data[campaign.camId].character[campaign.charId].assets[i]"
-          >
+        <div v-for="(a, i) in app.ch.assets" :key="i">
+          <asset class="q-mb-sm" v-if="i % 2 != 0" v-model="app.ch.assets[i]">
             <template v-slot:append>
-              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="campaign.config.edit">
+              <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="app.config.edit">
                 <q-tooltip>Remove asset</q-tooltip>
               </q-btn>
             </template>
@@ -196,10 +139,10 @@
       </div>
     </div>
     <div class="column assets-container" v-else>
-      <div v-for="(a, i) in campaign.data[campaign.camId].character[campaign.charId].assets" :key="i">
-        <asset class="q-mb-sm" v-model="campaign.data[campaign.camId].character[campaign.charId].assets[i]">
+      <div v-for="(a, i) in app.ch.assets" :key="i">
+        <asset class="q-mb-sm" v-model="app.ch.assets[i]">
           <template v-slot:append>
-            <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="campaign.config.edit">
+            <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="app.config.edit">
               <q-tooltip>Remove asset</q-tooltip>
             </q-btn>
           </template>
@@ -211,32 +154,25 @@
 
     <!-- Legacy tracks -->
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">Legacy Tracks</div>
-    <legacy-track name="Quests" v-model="campaign.data[campaign.camId].character[campaign.charId].legacies.quests" />
+    <legacy-track name="Quests" v-model="app.ch.legacies.quests" />
     <q-separator />
-    <legacy-track name="Bonds" v-model="campaign.data[campaign.camId].character[campaign.charId].legacies.bonds" />
+    <legacy-track name="Bonds" v-model="app.ch.legacies.bonds" />
     <q-separator />
-    <legacy-track
-      name="Discoveries"
-      v-model="campaign.data[campaign.camId].character[campaign.charId].legacies.discoveries"
-    />
+    <legacy-track name="Discoveries" v-model="app.ch.legacies.discoveries" />
 
     <q-separator />
 
     <div class="row">
       <!-- Impacts -->
       <div class="col-12 text-h4 sf-header text-center q-pt-md" id="impacts">Impacts</div>
-      <div
-        class="col-xs-6 col-sm-3 col-3"
-        v-for="(set, setIndex) in campaign.data[campaign.camId].character[campaign.charId].impacts"
-        :key="setIndex"
-      >
+      <div class="col-xs-6 col-sm-3 col-3" v-for="(set, setIndex) in app.ch.impacts" :key="setIndex">
         <div class="text-bold">{{ setIndex }}</div>
         <q-checkbox
           class="row"
-          v-for="(impact, iIndex) in campaign.data[campaign.camId].character[campaign.charId].impacts[setIndex]"
+          v-for="(impact, iIndex) in app.ch.impacts[setIndex]"
           :key="iIndex"
           :label="impact.name"
-          v-model="campaign.data[campaign.camId].character[campaign.charId].impacts[setIndex][iIndex].marked"
+          v-model="app.ch.impacts[setIndex][iIndex].marked"
           @click="markImpact"
         >
         </q-checkbox>
@@ -270,15 +206,14 @@ export default defineComponent({
     IInput,
   },
   setup() {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
-    const removeAsset = (index: number) =>
-      campaign.data[campaign.camId].character[campaign.charId].assets.splice(index, 1);
+    const removeAsset = (index: number) => app.ch.assets.splice(index, 1);
     const showAssetSelect = ref(false);
 
     const markImpact = () => {
       let marked = 0;
-      Object.values(campaign.data[campaign.camId].character[campaign.charId].impacts).forEach((set) => {
+      Object.values(app.ch.impacts).forEach((set) => {
         set.forEach((impact) => {
           if (impact.marked) {
             marked++;
@@ -287,23 +222,23 @@ export default defineComponent({
       });
 
       if (marked === 1) {
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset = 1;
+        app.ch.tracks.momentum.reset = 1;
       } else if (marked > 1) {
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset = 0;
+        app.ch.tracks.momentum.reset = 0;
       } else {
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset = 2;
+        app.ch.tracks.momentum.reset = 2;
       }
 
-      campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.max = 10 - marked;
+      app.ch.tracks.momentum.max = 10 - marked;
     };
 
     const burnMomentum = () => {
-      const n = +campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset;
-      campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value = n;
+      const n = +app.ch.tracks.momentum.reset;
+      app.ch.tracks.momentum.value = n;
     };
 
     return {
-      campaign,
+      app,
 
       removeAsset,
       showAssetSelect,

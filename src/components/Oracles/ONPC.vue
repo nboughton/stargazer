@@ -70,8 +70,8 @@ export default defineComponent({
         roll.Disp();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].npcs.unshift(deepCopy(data.value));
+        const app = useCampaign();
+        app.ca.sectors[args.sector].cells[args.cell].npcs.unshift(deepCopy(data.value));
       },
     };
     return {

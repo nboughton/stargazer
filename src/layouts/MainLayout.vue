@@ -8,12 +8,12 @@
           IRON JOURNAL <span class="title-pipe">|</span> STARFORGED
         </q-toolbar-title>
 
-        <q-btn v-if="campaign.config.saving" icon="save" flat dense disable />
+        <q-btn v-if="app.config.saving" icon="save" flat dense disable />
         <q-btn icon="mdi-dice-6" flat dense @click="showRoller = !showRoller">
           <q-tooltip>Toggle Dice Roller</q-tooltip>
         </q-btn>
 
-        <q-toggle icon="delete" v-model="campaign.config.edit">
+        <q-toggle icon="delete" v-model="app.config.edit">
           <q-tooltip>Toggle Delete buttons</q-tooltip>
         </q-toggle>
 
@@ -22,8 +22,8 @@
 
       <q-tabs align="center" dense :class="{ crt: crt }">
         <q-route-tab to="/campaign" label="Campaign" />
-        <q-route-tab v-if="campaign.config.journalTab" to="/journal" label="Journal" />
-        <q-route-tab to="/" :label="campaign.data[campaign.camId].character[campaign.charId].name" />
+        <q-route-tab v-if="app.config.journalTab" to="/journal" label="Journal" />
+        <q-route-tab to="/" :label="app.ch.name" />
         <q-route-tab to="/challenges" label="Challenges" />
         <q-route-tab to="/sector" label="Sector" />
       </q-tabs>
@@ -35,16 +35,16 @@
       <q-list>
         <q-item
           class="items-center"
-          v-for="(item, index) in campaign.config.index.sort((a, b) => (a.name || '').localeCompare(b.name))"
+          v-for="(item, index) in app.config.index.sort((a, b) => (a.name || '').localeCompare(b.name))"
           :key="index"
-          :active="item.id == campaign.data[campaign.camId]?.id"
+          :active="item.id == app.ca?.id"
           clickable
           v-ripple
         >
-          <q-item-section @click="campaign.config.current.campaign = item.id" class="row full-width no-wrap">
+          <q-item-section @click="app.config.current.campaign = item.id" class="row full-width no-wrap">
             {{ item.name || 'unnamed campaign' }}
           </q-item-section>
-          <q-item-section class="col-shrink" v-if="campaign.config.index.length > 1 && campaign.config.edit">
+          <q-item-section class="col-shrink" v-if="app.config.index.length > 1 && app.config.edit">
             <q-btn
               icon="delete"
               flat
@@ -62,7 +62,7 @@
       <q-separator size="lg" />
 
       <q-list class="text-primary">
-        <q-item clickable v-ripple @click="campaign.exportData">
+        <q-item clickable v-ripple @click="app.exportData">
           <q-item-section avatar>
             <q-icon name="download" />
           </q-item-section>
@@ -128,7 +128,7 @@
 
         <q-separator size="lg" />
 
-        <q-item clickable v-ripple @click="campaign.exportJournal">
+        <q-item clickable v-ripple @click="app.exportJournal">
           <q-item-section avatar>
             <q-icon name="download" />
           </q-item-section>
@@ -142,7 +142,7 @@
 
         <q-item>
           <q-item-section avatar>
-            <q-toggle v-model="campaign.config.journalTab" label="Use Journal Tab" />
+            <q-toggle v-model="app.config.journalTab" label="Use Journal Tab" />
           </q-item-section>
         </q-item>
 
@@ -189,7 +189,7 @@
       </div>
 
       <div id="journal" />
-      <journal v-if="!campaign.config.journalTab" />
+      <journal v-if="!app.config.journalTab" />
 
       <q-fab color="primary" icon="keyboard_arrow_left" direction="left" class="journal-to-top">
         <q-fab-action color="primary" @click="scrollTo('oracles')" icon="mdi-dice-multiple">
@@ -198,12 +198,7 @@
         <q-fab-action color="primary" @click="scrollTo('moves')" icon="mdi-file-document-multiple">
           <q-tooltip>Scroll to Moves</q-tooltip>
         </q-fab-action>
-        <q-fab-action
-          v-if="!campaign.config.journalTab"
-          color="primary"
-          @click="scrollTo('journal')"
-          icon="mdi-notebook"
-        >
+        <q-fab-action v-if="!app.config.journalTab" color="primary" @click="scrollTo('journal')" icon="mdi-notebook">
           <q-tooltip>Scroll to Journal</q-tooltip>
         </q-fab-action>
       </q-fab>
@@ -388,11 +383,11 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
     const rightDrawerOpen = ref(false);
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     const $q = useQuasar();
 
-    const addCampaign = () => campaign.new();
-    const removeCampaign = (id: string) => campaign.delete(id);
+    const addCampaign = () => app.new();
+    const removeCampaign = (id: string) => app.delete(id);
     const campaignToDelete = ref('');
     const campaignToDeleteName = ref('');
     const showCampaignDelete = ref(false);
@@ -401,7 +396,7 @@ export default defineComponent({
     const showDataLoad = ref(false);
     const loadData = () => {
       const f: File = fileToLoad.value as unknown as File;
-      campaign.loadData(f, 1);
+      app.loadData(f, 1);
       showDataLoad.value = false;
     };
 
@@ -435,7 +430,7 @@ export default defineComponent({
     const showRoller = ref(false);
     const showAbout = ref(false);
     const crt = computed((): boolean => {
-      return /bebop/i.test(campaign.data[campaign.camId].sectors[campaign.config.sector].name);
+      return /bebop/i.test(app.ca.sectors[app.config.sector].name);
     });
 
     const { getScrollTarget, setVerticalScrollPosition } = scroll;
@@ -461,7 +456,7 @@ export default defineComponent({
       },
       width,
 
-      campaign,
+      app,
       customAssets,
       customOracles,
 

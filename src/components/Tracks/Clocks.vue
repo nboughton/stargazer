@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      class="row q-gutter-sm q-mb-sm items-center justify-center"
-      v-if="all && campaign.data[campaign.camId].clocks.length > 0"
-    >
+    <div class="row q-gutter-sm q-mb-sm items-center justify-center" v-if="all && app.ca.clocks.length > 0">
       <q-btn label="Begin a Session" flat dense @click="rollAllClocks" />
     </div>
 
@@ -14,19 +11,14 @@
     </div>
 
     <div class="row q-gutter-sm justify-evenly" v-if="!all">
-      <clock
-        v-for="index in clockIndices"
-        :key="index"
-        v-model="campaign.data[campaign.camId].clocks[index]"
-        @delete="removeClock(index)"
-      />
+      <clock v-for="index in clockIndices" :key="index" v-model="app.ca.clocks[index]" @delete="removeClock(index)" />
     </div>
 
     <div class="row q-gutter-sm justify-evenly" v-else>
       <clock
-        v-for="(clock, index) in campaign.data[campaign.camId].clocks"
+        v-for="(clock, index) in app.ca.clocks"
         :key="index"
-        v-model="campaign.data[campaign.camId].clocks[index]"
+        v-model="app.ca.clocks[index]"
         @delete="removeClock(index)"
       />
     </div>
@@ -34,12 +26,16 @@
 </template>
 
 <script lang="ts">
-import { NewClock, RollClock } from 'src/lib/tracks';
-import { useCampaign } from 'src/store/campaign';
 import { defineComponent, PropType, ref, computed } from 'vue';
+
 import { EAtO, ISelectOpt } from '../models';
 
+import { useCampaign } from 'src/store/campaign';
+
+import { NewClock, RollClock } from 'src/lib/tracks';
+
 import Clock from 'src/components/Tracks/Clock.vue';
+
 export default defineComponent({
   name: 'Clocks',
   components: { Clock },
@@ -61,18 +57,18 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value: string[]) {
-        emit('update:modelValue', value);
+        return emit('update:modelValue', value);
       },
     });
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     const clockSelect = ref('');
 
     const clockIndices = computed(() => {
       const out: number[] = [];
       if (!idList.value) return out;
       idList.value.forEach((id) => {
-        campaign.data[campaign.camId].clocks.forEach((c, i) => {
+        app.ca.clocks.forEach((c, i) => {
           if (c.id === id) {
             out.push(i);
           }
@@ -82,7 +78,7 @@ export default defineComponent({
     });
     const clockOpts = computed(() => {
       const out: ISelectOpt[] = [{ label: 'New', value: 'new' }];
-      campaign.data[campaign.camId].clocks.forEach((c) => {
+      app.ca.clocks.forEach((c) => {
         out.push({
           label: c.name,
           value: c.id,
@@ -94,7 +90,7 @@ export default defineComponent({
     const addClock = (id: string) => {
       if (id === 'new') {
         const c = NewClock();
-        campaign.data[campaign.camId].clocks.unshift(c);
+        app.ca.clocks.unshift(c);
         idList.value.unshift(c.id);
         return;
       }
@@ -106,13 +102,13 @@ export default defineComponent({
       });
     };
     const removeClock = (index: number) => {
-      campaign.data[campaign.camId].clocks.splice(index, 1);
+      app.ca.clocks.splice(index, 1);
     };
 
     const rollAllClocks = () => {
-      campaign.data[campaign.camId].clocks.forEach((clock, index) => {
+      app.ca.clocks.forEach((clock, index) => {
         if (clock.advance !== EAtO.NoRoll) {
-          campaign.data[campaign.camId].clocks[index] = RollClock(clock);
+          app.ca.clocks[index] = RollClock(clock);
         }
       });
     };
@@ -125,7 +121,7 @@ export default defineComponent({
       clockOpts,
       clockSelect,
       rollAllClocks,
-      campaign,
+      app,
     };
   },
 });

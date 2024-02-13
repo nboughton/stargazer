@@ -1,10 +1,11 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="row q-gutter-sm items-center">
     <div class="col-grow">
       <div class="row full-width q-gutter-sm items-center q-mb-xs">
         <q-input class="col-grow" label="Name" v-model="data.name" debounce="750" dense />
         <q-select class="col" v-model="data.segments" :options="[4, 6, 8, 10]" borderless dense />
-        <q-btn class="col-shrink" v-if="campaign.config.edit" flat dense icon="delete" @click="$emit('delete')" />
+        <q-btn class="col-shrink" v-if="app.config.edit" flat dense icon="delete" @click="$emit('delete')" />
       </div>
 
       <div class="row full-width q-gutter-sm items-center">
@@ -52,7 +53,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'delete'],
   setup(props, { emit }) {
     const data = ref(props.modelValue);
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     watch(
       () => props.modelValue,
@@ -64,7 +65,7 @@ export default defineComponent({
       () => {
         if (data.value.filled === data.value.segments && !data.value.complete) {
           data.value.complete = true;
-          campaign.appendToJournal(0, `<div class="note clock"><b>[Clock completed: ${data.value.name}]</b></div>`);
+          app.appendToJournal(0, `<div class="note clock"><b>[Clock completed: ${data.value.name}]</b></div>`);
         }
         if (data.value.filled > data.value.segments) {
           data.value.filled = 0;
@@ -86,7 +87,7 @@ export default defineComponent({
     };
     return {
       data,
-      campaign,
+      app,
       value,
       EAtO,
       roll,

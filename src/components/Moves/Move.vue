@@ -73,9 +73,9 @@ export default defineComponent({
     });
 
     const save = () => {
-      const campaign = useCampaign();
+      const app = useCampaign();
       results.value.forEach((v) => {
-        campaign.appendToJournal(0, `<div class="note moveoracleroll"><b>[${props.move.Name}: ${v}]</b></div>`);
+        app.appendToJournal(0, `<div class="note moveoracleroll"><b>[${props.move.Name}: ${v}]</b></div>`);
       });
     };
 

@@ -13,14 +13,14 @@
         <i-input class="col" label="Role" v-model="data.role" />
         <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection" />
         <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond" />
-        <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
       <div v-else>
         <div class="row q-gutter-sm q-mb-sm no-wrap">
           <i-input class="col" label="Name" v-model="data.name" />
           <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection" />
           <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond" />
-          <q-btn v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+          <q-btn v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
         </div>
 
         <div class="row q-gutter-sm q-mb-sm">
@@ -117,7 +117,7 @@ export default defineComponent({
       updateChallengeTracksVisibility();
     });
 
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     // Older saves may not have a value for connection stored. In this case it will be undefined.
     // New NPCs and existing ones, where this flag isn't set explicitly, will be treated as connections.
@@ -127,7 +127,7 @@ export default defineComponent({
 
     return {
       data,
-      campaign,
+      app,
       icon,
       pronouns,
       challenge_tracks,

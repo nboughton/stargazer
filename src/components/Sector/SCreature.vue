@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div>
     <q-expansion-item
       :icon="`img:${icon.creature(data.form)}`"
@@ -19,7 +20,7 @@
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <q-btn class="col-shrink" v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+        <q-btn class="col-shrink" v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
 
       <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
@@ -83,11 +84,11 @@ export default defineComponent({
       { deep: true }
     );
 
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     return {
       data,
-      campaign,
+      app,
       EEnv,
       icon,
     };

@@ -4,13 +4,8 @@
     <div class="text-h4 sf-header text-center q-mb-sm" id="vows">
       Vows<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
-    <progress-track
-      class="q-mb-md"
-      v-for="(vow, vIndex) in campaign.data[campaign.camId].character[campaign.charId].vows"
-      :key="vIndex"
-      v-model="campaign.data[campaign.camId].character[campaign.charId].vows[vIndex]"
-    >
-      <template v-slot:action v-if="campaign.config.edit">
+    <progress-track class="q-mb-md" v-for="(vow, vIndex) in app.ch.vows" :key="vIndex" v-model="app.ch.vows[vIndex]">
+      <template v-slot:action v-if="app.config.edit">
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeVow(vIndex)" />
       </template>
     </progress-track>
@@ -23,11 +18,11 @@
     </div>
     <progress-track
       class="q-mb-md"
-      v-for="(track, pIndex) in campaign.data[campaign.camId].progressTracks"
+      v-for="(track, pIndex) in app.ca.progressTracks"
       :key="pIndex"
-      v-model="campaign.data[campaign.camId].progressTracks[pIndex]"
+      v-model="app.ca.progressTracks[pIndex]"
     >
-      <template v-slot:action v-if="campaign.config.edit">
+      <template v-slot:action v-if="app.config.edit">
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeTrack(pIndex)" />
       </template>
     </progress-track>
@@ -54,22 +49,22 @@ export default defineComponent({
   name: 'Challenges',
   components: { ProgressTrack, Clocks },
   setup() {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
-    const addVow = () => campaign.data[campaign.camId].character[campaign.charId].vows.unshift(NewProgressTrack());
-    const removeVow = (index: number) => campaign.data[campaign.camId].character[campaign.charId].vows.splice(index, 1);
+    const addVow = () => app.ch.vows.unshift(NewProgressTrack());
+    const removeVow = (index: number) => app.ch.vows.splice(index, 1);
 
-    const addTrack = () => campaign.data[campaign.camId].progressTracks.unshift(NewProgressTrack());
-    const removeTrack = (index: number) => campaign.data[campaign.camId].progressTracks.splice(index, 1);
+    const addTrack = () => app.ca.progressTracks.unshift(NewProgressTrack());
+    const removeTrack = (index: number) => app.ca.progressTracks.splice(index, 1);
 
     const addClock = () => {
-      if (!campaign.data[campaign.camId].clocks) campaign.data[campaign.camId].clocks = [];
-      campaign.data[campaign.camId].clocks.unshift(NewClock());
+      if (!app.ca.clocks) app.ca.clocks = [];
+      app.ca.clocks.unshift(NewClock());
     };
-    const removeClock = (index: number) => campaign.data[campaign.camId].clocks.splice(index, 1);
+    const removeClock = (index: number) => app.ca.clocks.splice(index, 1);
 
     return {
-      campaign,
+      app,
       addVow,
       removeVow,
       addTrack,

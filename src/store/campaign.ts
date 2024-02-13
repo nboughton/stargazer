@@ -1,19 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { defineStore } from 'pinia';
-import { ESectorOpts, ICampaign, IConfig } from 'components/models';
+import { ESectorOpts, ICampaign, ICampaigns, ICharacter } from 'components/models';
+
 import { exportFile } from 'quasar';
 import { deepCopy, now } from 'src/lib/util';
 import { NewCampaign } from 'src/lib/campaign';
-
-interface ICampaigns {
-  [index: string]: ICampaign;
-}
+import { NewConfig } from 'src/lib/config';
 
 export const useCampaign = defineStore({
   id: 'campaign',
 
   state: () => ({
-    config: {} as IConfig,
-    data: {} as ICampaigns,
+    config: NewConfig(),
+    campaigns: <ICampaigns>{},
   }),
 
   actions: {
@@ -24,22 +26,22 @@ export const useCampaign = defineStore({
       from: { sector: number; cell: string },
       to: { sector: number; cell: string }
     ) {
-      this.data[this.camId].sectors[to.sector].cells[to.cell][type].unshift(deepCopy(obj));
-      this.data[this.camId].sectors[from.sector].cells[from.cell][type].splice(index, 1);
+      this.campaigns[this.camId].sectors[to.sector].cells[to.cell][type].unshift(deepCopy(obj));
+      this.campaigns[this.camId].sectors[from.sector].cells[from.cell][type].splice(index, 1);
     },
 
     removeObject(type: ESectorOpts, sector: number, cell: string, index: number) {
-      this.data[this.camId].sectors[sector].cells[cell][type].splice(index, 1);
+      this.campaigns[this.camId].sectors[sector].cells[cell][type].splice(index, 1);
     },
 
     appendToJournal(index: number, text: string) {
-      this.data[this.camId].journal[index].content += text;
+      this.campaigns[this.camId].journal[index].content += text;
     },
 
     exportJournal() {
       const doc = document.implementation.createHTMLDocument('Journal');
 
-      this.data[this.camId].journal.forEach((j) => {
+      this.campaigns[this.camId].journal.forEach((j) => {
         const div = doc.createElement('div');
         div.classList.add('entry');
         div.innerHTML = `<h3>${j.title}</h3><div class="content">${j.content}</div>`;
@@ -57,24 +59,24 @@ export const useCampaign = defineStore({
     // this is where the functions that will need to migrate data into the new store begin
     new() {
       const c = NewCampaign();
-      this.data[c.id] = c;
+      this.campaigns[c.id] = c;
       this.config.current.campaign = c.id;
     },
 
     delete(id: string) {
       if (this.camId === id) {
-        Object.keys(this.data).forEach((k) => {
+        Object.keys(this.campaigns).forEach((k) => {
           if (k != id) {
             this.config.current.campaign = k;
             return;
           }
         });
       }
-      delete this.data[id];
+      delete this.campaigns[id];
     },
 
     exportData() {
-      const data = JSON.stringify(this.data);
+      const data = JSON.stringify(this.campaigns);
       const status = exportFile(`Starforged-2-campaign-${now()}.json`, data, {
         mimeType: 'application/json',
       });
@@ -88,13 +90,13 @@ export const useCampaign = defineStore({
           case 1:
             const v1campaigns = JSON.parse(ev.target?.result as string) as ICampaign[];
             v1campaigns.forEach((c) => {
-              this.data[c.id] = deepCopy(c);
+              this.campaigns[c.id] = deepCopy(c);
             });
             break;
           case 2:
             const v2campaigns = JSON.parse(ev.target?.result as string) as ICampaigns;
             Object.keys(v2campaigns).forEach((key) => {
-              this.data[key] = deepCopy(v2campaigns[key]);
+              this.campaigns[key] = deepCopy(v2campaigns[key]);
             });
             break;
         }
@@ -104,6 +106,8 @@ export const useCampaign = defineStore({
   },
 
   getters: {
+    ch: (state): ICharacter => state.campaigns[state.config.current.campaign].character[state.config.current.character],
+    ca: (state): ICampaign => state.campaigns[state.config.current.campaign],
     camId: (state): string => state.config.current.campaign,
     charId: (state): number => state.config.current.character,
   },

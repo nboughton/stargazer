@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
       <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
@@ -58,7 +59,7 @@ export default defineComponent({
       },
       Type: () => {
         data.value.type = oracle.roll(
-          `Starforged/Oracles/Derelicts/Type/${data.value.location.replace(' ', '_')}`
+          `Starforged/Oracles/Derelicts/Type/${data.value.location.replace(/ /gi, '_')}`
         ) as EDerelictType;
       },
       Name: () => {
@@ -112,8 +113,8 @@ export default defineComponent({
         roll.OuterFirst();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].derelicts.unshift(deepCopy(data.value));
+        const app = useCampaign();
+        app.ca.sectors[args.sector].cells[args.cell].derelicts.unshift(deepCopy(data.value));
       },
     };
     return {

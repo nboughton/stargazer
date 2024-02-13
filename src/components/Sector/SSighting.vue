@@ -11,7 +11,7 @@
 
     <div class="row q-gutter-sm q-mb-sm">
       <i-input class="col-grow" label="Name" v-model="data.name" />
-      <q-btn class="col-shrink" v-if="campaign.config.edit" icon="delete" flat dense @click="$emit('delete')" />
+      <q-btn class="col-shrink" v-if="app.config.edit" icon="delete" flat dense @click="$emit('delete')" />
     </div>
     <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
   </q-expansion-item>
@@ -55,10 +55,10 @@ export default defineComponent({
       { deep: true }
     );
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     return {
       data,
-      campaign,
+      app,
       icon,
     };
   },

@@ -1,4 +1,5 @@
 <template>
+  <!-- file deepcode ignore PureFunctionReturnValueIgnored: value passed to component -->
   <div class="card-bg q-pa-xs">
     <div>
       <div class="row items-center">
@@ -121,8 +122,8 @@ export default defineComponent({
         roll.OuterFirst();
       },
       Save: (args: { sector: number; cell: number }) => {
-        const campaign = useCampaign();
-        campaign.data[campaign.camId].sectors[args.sector].cells[args.cell].vaults.unshift(deepCopy(data.value));
+        const app = useCampaign();
+        app.ca.sectors[args.sector].cells[args.cell].vaults.unshift(deepCopy(data.value));
       },
     };
 

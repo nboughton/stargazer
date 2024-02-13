@@ -24,7 +24,7 @@
       <q-btn class="col-shrink" icon="mdi-dice-6" flat dense @click="rollSub" />
     </div>
 
-    <q-input label="Text" v-model="campaign.data[campaign.camId].truths[id]" dense outlined autogrow />
+    <q-input label="Text" v-model="app.ca.truths[id]" dense outlined autogrow />
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const campaign = useCampaign();
+    const app = useCampaign();
 
     const truth = starforged['Setting Truths'].find((t) => t.Name === props.label);
     if (!truth) alert(`No truth found for ${props.label}`);
@@ -80,7 +80,7 @@ export default defineComponent({
         truth?.Table.forEach((t, i) => {
           const r = new RegExp(`^${truncate(t.Result)}`);
           if (r.test(optSelect.value)) {
-            campaign.data[campaign.camId].truths[props.id] = `${t.Result} ${t.Description}`;
+            app.ca.truths[props.id] = `${t.Result} ${t.Description}`;
             console.log(t);
             if (t.Subtable) {
               optID.value = i;
@@ -96,7 +96,7 @@ export default defineComponent({
     watch(
       () => subOptSelect.value,
       () => {
-        campaign.data[campaign.camId].truths[props.id] += '\n\n' + subOptSelect.value;
+        app.ca.truths[props.id] += '\n\n' + subOptSelect.value;
       }
     );
 
@@ -105,7 +105,7 @@ export default defineComponent({
     const rollSub = () => (subOptSelect.value = oracle.truth(truth?.$id as string, optID.value).Result);
 
     return {
-      campaign,
+      app,
       truth,
       optSelect,
       opts,

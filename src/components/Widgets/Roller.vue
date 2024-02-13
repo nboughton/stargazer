@@ -100,7 +100,7 @@
                 class="col-shrink"
                 dense
                 flat
-                :label="campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value"
+                :label="app.ch.tracks.momentum.value"
                 icon="mdi-fire"
                 @click="burn"
                 :size="btnSize"
@@ -174,24 +174,24 @@ export default defineComponent({
       burnt.value = false;
     };
 
-    const campaign = useCampaign();
+    const app = useCampaign();
     const attribute = ref(0);
     const otherAttr = ref(0);
 
     const adds = ref(0);
     const opts = computed((): ISelectOpt[] => {
       return [
-        { label: 'Edge', value: `edge:${campaign.data[campaign.camId].character[campaign.charId].stats.edge}` },
+        { label: 'Edge', value: `edge:${app.ch.stats.edge}` },
         {
           label: 'Heart',
-          value: `heart:${campaign.data[campaign.camId].character[campaign.charId].stats.heart}`,
+          value: `heart:${app.ch.stats.heart}`,
         },
-        { label: 'Iron', value: `iron:${campaign.data[campaign.camId].character[campaign.charId].stats.iron}` },
+        { label: 'Iron', value: `iron:${app.ch.stats.iron}` },
         {
           label: 'Shadow',
-          value: `shadow:${campaign.data[campaign.camId].character[campaign.charId].stats.shadow}`,
+          value: `shadow:${app.ch.stats.shadow}`,
         },
-        { label: 'Wits', value: `wits:${campaign.data[campaign.camId].character[campaign.charId].stats.wits}` },
+        { label: 'Wits', value: `wits:${app.ch.stats.wits}` },
         { label: 'Other', value: 'other' },
       ];
     });
@@ -212,27 +212,23 @@ export default defineComponent({
     const roll = () => {
       burnt.value = false;
       if (select.value === 'other') attribute.value = otherAttr.value;
-      data.value = moveRoll(
-        attribute.value,
-        adds.value,
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value
-      );
+      data.value = moveRoll(attribute.value, adds.value, app.ch.tracks.momentum.value);
     };
 
     const burnt = ref(false);
     const burn = () => {
-      const m = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value;
-      const r = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.reset;
+      const m = app.ch.tracks.momentum.value;
+      const r = app.ch.tracks.momentum.reset;
       if (data.value.result && data.value.result !== 'Strong Hit' && data.value.action.score < m) {
         data.value.action.score = m;
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value = r;
+        app.ch.tracks.momentum.value = r;
         data.value = updateResults(data.value);
         burnt.value = true;
       }
     };
 
     const adIcon = computed(() => {
-      const m = campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value;
+      const m = app.ch.tracks.momentum.value;
       return m < 0 && Math.abs(m) === data.value.action.die
         ? `mdi-dice-${data.value.action.die}-outline`
         : `mdi-dice-${data.value.action.die}`;
@@ -254,9 +250,8 @@ export default defineComponent({
 
       // Account for negative momentum
       if (
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value < 0 &&
-        Math.abs(campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value) ===
-          Math.abs(data.value.action.die)
+        app.ch.tracks.momentum.value < 0 &&
+        Math.abs(app.ch.tracks.momentum.value) === Math.abs(data.value.action.die)
       ) {
         data.value.action.score -= data.value.action.die;
       }
@@ -269,32 +264,24 @@ export default defineComponent({
     const saveResult = () => {
       if (!data.value.result) return;
 
-      campaign.appendToJournal(
+      app.appendToJournal(
         0,
         `<div class="note actionroll"><b>[${data.value.result}: ${data.value.action.die} + ${attribute.value} + ${adds.value} = ${data.value.action.score} vs ${data.value.challenge.die1.roll} | ${data.value.challenge.die2.roll}]</b></div>`
       );
     };
 
     const mInc = () => {
-      if (
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value <
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.max
-      )
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value++;
+      if (app.ch.tracks.momentum.value < app.ch.tracks.momentum.max) app.ch.tracks.momentum.value++;
     };
 
     const mDec = () => {
-      if (
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value >
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.min
-      )
-        campaign.data[campaign.camId].character[campaign.charId].tracks.momentum.value--;
+      if (app.ch.tracks.momentum.value > app.ch.tracks.momentum.min) app.ch.tracks.momentum.value--;
     };
 
     return {
       show,
       close,
-      campaign,
+      app,
       icon,
 
       attribute,
