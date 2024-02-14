@@ -151,6 +151,8 @@ export interface IProgressTrack {
   difficulty: number;
   boxes: number[];
   clocks: string[];
+  resolved?: boolean;
+  resolve?: string;
 }
 
 export interface ILegacyBox {

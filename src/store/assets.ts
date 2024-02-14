@@ -64,7 +64,7 @@ export const useAssets = defineStore({
     enabled: true,
     strategies: [
       {
-        key: 'StargazerCustomAssets',
+        key: 'Stargazer2CustomAssets',
         storage: localStorage,
       },
     ],

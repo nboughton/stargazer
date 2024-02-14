@@ -19,6 +19,8 @@ import { useCampaign } from './store/campaign';
 
 import { useQuasar } from 'quasar';
 import { sleep } from './lib/util';
+import { NewCampaign } from './lib/campaign';
+import { NewConfig } from './lib/config';
 
 export default defineComponent({
   name: 'App',
@@ -46,6 +48,14 @@ export default defineComponent({
     const app = useCampaign();
 
     const renderIntro = async () => {
+      if (Object.keys(app.campaigns).length === 0) {
+        const c = NewCampaign()
+        app.campaigns[c.id] = c
+
+        app.config = NewConfig()
+        app.config.current.campaign = c.id
+      }
+
       await writeLine('::booting system...');
       await skippableSleep(500);
       await writeLine('::assessing damage...');

@@ -73,7 +73,7 @@ export const useOracles = defineStore({
     enabled: true,
     strategies: [
       {
-        key: 'StargazerCustomOracles',
+        key: 'Stargazer2CustomOracles',
         storage: localStorage,
       },
     ],

@@ -1,5 +1,27 @@
 <template>
   <q-page padding>
+    <!--Character add/select-->
+    <div class="row full-width items-center">
+      <q-select
+        class="col-grow"
+        label="Character Select"
+        :options="charOpts"
+        v-model="app.config.current.character"
+        map-options
+        emit-value
+        dense
+      />
+      <q-btn icon="add_circle" @click="addCharacter" dense round flat />
+      <q-btn
+        v-if="app.config.edit && app.ca.character.length > 1"
+        icon="delete"
+        @click="removeCharacter"
+        dense
+        round
+        flat
+      />
+    </div>
+
     <!-- Name, pronouns, callsign etc -->
     <div class="row full-width items-center" id="top">
       <q-input class="col-grow" label="Name" v-model="app.ch.name" dense />
@@ -184,9 +206,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+
+import { ISelectOpt } from 'src/components/models';
 
 import { useCampaign } from 'src/store/campaign';
+
+import { NewCharacter } from 'src/lib/campaign';
 
 import Stats from 'src/components/Stats/Stats.vue';
 import Asset from 'src/components/Assets/Asset.vue';
@@ -207,6 +233,18 @@ export default defineComponent({
   },
   setup() {
     const app = useCampaign();
+
+    const addCharacter = () => {
+      app.ca.character.push(NewCharacter());
+      app.config.current.character = app.ca.character.length - 1;
+    };
+    const removeCharacter = () => {
+      const index = app.config.current.character;
+      app.config.current.character = 0;
+      if (window.confirm(`Are you sure you want to delete ${app.ca.character[index].name}?`))
+        app.ca.character.splice(index, 1);
+    };
+    const charOpts = computed((): ISelectOpt[] => app.ca.character.map((c, i) => ({ label: c.name, value: i })));
 
     const removeAsset = (index: number) => app.ch.assets.splice(index, 1);
     const showAssetSelect = ref(false);
@@ -239,6 +277,10 @@ export default defineComponent({
 
     return {
       app,
+
+      addCharacter,
+      removeCharacter,
+      charOpts,
 
       removeAsset,
       showAssetSelect,

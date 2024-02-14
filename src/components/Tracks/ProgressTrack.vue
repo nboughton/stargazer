@@ -166,11 +166,9 @@ export default defineComponent({
     const rollData = ref(NewRollData());
     const conclude = () => {
       rollData.value = moveRoll(0, 0, 0, actionScore.value);
+      const res = `${data.value.name} :${rollData.value.result} = ${rollData.value.action.score} vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}`;
 
-      app.appendToJournal(
-        0,
-        `<div class="note progressroll"><b>[Progress Roll: ${data.value.name} :${rollData.value.result} = ${rollData.value.action.score} vs ${rollData.value.challenge.die1.roll} | ${rollData.value.challenge.die2.roll}]</b></div>`
-      );
+      app.appendToJournal(0, `<div class="note progressroll"><b>[Progress Roll: ${res}]</b></div>`);
     };
 
     const app = useCampaign();

@@ -3,23 +3,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { defineStore } from 'pinia';
-import { ESectorOpts, ICampaign, ICampaigns, ICharacter } from 'components/models';
+import { ESectorOpts, ICampaign, ICampaigns, ICharacter, IConfig } from 'components/models';
 
 import { exportFile } from 'quasar';
 import { deepCopy, now } from 'src/lib/util';
 import { NewCampaign } from 'src/lib/campaign';
-import { NewConfig } from 'src/lib/config';
-
-const defCampaign = NewCampaign();
 
 export const useCampaign = defineStore({
   id: 'campaign',
 
   state: () => ({
-    config: NewConfig(),
-    campaigns: <ICampaigns>{
-      [defCampaign.id]: defCampaign,
-    },
+    config: <IConfig>{},
+    campaigns: <ICampaigns>{},
   }),
 
   actions: {
@@ -131,7 +126,7 @@ export const useCampaign = defineStore({
     enabled: true,
     strategies: [
       {
-        key: 'StargazerCampaign',
+        key: 'Stargazer2Campaigns',
         storage: localStorage,
       },
     ],

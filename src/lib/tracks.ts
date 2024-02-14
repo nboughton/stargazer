@@ -29,37 +29,39 @@ export const Difficulty: { [index: number]: IDiff } = {
   5: <IDiff>{ label: 'Epic', mark: 0.25, harm: 5 },
 };
 
-export const NewProgressTrack = (name?: string): IProgressTrack => {
-  return {
-    name: name ? name : '',
-    difficulty: 1,
-    boxes: Array(10).fill(0) as number[],
-    clocks: [],
-  };
-};
+export const NewProgressTrack = (name?: string): IProgressTrack => ({
+  name: name ? name : '',
+  difficulty: 1,
+  boxes: Array(10).fill(0) as number[],
+  clocks: [],
+  resolved: false,
+  resolve: '',
+});
 
 export const NewLegacyTrack = (): ILegacyTrack => {
-  const track: ILegacyTrack = {
+  const track = {
     plus10: false,
-    boxes: Array(10).fill({
+    boxes: [] as ILegacyBox[],
+  };
+
+  for (let i = 0; i < 10; i++) {
+    track.boxes.push({
       ticks: 0,
       xp: [false, false],
-    }) as ILegacyBox[],
-  };
+    });
+  }
 
   return track;
 };
 
-export const NewClock = (): IClock => {
-  return {
-    id: uid(),
-    name: '',
-    segments: 4,
-    filled: 0,
-    advance: EAtO.Likely,
-    roll: 0,
-  };
-};
+export const NewClock = (): IClock => ({
+  id: uid(),
+  name: '',
+  segments: 4,
+  filled: 0,
+  advance: EAtO.Likely,
+  roll: 0,
+});
 
 export const RollClock = (clock: IClock): IClock => {
   const { val, yn, match } = clockRoll(clock.advance);

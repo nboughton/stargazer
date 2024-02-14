@@ -5,7 +5,7 @@
   </div>
 
   <div class="row no-wrap items-center justify-between q-mb-md">
-    <div class="column items-center" v-for="(box, i) in data.boxes" :key="i">
+    <div class="column items-center" v-for="(box, i) in data.boxes" :key="`${name}-ltrack-${i}`">
       <div class="row">
         <q-btn :icon="boxIcon(data.boxes[i].ticks)" flat dense :size="boxSize" @click="boxIncrement(i)" />
       </div>
@@ -39,14 +39,14 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup(props, ctx) {
+  setup(props, { emit }) {
     const data = ref(props.modelValue);
     watch(
       () => props.modelValue,
       () => (data.value = props.modelValue),
       { deep: true }
     );
-    const updateValue = () => ctx.emit('update:modelValue', data.value);
+    const updateValue = () => emit('update:modelValue', data.value);
 
     const boxIncrement = (index: number) => {
       if (data.value.boxes[index].ticks === 4) {

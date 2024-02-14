@@ -15,17 +15,15 @@ import { ICustomOracle } from 'src/components/models';
 import { uid } from 'quasar';
 import { useOracles } from 'src/store/oracles';
 
-export const NewCustomOracle = (name: string): ICustomOracle => {
-  return {
-    $id: 'Stargazer/Oracles/Custom/' + uid(), // Ensure IDs are unique
-    Name: name,
-    Dice: '1d100',
-    Display: <IDisplayOracle>{},
-    Category: 'Custom',
-    Source: <ISource>{},
-    Table: <IRow[]>[],
-  };
-};
+export const NewCustomOracle = (name: string): ICustomOracle => ({
+  $id: 'Stargazer/Oracles/Custom/' + uid(), // Ensure IDs are unique
+  Name: name,
+  Dice: '1d100',
+  Display: <IDisplayOracle>{},
+  Category: 'Custom',
+  Source: <ISource>{},
+  Table: <IRow[]>[],
+});
 
 // This is where the magic really happens
 const find = (id: string): ICustomOracle | IOracleBase | ISettingTruth | string[] | false => {
