@@ -8,6 +8,7 @@ export function NewConfig(): IConfig {
     index: [],
     edit: true,
     saving: false,
+    locale: 'en-US',
     map: {
       height: 400,
       width: 800,

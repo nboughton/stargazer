@@ -5,7 +5,7 @@
         <div class="row">
           <!--q-icon :name="icon.asset(data.title)" /-->
           <hexbox
-            :label="`asset ability ${index + 1}`"
+            :label="$t('assets.abilityLabel', { n: index + 1 })"
             v-for="(box, index) in data.items"
             :key="index"
             v-model="data.items[index].marked"
@@ -19,7 +19,7 @@
       </div>
 
       <div class="col-3 text-h6 sf-header q-mr-sm text-right">
-        {{ data.type }}
+        {{ displayType }}
       </div>
     </q-card-section>
 
@@ -44,8 +44,8 @@
         </div>
       </div>
       <div class="row justify-evenly q-gutter-sm">
-        <q-checkbox v-if="data.cursed != undefined" label="Cursed" v-model="data.cursed" />
-        <q-checkbox v-if="data.battered != undefined" label="Battered" v-model="data.battered" />
+        <q-checkbox v-if="data.cursed != undefined" :label="$t('assets.conditions.cursed')" v-model="data.cursed" />
+        <q-checkbox v-if="data.battered != undefined" :label="$t('assets.conditions.battered')" v-model="data.battered" />
       </div>
 
       <resource-track class="col-grow q-mt-xs" v-if="data.track" v-model="data.track" reverse variable />
@@ -60,6 +60,8 @@ import { ISGAsset } from '../models';
 
 import { useConfig } from 'src/store/config';
 
+import { currentStarforged } from 'src/lib/dataforged';
+import { translateKey } from 'src/i18n';
 import { icon } from 'src/lib/icons';
 
 import ResourceTrack from '../Tracks/ResourceTrack.vue';
@@ -99,10 +101,21 @@ export default defineComponent({
       return out;
     });
 
+    const displayType = computed((): string => {
+      if (data.value.assetTypeId) {
+        const found = currentStarforged.value['Asset Types'].find((t) => t.$id === data.value.assetTypeId);
+        if (found) return found.Name;
+      }
+      const key = `assets.types.${data.value.type}`;
+      const translated = translateKey(key);
+      return translated === key ? data.value.type : translated;
+    });
+
     const dExpanded = ref(props.expanded);
     const config = useConfig();
     return {
       data,
+      displayType,
       dExpanded,
       icon,
       config,

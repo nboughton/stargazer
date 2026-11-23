@@ -3,17 +3,17 @@
     :icon="`img:${icon.sighting(data.name)}`"
     header-class="sighting-header rounded-borders q-mb-sm"
     :label="data.name"
-    caption="Sighting"
+    :caption="$t('enums.sectorItem.Sighting')"
   >
     <div class="row q-mb-sm" v-if="controls">
       <controls class="col" @move="$emit('move', $event)" />
     </div>
 
     <div class="row q-gutter-sm q-mb-sm">
-      <i-input class="col-grow" label="Name" v-model="data.name" />
+      <i-input class="col-grow" :label="$t('common.name')" v-model="data.name" />
       <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
     </div>
-    <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+    <i-input class="q-mb-sm" :label="$t('common.notes')" v-model="data.notes" autogrow />
   </q-expansion-item>
 </template>
 

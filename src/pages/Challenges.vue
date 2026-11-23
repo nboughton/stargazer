@@ -2,7 +2,7 @@
   <q-page padding>
     <!-- Vows -->
     <div class="text-h4 sf-header text-center q-mb-sm" id="vows">
-      Vows<q-btn icon="add_circle" flat dense @click="addVow" />
+      {{ $t('challenges.vows') }}<q-btn icon="add_circle" flat dense @click="addVow" />
     </div>
     <progress-track
       class="q-mb-md"
@@ -19,7 +19,7 @@
 
     <!-- Progress -->
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="progress">
-      Progress<q-btn icon="add_circle" flat dense @click="addTrack" />
+      {{ $t('challenges.progress') }}<q-btn icon="add_circle" flat dense @click="addTrack" />
     </div>
     <progress-track
       class="q-mb-md"
@@ -36,7 +36,7 @@
 
     <!-- Clocks -->
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="clocks">
-      Clocks<q-btn icon="add_circle" flat dense @click="addClock" />
+      {{ $t('challenges.clocks') }}<q-btn icon="add_circle" flat dense @click="addClock" />
     </div>
     <clocks class="q-mb-sm" all />
   </q-page>

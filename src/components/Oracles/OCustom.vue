@@ -1,7 +1,7 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row justify-between q-ma-xs items-center">
-      <div class="col-grow text-bold">Add Custom Oracle</div>
+      <div class="col-grow text-bold">{{ $t('oracles.fields.addCustomOracle') }}</div>
       <q-btn class="col-shrink" icon="add_circle" flat dense @click="$emit('new')" />
     </div>
     <o-input

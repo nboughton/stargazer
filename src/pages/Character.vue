@@ -2,21 +2,21 @@
   <q-page padding>
     <!-- Name, pronouns, callsign etc -->
     <div class="row full-width items-center" id="top">
-      <q-input class="col-grow" label="Name" v-model="campaign.data.character.name" dense />
-      <q-input class="col-4" label="Pronouns" v-model="campaign.data.character.pronouns" dense />
+      <q-input class="col-grow" :label="$t('common.name')" v-model="campaign.data.character.name" dense />
+      <q-input class="col-4" :label="$t('character.pronouns')" v-model="campaign.data.character.pronouns" dense />
     </div>
     <div class="row full-width items-center">
-      <q-input class="col-xs-4 col-sm-3 col-2" label="Callsign" v-model="campaign.data.character.callsign" dense />
-      <q-input class="col-grow" label="Characteristics" v-model="campaign.data.character.characteristics" dense />
+      <q-input class="col-xs-4 col-sm-3 col-2" :label="$t('character.callsign')" v-model="campaign.data.character.callsign" dense />
+      <q-input class="col-grow" :label="$t('character.characteristics')" v-model="campaign.data.character.characteristics" dense />
     </div>
 
     <!-- Momentum -->
     <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
-      <span class="col-shrink text-bold q-mx-sm">Momentum</span>
+      <span class="col-shrink text-bold q-mx-sm">{{ $t('character.momentum') }}</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.momentum" />
       <q-input
         class="col-xs-2 col-sm-1 col-1"
-        label="Max"
+        :label="$t('common.max')"
         type="number"
         :max="10"
         :min="-6"
@@ -26,7 +26,7 @@
       />
       <q-input
         class="col-xs-2 col-sm-1 col-1"
-        label="Reset"
+        :label="$t('common.reset')"
         type="number"
         :max="4"
         :min="0"
@@ -35,15 +35,15 @@
         borderless
       />
       <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
-        <q-tooltip>Burn momentum</q-tooltip>
+        <q-tooltip>{{ $t('character.burnMomentum') }}</q-tooltip>
       </q-btn>
     </div>
     <div v-else>
       <div class="row items-center">
-        <span class="col-grow text-h6">Momentum</span>
+        <span class="col-grow text-h6">{{ $t('character.momentum') }}</span>
         <q-input
           class="col-xs-2 col-sm-1 col-1"
-          label="Max"
+          :label="$t('common.max')"
           type="number"
           :max="10"
           :min="-6"
@@ -53,7 +53,7 @@
         />
         <q-input
           class="col-xs-2 col-sm-1 col-1"
-          label="Reset"
+          :label="$t('common.reset')"
           type="number"
           :max="4"
           :min="0"
@@ -62,7 +62,7 @@
           borderless
         />
         <q-btn class="col-shrink" icon="mdi-fire" @click="burnMomentum" flat dense>
-          <q-tooltip>Burn momentum</q-tooltip>
+          <q-tooltip>{{ $t('character.burnMomentum') }}</q-tooltip>
         </q-btn>
       </div>
       <resource-track class="row full-width" v-model="campaign.data.character.tracks.momentum" />
@@ -72,30 +72,30 @@
 
     <!-- Tracks -->
     <div class="row justify-between items-center" v-if="$q.screen.gt.xs">
-      <span class="col-shrink text-bold q-mx-sm">Health</span>
+      <span class="col-shrink text-bold q-mx-sm">{{ $t('character.health') }}</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.health" />
       <q-separator vertical />
 
-      <span class="col-shrink text-bold q-mx-sm">Spirit</span>
+      <span class="col-shrink text-bold q-mx-sm">{{ $t('character.spirit') }}</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.spirit" />
       <q-separator vertical />
 
-      <span class="col-shrink text-bold q-mx-sm">Supply</span>
+      <span class="col-shrink text-bold q-mx-sm">{{ $t('character.supply') }}</span>
       <resource-track class="col-grow" v-model="campaign.data.character.tracks.supply" />
     </div>
     <div v-else>
       <div class="row justify-between items-center">
-        <span class="col-2 text-bold">Health</span>
+        <span class="col-2 text-bold">{{ $t('character.health') }}</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.health" />
       </div>
 
       <div class="row justify-between items-center">
-        <span class="col-2 text-bold">Spirit</span>
+        <span class="col-2 text-bold">{{ $t('character.spirit') }}</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.spirit" />
       </div>
 
       <div class="row justify-between items-center">
-        <span class="col-2 text-bold">Supply</span>
+        <span class="col-2 text-bold">{{ $t('character.supply') }}</span>
         <resource-track class="col-grow" v-model="campaign.data.character.tracks.supply" />
       </div>
     </div>
@@ -104,13 +104,13 @@
 
     <!-- Stats -->
     <stats class="q-mt-md" v-model="campaign.data.character.stats" />
-    <i-input class="q-mt-md q-mb-md" label="Gear &amp; Notes" v-model="campaign.data.character.gear" autogrow />
+    <i-input class="q-mt-md q-mb-md" :label="$t('character.gearNotes')" v-model="campaign.data.character.gear" autogrow />
 
     <q-separator />
 
     <!-- Assets -->
     <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="assets">
-      Assets<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
+      {{ $t('character.assets') }}<q-btn icon="add_circle" flat dense @click="showAssetSelect = true" />
     </div>
 
     <div class="row assets-container" v-if="$q.screen.gt.sm">
@@ -119,7 +119,7 @@
           <asset class="q-mb-sm" v-if="i % 2 == 0" v-model="campaign.data.character.assets[i]">
             <template v-slot:append>
               <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
-                <q-tooltip>Remove asset</q-tooltip>
+                <q-tooltip>{{ $t('character.removeAsset') }}</q-tooltip>
               </q-btn>
             </template>
           </asset>
@@ -131,7 +131,7 @@
           <asset class="q-mb-sm" v-if="i % 2 != 0" v-model="campaign.data.character.assets[i]">
             <template v-slot:append>
               <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
-                <q-tooltip>Remove asset</q-tooltip>
+                <q-tooltip>{{ $t('character.removeAsset') }}</q-tooltip>
               </q-btn>
             </template>
           </asset>
@@ -143,7 +143,7 @@
         <asset class="q-mb-sm" v-model="campaign.data.character.assets[i]">
           <template v-slot:append>
             <q-btn icon="delete" flat dense @click="removeAsset(i)" v-if="config.data.edit">
-              <q-tooltip>Remove asset</q-tooltip>
+              <q-tooltip>{{ $t('character.removeAsset') }}</q-tooltip>
             </q-btn>
           </template>
         </asset>
@@ -153,25 +153,25 @@
     <q-separator />
 
     <!-- Legacy tracks -->
-    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">Legacy Tracks</div>
-    <legacy-track name="Quests" v-model="campaign.data.character.legacies.quests" />
+    <div class="text-h4 sf-header text-center q-mt-md q-mb-sm" id="legacies">{{ $t('character.legacyTracks') }}</div>
+    <legacy-track :name="$t('character.quests')" v-model="campaign.data.character.legacies.quests" />
     <q-separator />
-    <legacy-track name="Bonds" v-model="campaign.data.character.legacies.bonds" />
+    <legacy-track :name="$t('character.bonds')" v-model="campaign.data.character.legacies.bonds" />
     <q-separator />
-    <legacy-track name="Discoveries" v-model="campaign.data.character.legacies.discoveries" />
+    <legacy-track :name="$t('character.discoveries')" v-model="campaign.data.character.legacies.discoveries" />
 
     <q-separator />
 
     <div class="row">
       <!-- Impacts -->
-      <div class="col-12 text-h4 sf-header text-center q-pt-md" id="impacts">Impacts</div>
+      <div class="col-12 text-h4 sf-header text-center q-pt-md" id="impacts">{{ $t('character.impacts') }}</div>
       <div class="col-xs-6 col-sm-3 col-3" v-for="(set, setIndex) in campaign.data.character.impacts" :key="setIndex">
-        <div class="text-bold">{{ setIndex }}</div>
+        <div class="text-bold">{{ $t(`impacts.categories.${setIndex}`) }}</div>
         <q-checkbox
           class="row"
           v-for="(impact, iIndex) in campaign.data.character.impacts[setIndex]"
           :key="iIndex"
-          :label="impact.name"
+          :label="$t(`impacts.items.${impact.name}`)"
           v-model="campaign.data.character.impacts[setIndex][iIndex].marked"
           @click="markImpact"
         >

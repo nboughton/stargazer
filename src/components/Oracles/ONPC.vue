@@ -1,13 +1,13 @@
 <template>
   <div class="card-bg q-pa-xs">
-    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
-    <o-input label="Pronouns" v-model="data.pronouns" no-roll />
-    <o-input label="Callsign" v-model="data.callsign" @roll="roll.Call" />
-    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
-    <o-input label="Disposition" v-model="data.disposition" @roll="roll.Disp" />
-    <o-input label="Role" v-model="data.role" @roll="roll.Role" />
-    <o-input label="Goal" v-model="data.goal" @roll="roll.Goal" />
-    <o-input label="Revealed Aspect" v-model="data.aspect" @roll="roll.Aspect" reroll :maxRerolls="3" />
+    <o-input :label="$t('common.name')" v-model="data.name" @roll="roll.Name" />
+    <o-input :label="$t('character.pronouns')" v-model="data.pronouns" no-roll />
+    <o-input :label="$t('character.callsign')" v-model="data.callsign" @roll="roll.Call" />
+    <o-input :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" @roll="roll.First" reroll />
+    <o-input :label="$t('oracles.fields.disposition')" v-model="data.disposition" @roll="roll.Disp" />
+    <o-input :label="$t('oracles.fields.role')" v-model="data.role" @roll="roll.Role" />
+    <o-input :label="$t('oracles.fields.goal')" v-model="data.goal" @roll="roll.Goal" />
+    <o-input :label="$t('oracles.fields.revealedAspect')" v-model="data.aspect" @roll="roll.Aspect" reroll :maxRerolls="3" />
     <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
   </div>
 </template>

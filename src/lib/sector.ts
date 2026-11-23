@@ -22,6 +22,7 @@ import {
 } from 'src/components/models';
 
 import * as oracle from 'src/lib/oracles';
+import { translateKey } from 'src/i18n';
 import { NewProgressTrack } from './tracks';
 
 export const NewNPC = (): INPC => {
@@ -62,7 +63,7 @@ export const NewDerelict = (loc?: ESLocation, type?: EDerelictType): IDerelict =
 
 export const NewCreature = (env?: EEnv): ICreature => {
   return {
-    name: 'New Creature',
+    name: translateKey('sector.defaults.newCreature'),
     environment: env ? env : EEnv.Land,
     scale: '',
     form: '',
@@ -75,7 +76,7 @@ export const NewCreature = (env?: EEnv): ICreature => {
 
 export const NewVault = (loc?: ESLocation): IVault => {
   return {
-    name: 'Mysterious Vault',
+    name: translateKey('sector.defaults.newVault'),
     location: loc ? loc : ESLocation.Orbital,
     scale: '',
     form: '',
@@ -195,7 +196,7 @@ export const NewStar = (): IStar => {
 
 export const NewSighting = (): ISighting => {
   return {
-    name: 'Sighting',
+    name: translateKey('sector.defaults.newSighting'),
     notes: '',
   };
 };

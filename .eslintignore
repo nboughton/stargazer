@@ -7,3 +7,6 @@
 .eslintrc.js
 babel.config.js
 /src-ssr
+/src-electron
+/src-pwa
+/scripts

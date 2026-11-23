@@ -1,30 +1,58 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
-      <q-select class="col-grow" label="Location" v-model="data.location" :options="Object.values(ESLocation)" dense />
+      <q-select
+        class="col-grow"
+        :label="$t('common.location')"
+        v-model="data.location"
+        :options="locOpts"
+        map-options
+        emit-value
+        dense
+      />
       <q-btn icon="mdi-dice-6" flat dense @click="roll.Loc" />
-      <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(EDerelictType)" dense />
+      <q-select
+        class="col-grow"
+        :label="$t('common.type')"
+        v-model="data.type"
+        :options="typeOpts"
+        map-options
+        emit-value
+        dense
+      />
       <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
     </div>
 
-    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+    <o-input :label="$t('common.name')" v-model="data.name" @roll="roll.Name" />
 
-    <o-input label="Condition" v-model="data.condition" @roll="roll.Cond" />
+    <o-input :label="$t('oracles.fields.condition')" v-model="data.condition" @roll="roll.Cond" />
 
-    <o-input label="Outer First Look" v-model="data.outerFirstLook" @roll="roll.OuterFirst" />
+    <o-input :label="$t('oracles.fields.outerFirstLook')" v-model="data.outerFirstLook" @roll="roll.OuterFirst" />
 
-    <o-input label="Inner First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" />
+    <o-input :label="$t('oracles.fields.innerFirstLook')" v-model="data.innerFirstLook" @roll="roll.InnerFirst" />
 
-    <q-expansion-item label="Explore">
-      <o-input label="Current Zone" v-model="data.currentZone" @roll="roll.Zone" />
+    <q-expansion-item :label="$t('oracles.fields.explore')">
+      <div class="row items-center">
+        <clipboard-btn :data="data.currentZone ? $t(`enums.derelictZone.${data.currentZone}`) : ''" />
+        <q-select
+          class="col-grow"
+          :label="$t('oracles.fields.currentZone')"
+          v-model="data.currentZone"
+          :options="zoneOpts"
+          map-options
+          emit-value
+          dense
+        />
+        <q-btn icon="mdi-dice-6" flat dense @click="roll.Zone" />
+      </div>
 
-      <o-input label="Area" v-model="data.explore.area" @roll="roll.Explore.Area" />
+      <o-input :label="$t('oracles.fields.area')" v-model="data.explore.area" @roll="roll.Explore.Area" />
 
-      <o-input label="Feature" v-model="data.explore.feature" @roll="roll.Explore.Feat" />
+      <o-input :label="$t('oracles.fields.feature')" v-model="data.explore.feature" @roll="roll.Explore.Feat" />
 
-      <o-input label="Peril" v-model="data.explore.peril" @roll="roll.Explore.Peril" />
+      <o-input :label="$t('oracles.fields.peril')" v-model="data.explore.peril" @roll="roll.Explore.Peril" />
 
-      <o-input label="Opportunity" v-model="data.explore.opportunity" @roll="roll.Explore.Opp" />
+      <o-input :label="$t('oracles.fields.opportunity')" v-model="data.explore.opportunity" @roll="roll.Explore.Opp" />
     </q-expansion-item>
 
     <o-btns clear @clear="btns.Clear" initial @initial="btns.Initial" save @save="btns.Save" />
@@ -33,7 +61,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { ESLocation, EDerelictType, EDerelictZone, IDerelict } from '../models';
 
@@ -41,22 +69,27 @@ import { useCampaign } from 'src/store/campaign';
 
 import { NewDerelict } from 'src/lib/sector';
 import * as oracle from 'src/lib/oracles';
+import { enumOptions } from 'src/i18n';
 
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
+import ClipboardBtn from '../Widgets/ClipboardBtn.vue';
 
 export default defineComponent({
-  components: { OInput, OBtns },
+  components: { OInput, OBtns, ClipboardBtn },
   name: 'ODerelict',
   setup() {
     const data = ref(NewDerelict());
+    const locOpts = computed(() => enumOptions(Object.values(ESLocation), 'enums.location'));
+    const typeOpts = computed(() => enumOptions(Object.values(EDerelictType), 'enums.derelictType'));
+    const zoneOpts = computed(() => enumOptions(Object.values(EDerelictZone), 'enums.derelictZone'));
 
     const roll = {
       Loc: () => {
-        data.value.location = oracle.roll('Starforged/Oracles/Derelicts/Location') as ESLocation;
+        data.value.location = oracle.rollEn('Starforged/Oracles/Derelicts/Location') as ESLocation;
       },
       Type: () => {
-        data.value.type = oracle.roll(
+        data.value.type = oracle.rollEn(
           `Starforged/Oracles/Derelicts/Type/${data.value.location.replace(' ', '_')}`
         ) as EDerelictType;
       },
@@ -76,9 +109,9 @@ export default defineComponent({
         data.value.innerFirstLook = oracle.roll('Starforged/Oracles/Derelicts/Inner_First_Look');
       },
       Zone: () => {
-        data.value.currentZone = oracle
-          .roll(`Starforged/Oracles/Derelicts/Zones/${data.value.type}`)
-          .replace(/[^a-z]/gi, '') as EDerelictZone;
+        data.value.currentZone = oracle.rollLinkTail(
+          `Starforged/Oracles/Derelicts/Zones/${data.value.type}`
+        ) as EDerelictZone;
       },
       Explore: {
         Area: () => {
@@ -117,6 +150,9 @@ export default defineComponent({
     };
     return {
       data,
+      locOpts,
+      typeOpts,
+      zoneOpts,
       ESLocation,
       EDerelictType,
       EDerelictZone,

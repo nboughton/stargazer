@@ -10,28 +10,42 @@
 
         <q-btn v-if="config.data.saving" icon="save" flat dense disable />
         <q-btn icon="mdi-dice-6" flat dense @click="showRoller = !showRoller">
-          <q-tooltip>Toggle Dice Roller</q-tooltip>
+          <q-tooltip>{{ $t('nav.toggleRoller') }}</q-tooltip>
         </q-btn>
 
         <q-toggle icon="delete" v-model="config.data.edit">
-          <q-tooltip>Toggle Delete buttons</q-tooltip>
+          <q-tooltip>{{ $t('nav.toggleDelete') }}</q-tooltip>
         </q-toggle>
+
+        <q-btn-toggle
+          :model-value="activeLocale"
+          @update:model-value="onLocaleChange"
+          :options="localeToggleOptions"
+          dense
+          flat
+          no-caps
+          toggle-color="primary"
+          data-testid="locale-switcher"
+          :aria-label="$t('language.label')"
+        >
+          <q-tooltip>{{ $t('language.tooltip') }}</q-tooltip>
+        </q-btn-toggle>
 
         <q-btn dense flat icon="edit_note" @click="toggleRightDrawer" />
       </q-toolbar>
 
       <q-tabs align="center" dense :class="{ crt: crt }">
-        <q-route-tab to="/campaign" label="Campaign" />
-        <q-route-tab v-if="config.data.journalTab" to="/journal" label="Journal" />
+        <q-route-tab to="/campaign" :label="$t('nav.campaign')" />
+        <q-route-tab v-if="config.data.journalTab" to="/journal" :label="$t('nav.journal')" />
         <q-route-tab to="/" :label="campaign.data.character.name" />
-        <q-route-tab to="/challenges" label="Challenges" />
-        <q-route-tab to="/sector" label="Sector" />
+        <q-route-tab to="/challenges" :label="$t('nav.challenges')" />
+        <q-route-tab to="/sector" :label="$t('nav.sector')" />
       </q-tabs>
     </q-header>
 
     <q-drawer elevated overlay v-model="leftDrawerOpen" side="left" bordered>
       <!-- left drawer content -->
-      <q-btn class="full-width" label="New Campaign" flat @click="addCampaign" icon-right="add" />
+      <q-btn class="full-width" :label="$t('nav.newCampaign')" flat @click="addCampaign" icon-right="add" />
       <q-list>
         <q-item
           class="items-center"
@@ -42,7 +56,7 @@
           v-ripple
         >
           <q-item-section @click="config.data.current = item.id" class="row full-width no-wrap">
-            {{ item.name || 'unnamed campaign' }}
+            {{ formatCampaignIndexName(item.name) }}
           </q-item-section>
           <q-item-section class="col-shrink" v-if="config.data.index.length > 1 && config.data.edit">
             <q-btn
@@ -67,8 +81,8 @@
             <q-icon name="download" />
           </q-item-section>
           <q-item-section>
-            Export Campaign Data
-            <q-tooltip>Download your current campaign database as a .json file</q-tooltip>
+            {{ $t('nav.exportCampaign') }}
+            <q-tooltip>{{ $t('nav.exportCampaignTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -77,8 +91,8 @@
             <q-icon name="upload" />
           </q-item-section>
           <q-item-section>
-            Load Campaign Data
-            <q-tooltip>Load a previously exported campaign database</q-tooltip>
+            {{ $t('nav.loadCampaign') }}
+            <q-tooltip>{{ $t('nav.loadCampaignTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -89,8 +103,8 @@
             <q-icon name="download" />
           </q-item-section>
           <q-item-section>
-            Export Custom Assets
-            <q-tooltip>Download your custom Assets as a .json file</q-tooltip>
+            {{ $t('nav.exportCustomAssets') }}
+            <q-tooltip>{{ $t('nav.exportCustomAssetsTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -99,8 +113,8 @@
             <q-icon name="upload" />
           </q-item-section>
           <q-item-section>
-            Load Custom Assets
-            <q-tooltip>Load a custom Assets file</q-tooltip>
+            {{ $t('nav.loadCustomAssets') }}
+            <q-tooltip>{{ $t('nav.loadCustomAssetsTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -111,8 +125,8 @@
             <q-icon name="download" />
           </q-item-section>
           <q-item-section>
-            Export Custom Oracles
-            <q-tooltip>Download your custom Oracles as a .json file</q-tooltip>
+            {{ $t('nav.exportCustomOracles') }}
+            <q-tooltip>{{ $t('nav.exportCustomOraclesTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -121,8 +135,8 @@
             <q-icon name="upload" />
           </q-item-section>
           <q-item-section>
-            Load Custom Oracles
-            <q-tooltip>Load a custom Oracles file</q-tooltip>
+            {{ $t('nav.loadCustomOracles') }}
+            <q-tooltip>{{ $t('nav.loadCustomOraclesTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -133,8 +147,8 @@
             <q-icon name="download" />
           </q-item-section>
           <q-item-section>
-            Export Journal
-            <q-tooltip>Export Journal as HTML</q-tooltip>
+            {{ $t('nav.exportJournal') }}
+            <q-tooltip>{{ $t('nav.exportJournalTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
 
@@ -142,7 +156,27 @@
 
         <q-item>
           <q-item-section avatar>
-            <q-toggle v-model="config.data.journalTab" label="Use Journal Tab" />
+            <q-toggle v-model="config.data.journalTab" :label="$t('nav.useJournalTab')" />
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section avatar>
+            <q-icon name="translate" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ $t('language.label') }}</q-item-label>
+            <q-btn-toggle
+              class="q-mt-xs"
+              :model-value="activeLocale"
+              @update:model-value="onLocaleChange"
+              :options="localeToggleOptions"
+              dense
+              unelevated
+              no-caps
+              toggle-color="primary"
+              data-testid="locale-toggle"
+            />
           </q-item-section>
         </q-item>
 
@@ -153,8 +187,8 @@
             <q-icon name="info" />
           </q-item-section>
           <q-item-section>
-            About
-            <q-tooltip>About this app</q-tooltip>
+            {{ $t('nav.about') }}
+            <q-tooltip>{{ $t('nav.aboutTip') }}</q-tooltip>
           </q-item-section>
         </q-item>
       </q-list>
@@ -173,7 +207,7 @@
       <div class="row">
         <q-expansion-item class="col-12" id="oracles">
           <template v-slot:header>
-            <div class="text-h4 sf-header col-grow">ORACLES</div>
+            <div class="text-h4 sf-header col-grow">{{ $t('nav.oraclesHeader') }}</div>
           </template>
           <oracles class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
@@ -182,7 +216,7 @@
       <div class="row">
         <q-expansion-item class="col-12" id="moves">
           <template v-slot:header>
-            <div class="text-h4 sf-header col-grow">MOVES</div>
+            <div class="text-h4 sf-header col-grow">{{ $t('nav.movesHeader') }}</div>
           </template>
           <moves class="q-pl-sm q-pr-sm" />
         </q-expansion-item>
@@ -193,13 +227,13 @@
 
       <q-fab color="primary" icon="keyboard_arrow_left" direction="left" class="journal-to-top">
         <q-fab-action color="primary" @click="scrollTo('oracles')" icon="mdi-dice-multiple">
-          <q-tooltip>Scroll to Oracles</q-tooltip>
+          <q-tooltip>{{ $t('nav.scrollToOracles') }}</q-tooltip>
         </q-fab-action>
         <q-fab-action color="primary" @click="scrollTo('moves')" icon="mdi-file-document-multiple">
-          <q-tooltip>Scroll to Moves</q-tooltip>
+          <q-tooltip>{{ $t('nav.scrollToMoves') }}</q-tooltip>
         </q-fab-action>
         <q-fab-action v-if="!config.data.journalTab" color="primary" @click="scrollTo('journal')" icon="mdi-notebook">
-          <q-tooltip>Scroll to Journal</q-tooltip>
+          <q-tooltip>{{ $t('nav.scrollToJournal') }}</q-tooltip>
         </q-fab-action>
       </q-fab>
     </q-drawer>
@@ -210,10 +244,10 @@
 
     <q-dialog v-model="showDataLoad" :maximized="$q.platform.is.mobile">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary"> Load Character Database </q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> {{ $t('nav.loadCharDbTitle') }} </q-card-section>
 
         <q-card-section class="text-subtitle">
-          Please bear in mind that this data will overwrite any existing versions of the same Campaigns.
+          {{ $t('nav.loadCharDbWarn') }}
         </q-card-section>
 
         <q-card-section>
@@ -221,29 +255,26 @@
             v-model="fileToLoad"
             standout="bg-blue-grey text-white"
             :input-style="{ color: '#ECEFF4' }"
-            label="Select File"
+            :label="$t('common.selectFile')"
             accept=".json"
           />
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn label="load" color="primary" @click="loadData" flat />
-          <q-btn label="close" color="warning" @click="showDataLoad = false" flat />
+          <q-btn :label="$t('common.loadLower')" color="primary" @click="loadData" flat />
+          <q-btn :label="$t('common.closeLower')" color="warning" @click="showDataLoad = false" flat />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
     <q-dialog v-model="showAssetLoad" :maximized="$q.platform.is.mobile">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary"> Load Custom Assets </q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> {{ $t('nav.loadCustomAssets') }} </q-card-section>
 
         <q-card-section class="text-subtitle text-center">
           <q-avatar icon="warning" size="xl" color="warning" />
           <div class="text-justify">
-            Warning: loading user supplied asset data can be risky. Stargazer attempts to strip any potentially
-            malicious code (i.e script tags in asset items) but cannot absolutely guarantee the safety of any data
-            loaded. Please check over the contents of the Asset file before loading it. And always ensure you only load
-            data from sources you trust.
+            {{ $t('nav.loadCustomAssetsWarn') }}
           </div>
         </q-card-section>
 
@@ -252,29 +283,26 @@
             v-model="assetsToLoad"
             standout="bg-blue-grey text-white"
             :input-style="{ color: '#ECEFF4' }"
-            label="Select File"
+            :label="$t('common.selectFile')"
             accept=".json"
           />
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn label="load" color="primary" @click="loadAssetData" flat />
-          <q-btn label="close" color="warning" @click="showAssetLoad = false" flat />
+          <q-btn :label="$t('common.loadLower')" color="primary" @click="loadAssetData" flat />
+          <q-btn :label="$t('common.closeLower')" color="warning" @click="showAssetLoad = false" flat />
         </q-card-actions>
       </q-card>
     </q-dialog>
 
     <q-dialog v-model="showOracleLoad" :maximized="$q.platform.is.mobile">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary"> Load Custom Oracles </q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> {{ $t('nav.loadCustomOracles') }} </q-card-section>
 
         <q-card-section class="text-subtitle text-center">
           <q-avatar icon="warning" size="xl" color="warning" />
           <div class="text-justify">
-            Warning: loading user supplied oracle data can be risky. Stargazer attempts to strip any potentially
-            malicious code (i.e script tags in oracles) but cannot absolutely guarantee the safety of any data loaded.
-            Please check over the contents of the Oracle file before loading it. And always ensure you only load data
-            from sources you trust.
+            {{ $t('nav.loadCustomOraclesWarn') }}
           </div>
         </q-card-section>
 
@@ -283,14 +311,14 @@
             v-model="oraclesToLoad"
             standout="bg-blue-grey text-white"
             :input-style="{ color: '#ECEFF4' }"
-            label="Select File"
+            :label="$t('common.selectFile')"
             accept=".json"
           />
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn label="load" color="primary" @click="loadOracleData" flat />
-          <q-btn label="close" color="warning" @click="showOracleLoad = false" flat />
+          <q-btn :label="$t('common.loadLower')" color="primary" @click="loadOracleData" flat />
+          <q-btn :label="$t('common.closeLower')" color="warning" @click="showOracleLoad = false" flat />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -298,40 +326,42 @@
     <q-dialog v-model="showAbout" :maximized="$q.platform.is.mobile">
       <q-card class="card-bg">
         <q-card-section class="row bg-secondary text-h5 justify-between">
-          <div class="col-grow sf-header">About</div>
+          <div class="col-grow sf-header">{{ $t('nav.about') }}</div>
           <q-btn class="col-shrink" flat dense icon="close" @click="showAbout = false" />
         </q-card-section>
 
         <q-card-section class="about-text text-justify">
           <div class="q-my-sm">
-            Ironsworn: Starforged is &copy;
+            {{ $t('nav.aboutCopyrightSf') }}
             <a href="https://www.ironswornrpg.com">Shawn Tomkin</a>
           </div>
 
           <div class="q-my-sm">
-            Iron Journal: Stargazer is &copy;
+            {{ $t('nav.aboutCopyrightSg') }}
             <a href="https://twitter.com/tiberianpun">Nick Boughton</a>
           </div>
 
           <div class="q-my-sm">
-            Ironsworn: Starforged planet tokens by <a href="https://joshmeehanart.com/">Joshua Meehan</a>.
+            {{ $t('nav.aboutPlanetTokens') }} <a href="https://joshmeehanart.com/">Joshua Meehan</a>.
           </div>
 
           <div class="q-my-sm">
-            With many thanks to
-            <a href="https://twitter.com/r_sek">rsek</a> for the amazing
-            <a href="https://github.com/rsek/dataforged">Dataforged repository</a> and all their contributions to
-            Stargazer's development. This app could not have been made without them.
+            {{ $t('nav.aboutThanksPrefix') }}
+            <a href="https://twitter.com/r_sek">rsek</a> {{ $t('nav.aboutThanksMid') }}
+            <a href="https://github.com/rsek/dataforged">{{ $t('nav.aboutThanksRepo') }}</a>
+            {{ $t('nav.aboutThanksSuffix') }}
           </div>
 
           <div class="q-my-sm">
-            Made with icons from <a href="https://game-icons.net/">game-icons.net</a> by
-            <a href="https://lorcblog.blogspot.com/">Lorc</a> and <a href="https://delapouite.com/">Delapouite</a>
+            {{ $t('nav.aboutIconsPrefix') }} <a href="https://game-icons.net/">game-icons.net</a>
+            {{ $t('nav.aboutIconsBy') }}
+            <a href="https://lorcblog.blogspot.com/">Lorc</a> {{ $t('nav.aboutAnd') }}
+            <a href="https://delapouite.com/">Delapouite</a>
           </div>
 
           <div class="q-my-sm">
-            If you like this app and want to say thanks you can
-            <a href="https://ko-fi.com/tiberianpun">buy me a coffee</a>
+            {{ $t('nav.aboutCoffeePrefix') }}
+            <a href="https://ko-fi.com/tiberianpun">{{ $t('nav.aboutCoffeeLink') }}</a>
           </div>
         </q-card-section>
       </q-card>
@@ -339,24 +369,26 @@
 
     <q-dialog v-model="showCampaignDelete" :maximized="$q.platform.is.mobile">
       <q-card>
-        <q-card-section class="text-center text-bold bg-secondary"> Delete Campaign </q-card-section>
-        <q-card-section class="text-h6 text-center"> Warning!</q-card-section>
+        <q-card-section class="text-center text-bold bg-secondary"> {{ $t('nav.deleteCampaignTitle') }} </q-card-section>
+        <q-card-section class="text-h6 text-center"> {{ $t('common.warning') }}</q-card-section>
         <q-card-section class="text-subtitle">
-          <p>Deleting a campaign cannot be reversed. Consider exporting before deleting.</p>
-          <q-card-section class="text-h6 text-center"> Delete '{{ campaignToDeleteName }}'?</q-card-section>
+          <p>{{ $t('nav.deleteCampaignWarn') }}</p>
+          <q-card-section class="text-h6 text-center">
+            {{ $t('nav.deleteCampaignPrompt', { name: campaignToDeleteName }) }}
+          </q-card-section>
         </q-card-section>
 
         <q-card-actions align="center">
           <q-btn
             color="warning"
-            label="DELETE"
+            :label="$t('common.deleteUpper')"
             @click="
               removeCampaign(campaignToDelete).then(() => {
                 showCampaignDelete = false;
               })
             "
           />
-          <q-btn color="primary" label="Do not delete" @click="showCampaignDelete = false" />
+          <q-btn color="primary" :label="$t('common.doNotDelete')" @click="showCampaignDelete = false" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -367,7 +399,10 @@
 
 <script lang="ts">
 import { ref, defineComponent, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+import { AppLocale, isAppLocale } from 'src/components/models';
+import { setLocale } from 'src/lib/locale';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { useAssets } from 'src/store/assets';
@@ -436,6 +471,29 @@ export default defineComponent({
       return /bebop/i.test(campaign.data.sectors[config.data.sector].name);
     });
 
+    const { t } = useI18n();
+    const localeToggleOptions = computed((): Array<{ label: string; value: AppLocale }> => [
+      { label: t('language.shortEn'), value: 'en-US' },
+      { label: t('language.shortPt'), value: 'pt-BR' },
+    ]);
+    const localeMenuOptions = computed((): Array<{ label: string; value: AppLocale }> => [
+      { label: t('language.enUS'), value: 'en-US' },
+      { label: t('language.ptBR'), value: 'pt-BR' },
+    ]);
+    const activeLocale = computed<AppLocale>(() =>
+      isAppLocale(config.data.locale) ? config.data.locale : 'en-US'
+    );
+    const onLocaleChange = (val: unknown): void => {
+      if (isAppLocale(val)) {
+        setLocale(val);
+      }
+    };
+    const formatCampaignIndexName = (name?: string): string => {
+      if (!name) return t('nav.unnamedCampaign');
+      const prefix = t('campaign.defaults.newCampaignPrefix');
+      return name.replace(/^(New Campaign|Nova Campanha)(?=\s*-\s*)/, prefix);
+    };
+
     const { getScrollTarget, setVerticalScrollPosition } = scroll;
     const scrollTo = (id: string) => {
       const el = document.getElementById(id);
@@ -487,6 +545,11 @@ export default defineComponent({
       btnSize,
       crt,
       scrollTo,
+      localeToggleOptions,
+      localeMenuOptions,
+      activeLocale,
+      onLocaleChange,
+      formatCampaignIndexName,
     };
   },
 });

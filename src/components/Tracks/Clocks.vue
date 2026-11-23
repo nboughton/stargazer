@@ -4,11 +4,11 @@
       class="row q-gutter-sm q-mb-sm items-center justify-center"
       v-if="all && campaign.data.character.clocks.length > 0"
     >
-      <q-btn label="Begin a Session" flat dense @click="rollAllClocks" />
+      <q-btn :label="$t('challenges.beginSession')" flat dense @click="rollAllClocks" />
     </div>
 
     <div class="row q-gutter-sm q-mb-sm items-center" v-if="!all">
-      <q-select class="col" label="Clock" v-model="clockSelect" :options="clockOpts" dense emit-value map-options />
+      <q-select class="col" :label="$t('challenges.clock')" v-model="clockSelect" :options="clockOpts" dense emit-value map-options />
       <q-btn class="col-shrink" icon="remove_circle" flat dense @click="unlinkClock(clockSelect)" />
       <q-btn class="col-shrink" icon="add_circle" flat dense @click="addClock(clockSelect)" />
     </div>
@@ -35,6 +35,7 @@
 
 <script lang="ts">
 import { NewClock, RollClock } from 'src/lib/tracks';
+import { translateKey } from 'src/i18n';
 import { useCampaign } from 'src/store/campaign';
 import { defineComponent, PropType, ref, computed } from 'vue';
 import { EAtO, ISelectOpt } from '../models';
@@ -81,7 +82,7 @@ export default defineComponent({
       return out;
     });
     const clockOpts = computed(() => {
-      const out: ISelectOpt[] = [{ label: 'New', value: 'new' }];
+      const out: ISelectOpt[] = [{ label: translateKey('common.new'), value: 'new' }];
       campaign.data.character.clocks.forEach((c) => {
         out.push({
           label: c.name,

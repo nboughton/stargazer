@@ -16,7 +16,7 @@ module.exports = configure(function (ctx) {
     supportTS: {
       tsCheckerConfig: {
         eslint: {
-          enabled: true,
+          enabled: !ctx.prod,
           files: './src/**/*.{ts,tsx,js,jsx,vue}',
         },
       },
@@ -28,7 +28,7 @@ module.exports = configure(function (ctx) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
-    boot: ['pinia'],
+    boot: ['pinia', 'i18n'],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['app.scss'],
@@ -49,6 +49,7 @@ module.exports = configure(function (ctx) {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
+      publicPath: process.env.PUBLIC_PATH || '/',
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
       // transpile: false,
@@ -69,8 +70,17 @@ module.exports = configure(function (ctx) {
 
       // https://v2.quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-      chainWebpack(/* chain */) {
-        //
+      chainWebpack(chain) {
+        /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return */
+        chain.plugin('define').tap((args) => {
+          Object.assign(args[0], {
+            __VUE_I18N_FULL_INSTALL__: JSON.stringify(true),
+            __VUE_I18N_LEGACY_API__: JSON.stringify(false),
+            __INTLIFY_PROD_DEVTOOLS__: JSON.stringify(false),
+          });
+          return args;
+        });
+        /* eslint-enable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-return */
       },
     },
 

@@ -1,22 +1,30 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
-      <q-select class="col-grow" label="Environment" v-model="data.environment" :options="Object.values(EEnv)" dense />
+      <q-select
+        class="col-grow"
+        :label="$t('oracles.fields.environment')"
+        v-model="data.environment"
+        :options="envOpts"
+        map-options
+        emit-value
+        dense
+      />
       <q-btn icon="mdi-dice-6" flat dense @click="roll.Env" />
     </div>
 
-    <o-input label="Scale" v-model="data.scale" @roll="roll.Scale" />
-    <o-input label="Basic Form" v-model="data.form" @roll="roll.Form" />
-    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
-    <o-input label="Encountered Behaviour" v-model="data.behaviour" @roll="roll.Behave" />
-    <o-input label="Revealed Aspect" v-model="data.aspect" @roll="roll.Aspect" reroll />
+    <o-input :label="$t('oracles.fields.scale')" v-model="data.scale" @roll="roll.Scale" />
+    <o-input :label="$t('oracles.fields.basicForm')" v-model="data.form" @roll="roll.Form" />
+    <o-input :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" @roll="roll.First" reroll />
+    <o-input :label="$t('oracles.fields.encounteredBehaviour')" v-model="data.behaviour" @roll="roll.Behave" />
+    <o-input :label="$t('oracles.fields.revealedAspect')" v-model="data.aspect" @roll="roll.Aspect" reroll />
 
     <o-btns save @save="btns.Save" clear @clear="btns.Clear" initial @initial="btns.Initial" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { EEnv, ICreature } from '../models';
 
@@ -24,6 +32,7 @@ import { useCampaign } from 'src/store/campaign';
 
 import { NewCreature } from 'src/lib/sector';
 import * as oracle from 'src/lib/oracles';
+import { enumOptions } from 'src/i18n';
 
 import OBtns from './OBtns.vue';
 import OInput from './OInput.vue';
@@ -33,17 +42,22 @@ export default defineComponent({
   name: 'OCreature',
   setup() {
     const data = ref(NewCreature());
+    const envOpts = computed(() => enumOptions(Object.values(EEnv), 'enums.env'));
 
     const roll = {
       Env: () => {
-        data.value.environment = oracle.roll('Starforged/Oracles/Creatures/Environment') as EEnv;
+        data.value.environment = oracle.rollEn('Starforged/Oracles/Creatures/Environment') as EEnv;
       },
       Scale: () => {
-        let s = oracle.roll('Starforged/Oracles/Creatures/Scale').replace(/[^a-z \(\)-]/gi, '');
-        if (s === 'Ultra-scale') {
-          s = oracle.roll('Starforged/Oracles/Creatures/Ultra-scale');
+        const res = oracle.rollDetailed('Starforged/Oracles/Creatures/Scale');
+        if (
+          res.linkTarget === 'Starforged/Oracles/Creatures/Ultra-scale' ||
+          res.canonical.replace(/[^\p{L}-]/gu, '') === 'Ultra-scale'
+        ) {
+          data.value.scale = oracle.roll('Starforged/Oracles/Creatures/Ultra-scale');
+        } else {
+          data.value.scale = res.result.replace(/[^\p{L}\p{N} \(\)-]/gu, '').trim();
         }
-        data.value.scale = s;
       },
       Form: () => {
         data.value.form = oracle.roll(`Starforged/Oracles/Creatures/Basic_Form/${data.value.environment}`);
@@ -80,6 +94,7 @@ export default defineComponent({
     return {
       data,
       EEnv,
+      envOpts,
 
       roll,
       btns,

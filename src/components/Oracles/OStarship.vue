@@ -1,27 +1,35 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
-      <q-select class="col-grow" label="Region" v-model="regionSelect" :options="Object.values(ERegion)" dense />
+      <q-select
+        class="col-grow"
+        :label="$t('common.region')"
+        v-model="regionSelect"
+        :options="regionOpts"
+        map-options
+        emit-value
+        dense
+      />
     </div>
 
-    <o-input label="Name" v-model="data.name" @roll="roll.Name" />
+    <o-input :label="$t('common.name')" v-model="data.name" @roll="roll.Name" />
 
-    <o-input label="Class" v-model="data.class" @roll="roll.Class" />
+    <o-input :label="$t('oracles.fields.class')" v-model="data.class" @roll="roll.Class" />
 
-    <o-input label="Fleet" v-model="data.fleet" @roll="roll.Fleet" />
+    <o-input :label="$t('oracles.fields.fleet')" v-model="data.fleet" @roll="roll.Fleet" />
 
-    <o-input label="Initial Contact" v-model="data.initialContact" @roll="roll.Cont" />
+    <o-input :label="$t('oracles.fields.initialContact')" v-model="data.initialContact" @roll="roll.Cont" />
 
-    <o-input label="First Look" v-model="data.firstLook" @roll="roll.First" reroll />
+    <o-input :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" @roll="roll.First" reroll />
 
-    <o-input label="Mission" v-model="data.mission" @roll="roll.Mission" />
+    <o-input :label="$t('oracles.fields.mission')" v-model="data.mission" @roll="roll.Mission" />
 
     <o-btns save @save="btns.Save" initial @initial="btns.Initial" clear @clear="btns.Clear" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { ERegion, IStarship } from 'src/components/models';
 
@@ -29,6 +37,7 @@ import { useCampaign } from 'src/store/campaign';
 
 import * as oracle from 'src/lib/oracles';
 import { NewShip } from 'src/lib/sector';
+import { enumOptions } from 'src/i18n';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
@@ -39,21 +48,35 @@ export default defineComponent({
   setup() {
     const data = ref(NewShip());
     const regionSelect = ref(ERegion.Terminus);
+    const regionOpts = computed(() => enumOptions(Object.values(ERegion), 'enums.region'));
+
+    const rollFleetValue = (): string => {
+      const fleetRes = oracle.rollDetailed('Starforged/Oracles/Starships/Fleet');
+      if (
+        fleetRes.linkTarget === 'Starforged/Oracles/Starships/Mission' ||
+        /Starship Mission/i.test(fleetRes.canonical)
+      ) {
+        const missionName = oracle.name('Starforged/Oracles/Starships/Mission');
+        return `${missionName}: ${oracle.roll(`Starforged/Oracles/Starships/Mission/${regionSelect.value}`)}`;
+      }
+      return fleetRes.result;
+    };
 
     const roll = {
       Name: () => {
         data.value.name = oracle.roll('Starforged/Oracles/Starships/Name');
       },
       Class: () => {
-        let c = oracle.roll('Starforged/Oracles/Starships/Type');
-        c = /Fleet/i.test(c) ? `Fleet: ${oracle.roll('Starforged/Oracles/Starships/Fleet')}` : c;
-        c = /Starship Mission/i.test(c)
-          ? `Starship Mission: ${oracle.roll(`Starforged/Oracles/Starships/Mission/${regionSelect.value}`)}`
-          : c;
-        data.value.class = c;
+        const typeRes = oracle.rollDetailed('Starforged/Oracles/Starships/Type');
+        if (typeRes.linkTarget === 'Starforged/Oracles/Starships/Fleet' || /Fleet/i.test(typeRes.canonical)) {
+          const fleetName = oracle.name('Starforged/Oracles/Starships/Fleet');
+          data.value.class = `${fleetName}: ${rollFleetValue()}`;
+        } else {
+          data.value.class = typeRes.result;
+        }
       },
       Fleet: () => {
-        data.value.fleet = oracle.roll('Starforged/Oracles/Starships/Fleet');
+        data.value.fleet = rollFleetValue();
       },
       Cont: () => {
         data.value.initialContact = oracle.roll('Starforged/Oracles/Starships/Initial_Contact');
@@ -86,6 +109,7 @@ export default defineComponent({
     return {
       data,
       regionSelect,
+      regionOpts,
       ERegion,
 
       roll,

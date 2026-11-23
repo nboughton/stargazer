@@ -12,11 +12,11 @@
         <q-btn
           v-for="(oracleID, index) in move.Oracles"
           :key="index"
-          :label="'Roll ' + oracleID.split('/').splice(-1)[0].replace(/_/g, ' ')"
+          :label="$t('moves.rollOracle', { name: oracle.name(oracleID) })"
           @click="click(oracleID)"
           outline
         />
-        <q-btn label="Clear results" outline @click="results = []" />
+        <q-btn :label="$t('common.clearResults')" outline @click="results = []" />
         <q-btn icon="save" outline @click="save" />
         <div>
           <span v-for="(res, index) in results" :key="index" class="q-pr-md" v-html="res"></span>
@@ -28,6 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IMove } from 'dataforged';
 
@@ -48,8 +49,13 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    categoryId: {
+      type: String,
+      default: '',
+    },
   },
   setup(props) {
+    const { t } = useI18n();
     const results = ref([] as string[]);
 
     const click = (o: string) => {
@@ -57,17 +63,19 @@ export default defineComponent({
         try {
           results.value.push(oracle.roll(o));
         } catch (err) {
-          alert('Move data not found');
+          alert(t('moves.dataNotFound'));
         }
       }
     };
 
     const cardStyle = computed((): string => {
-      return 'text-h6 move-header ' + props.moveType.split(' ')[0].toLowerCase();
+      const catSource = props.categoryId || props.move.Category || '';
+      const segment = catSource.split('/').pop()?.split('_')[0].toLowerCase() || '';
+      return 'text-h6 move-header ' + segment;
     });
 
     const caption = computed((): string => {
-      return `${props.moveType}: ${props.move.Source.Title} (pg. ${
+      return `${props.moveType}: ${props.move.Source.Title} (${t('moves.pageAbbr')} ${
         props.move.Source.Page ? props.move.Source.Page : '?'
       })`;
     });
@@ -84,6 +92,7 @@ export default defineComponent({
       results,
       save,
       mdToHtml,
+      oracle,
       cardStyle,
       caption,
     };

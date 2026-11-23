@@ -4,32 +4,34 @@
       <div class="row items-center">
         <q-select
           class="col-grow"
-          label="Location"
+          :label="$t('common.location')"
           v-model="data.location"
-          :options="Object.values(ESLocation)"
+          :options="locOpts"
+          map-options
+          emit-value
           dense
         />
         <q-btn icon="mdi-dice-6" flat dense @click="roll.Loc" />
       </div>
 
-      <o-input label="Scale" v-model="data.scale" @roll="roll.Scale" />
-      <o-input label="Form" v-model="data.form" @roll="roll.Form" />
-      <o-input label="Shape" v-model="data.shape" @roll="roll.Shape" />
-      <o-input label="Material" v-model="data.material" @roll="roll.Material" />
-      <o-input label="Outer First Look" v-model="data.outerFirstLook" @roll="roll.OuterFirst" reroll />
+      <o-input :label="$t('oracles.fields.scale')" v-model="data.scale" @roll="roll.Scale" />
+      <o-input :label="$t('oracles.fields.form')" v-model="data.form" @roll="roll.Form" />
+      <o-input :label="$t('oracles.fields.shape')" v-model="data.shape" @roll="roll.Shape" />
+      <o-input :label="$t('oracles.fields.material')" v-model="data.material" @roll="roll.Material" />
+      <o-input :label="$t('oracles.fields.outerFirstLook')" v-model="data.outerFirstLook" @roll="roll.OuterFirst" reroll />
 
-      <q-expansion-item label="Interior">
-        <o-input label="First Look" v-model="data.innerFirstLook" @roll="roll.InnerFirst" reroll />
-        <o-input label="Feature" v-model="data.interior.feature" @roll="roll.Int.Feat" />
-        <o-input label="Peril" v-model="data.interior.peril" @roll="roll.Int.Peril" />
-        <o-input label="Opportunity" v-model="data.interior.opportunity" @roll="roll.Int.Opp" />
+      <q-expansion-item :label="$t('oracles.fields.interior')">
+        <o-input :label="$t('oracles.fields.firstLook')" v-model="data.innerFirstLook" @roll="roll.InnerFirst" reroll />
+        <o-input :label="$t('oracles.fields.feature')" v-model="data.interior.feature" @roll="roll.Int.Feat" />
+        <o-input :label="$t('oracles.fields.peril')" v-model="data.interior.peril" @roll="roll.Int.Peril" />
+        <o-input :label="$t('oracles.fields.opportunity')" v-model="data.interior.opportunity" @roll="roll.Int.Opp" />
       </q-expansion-item>
 
-      <q-expansion-item label="Sanctum">
-        <o-input label="Feature" v-model="data.sanctum.feature" @roll="roll.Sanct.Feat" />
-        <o-input label="Peril" v-model="data.sanctum.peril" @roll="roll.Sanct.Peril" />
-        <o-input label="Opportunity" v-model="data.sanctum.opportunity" @roll="roll.Sanct.Opp" />
-        <o-input label="Purpose" v-model="data.purpose" @roll="roll.Purpose" />
+      <q-expansion-item :label="$t('oracles.fields.sanctum')">
+        <o-input :label="$t('oracles.fields.feature')" v-model="data.sanctum.feature" @roll="roll.Sanct.Feat" />
+        <o-input :label="$t('oracles.fields.peril')" v-model="data.sanctum.peril" @roll="roll.Sanct.Peril" />
+        <o-input :label="$t('oracles.fields.opportunity')" v-model="data.sanctum.opportunity" @roll="roll.Sanct.Opp" />
+        <o-input :label="$t('oracles.fields.purpose')" v-model="data.purpose" @roll="roll.Purpose" />
       </q-expansion-item>
     </div>
     <o-btns clear @clear="btns.Clear" save @save="btns.Save" initial @initial="btns.Initial" />
@@ -37,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { ESLocation, IVault } from '../models';
 
@@ -45,6 +47,7 @@ import { useCampaign } from 'src/store/campaign';
 
 import * as oracle from 'src/lib/oracles';
 import { NewVault } from 'src/lib/sector';
+import { enumOptions } from 'src/i18n';
 
 import OInput from 'src/components/Oracles/OInput.vue';
 import OBtns from './OBtns.vue';
@@ -54,10 +57,11 @@ export default defineComponent({
   components: { OInput, OBtns },
   setup() {
     const data = ref(NewVault());
+    const locOpts = computed(() => enumOptions(Object.values(ESLocation), 'enums.location'));
 
     const roll = {
       Loc: () => {
-        data.value.location = oracle.roll('Starforged/Oracles/Vaults/Location') as ESLocation;
+        data.value.location = oracle.rollEn('Starforged/Oracles/Vaults/Location') as ESLocation;
       },
       Scale: () => {
         data.value.scale = oracle.roll('Starforged/Oracles/Vaults/Scale');
@@ -127,6 +131,7 @@ export default defineComponent({
 
     return {
       data,
+      locOpts,
       ESLocation,
 
       roll,

@@ -53,6 +53,14 @@ export interface ISelectOpt {
 }
 
 // Config
+export type AppLocale = 'en-US' | 'pt-BR';
+
+export const SUPPORTED_LOCALES: readonly AppLocale[] = ['en-US', 'pt-BR'];
+
+export function isAppLocale(value: unknown): value is AppLocale {
+  return value === 'en-US' || value === 'pt-BR';
+}
+
 export interface IIndexItem {
   name: string;
   id: string;
@@ -66,6 +74,7 @@ export interface IConfig {
   edit: boolean;
   saving: boolean;
   journalTab?: boolean;
+  locale?: AppLocale;
   map: {
     height: number;
     width: number;
@@ -175,6 +184,8 @@ export interface ISGAssetItem {
 
 export interface ISGAsset {
   id?: string;
+  dfId?: string;
+  assetTypeId?: string;
   icon?: string;
   title: string;
   subtitle?: string;

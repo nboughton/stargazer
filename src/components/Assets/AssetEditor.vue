@@ -2,62 +2,62 @@
   <div class="row full-height fit">
     <!-- editor column -->
     <div class="col-12">
-      <q-input label="Title" v-model="data.title" dense />
-      <q-input label="Subtitle?" v-model="subtitle" dense />
+      <q-input :label="$t('common.title')" v-model="data.title" dense />
+      <q-input :label="$t('assets.editor.subtitle')" v-model="subtitle" dense />
 
       <div class="row items-center q-mb-lg">
-        <q-toggle class="q-mr-md q-mt-sm" label="Text input?" v-model="hasMainInput" dense @click="mInputClick" />
-        <q-input class="col-grow" v-if="hasMainInput" label="Input Label" v-model="data.input!.label" dense />
+        <q-toggle class="q-mr-md q-mt-sm" :label="$t('assets.editor.textInput')" v-model="hasMainInput" dense @click="mInputClick" />
+        <q-input class="col-grow" v-if="hasMainInput" :label="$t('assets.editor.inputLabel')" v-model="data.input!.label" dense />
       </div>
 
-      <p>You can use the following subset of HTML tags to style your item text:</p>
+      <p>{{ $t('assets.editor.htmlTagsInfo') }}</p>
       <p>{{ validTags.toString().replace(/,/g, ', ') }}</p>
 
       <q-input
-        label="First item text"
+        :label="$t('assets.editor.firstItemText')"
         v-model="data.items[0].text"
         dense
         autogrow
-        hint="Item text can contain html for formatting"
+        :hint="$t('assets.editor.itemHtmlHint')"
       />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem1Input" dense @click="item1Click" />
-        <q-input class="col-grow" v-if="hasItem1Input" label="Input Label" v-model="data.items[0].input!.label" dense />
+        <q-toggle class="q-mr-md" :label="$t('assets.editor.textInput')" v-model="hasItem1Input" dense @click="item1Click" />
+        <q-input class="col-grow" v-if="hasItem1Input" :label="$t('assets.editor.inputLabel')" v-model="data.items[0].input!.label" dense />
       </div>
 
       <q-input
-        label="Second item text"
+        :label="$t('assets.editor.secondItemText')"
         v-model="data.items[1].text"
         dense
         autogrow
-        hint="Item text can contain html for formatting"
+        :hint="$t('assets.editor.itemHtmlHint')"
       />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem2Input" dense @click="item2Click" />
-        <q-input class="col-grow" v-if="hasItem2Input" label="Input Label" v-model="data.items[1].input!.label" dense />
+        <q-toggle class="q-mr-md" :label="$t('assets.editor.textInput')" v-model="hasItem2Input" dense @click="item2Click" />
+        <q-input class="col-grow" v-if="hasItem2Input" :label="$t('assets.editor.inputLabel')" v-model="data.items[1].input!.label" dense />
       </div>
 
       <q-input
-        label="Third item text"
+        :label="$t('assets.editor.thirdItemText')"
         v-model="data.items[2].text"
         dense
         autogrow
-        hint="Item text can contain html for formatting"
+        :hint="$t('assets.editor.itemHtmlHint')"
       />
       <div class="row items-center q-mb-lg q-mt-xs">
-        <q-toggle class="q-mr-md" label="Text input?" v-model="hasItem3Input" dense @click="item3Click" />
-        <q-input class="col-grow" v-if="hasItem3Input" label="Input Label" v-model="data.items[2].input!.label" dense />
+        <q-toggle class="q-mr-md" :label="$t('assets.editor.textInput')" v-model="hasItem3Input" dense @click="item3Click" />
+        <q-input class="col-grow" v-if="hasItem3Input" :label="$t('assets.editor.inputLabel')" v-model="data.items[2].input!.label" dense />
       </div>
 
-      <q-toggle class="row" label="Resource track?" v-model="hasTrack" dense @click="trackClick" />
+      <q-toggle class="row" :label="$t('assets.editor.resourceTrack')" v-model="hasTrack" dense @click="trackClick" />
       <div class="row items-center q-mb-lg">
-        <q-input class="col-grow" v-if="hasTrack" label="Min" type="number" v-model.number="data.track!.min" dense />
-        <q-input class="col-grow" v-if="hasTrack" label="Max" type="number" v-model.number="data.track!.max" dense />
+        <q-input class="col-grow" v-if="hasTrack" :label="$t('common.min')" type="number" v-model.number="data.track!.min" dense />
+        <q-input class="col-grow" v-if="hasTrack" :label="$t('common.max')" type="number" v-model.number="data.track!.max" dense />
       </div>
 
       <div class="row justify-between">
-        <q-btn color="positive" icon="save" label="save" flat @click="save(data)" />
-        <q-btn color="negative" icon="close" label="close" flat @click="close" />
+        <q-btn color="positive" icon="save" :label="$t('common.saveLower')" flat @click="save(data)" />
+        <q-btn color="negative" icon="close" :label="$t('common.closeLower')" flat @click="close" />
       </div>
     </div>
 

@@ -4,25 +4,29 @@
       :icon="`img:${icon.derelict()}`"
       header-class="derelict-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
-      caption="Derelict"
+      :caption="$t('enums.sectorItem.Derelict')"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
-        <i-input class="col" label="Name" v-model="data.name" />
+        <i-input class="col" :label="$t('common.name')" v-model="data.name" />
         <q-select
           class="col"
-          label="Location"
+          :label="$t('common.location')"
           v-model="data.location"
-          :options="Object.values(ESLocation)"
+          :options="locOpts"
+          map-options
+          emit-value
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
         <q-select
           class="col"
-          label="Type"
+          :label="$t('common.type')"
           v-model="data.type"
-          :options="Object.values(EDerelictType)"
+          :options="typeOpts"
+          map-options
+          emit-value
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
           dense
@@ -31,23 +35,24 @@
       </div>
 
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Condition" v-model="data.condition" />
-        <i-input class="col" label="Outer First Look" v-model="data.outerFirstLook" />
+        <i-input class="col" :label="$t('oracles.fields.condition')" v-model="data.condition" />
+        <i-input class="col" :label="$t('oracles.fields.outerFirstLook')" v-model="data.outerFirstLook" />
       </div>
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+      <i-input class="q-mb-sm" :label="$t('common.notes')" v-model="data.notes" autogrow />
     </q-expansion-item>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 
 import { IDerelict, ESLocation, EDerelictType } from '../models';
 
 import { useConfig } from 'src/store/config';
 
 import { icon } from 'src/lib/icons';
+import { enumOptions } from 'src/i18n';
 
 import Controls from './Controls.vue';
 import IInput from '../Widgets/IInput.vue';
@@ -79,11 +84,15 @@ export default defineComponent({
     );
 
     const config = useConfig();
+    const locOpts = computed(() => enumOptions(Object.values(ESLocation), 'enums.location'));
+    const typeOpts = computed(() => enumOptions(Object.values(EDerelictType), 'enums.derelictType'));
     return {
       data,
       config,
       ESLocation,
       EDerelictType,
+      locOpts,
+      typeOpts,
       icon,
     };
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="row items-center justify-between">
     <span class="text-h5 sf-header">{{ name }}</span>
-    <q-checkbox label="+10" v-model="data.plus10" @click="p10" />
+    <q-checkbox label="+10" v-model="data.plus10" @update:model-value="p10" />
   </div>
 
   <div class="row no-wrap items-center justify-between q-mb-md">
@@ -62,13 +62,13 @@ export default defineComponent({
       return f;
     };
 
-    const p10 = () => {
-      if (data.value.plus10 && full())
-        data.value.boxes.forEach((b, i) => {
+    const p10 = (checked: boolean) => {
+      if (checked && full()) {
+        data.value.boxes.forEach((_b, i) => {
           data.value.boxes[i].ticks = 0;
           data.value.boxes[i].xp = [false, false];
         });
-      else data.value.plus10 = false;
+      }
       updateValue();
     };
 

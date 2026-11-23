@@ -4,16 +4,18 @@
       :icon="`img:${icon.vault()}`"
       header-class="vault-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
-      caption="Vault"
+      :caption="$t('enums.sectorItem.Vault')"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap">
-        <i-input class="col-grow" label="Name" v-model="data.name" />
+        <i-input class="col-grow" :label="$t('common.name')" v-model="data.name" />
         <q-select
           class="col-shrink"
-          label="Type"
+          :label="$t('common.type')"
           v-model="data.location"
-          :options="Object.values(ESLocation)"
+          :options="locOpts"
+          map-options
+          emit-value
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
           dense
@@ -22,29 +24,30 @@
       </div>
 
       <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
-        <i-input class="col" label="Scale" v-model="data.scale" />
-        <i-input class="col" label="Form" v-model="data.form" />
-        <i-input class="col" label="Shape" v-model="data.shape" />
+        <i-input class="col" :label="$t('oracles.fields.scale')" v-model="data.scale" />
+        <i-input class="col" :label="$t('oracles.fields.form')" v-model="data.form" />
+        <i-input class="col" :label="$t('oracles.fields.shape')" v-model="data.shape" />
       </div>
       <div v-else>
-        <i-input class="q-mb-sm" label="Scale" v-model="data.scale" />
-        <i-input class="q-mb-sm" label="Form" v-model="data.form" />
-        <i-input class="q-mb-sm" label="Shape" v-model="data.shape" />
+        <i-input class="q-mb-sm" :label="$t('oracles.fields.scale')" v-model="data.scale" />
+        <i-input class="q-mb-sm" :label="$t('oracles.fields.form')" v-model="data.form" />
+        <i-input class="q-mb-sm" :label="$t('oracles.fields.shape')" v-model="data.shape" />
       </div>
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+      <i-input class="q-mb-sm" :label="$t('common.notes')" v-model="data.notes" autogrow />
     </q-expansion-item>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, watch } from 'vue';
+import { computed, defineComponent, ref, PropType, watch } from 'vue';
 
 import { IVault, ESLocation } from '../models';
 
 import { useConfig } from 'src/store/config';
 
 import { icon } from 'src/lib/icons';
+import { enumOptions } from 'src/i18n';
 
 import Controls from './Controls.vue';
 import IInput from '../Widgets/IInput.vue';
@@ -76,11 +79,13 @@ export default defineComponent({
     );
 
     const config = useConfig();
+    const locOpts = computed(() => enumOptions(Object.values(ESLocation), 'enums.location'));
 
     return {
       data,
       config,
       ESLocation,
+      locOpts,
       icon,
     };
   },

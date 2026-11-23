@@ -21,7 +21,7 @@
       <q-card-section class="row justify-between items-center bg-secondary text-h5">
         <q-input
           class="col"
-          label="Cell Name"
+          :label="$t('sector.cellName')"
           v-model="campaign.data.sectors[config.data.sector].cells[selectedID].name"
           dense
           borderless
@@ -33,16 +33,18 @@
         <div class="row q-gutter-sm items-center">
           <q-select
             class="col-grow"
-            label="Set cell status"
-            hint="Set to 'location' to save Oracle generated content and enable search for this cell"
+            :label="$t('sector.setCellStatus')"
+            :hint="$t('sector.setCellStatusHint')"
             v-model="campaign.data.sectors[config.data.sector].cells[selectedID].stat"
-            :options="Object.values(ECellStatus)"
+            :options="cellStatusOpts"
+            map-options
+            emit-value
           />
           <q-btn
             class="col-shrink"
             dense
             outline
-            label="Go here"
+            :label="$t('sector.goHere')"
             @click="campaign.data.character.location = selectedID"
           />
         </div>
@@ -56,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch, PropType } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch, PropType } from 'vue';
 
 import { ECellStatus, ESectorOpts, ISearchResults } from '../models';
 
@@ -64,6 +66,7 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 
 import { CellLabel, NewCell } from 'src/lib/sector';
+import { enumOptions } from 'src/i18n';
 import { Svg, SVG } from '@svgdotjs/svg.js';
 import { extendHex, defineGrid } from 'honeycomb-grid';
 import { icon } from 'src/lib/icons';
@@ -87,6 +90,7 @@ export default defineComponent({
     const config = useConfig();
     const showDialog = ref(false);
     const selectedID = ref('');
+    const cellStatusOpts = computed(() => enumOptions(Object.values(ECellStatus), 'enums.cellStatus'));
 
     // Instantiate a null ref
     const hexmap = ref(null);
@@ -436,6 +440,7 @@ export default defineComponent({
       showDialog,
       selectedID,
       ECellStatus,
+      cellStatusOpts,
     };
   },
 });

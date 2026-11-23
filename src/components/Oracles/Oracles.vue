@@ -4,7 +4,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Core"
+      :label="$t('oracles.categories.core')"
     >
       <o-core />
     </q-expansion-item>
@@ -13,7 +13,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Space"
+      :label="$t('oracles.categories.space')"
     >
       <o-space />
     </q-expansion-item>
@@ -22,7 +22,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Planet"
+      :label="$t('oracles.categories.planet')"
     >
       <o-planet />
     </q-expansion-item>
@@ -31,7 +31,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Settlement"
+      :label="$t('oracles.categories.settlement')"
     >
       <o-settlement />
     </q-expansion-item>
@@ -40,7 +40,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Starship"
+      :label="$t('oracles.categories.starship')"
     >
       <o-starship />
     </q-expansion-item>
@@ -49,7 +49,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Character"
+      :label="$t('oracles.categories.character')"
     >
       <o-NPC />
     </q-expansion-item>
@@ -58,7 +58,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Creature"
+      :label="$t('oracles.categories.creature')"
     >
       <o-creature />
     </q-expansion-item>
@@ -67,7 +67,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Derelict"
+      :label="$t('oracles.categories.derelict')"
     >
       <o-derelict />
     </q-expansion-item>
@@ -76,7 +76,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Vault"
+      :label="$t('oracles.categories.vault')"
     >
       <o-vault />
     </q-expansion-item>
@@ -85,7 +85,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Faction"
+      :label="$t('oracles.categories.faction')"
     >
       <o-faction />
     </q-expansion-item>
@@ -94,7 +94,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Location Theme"
+      :label="$t('oracles.categories.locationTheme')"
     >
       <o-location-theme />
     </q-expansion-item>
@@ -103,7 +103,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Misc"
+      :label="$t('oracles.categories.misc')"
     >
       <o-misc />
     </q-expansion-item>
@@ -112,7 +112,7 @@
       class="shadow-1 overflow-hidden oracles q-mb-sm"
       style="border-radius: 4px"
       header-class="text-h6"
-      label="Custom"
+      :label="$t('oracles.categories.custom')"
     >
       <o-custom @new="addOracle" @edit="editOracle" />
     </q-expansion-item>
@@ -131,6 +131,7 @@ import { ICustomOracle } from '../models';
 import { useOracles } from 'src/store/oracles';
 
 import { NewCustomOracle } from 'src/lib/oracles';
+import { translateKey } from 'src/i18n';
 import { deepCopy } from 'src/lib/util';
 
 import OSpace from './OSpace.vue';
@@ -170,7 +171,7 @@ export default defineComponent({
     const showEditor = ref(false);
     const editorData = ref(<ICustomOracle>{});
     const addOracle = () => {
-      editorData.value = NewCustomOracle('Custom Oracle');
+      editorData.value = NewCustomOracle(translateKey('oracles.fields.customOracleDefault'));
       showEditor.value = true;
     };
     const editOracle = (id: string) => {
