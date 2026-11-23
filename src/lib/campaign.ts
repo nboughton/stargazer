@@ -2,6 +2,7 @@ import { ICampaign, ICharacter, IJournalEntry, IFaction } from 'src/components/m
 
 import { v4 as uuid } from 'uuid';
 import * as oracle from 'src/lib/oracles';
+import { translateKey } from 'src/i18n';
 import { NewSector } from './sector';
 import { NewLegacyTrack, NewProgressTrack } from './tracks';
 
@@ -91,7 +92,7 @@ export const NewCharacter = (): ICharacter => {
 
 export const NewJournal = (): IJournalEntry => {
   return {
-    title: 'New journal entry',
+    title: translateKey('campaign.defaults.newJournal'),
     content: '',
     pinned: false,
   };
@@ -118,7 +119,7 @@ export const NewCampaign = (): ICampaign => {
 
   return {
     id: uuid(),
-    name: `New Campaign - ${character.name}`,
+    name: `${translateKey('campaign.defaults.newCampaignPrefix')} - ${character.name}`,
     character: character,
     truths: {},
     progressTracks: [NewProgressTrack()],

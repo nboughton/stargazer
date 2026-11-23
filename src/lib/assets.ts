@@ -1,24 +1,25 @@
 import { ISGAsset, ISGAssetItem } from 'src/components/models';
 import { IAsset } from 'dataforged';
 import { v4 as uuid } from 'uuid';
+import { translateKey } from 'src/i18n';
 import { mdToHtml } from './util';
 
 export const NewAsset = (): ISGAsset => {
   return {
     id: uuid(),
-    title: 'Custom Asset',
+    title: translateKey('assets.customTitle'),
     type: 'Custom',
     items: [
       {
-        text: 'Asset item text 1',
+        text: translateKey('assets.itemPlaceholder', { n: 1 }),
         marked: false,
       },
       {
-        text: 'Asset item text 2',
+        text: translateKey('assets.itemPlaceholder', { n: 2 }),
         marked: false,
       },
       {
-        text: 'Asset item text 3',
+        text: translateKey('assets.itemPlaceholder', { n: 3 }),
         marked: false,
       },
     ],
@@ -29,10 +30,12 @@ export const NewAsset = (): ISGAsset => {
 export const convertDFAsset = (asset: IAsset): ISGAsset => {
   const newAsset = <ISGAsset>{};
 
+  newAsset.dfId = asset.$id;
+  newAsset.assetTypeId = asset['Asset Type'];
   newAsset.title = asset.Name;
   newAsset.icon = asset.Display.Icon;
   if (asset.Requirement) newAsset.subtitle = mdToHtml(asset.Requirement);
-  newAsset.type = asset['Asset Type'].split('/').pop()?.replace('_', ' ') as string;
+  newAsset.type = asset['Asset Type'].split('/').pop()?.replace(/_/g, ' ') as string;
 
   if (asset.Inputs) {
     const labels: string[] = [];

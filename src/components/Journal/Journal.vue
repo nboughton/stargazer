@@ -1,6 +1,6 @@
 <template>
   <div class="row full-width items-center q-pl-md q-pr-sm q-mt-sm">
-    <span class="col-shrink text-h4 q-pr-sm sf-header">JOURNAL</span>
+    <span class="col-shrink text-h4 q-pr-sm sf-header">{{ $t('journal.header') }}</span>
     <q-input
       v-model="filter"
       class="col-grow q-mb-sm"
@@ -9,11 +9,11 @@
       :input-style="{ color: '#ECEFF4' }"
       debounce="500"
       clearable
-      label="Search by title or content"
+      :label="$t('journal.searchPlaceholder')"
     >
       <template v-slot:before>
         <q-btn class="col-shrink" icon="add_circle" flat dense @click="addJournal">
-          <q-tooltip>Add a journal entry</q-tooltip>
+          <q-tooltip>{{ $t('journal.addEntryTip') }}</q-tooltip>
         </q-btn>
       </template>
 
@@ -23,7 +23,7 @@
 
       <template v-slot:after>
         <q-btn icon="sort" flat dense @click="journalSortByTitle">
-          <q-tooltip>Sort journal entries by title</q-tooltip>
+          <q-tooltip>{{ $t('journal.sortByTitleTip') }}</q-tooltip>
         </q-btn>
       </template>
     </q-input>
@@ -61,31 +61,33 @@
 
   <q-dialog v-model="showImageLoad" :maximized="$q.platform.is.mobile">
     <q-card class="card-bg">
-      <q-card-section class="text-center text-bold bg-secondary">Upload Image</q-card-section>
+      <q-card-section class="text-center text-bold bg-secondary">{{ $t('journal.uploadImage') }}</q-card-section>
 
       <q-card-section>
         <q-file
           v-model="imageToLoad"
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
-          label="Select Image"
+          :label="$t('journal.selectImage')"
           accept="image/*"
         />
       </q-card-section>
 
       <q-card-section>
         <q-select
-          label="Float"
+          :label="$t('journal.float')"
           v-model="imageFloatSelect"
-          :options="Object.values(imageFloat)"
+          :options="imageFloatOpts"
+          map-options
+          emit-value
           dense
-          hint="Select image float (allows text to wrap around the image)"
+          :hint="$t('journal.floatHint')"
         />
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn label="Save" flat color="primary" @click="loadImage" />
-        <q-btn label="Close" flat color="warning" dense @click="showImageLoad = false" />
+        <q-btn :label="$t('common.save')" flat color="primary" @click="loadImage" />
+        <q-btn :label="$t('common.close')" flat color="warning" dense @click="showImageLoad = false" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -93,7 +95,8 @@
 
 <script lang="ts">
 /* eslint-disable no-unused-vars */
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IJournalEntry } from '../models';
 
@@ -102,6 +105,7 @@ import { useConfig } from 'src/store/config';
 import { useQuasar } from 'quasar';
 
 import { NewJournal } from 'src/lib/campaign';
+import { enumOptions } from 'src/i18n';
 
 import JournalEntry from 'src/components/Journal/JournalEntry.vue';
 
@@ -109,12 +113,13 @@ export default defineComponent({
   name: 'Journal',
   components: { JournalEntry },
   setup() {
+    const { t } = useI18n();
     const campaign = useCampaign();
     const config = useConfig();
 
     const addJournal = () => campaign.data.journal.unshift(NewJournal());
     const removeJournal = (index: number) => {
-      if (window.confirm('Are you sure you want to delete this entry?')) campaign.data.journal.splice(index, 1);
+      if (window.confirm(t('journal.deleteConfirm'))) campaign.data.journal.splice(index, 1);
     };
 
     const filter = ref('');
@@ -123,16 +128,13 @@ export default defineComponent({
         return true;
       }
 
-      if (journal.title !== undefined) {
-        if (RegExp(filter.value, 'i').test(journal.title)) {
-          return true;
-        }
+      const query = filter.value.toLowerCase();
+      if (journal.title !== undefined && journal.title.toLowerCase().includes(query)) {
+        return true;
       }
 
-      if (journal.content !== undefined) {
-        if (RegExp(filter.value, 'i').test(journal.content)) {
-          return true;
-        }
+      if (journal.content !== undefined && journal.content.toLowerCase().includes(query)) {
+        return true;
       }
       return false;
     };
@@ -141,8 +143,8 @@ export default defineComponent({
     const journalSortByTitle = () =>
       $q
         .dialog({
-          title: 'Confirm',
-          message: 'This will re-order your journal entries and cannot be undone. Are you sure?',
+          title: t('common.confirm'),
+          message: t('journal.sortConfirmMsg'),
           cancel: true,
         })
         .onOk(() => campaign.data.journal.sort((a: IJournalEntry, b: IJournalEntry) => b.title.localeCompare(a.title)));
@@ -153,6 +155,7 @@ export default defineComponent({
       None = 'none',
     }
     const imageFloatSelect = ref(imageFloat.None);
+    const imageFloatOpts = computed(() => enumOptions(Object.values(imageFloat), 'journal.imageFloat'));
     const imageToLoad = ref(null);
     const journalEntryID = ref(0);
     const showImageLoad = ref(false);
@@ -184,6 +187,7 @@ export default defineComponent({
       loadImage,
       showImageLoad,
       imageFloat,
+      imageFloatOpts,
       imageToLoad,
       imageFloatSelect,
       journalEntryID,

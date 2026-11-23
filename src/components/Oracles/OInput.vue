@@ -7,10 +7,10 @@
       </template>
     </q-input>
     <q-btn v-if="!noRoll" icon="mdi-dice-6" flat dense @click="$emit('roll')">
-      <q-tooltip>Roll oracle</q-tooltip>
+      <q-tooltip>{{ $t('oracles.fields.rollOracleTip') }}</q-tooltip>
     </q-btn>
     <q-btn v-if="custom" icon="edit" flat dense @click="$emit('edit')">
-      <q-tooltip>Edit custom oracle</q-tooltip>
+      <q-tooltip>{{ $t('oracles.fields.editCustomOracleTip') }}</q-tooltip>
     </q-btn>
   </div>
 </template>

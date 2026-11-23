@@ -8,21 +8,21 @@
     <div v-if="rollData.result" class="col-12 text-h6">
       <div class="row text-center items-center justify-evenly">
         <div :class="rollData.action.color">
-          {{ rollData.result }}
-          <span v-if="rollData.challenge.match">with a match</span>:
+          {{ $t(`roll.outcomes.${rollData.result}`) }}
+          <span v-if="rollData.challenge.match">{{ $t('roll.outcomes.withMatch') }}</span>:
         </div>
         <span :class="rollData.action.color"> {{ rollData.action.score }}</span>
-        <span> vs </span> <span :class="rollData.challenge.die1.color"> {{ rollData.challenge.die1.roll }}</span>
+        <span> {{ $t('roll.outcomes.vs') }} </span> <span :class="rollData.challenge.die1.color"> {{ rollData.challenge.die1.roll }}</span>
         <span>|</span>
         <span :class="rollData.challenge.die2.color">{{ rollData.challenge.die2.roll }}</span>
         <q-btn icon="mdi-close-circle" flat dense :size="btnSize" @click="rollData.result = ''">
-          <q-tooltip>Clear roll result</q-tooltip>
+          <q-tooltip>{{ $t('challenges.clearRollResult') }}</q-tooltip>
         </q-btn>
       </div>
     </div>
 
     <div class="row justify-evenly">
-      <q-btn label="Mark" dense :size="btnSize" flat @click="mark" />
+      <q-btn :label="$t('challenges.mark')" dense :size="btnSize" flat @click="mark" />
       <q-btn
         v-for="(value, index) in data.boxes"
         :key="index"
@@ -33,7 +33,7 @@
         @click="boxIncrement(index)"
       />
       <q-btn icon="mdi-dice-6" flat dense :size="btnSize" @click="conclude">
-        <q-tooltip>Make a progress roll</q-tooltip>
+        <q-tooltip>{{ $t('challenges.makeProgressRoll') }}</q-tooltip>
       </q-btn>
     </div>
 
@@ -53,7 +53,7 @@
     </div>
 
     <div v-if="showNotes" class="q-mt-sm">
-      <i-input v-model="data.notes" autogrow label="Notes" />
+      <i-input v-model="data.notes" autogrow :label="$t('common.notes')" />
     </div>
 
     <div v-if="showClocks">
@@ -64,6 +64,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { IProgressTrack } from 'src/components/models';
 
@@ -124,13 +125,14 @@ export default defineComponent({
       updateValue();
     };
 
-    const diffOpts = [
-      { label: Difficulty[1].label, value: 1 },
-      { label: Difficulty[2].label, value: 2 },
-      { label: Difficulty[3].label, value: 3 },
-      { label: Difficulty[4].label, value: 4 },
-      { label: Difficulty[5].label, value: 5 },
-    ];
+    const { t } = useI18n();
+    const diffOpts = computed(() => [
+      { label: t('tracks.difficulty.1'), value: 1 },
+      { label: t('tracks.difficulty.2'), value: 2 },
+      { label: t('tracks.difficulty.3'), value: 3 },
+      { label: t('tracks.difficulty.4'), value: 4 },
+      { label: t('tracks.difficulty.5'), value: 5 },
+    ]);
 
     const mark = () => {
       let ticks = Difficulty[data.value.difficulty].mark * 4;

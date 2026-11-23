@@ -4,19 +4,21 @@
       :icon="`img:${icon.starship()}`"
       header-class="starship-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
-      caption="Starship"
+      :caption="$t('oracles.categories.starship')"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap items-baseline">
-        <i-input class="col" label="Name" v-model="data.name" />
-        <i-input class="col" label="Class" v-model="data.class" />
-        <i-input class="col" label="Fleet" v-model="data.fleet" />
+        <i-input class="col" :label="$t('common.name')" v-model="data.name" />
+        <i-input class="col" :label="$t('oracles.fields.class')" v-model="data.class" />
+        <i-input class="col" :label="$t('oracles.fields.fleet')" v-model="data.fleet" />
         <q-select
           v-if="$q.screen.gt.sm"
           class="col"
-          label="Faction"
+          :label="$t('oracles.categories.faction')"
           v-model="faction"
-          :options="campaignFactionNames"
+          :options="campaignFactionOpts"
+          map-options
+          emit-value
           dense
           standout
         />
@@ -24,27 +26,28 @@
       </div>
 
       <div class="row q-gutter-sm q-mb items-baseline" v-if="$q.screen.lt.md">
-        <i-input class="col q-mb-sm" label="First Look" v-model="data.firstLook" />
-        <q-select class="col" label="Faction" v-model="faction" :options="campaignFactionNames" dense standout />
+        <i-input class="col q-mb-sm" :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" />
+        <q-select class="col" :label="$t('oracles.categories.faction')" v-model="faction" :options="campaignFactionOpts" map-options emit-value dense standout />
       </div>
-      <v-else>
-        <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
-      </v-else>
+      <div v-else>
+        <i-input class="q-mb-sm" :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" />
+      </div>
 
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Initial Contact" v-model="data.initialContact" />
-        <i-input class="col" label="Mission" v-model="data.mission" />
+        <i-input class="col" :label="$t('oracles.fields.initialContact')" v-model="data.initialContact" />
+        <i-input class="col" :label="$t('oracles.fields.mission')" v-model="data.mission" />
       </div>
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+      <i-input class="q-mb-sm" :label="$t('common.notes')" v-model="data.notes" autogrow />
     </q-expansion-item>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-import { IFaction, IStarship } from '../models';
+import { IStarship } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
@@ -80,56 +83,27 @@ export default defineComponent({
       { deep: true }
     );
 
+    const { t } = useI18n();
+
     const faction = computed({
-      /**
-       * Gets or sets the underlying data.faction IFaction. The IFaction will be identified by the name.
-       */
-      get() {
-        if (data.value.factionId === '' || data.value.factionId === undefined) {
-          // The faction is either not set yet, or was deleted.
-          return 'None';
+      get(): string {
+        if (!data.value.factionId) {
+          return '';
         }
-
-        const factionForId = getFactionForId(data.value.factionId);
-
-        return !factionForId ? 'None' : factionForId.name;
+        return useCampaign().data.factions.some((x) => x.id === data.value.factionId)
+          ? data.value.factionId
+          : '';
       },
 
       set(value: string) {
-        if (value === 'None') {
-          // The user has unassigned the faction of the ship.
-          data.value.factionId = '';
-        } else {
-          // Find the IFaction that matches the name of the faction given.
-          const factionForSelectedName = getFactionForName(value);
-
-          data.value.factionId = !factionForSelectedName ? '' : factionForSelectedName.id;
-        }
+        data.value.factionId = value || '';
       },
     });
 
-    const campaignFactionNames = computed((): string[] => {
-      /**
-       * Get the names of the factions in the campaign.
-       */
-      const factionNames = useCampaign().data.factions.map((x) => x.name);
-
-      if (factionNames.length == 0) {
-        // This campaign has no factions created yet.
-        return ['None'];
-      }
-
-      // Always add 'None' as an option to the array.
-      factionNames.unshift('None');
-      return factionNames;
-    });
-
-    const getFactionForName = function (factionName: string): IFaction {
-      return useCampaign().data.factions.find((x) => x.name === factionName) as IFaction;
-    };
-    const getFactionForId = function (factionId: string): IFaction {
-      return useCampaign().data.factions.find((x) => x.id === factionId) as IFaction;
-    };
+    const campaignFactionOpts = computed((): Array<{ label: string; value: string }> => [
+      { label: t('common.none'), value: '' },
+      ...useCampaign().data.factions.map((x) => ({ label: x.name, value: x.id })),
+    ]);
 
     // Older saves may not have this value set. Set it to a default, if it is undefined.
     if (data.value.factionId === undefined) data.value.factionId = '';
@@ -140,9 +114,7 @@ export default defineComponent({
       config,
       icon,
       faction,
-      campaignFactionNames,
-      getFactionForName,
-      getFactionForId,
+      campaignFactionOpts,
     };
   },
 });

@@ -2,44 +2,46 @@
   <q-card>
     <!-- editor column-->
     <q-card-section class="row full-width items-baseline">
-      <q-input class="col-xs-12 col-md-6" label="Name" v-model="data.Name" />
+      <q-input class="col-xs-12 col-md-6" :label="$t('common.name')" v-model="data.Name" />
       <div class="col-xs-12 col-md-6">
         <div class="row items-baseline q-gutter-xs">
-          <span class="col-shrink">Dice:</span>
+          <span class="col-shrink">{{ $t('oracles.editor.dice') }}</span>
           <q-select class="col" :options="[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" v-model.number="diceNum" dense outlined />
           <span class="col-shrink">d</span>
           <q-select class="col" :options="[2, 4, 6, 8, 10, 12, 20, 100]" v-model.number="diceSize" dense outlined />
         </div>
         <div class="col-12 q-mt-xs">
-          <div class="text-subtitle2 text-right">Dice range: {{ diceNum }} - {{ diceNum * diceSize }}</div>
+          <div class="text-subtitle2 text-right">
+            {{ $t('oracles.editor.diceRange', { min: diceNum, max: diceNum * diceSize }) }}
+          </div>
         </div>
       </div>
     </q-card-section>
 
     <q-card-section>
       <div class="row q-ml-sm items-center q-mb-sm" v-for="(row, index) of data.Table" :key="index">
-        <q-input class="col-2" type="number" v-model.number="data.Table![index].Floor" label="Floor" dense />
-        <q-input class="col-2" type="number" v-model.number="data.Table![index].Ceiling" label="Ceiling" dense />
-        <q-input class="col" v-model="data.Table![index].Result" label="Result Text" dense />
+        <q-input class="col-2" type="number" v-model.number="data.Table![index].Floor" :label="$t('oracles.editor.floor')" dense />
+        <q-input class="col-2" type="number" v-model.number="data.Table![index].Ceiling" :label="$t('oracles.editor.ceiling')" dense />
+        <q-input class="col" v-model="data.Table![index].Result" :label="$t('oracles.editor.resultText')" dense />
         <q-icon class="col-shrink q-px-xs" v-if="badRows[index]" name="error" color="negative" size="sm">
           <q-tooltip>{{ badRows[index].join(', ') }}</q-tooltip>
         </q-icon>
         <q-btn class="col-shrink" icon="delete" flat dense @click="removeRow(index)">
-          <q-tooltip>Remove row</q-tooltip>
+          <q-tooltip>{{ $t('oracles.editor.removeRow') }}</q-tooltip>
         </q-btn>
       </div>
       <div class="row justify-between items-center q-ml-sm">
-        <div class="col-grow text-bold">Add Row</div>
+        <div class="col-grow text-bold">{{ $t('oracles.editor.addRow') }}</div>
         <q-btn class="col-shrink" icon="add_circle" flat dense @click="addRow" />
       </div>
     </q-card-section>
     <q-card-actions class="justify-between row">
       <div class="col-shrink">
-        <q-btn label="Delete" flat class="self-start" color="warning" @click="del" v-if="isExistingOracle" />
+        <q-btn :label="$t('common.delete')" flat class="self-start" color="warning" @click="del" v-if="isExistingOracle" />
       </div>
       <div class="col-shrink">
         <q-btn
-          label="Save"
+          :label="$t('common.save')"
           flat
           color="positive"
           @click="
@@ -47,7 +49,7 @@
             $emit('close');
           "
         />
-        <q-btn label="Close" flat color="negative" @click="$emit('close')" />
+        <q-btn :label="$t('common.close')" flat color="negative" @click="$emit('close')" />
       </div>
     </q-card-actions>
   </q-card>
@@ -55,6 +57,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { ICustomOracle } from '../models';
 
@@ -72,6 +75,7 @@ export default defineComponent({
   emits: ['close'],
   setup(props, { emit }) {
     const $q = useQuasar();
+    const { t } = useI18n();
     const oracles = useOracles();
     const data = ref(props.oracle);
 
@@ -101,7 +105,7 @@ export default defineComponent({
     const removeRow = (index: number) =>
       $q
         .dialog({
-          title: 'Delete this row?',
+          title: t('oracles.editor.deleteRowConfirm'),
           cancel: true,
         })
         .onOk(() => data.value.Table?.splice(index, 1));
@@ -122,18 +126,18 @@ export default defineComponent({
 
         if (c < f) {
           if (!rows[i]) rows[i] = [];
-          rows[i].push('Ceiling lower than Floor');
+          rows[i].push(t('oracles.editor.ceilingLowerThanFloor'));
         }
 
         // Check floor/ceiling don't fall outside of min/max
         if (f < min || f > max) {
           if (!rows[i]) rows[i] = [];
-          rows[i].push(`cannot roll ${f} with ${diceNum.value}d${diceSize.value}`);
+          rows[i].push(t('oracles.editor.cannotRoll', { val: f, dice: `${diceNum.value}d${diceSize.value}` }));
         }
 
         if (c < min || c > max) {
           if (!rows[i]) rows[i] = [];
-          rows[i].push(`cannot roll ${c} with ${diceNum.value}d${diceSize.value}`);
+          rows[i].push(t('oracles.editor.cannotRoll', { val: c, dice: `${diceNum.value}d${diceSize.value}` }));
         }
 
         // Collate every possible result range to check for overlaps
@@ -142,7 +146,7 @@ export default defineComponent({
 
           if (numbers[n] > 1) {
             if (!rows[i]) rows[i] = [];
-            rows[i].push(`result number duplicate: ${n}`);
+            rows[i].push(t('oracles.editor.duplicateResult', { n }));
           }
         }
       });
@@ -154,7 +158,7 @@ export default defineComponent({
     const del = () =>
       $q
         .dialog({
-          title: 'Delete this Oracle?',
+          title: t('oracles.editor.deleteOracleConfirm'),
           cancel: true,
         })
         .onOk(() => {

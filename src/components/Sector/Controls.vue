@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row q-gutter-sm items-center">
-      <span class="col-shrink">Move to</span>
+      <span class="col-shrink">{{ $t('common.moveTo') }}</span>
       <location-select class="col-grow" icon="mdi-transfer-right" @selected="$emit('move', $event)" />
     </div>
   </div>

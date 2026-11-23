@@ -14,7 +14,10 @@
 </template>
 <script lang="ts">
 import { defineComponent, watch, ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+import { AppLocale, isAppLocale } from './components/models';
+import { applyRuntimeLocale } from './i18n';
 import { useConfig } from './store/config';
 import { useCampaign } from './store/campaign';
 import { useAssets } from './store/assets';
@@ -26,6 +29,7 @@ import { sleep } from './lib/util';
 export default defineComponent({
   name: 'App',
   setup() {
+    const { t } = useI18n();
     let skipIntro = () => {
       /* placeholder */
     };
@@ -49,15 +53,15 @@ export default defineComponent({
     const campaign = useCampaign();
 
     const renderIntro = async () => {
-      await writeLine('::booting system...');
+      await writeLine(t('app.boot.booting'));
       await skippableSleep(500);
-      await writeLine('::assessing damage...');
+      await writeLine(t('app.boot.assessing'));
       await skippableSleep(500);
-      await writeLine('::loading protocols...');
+      await writeLine(t('app.boot.loading'));
       await skippableSleep(500);
       // await writeLine('::synchronising...');
       //await skippableSleep(500);
-      await writeLine('::welcome ' + campaign.data.character.name);
+      await writeLine(t('app.boot.welcome', { name: campaign.data.character.name }));
       await sleep(500);
     };
 
@@ -76,6 +80,15 @@ export default defineComponent({
     });
 
     const config = useConfig();
+
+    watch(
+      () => config.$state.data.locale,
+      (newLocale) => {
+        const target: AppLocale = isAppLocale(newLocale) ? newLocale : 'en-US';
+        applyRuntimeLocale(target);
+      },
+      { immediate: true }
+    );
 
     watch(
       () => config.$state,

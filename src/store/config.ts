@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IConfig } from 'components/models';
+import { IConfig, isAppLocale } from 'components/models';
 import { NewConfig } from 'src/lib/config';
 import { db } from 'src/lib/db';
 
@@ -16,7 +16,10 @@ export const useConfig = defineStore({
     async populateStore() {
       if ((await db.config.count()) > 0) {
         try {
-          this.data = (await db.config.where('id').equals(1).first()) as IConfig;
+          const loaded = await db.config.where('id').equals(1).first();
+          if (loaded) {
+            this.data = loaded;
+          }
           // Remove this on release
           if (!this.data.map) {
             this.data.map = {
@@ -27,13 +30,16 @@ export const useConfig = defineStore({
               starfield: true,
             };
           }
+          if (!isAppLocale(this.data.locale)) {
+            this.data.locale = 'en-US';
+          }
         } catch (err) {
           console.log(err);
         }
       } else {
         const conf = NewConfig();
         this.data = conf;
-        db.config.put(conf).catch((err) => console.log(err));
+        await db.config.put(conf).catch((err) => console.log(err));
       }
     },
 

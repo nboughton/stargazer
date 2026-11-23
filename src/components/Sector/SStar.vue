@@ -4,17 +4,17 @@
       :icon="`img:${icon.star(data.description)}`"
       header-class="star-header sf-header rounded-borders q-mb-sm"
       :label="data.name"
-      caption="Star"
+      :caption="$t('enums.sectorItem.Star')"
     >
       <div class="row q-mb-sm" v-if="controls">
         <controls class="col" @move="$emit('move', $event)" />
       </div>
 
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col-grow" label="Name" v-model="data.name" />
+        <i-input class="col-grow" :label="$t('common.name')" v-model="data.name" />
         <q-btn class="col-shrink" v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
-      <i-input class="q-mb-sm" label="Description" v-model="data.description" autogrow />
+      <i-input class="q-mb-sm" :label="$t('common.description')" v-model="data.description" autogrow />
     </q-expansion-item>
   </div>
 </template>

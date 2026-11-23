@@ -2,13 +2,13 @@
   <div class="row q-gutter-sm items-center">
     <div class="col-grow">
       <div class="row full-width q-gutter-sm items-center q-mb-xs">
-        <q-input class="col-grow" label="Name" v-model="data.name" debounce="750" dense />
+        <q-input class="col-grow" :label="$t('common.name')" v-model="data.name" debounce="750" dense />
         <q-select class="col" v-model="data.segments" :options="[4, 6, 8, 10]" borderless dense />
         <q-btn class="col-shrink" v-if="config.data.edit" flat dense icon="delete" @click="$emit('delete')" />
       </div>
 
       <div class="row full-width q-gutter-sm items-center">
-        <q-select class="col-grow" label="Advance" v-model="data.advance" :options="Object.values(EAtO)" dense />
+        <q-select class="col-grow" :label="$t('challenges.advance')" v-model="data.advance" :options="advanceOpts" map-options emit-value dense />
         <q-btn class="col-shrink" icon-right="mdi-dice-6" flat dense @click="roll" :label="data.roll" />
       </div>
     </div>
@@ -41,6 +41,7 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 
 import { RollClock } from 'src/lib/tracks';
+import { enumOptions } from 'src/i18n';
 
 export default defineComponent({
   name: 'Clock',
@@ -77,6 +78,8 @@ export default defineComponent({
       { deep: true }
     );
 
+    const advanceOpts = computed(() => enumOptions(Object.values(EAtO), 'enums.advanceOdds'));
+
     const value = computed(() => {
       return (100 / data.value.segments) * data.value.filled;
     });
@@ -91,6 +94,7 @@ export default defineComponent({
       data,
       value,
       EAtO,
+      advanceOpts,
       roll,
     };
   },

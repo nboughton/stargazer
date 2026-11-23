@@ -1,10 +1,10 @@
 <template>
   <div class="row justify-evenly q-gutter-xs">
-    <stat class="col-2" v-model.number="data.edge" label="Edge" />
-    <stat class="col-2" v-model.number="data.heart" label="Heart" />
-    <stat class="col-2" v-model.number="data.iron" label="Iron" />
-    <stat class="col-2" v-model.number="data.shadow" label="Shadow" />
-    <stat class="col-2" v-model.number="data.wits" label="Wits" />
+    <stat class="col-2" v-model.number="data.edge" :label="$t('stats.edge')" />
+    <stat class="col-2" v-model.number="data.heart" :label="$t('stats.heart')" />
+    <stat class="col-2" v-model.number="data.iron" :label="$t('stats.iron')" />
+    <stat class="col-2" v-model.number="data.shadow" :label="$t('stats.shadow')" />
+    <stat class="col-2" v-model.number="data.wits" :label="$t('stats.wits')" />
   </div>
 </template>
 

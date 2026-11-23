@@ -4,7 +4,7 @@
       <div class="row">
         <q-select
           class="col-grow"
-          label="Sector"
+          :label="$t('nav.sector')"
           v-model="sectorSelect"
           :options="sOpts"
           map-options
@@ -14,7 +14,7 @@
         />
         <q-select
           class="col-grow"
-          label="Cell"
+          :label="$t('sector.cell')"
           v-model="cellSelect"
           :options="cOpts"
           map-options
@@ -32,6 +32,7 @@
 import { defineComponent, computed, ref } from 'vue';
 
 import { ECellStatus, ISelectOpt } from '../models';
+import { translateKey } from 'src/i18n';
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 import { CellLabel } from 'src/lib/sector';
@@ -75,7 +76,7 @@ export default defineComponent({
       });
       if (opts.length == 0) {
         opts.push({
-          label: 'Create a location to save data',
+          label: translateKey('sector.createLocationHint'),
           value: '__no-data__',
         });
       }

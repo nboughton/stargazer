@@ -91,7 +91,7 @@ export const clockRoll = (t: EAtO): { val: number; yn: boolean; match: boolean }
   const n2 = Math.floor(Math.random() * 10);
   const n = n1 + n2 === 0 ? 100 : n1 === 0 ? n2 : +`${n1}${n2}`;
 
-  const YN = oracle.roll(`Starforged/Oracles/Moves/Ask_the_Oracle/${t.replace(/ /g, '_')}`, n) === 'Yes';
+  const YN = oracle.rollEn(`Starforged/Oracles/Moves/Ask_the_Oracle/${t.replace(/ /g, '_')}`, n) === 'Yes';
 
   return { val: n, yn: YN, match: n1 === n2 };
 };

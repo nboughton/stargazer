@@ -1,15 +1,23 @@
 <template>
   <div class="card-bg q-pa-xs">
     <div class="row items-center">
-      <q-select class="col-grow" label="Type" v-model="data.type" :options="Object.values(ELocTheme)" dense />
+      <q-select
+        class="col-grow"
+        :label="$t('common.type')"
+        v-model="data.type"
+        :options="themeOpts"
+        map-options
+        emit-value
+        dense
+      />
       <q-btn icon="mdi-dice-6" flat dense @click="roll.Type" />
     </div>
 
-    <o-input label="Feature" v-model="data.feature" @roll="roll.Feat" />
+    <o-input :label="$t('oracles.fields.feature')" v-model="data.feature" @roll="roll.Feat" />
 
-    <o-input label="Peril" v-model="data.peril" @roll="roll.Peril" />
+    <o-input :label="$t('oracles.fields.peril')" v-model="data.peril" @roll="roll.Peril" />
 
-    <o-input label="Opportunity" v-model="data.opportunity" @roll="roll.Opp" />
+    <o-input :label="$t('oracles.fields.opportunity')" v-model="data.opportunity" @roll="roll.Opp" />
 
     <o-btns clear @click="btns.Clear" />
   </div>
@@ -17,11 +25,12 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { ELocTheme } from '../models';
 
 import * as oracle from 'src/lib/oracles';
+import { enumOptions } from 'src/i18n';
 
 import OInput from './OInput.vue';
 import OBtns from './OBtns.vue';
@@ -36,12 +45,11 @@ export default defineComponent({
       peril: '',
       opportunity: '',
     });
+    const themeOpts = computed(() => enumOptions(Object.values(ELocTheme), 'enums.locTheme'));
 
     const roll = {
       Type: () =>
-        (data.value.type = oracle
-          .roll('Starforged/Oracles/Location_Themes/Theme_Type')
-          .replace(/[^a-z ]/gi, '') as ELocTheme),
+        (data.value.type = oracle.rollLinkTail('Starforged/Oracles/Location_Themes/Theme_Type') as ELocTheme),
       Feat: () => (data.value.feature = oracle.roll(`Starforged/Oracles/Location_Themes/${data.value.type}/Feature`)),
       Peril: () => (data.value.peril = oracle.roll(`Starforged/Oracles/Location_Themes/${data.value.type}/Peril`)),
       Opp: () =>
@@ -61,6 +69,7 @@ export default defineComponent({
 
     return {
       ELocTheme,
+      themeOpts,
       data,
       roll,
       btns,

@@ -23,36 +23,36 @@
       <q-card-section class="q-pa-sm" v-if="data.result">
         <div class="row text-center text-h6 items-center justify-center q-mb-sm">
           <div :class="data.action.color">
-            {{ data.result }}
-            <span v-if="data.challenge.match">with a match</span>
+            {{ $t(`roll.outcomes.${data.result}`) }}
+            <span v-if="data.challenge.match">{{ $t('roll.outcomes.withMatch') }}</span>
             <q-icon v-if="burnt" name="mdi-fire" />
           </div>
         </div>
 
         <div class="row items-center justify-between text-h6">
           <q-btn v-if="!burnt" :icon="adIcon" size="md" flat dense @click="reroll(true, false, false)">
-            <q-tooltip>Reroll Action die</q-tooltip>
+            <q-tooltip>{{ $t('roller.rerollAction') }}</q-tooltip>
           </q-btn>
           <span v-if="!burnt">+</span>
           <span v-if="!burnt">{{ attribute }}</span>
           <span v-if="!burnt">+</span>
           <span v-if="!burnt">{{ adds }}</span>
           <span v-if="!burnt">=</span>
-          <span v-if="burnt">Momentum</span>
+          <span v-if="burnt">{{ $t('character.momentum') }}</span>
           <span v-if="burnt">=</span>
           <span :class="data.action.color">{{ data.action.score }}</span>
-          <span>vs</span>
+          <span>{{ $t('roll.outcomes.vs') }}</span>
           <q-btn :class="data.challenge.die1.color" outline round size="md" @click="reroll(false, true, false)">
             {{ data.challenge.die1.roll }}
-            <q-tooltip>Reroll Challenge die</q-tooltip>
+            <q-tooltip>{{ $t('roller.rerollChallenge') }}</q-tooltip>
           </q-btn>
 
           <q-btn :class="data.challenge.die2.color" outline round size="md" @click="reroll(false, false, true)">
             {{ data.challenge.die2.roll }}
-            <q-tooltip>Reroll Challenge die</q-tooltip>
+            <q-tooltip>{{ $t('roller.rerollChallenge') }}</q-tooltip>
           </q-btn>
           <q-btn class="col-shrink" dense flat icon="mdi-backspace-outline" @click="data.result = ''" :size="btnSize">
-            <q-tooltip>Clear Roll Results</q-tooltip>
+            <q-tooltip>{{ $t('roller.clearResults') }}</q-tooltip>
           </q-btn>
         </div>
       </q-card-section>
@@ -62,39 +62,39 @@
           <q-btn-toggle
             class="col-grow"
             flat
-            :options="opts as unknown as any"
-            label="Attribute"
+            :options="opts"
+            :label="$t('roller.attribute')"
             dense
             spread
             v-model="select"
             :size="btnSize"
           />
 
-          <q-input class="col-1" type="number" label="Other" dense borderless v-model="otherAttr">
-            <q-tooltip>Custom attribute value</q-tooltip>
+          <q-input class="col-1" type="number" :label="$t('stats.other')" dense borderless v-model="otherAttr">
+            <q-tooltip>{{ $t('roller.customAttrTip') }}</q-tooltip>
           </q-input>
 
-          <q-input class="col-1" type="number" label="Adds" dense borderless v-model="adds" />
+          <q-input class="col-1" type="number" :label="$t('roller.adds')" dense borderless v-model="adds" />
         </div>
       </q-card-section>
 
       <q-card-section class="q-pa-sm">
         <div class="row items-center justify-between">
           <q-btn class="col-shrink" icon="expand_more" dense flat @click="close" :size="btnSize">
-            <q-tooltip>Hide roller</q-tooltip>
+            <q-tooltip>{{ $t('roller.hideRoller') }}</q-tooltip>
           </q-btn>
 
           <q-btn class="col-shrink" dense flat @click="roll" :size="btnSize">
             <q-icon name="mdi-dice-6" />
             <q-icon :name="`img:${icon.d10()}`" />
             <q-icon :name="`img:${icon.d10()}`" />
-            <q-tooltip>Roll +Attribute</q-tooltip>
+            <q-tooltip>{{ $t('roller.rollAttrTip') }}</q-tooltip>
           </q-btn>
 
           <div class="col-shrink">
             <div class="row items-center">
               <q-btn class="col-shrink" dense flat icon="remove" @click="mDec" :size="btnSize">
-                <q-tooltip>Decrement Momentum</q-tooltip>
+                <q-tooltip>{{ $t('roller.decMomentum') }}</q-tooltip>
               </q-btn>
               <q-btn
                 class="col-shrink"
@@ -105,26 +105,26 @@
                 @click="burn"
                 :size="btnSize"
               >
-                <q-tooltip>Burn Momentum</q-tooltip>
+                <q-tooltip>{{ $t('roller.burnMomentum') }}</q-tooltip>
               </q-btn>
               <q-btn class="col-shrink" dense flat icon="add" @click="mInc" :size="btnSize">
-                <q-tooltip>Increment Momentum</q-tooltip>
+                <q-tooltip>{{ $t('roller.incMomentum') }}</q-tooltip>
               </q-btn>
             </div>
           </div>
 
           <q-btn class="col-shrink" dense flat icon="mdi-dice-6" @click="d6" :size="btnSize">
-            <q-tooltip>Roll a D6</q-tooltip>
+            <q-tooltip>{{ $t('roller.rollD6') }}</q-tooltip>
           </q-btn>
 
           <q-btn class="col-shrink" dense flat @click="d100" :size="btnSize">
             <q-icon :name="`img:${icon.d10()}`" />
             <q-icon :name="`img:${icon.d10()}`" />
-            <q-tooltip>Roll a D100</q-tooltip>
+            <q-tooltip>{{ $t('roller.rollD100') }}</q-tooltip>
           </q-btn>
 
           <q-btn class="col-shrink" dense flat icon="save" @click="saveResult" :size="btnSize">
-            <q-tooltip>Save result to most recent journal</q-tooltip>
+            <q-tooltip>{{ $t('roller.saveResultTip') }}</q-tooltip>
           </q-btn>
         </div>
       </q-card-section>
@@ -134,6 +134,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 import { ISelectOpt } from '../models';
 
@@ -179,20 +180,21 @@ export default defineComponent({
     const otherAttr = ref(0);
 
     const adds = ref(0);
+    const { t } = useI18n();
     const opts = computed((): ISelectOpt[] => {
       return [
-        { label: 'Edge', value: `edge:${campaign.data.character.stats.edge}` },
+        { label: t('stats.edge'), value: `edge:${campaign.data.character.stats.edge}` },
         {
-          label: 'Heart',
+          label: t('stats.heart'),
           value: `heart:${campaign.data.character.stats.heart}`,
         },
-        { label: 'Iron', value: `iron:${campaign.data.character.stats.iron}` },
+        { label: t('stats.iron'), value: `iron:${campaign.data.character.stats.iron}` },
         {
-          label: 'Shadow',
+          label: t('stats.shadow'),
           value: `shadow:${campaign.data.character.stats.shadow}`,
         },
-        { label: 'Wits', value: `wits:${campaign.data.character.stats.wits}` },
-        { label: 'Other', value: 'other' },
+        { label: t('stats.wits'), value: `wits:${campaign.data.character.stats.wits}` },
+        { label: t('stats.other'), value: 'other' },
       ];
     });
 

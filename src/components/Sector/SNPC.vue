@@ -4,43 +4,43 @@
       :icon="`img:${icon.npc()}`"
       header-class="person-header sf-header rounded-borders q-mb-sm"
       :label="`${data.name} ${pronouns}`"
-      caption="Person"
+      :caption="$t('enums.sectorItem.Person')"
     >
       <controls v-if="controls" @move="$emit('move', $event)" />
       <div class="row q-gutter-sm q-mb-sm no-wrap" v-if="$q.screen.gt.xs">
-        <i-input class="col" label="Name" v-model="data.name" />
-        <i-input class="col" label="Pronouns" v-model="data.pronouns" />
-        <i-input class="col" label="Role" v-model="data.role" />
-        <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection" />
-        <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond" />
+        <i-input class="col" :label="$t('common.name')" v-model="data.name" />
+        <i-input class="col" :label="$t('character.pronouns')" v-model="data.pronouns" />
+        <i-input class="col" :label="$t('oracles.fields.role')" v-model="data.role" />
+        <q-checkbox class="col-shrink" dense :label="$t('sector.connection')" v-model="data.connection" />
+        <q-checkbox v-if="data.connection" class="col-shrink" dense :label="$t('sector.bond')" v-model="data.bond" />
         <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
       </div>
       <div v-else>
         <div class="row q-gutter-sm q-mb-sm no-wrap">
-          <i-input class="col" label="Name" v-model="data.name" />
-          <q-checkbox class="col-shrink" dense label="Connection" v-model="data.connection" />
-          <q-checkbox v-if="data.connection" class="col-shrink" dense label="Bond" v-model="data.bond" />
+          <i-input class="col" :label="$t('common.name')" v-model="data.name" />
+          <q-checkbox class="col-shrink" dense :label="$t('sector.connection')" v-model="data.connection" />
+          <q-checkbox v-if="data.connection" class="col-shrink" dense :label="$t('sector.bond')" v-model="data.bond" />
           <q-btn v-if="config.data.edit" icon="delete" flat dense @click="$emit('delete')" />
         </div>
 
         <div class="row q-gutter-sm q-mb-sm">
-          <i-input class="col" label="Pronouns" v-model="data.pronouns" />
-          <i-input class="col" label="Role" v-model="data.role" />
+          <i-input class="col" :label="$t('character.pronouns')" v-model="data.pronouns" />
+          <i-input class="col" :label="$t('oracles.fields.role')" v-model="data.role" />
         </div>
       </div>
 
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Callsign" v-model="data.callsign" />
-        <i-input class="col" label="Disposition" v-model="data.disposition" />
-        <i-input class="col" label="Goal" v-model="data.goal" />
+        <i-input class="col" :label="$t('character.callsign')" v-model="data.callsign" />
+        <i-input class="col" :label="$t('oracles.fields.disposition')" v-model="data.disposition" />
+        <i-input class="col" :label="$t('oracles.fields.goal')" v-model="data.goal" />
       </div>
 
-      <i-input class="q-mb-sm" label="First Look" v-model="data.firstLook" />
-      <i-input class="q-mb-sm" label="Revealed Aspect" v-model="data.aspect" />
+      <i-input class="q-mb-sm" :label="$t('oracles.fields.firstLook')" v-model="data.firstLook" />
+      <i-input class="q-mb-sm" :label="$t('oracles.fields.revealedAspect')" v-model="data.aspect" />
 
-      <i-input class="q-mb-sm" label="Notes" v-model="data.notes" autogrow />
+      <i-input class="q-mb-sm" :label="$t('common.notes')" v-model="data.notes" autogrow />
 
-      <q-expansion-item class="q-mb-sm" header-class="sf-header" label="Challenge tracks" ref="challenge_tracks">
+      <q-expansion-item class="q-mb-sm" header-class="sf-header" :label="$t('sector.challengeTracks')" ref="challenge_tracks">
         <progress-track class="q-mb-sm" v-model="data.track" />
       </q-expansion-item>
     </q-expansion-item>

@@ -5,7 +5,7 @@
       <q-btn class="col-shrink" flat dense icon="add_circle" @click="addSector" />
       <q-select
         class="col"
-        label="Sector"
+        :label="$t('nav.sector')"
         v-model="config.data.sector"
         :options="sectorOpts"
         map-options
@@ -24,21 +24,23 @@
       />
       <q-select
         class="col"
-        label="Region"
+        :label="$t('common.region')"
         v-model="campaign.data.sectors[config.data.sector].region"
-        :options="Object.values(ERegion)"
+        :options="regionOpts"
+        map-options
+        emit-value
         standout="bg-blue-grey text-white"
         :input-style="{ color: '#ECEFF4' }"
         dense
       />
-      <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
+      <i-input class="col" :label="$t('sector.factionControl')" v-model="campaign.data.sectors[config.data.sector].control" />
     </div>
     <div v-else>
       <div class="row q-mb-sm">
         <q-btn class="col-shrink" flat dense icon="add_circle" @click="addSector" />
         <q-select
           class="col"
-          label="Sector"
+          :label="$t('nav.sector')"
           v-model="config.data.sector"
           :options="sectorOpts"
           map-options
@@ -59,14 +61,16 @@
       <div class="row q-gutter-sm q-mb-sm">
         <q-select
           class="col"
-          label="Region"
+          :label="$t('common.region')"
           v-model="campaign.data.sectors[config.data.sector].region"
-          :options="Object.values(ERegion)"
+          :options="regionOpts"
+          map-options
+          emit-value
           standout="bg-blue-grey text-white"
           :input-style="{ color: '#ECEFF4' }"
           dense
         />
-        <i-input class="col" label="Faction/Control" v-model="campaign.data.sectors[config.data.sector].control" />
+        <i-input class="col" :label="$t('sector.factionControl')" v-model="campaign.data.sectors[config.data.sector].control" />
       </div>
     </div>
 
@@ -75,13 +79,15 @@
     </div>
 
     <div class="row q-gutter-sm q-mb-sm" v-if="$q.screen.gt.xs">
-      <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
-      <i-input class="col" label="Search" v-model="searchText" clearable />
+      <i-input class="col" :label="$t('sector.sectorName')" v-model="campaign.data.sectors[config.data.sector].name" />
+      <i-input class="col" :label="$t('common.search')" v-model="searchText" clearable />
       <q-select
         class="col"
-        label="Filters"
+        :label="$t('common.filters')"
         v-model="filters"
-        :options="Object.values(ESectorOpts)"
+        :options="filterOpts"
+        map-options
+        emit-value
         multiple
         clearable
         standout="bg-blue-grey text-white"
@@ -92,16 +98,18 @@
     </div>
     <div v-else>
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Sector name" v-model="campaign.data.sectors[config.data.sector].name" />
+        <i-input class="col" :label="$t('sector.sectorName')" v-model="campaign.data.sectors[config.data.sector].name" />
         <q-btn class="col-shrink" flat dense icon="mdi-cog" @click="showMapConfig = true" />
       </div>
       <div class="row q-gutter-sm q-mb-sm">
-        <i-input class="col" label="Search" v-model="searchText" clearable />
+        <i-input class="col" :label="$t('common.search')" v-model="searchText" clearable />
         <q-select
           class="col"
-          label="Filters"
+          :label="$t('common.filters')"
           v-model="filters"
-          :options="Object.values(ESectorOpts)"
+          :options="filterOpts"
+          map-options
+          emit-value
           multiple
           clearable
           standout="bg-blue-grey text-white"
@@ -116,10 +124,12 @@
       <div v-if="results">
         <q-expansion-item class="q-mb-lg" v-for="(sector, sID) in results" :key="sID" default-opened>
           <template v-slot:header>
-            <div class="text-h4 sf-header col-grow">Sector: {{ campaign.data.sectors[+sID].name }}</div>
+            <div class="text-h4 sf-header col-grow">
+              {{ $t('sector.sectorHeader', { name: campaign.data.sectors[+sID].name }) }}
+            </div>
           </template>
 
-          <i-input class="q-mb-sm" label="Sector Notes" v-model="campaign.data.sectors[+sID].notes" autogrow />
+          <i-input class="q-mb-sm" :label="$t('sector.sectorNotes')" v-model="campaign.data.sectors[+sID].notes" autogrow />
 
           <q-expansion-item
             class="q-mb-md card-bg rounded-borders"
@@ -130,7 +140,7 @@
           >
             <template v-slot:header>
               <div class="card-bg sf-header text-h5 q-pa-none col-grow">
-                Cell: {{ CellLabel(campaign.data.sectors[+sID].cells[cID], cID as string).label }}
+                {{ $t('sector.cellHeader', { label: CellLabel(campaign.data.sectors[+sID].cells[cID], cID as string).label }) }}
               </div>
             </template>
 
@@ -210,13 +220,13 @@
     <q-dialog v-model="showMapConfig">
       <q-card>
         <q-card-section class="card-bg row justify-between items-center text-h5 sf-header">
-          <div class="sf-header col-grow">Options</div>
+          <div class="sf-header col-grow">{{ $t('common.options') }}</div>
           <q-btn class="col-shrink" flat dense icon="close" @click="showMapConfig = false" />
         </q-card-section>
 
         <q-card-section>
-          <q-toggle label="Stars" v-model="config.data.map.starfield" />
-          <q-toggle label="Animations" v-model="config.data.map.animations" />
+          <q-toggle :label="$t('sector.stars')" v-model="config.data.map.starfield" />
+          <q-toggle :label="$t('sector.animations')" v-model="config.data.map.animations" />
           <!--q-toggle label="Set passage as default" v-model="config.data.map.defaultPassage" /-->
         </q-card-section>
       </q-card>
@@ -248,6 +258,7 @@ import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
 
 import { NewSector, CellLabel } from 'src/lib/sector';
+import { enumOptions, translateKey } from 'src/i18n';
 
 import IInput from 'src/components/Widgets/IInput.vue';
 import SSettlement from 'src/components/Sector/SSettlement.vue';
@@ -268,6 +279,8 @@ export default defineComponent({
     const campaign = useCampaign();
     const config = useConfig();
     const showMapConfig = ref(false);
+    const regionOpts = computed(() => enumOptions(Object.values(ERegion), 'enums.region'));
+    const filterOpts = computed(() => enumOptions(Object.values(ESectorOpts), 'enums.sectorOpts'));
 
     const sectorOpts = computed(() => {
       const out: ISelectOpt[] = [];
@@ -298,8 +311,8 @@ export default defineComponent({
     });
 
     const t = (s: string): boolean => {
-      if (searchText.value === null) return true;
-      return RegExp(searchText.value, 'i').test(s);
+      if (!searchText.value) return true;
+      return (s || '').toLowerCase().includes(searchText.value.toLowerCase());
     };
 
     const results = computed((): ISearchResults => {
@@ -399,7 +412,13 @@ export default defineComponent({
       },
       planet: (o: IPlanet): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Planets)) return false;
-        return t(o.name) || t(o.type) || t(o.description) || t(o.notes);
+        return (
+          t(o.name) ||
+          t(o.type) ||
+          (o.type ? t(translateKey(`enums.planetClass.${o.type}`)) : false) ||
+          t(o.description) ||
+          t(o.notes)
+        );
       },
       settlement: (o: ISettlement): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Settlements)) return false;
@@ -411,15 +430,25 @@ export default defineComponent({
       },
       npc: (o: INPC): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.NPCs)) return false;
-        return (t('bond') && o.bond) || t(o.name) || t(o.role) || t(o.notes);
+        return ((t('bond') || t(translateKey('sector.bondKeyword'))) && o.bond) || t(o.name) || t(o.role) || t(o.notes);
       },
       creature: (o: ICreature): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Creatures)) return false;
-        return t(o.name) || t(o.environment) || t(o.notes);
+        return (
+          t(o.name) ||
+          t(o.environment) ||
+          (o.environment ? t(translateKey(`enums.env.${o.environment}`)) : false) ||
+          t(o.notes)
+        );
       },
       derelict: (o: IDerelict): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Derelicts)) return false;
-        return t(o.name) || t(o.type) || t(o.notes);
+        return (
+          t(o.name) ||
+          t(o.type) ||
+          (o.type ? t(translateKey(`enums.derelictType.${o.type}`)) : false) ||
+          t(o.notes)
+        );
       },
       vault: (o: IVault): boolean => {
         if (applyFilters.value && !filters.value.includes(ESectorOpts.Vaults)) return false;
@@ -435,6 +464,8 @@ export default defineComponent({
       campaign,
       config,
       showMapConfig,
+      regionOpts,
+      filterOpts,
       ERegion,
       ECellStatus,
       CellLabel,

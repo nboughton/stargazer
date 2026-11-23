@@ -2,12 +2,14 @@
   <!-- content -->
   <div>
     <div class="row full-width q-gutter-sm justify-between items-center">
-      <q-toggle class="col" icon="mdi-cog" v-model="showControls" label="Move Controls" />
+      <q-toggle class="col" icon="mdi-cog" v-model="showControls" :label="$t('sector.moveControls')" />
       <q-select
         class="col-shrink"
-        label="Add"
+        :label="$t('common.add')"
         v-model="addSelect"
-        :options="Object.values(ESectorItem)"
+        :options="addOpts"
+        map-options
+        emit-value
         dense
         borderless
       />
@@ -124,12 +126,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 import { ESectorItem, ESectorOpts } from '../models';
 
 import { useCampaign } from 'src/store/campaign';
 import { useConfig } from 'src/store/config';
+import { enumOptions, translateKey } from 'src/i18n';
 
 import {
   NewStar,
@@ -168,7 +171,11 @@ export default defineComponent({
   },
   setup(props) {
     const campaign = useCampaign();
-    const addSelect = ref('Select');
+    const addSelect = ref('');
+    const addOpts = computed(() => [
+      { label: translateKey('common.select'), value: '' },
+      ...enumOptions(Object.values(ESectorItem), 'enums.sectorItem'),
+    ]);
     const add = () => {
       switch (addSelect.value) {
         case ESectorItem.Star:
@@ -226,6 +233,7 @@ export default defineComponent({
       ESectorItem,
       ESectorOpts,
       addSelect,
+      addOpts,
       add,
       show,
       showControls,

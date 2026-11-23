@@ -8,13 +8,14 @@
   "scripts": {
     "dev": "quasar dev",
     "lint": "eslint --ext .js,.ts,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test:i18n": "node scripts/verify-i18n.mjs",
+    "test": "node scripts/verify-i18n.mjs"
   },
   "dependencies": {
     "@quasar/extras": "^1.14.3",
     "@svgdotjs/svg.js": "^3.1.1",
     "core-js": "^3.19.0",
-    "dataforged": "^1.2.2",
+    "dataforged": "^1.5.3",
     "dexie": "^3.0.3",
     "honeycomb-grid": "^3.1.8",
     "pinia": "^2.0.0",
@@ -24,6 +25,7 @@
     "showdown": "^2.1.0",
     "uuid": "^8.3.2",
     "vue": "^3.0.0",
+    "vue-i18n": "^9",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {

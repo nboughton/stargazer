@@ -1,9 +1,9 @@
 <template>
   <div class="card-bg q-pa-xs">
-    <o-input label="Story Complication" v-model="data.storyComplication" @roll="roll.storyComplication" />
-    <o-input label="Story Clue" v-model="data.storyClue" @roll="roll.storyClue" />
-    <o-input label="Anomaly Effect" v-model="data.anomalyEffect" @roll="roll.anomalyEffect" />
-    <o-input label="Combat Action" v-model="data.combatAction" @roll="roll.combatAction" />
+    <o-input :label="$t('oracles.fields.storyComplication')" v-model="data.storyComplication" @roll="roll.storyComplication" />
+    <o-input :label="$t('oracles.fields.storyClue')" v-model="data.storyClue" @roll="roll.storyClue" />
+    <o-input :label="$t('oracles.fields.anomalyEffect')" v-model="data.anomalyEffect" @roll="roll.anomalyEffect" />
+    <o-input :label="$t('oracles.fields.combatAction')" v-model="data.combatAction" @roll="roll.combatAction" />
     <o-btns clear @clear="btns.Clear" />
   </div>
 </template>
